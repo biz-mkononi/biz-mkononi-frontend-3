@@ -1,0 +1,74 @@
+import "./Login.css"
+import image1 from "../../Assets/Group 2.svg"
+import image2 from "../../Assets/logo.png"
+import image3 from "../../Assets/ai-1.svg"
+import image4 from "../../Assets/customer 1.svg"
+import image5 from "../../Assets/insight 1.svg"
+import image6 from "../../Assets/business-and-finance 1.svg"
+import { TextField, FormControlLabel, Checkbox } from "@mui/material"
+
+
+const Login = () => {
+    return (
+        <div className="container-fluid login">
+
+
+            <div className="row padding">
+                <div className="col-lg-6 col-sm-12">
+                    <div className="container login-banner">
+                        <div style={{ display: "flex" }}>
+                            <img src={image2} className="img-fluid" alt="..." />
+                            <h5>BizMkononi</h5>
+                        </div>
+
+
+                        <p>Biz Mkononi is an AI powered insights platform that provides decision making tools, solutions and analytics to the small and medium enterprises in Kenya and the rest of the world.</p>
+                        <div style={{ display: "flex" }}>
+                            <img src={image3} className="img-fluid" alt="..." />
+                            <p>AI Powered Business Intelligence</p>
+                        </div>
+
+                        <div style={{ display: "flex" }}>
+                            <img src={image4} className="img-fluid" alt="..." />
+                            <p>360° Customer view</p>
+                        </div>
+
+                        <div style={{ display: "flex" }}>
+                            <img src={image5} className="img-fluid" alt="..." />
+                            <p>100% Business Insights</p>
+                        </div>
+
+                        <div style={{ display: "flex" }}>
+                            <img src={image6} className="img-fluid" alt="..." />
+                            <p>Revenue Projection Charts</p>
+                        </div>
+
+                    </div>
+                </div>
+                <div className="col-lg-6 ">
+                    <div className="container">
+                        {/* <img src={image1} className="img-fluid login-img" alt="..." /> */}
+                        <div className="card login-card">
+                            <h5 className="mt-3 mb-3">Sign In</h5>
+                            <TextField id="standard-basic" label="Phone" variant="standard" className="textfield mb-3" />
+                            <TextField id="standard-basic" label="Password" variant="standard" className="textfield mb-3" />
+                            <div style={{ display: "flex" }}>
+                                <FormControlLabel control={<Checkbox defaultChecked />} label="Remember me" />
+                                <p>Forgot password?</p>
+                            </div>
+                            <div className="mt-3 sign-button">
+                                <button className="btn btn-primary btn-md">Sign In</button>
+                            </div>
+                            <div className="mt-3">
+                                <p>Don't have an account yet? <a href="#">Sign Up</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    )
+}
+
+export default Login
