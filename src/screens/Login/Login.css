@@ -16,11 +16,11 @@
 
 }
 .login-card {
-    margin-top: 10%;
+    margin-top: 5%;
     position: relative;
     background-color: transparent;
     text-align: center;
-    padding: 20px;
+    padding: 10px;
 }
 .textfield {
     border-width: 0 0 1px 0;
