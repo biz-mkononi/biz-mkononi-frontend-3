@@ -18,13 +18,12 @@ const Login = () => {
     return (
         <div className="container-fluid login">
 
-
             <div className="row padding">
                 <div className="col-lg-6 col-sm-12">
                     <div className="container login-banner">
                         <div style={{ display: "flex" }}>
                             <img src={image2} className="img-fluid" alt="..." />
-                            <h5>BizMkononi</h5>
+                            <h5 className="font-medium leading-tight text-xl mt-0 mb-2 " style={{ padding: "20px" }}>BizMkononi</h5>
                         </div>
 
 
