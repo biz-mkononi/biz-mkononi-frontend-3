@@ -17,7 +17,6 @@ const Login = () => {
     }
     return (
         <div className="container-fluid login">
-
             <div className="row padding">
                 <div className="col-lg-6 col-sm-12">
                     <div className="container login-banner">

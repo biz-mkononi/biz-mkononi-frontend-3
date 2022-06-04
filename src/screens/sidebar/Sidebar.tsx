@@ -1,6 +1,5 @@
-import { NavLink, useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { useContext, useState } from "react";
+
+import { useState } from "react";
 import image2 from "../../Assets/logo.png"
 
 import "./sidebar.css";
@@ -14,7 +13,6 @@ const Sidebar = () => {
             setIsActive(true);
         }
     };
-    const navigate = useNavigate();
     const options: Intl.DateTimeFormatOptions = {
         year: "numeric",
         month: "long",
@@ -22,12 +20,7 @@ const Sidebar = () => {
         hour: "2-digit",
         minute: "2-digit",
     };
-    const onClick = () => {
-        localStorage.removeItem("adminProfile");
-        localStorage.removeItem("agentProfile");
 
-        navigate("/");
-    };
     return (
         <div>
             <aside className="w-64" aria-label="Sidebar">
