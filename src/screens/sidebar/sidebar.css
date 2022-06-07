@@ -2,5 +2,6 @@
   background-color: #BBE1FA !important; 
   padding: 0% !important;
   margin: 0% !important;
-
+z-index: -3 !important;
+position: relative;
 }

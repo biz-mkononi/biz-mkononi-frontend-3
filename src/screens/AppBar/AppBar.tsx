@@ -1,6 +1,9 @@
+
+import "./appbar.css"
 const AppBar = () => {
     return (
         <nav className="
+        appbar
   relative
   w-full
   flex flex-wrap

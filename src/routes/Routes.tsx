@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 const RoutesFile = () => {
     const LoginScreen = lazy(() => import("../screens/Login/Login"))
-
+    const OverviewScreen = lazy(() => import('../screens/Insights/Overview'))
     return (
         <Suspense fallback={
             <div className="flex justify-center items-center mt-3">
@@ -16,6 +16,7 @@ const RoutesFile = () => {
             <Router>
                 <Routes>
                     <Route path='/auth/login' element={<LoginScreen />} />
+                    <Route path='/insights/overview' element={<OverviewScreen />} />
                 </Routes>
             </Router>
         </Suspense>
