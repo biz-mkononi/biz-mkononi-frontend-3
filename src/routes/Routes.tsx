@@ -4,7 +4,9 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 const RoutesFile = () => {
     const LoginScreen = lazy(() => import("../screens/Login/Login"))
     const OverviewScreen = lazy(() => import('../screens/Insights/Overview'))
-    const SalesINsightsScreen = lazy(() => import('../screens/Insights/SalesInsights'))
+    const SalesInsightsScreen = lazy(() => import('../screens/Insights/SalesInsights'))
+    const CustomersInsightsScreen = lazy(() => import('../screens/Insights/CustomersInsights'))
+
 
     return (
         <Suspense fallback={
@@ -19,7 +21,9 @@ const RoutesFile = () => {
                 <Routes>
                     <Route path='/auth/login' element={<LoginScreen />} />
                     <Route path='/insights/overview' element={<OverviewScreen />} />
-                    <Route path='/insights/sales' element={<SalesINsightsScreen />} />
+                    <Route path='/insights/sales' element={<SalesInsightsScreen />} />
+                    <Route path='/insights/customers' element={<CustomersInsightsScreen />} />
+
 
                 </Routes>
             </Router>
