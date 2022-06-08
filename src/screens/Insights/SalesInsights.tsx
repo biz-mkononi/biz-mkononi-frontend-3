@@ -4,22 +4,14 @@ import Sidebar from '../sidebar/Sidebar'
 import { data } from "../../Data/Data"
 import Card from '@mui/material/Card';
 import {
-    ComposedChart, Area, Scatter, PieChart, Sector, Cell,
     BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
-import { Doughnut, Pie } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables } from "chart.js";
 import "./Overview.css"
 
 ChartJS.register(...registerables);
 const SalesInsights = () => {
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
-    const pieData = [
-        { name: "Group A", value: 400 },
-        { name: "Group B", value: 300 },
-        { name: "Group C", value: 300 },
-        { name: "Group D", value: 200 }
-    ];
     return (
         <div>
             {/* <AppBar />
