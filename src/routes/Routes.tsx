@@ -6,6 +6,7 @@ const RoutesFile = () => {
     const OverviewScreen = lazy(() => import('../screens/Insights/Overview'))
     const SalesInsightsScreen = lazy(() => import('../screens/Insights/SalesInsights'))
     const CustomersInsightsScreen = lazy(() => import('../screens/Insights/CustomersInsights'))
+    const ChurnRateInsightsScreen = lazy(() => import('../screens/Insights/ChurnRateInsights'))
 
 
     return (
@@ -23,6 +24,8 @@ const RoutesFile = () => {
                     <Route path='/insights/overview' element={<OverviewScreen />} />
                     <Route path='/insights/sales' element={<SalesInsightsScreen />} />
                     <Route path='/insights/customers' element={<CustomersInsightsScreen />} />
+                    <Route path='/insights/churn-rate' element={<ChurnRateInsightsScreen />} />
+
 
 
                 </Routes>
