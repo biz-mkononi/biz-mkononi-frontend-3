@@ -1,29 +1,30 @@
 .overview {
-    padding: 20px;
-    z-index: 1000;
-    position: absolute;
+  padding: 20px;
+  position: absolute;
+  z-index: 2 !important;
+  position:relative;
 }
 .insights {
-    padding: 20px;
+  padding: 20px;
 }
 .insights .card {
-    padding: 20px;
-    border-color: #3282B8;
-
+  padding: 20px;
+  border-color: #3282b8;
 }
 .insights h2 {
-    color: #3282B8;
-    font-size: 23px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  color: #3282b8;
+  font-size: 23px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }
 .charts {
-    padding: 20px;
+  padding: 20px;
 }
 .charts h2 {
-    font-weight: 500;
+  font-weight: 500;
 }
 .charts .Card {
-    padding: 20px;
-    background-color: #fff;
-    margin-bottom:30px;
+  padding: 20px;
+  background-color: #fff;
+  margin-bottom: 30px;
 }
