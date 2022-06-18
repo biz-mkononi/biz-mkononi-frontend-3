@@ -1,12 +1,13 @@
-import React, { Suspense, lazy } from 'react'
+import React, { Suspense, lazy, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-
 const RoutesFile = () => {
     const LoginScreen = lazy(() => import("../screens/Login/Login"))
     const OverviewScreen = lazy(() => import('../screens/Insights/Overview'))
     const SalesInsightsScreen = lazy(() => import('../screens/Insights/SalesInsights'))
     const CustomersInsightsScreen = lazy(() => import('../screens/Insights/CustomersInsights'))
     const ChurnRateInsightsScreen = lazy(() => import('../screens/Insights/ChurnRateInsights'))
+
+
 
 
     return (

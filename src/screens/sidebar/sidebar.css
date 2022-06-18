@@ -2,6 +2,11 @@
   background-color: #BBE1FA !important; 
   padding: 0% !important;
   margin: 0% !important;
-z-index: -3 !important;
+z-index: 1000 !important;
 position: relative;
+}
+
+.bar-container {
+  background-color: #BBE1FA !important; 
+
 }

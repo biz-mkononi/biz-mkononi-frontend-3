@@ -25,7 +25,7 @@ const Sidebar = () => {
     return (
         <div>
             <aside className="w-64" aria-label="Sidebar">
-                <div className="overflow-y-auto sidebar px-3 bg-gray-50 rounded dark:bg-gray-800">
+                <div className="overflow-y-auto sidebar  px-3 bg-gray-50 rounded dark:bg-gray-800">
                     <div className="mb-3 mt-5" style={{ display: "flex" }}>
                         <img src={image2} style={{ height: "50px" }} className="img-fluid p-2 ml-2" alt="..." />
                         <h5 className="font-medium leading-tight text-xl mt-0 mb-2 " style={{ padding: "10px" }}>BizMkononi</h5>
