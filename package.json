@@ -11,6 +11,7 @@
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@hookform/resolvers": "^2.8.10",
+    "@material-ui/icons": "^4.11.3",
     "@mui/icons-material": "^5.8.2",
     "@mui/material": "^5.8.1",
     "@syncfusion/ej2-react-popups": "^20.1.58",
