@@ -19,11 +19,9 @@
     margin-top: 5%;
     position: relative;
     background-color: transparent;
-    text-align: center;
     padding: 10px;
 }
 .textfield {
-    border-width: 0 0 1px 0;
     border-radius: 0px;
     padding: 0.75rem 0;
     background: transparent !important;
@@ -34,4 +32,7 @@
 }
 a {
     text-decoration: none;
+}
+.field {
+    margin-left:25%;
 }

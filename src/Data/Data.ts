@@ -43,7 +43,66 @@ const data = [
     },
   ];
 
+  const url = "https://api-stage.mkononi.biz"
+
+  const verifyPhone = (phone:any) => {
+    fetch(`${url}/auth/verify`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(phone),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json)
+      });
+      console.log(phone)
+  }
+  const login = (setErrors:any,post:any) => {
+    fetch(`${url}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(post),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.message) {
+          setErrors(json.message);
+        } else {
+          console.log(json)
+          // localStorage.setItem("adminProfile", JSON.stringify({ json }));
+        }
+      });
+    console.log(post)
+  }
+
+  
+  const register = async (setErrors:any,post:any) => {
+    fetch(`${url}/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(post),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.message) {
+          setErrors(json.message);
+        } else {
+          console.log(json)
+        }
+      });
+    console.log(post)
+  }
+
   export {
-      data
+      data,
+      register,
+      login,
+      verifyPhone
   }
   
