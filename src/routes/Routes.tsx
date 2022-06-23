@@ -1,5 +1,14 @@
 import React, { Suspense, lazy, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { makeStyles } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import Drawer from '@material-ui/core/Drawer'
+import Container from '@material-ui/core/Container'
+import Typography from '@material-ui/core/Typography'
+import AppMenu from "../screens/sidebar/AppMenu"
+import AppBarMenu from "../screens/AppBar/AppBar"
+import clsx from 'clsx'
+
 const RoutesFile = () => {
     const LoginScreen = lazy(() => import("../screens/Login/Login"))
     const OverviewScreen = lazy(() => import('../screens/Insights/Overview'))
@@ -8,7 +17,7 @@ const RoutesFile = () => {
     const ChurnRateInsightsScreen = lazy(() => import('../screens/Insights/ChurnRateInsights'))
 
 
-
+    const classes = useStyles()
 
     return (
         <Suspense fallback={
@@ -18,21 +27,68 @@ const RoutesFile = () => {
                 </div>
             </div>
         }>
+            <div className={clsx('App', classes.root)}>
 
-            <Router>
-                <Routes>
-                    <Route path='/auth/login' element={<LoginScreen />} />
-                    <Route path='/insights/overview' element={<OverviewScreen />} />
-                    <Route path='/insights/sales' element={<SalesInsightsScreen />} />
-                    <Route path='/insights/customers' element={<CustomersInsightsScreen />} />
-                    <Route path='/insights/churn-rate' element={<ChurnRateInsightsScreen />} />
+                <Router>
+                    <CssBaseline />
+                    <Drawer
+                        variant="permanent"
+                        classes={{
+                            paper: classes.drawerPaper,
+                        }}
+                    >
+                        <AppMenu />
+                    </Drawer>
+                    <main className={classes.content}>
+                        <Container maxWidth="lg" className={classes.container}>
+                            <AppBarMenu />
+
+                            <Routes>
 
 
 
-                </Routes>
-            </Router>
+                                <Route path='/auth/login' element={<LoginScreen />} />
+                                <Route path='/insights/overview' element={<OverviewScreen />} />
+                                <Route path='/insights/sales' element={<SalesInsightsScreen />} />
+                                <Route path='/insights/customers' element={<CustomersInsightsScreen />} />
+                                <Route path='/insights/churn-rate' element={<ChurnRateInsightsScreen />} />
+
+
+                            </Routes>
+                        </Container>
+
+                    </main>
+
+                </Router>
+            </div>
         </Suspense>
     )
 }
+const drawerWidth = 240
+
+const useStyles = makeStyles(theme => ({
+    root: {
+        display: 'flex',
+    },
+    drawerPaper: {
+        position: 'relative',
+        whiteSpace: 'nowrap',
+        width: drawerWidth,
+        paddingTop: theme.spacing(4),
+        paddingBottom: theme.spacing(4),
+        background: '#BBE1FA',
+        color: '#1B262C',
+    },
+    content: {
+        flexGrow: 1,
+        height: '100vh',
+        overflow: 'auto',
+    },
+    container: {
+        paddingTop: theme.spacing(4),
+        paddingBottom: theme.spacing(4),
+    },
+}))
+
 
 export default RoutesFile
