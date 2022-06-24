@@ -51,7 +51,7 @@ const appMenuItems = [
       },
       {
         name: 'New Business',
-        link: '/',
+        link: '/businesses/add',
       },
 
     ],

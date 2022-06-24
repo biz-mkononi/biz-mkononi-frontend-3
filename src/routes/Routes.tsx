@@ -15,6 +15,7 @@ const RoutesFile = () => {
     const SalesInsightsScreen = lazy(() => import('../screens/Insights/SalesInsights'))
     const CustomersInsightsScreen = lazy(() => import('../screens/Insights/CustomersInsights'))
     const ChurnRateInsightsScreen = lazy(() => import('../screens/Insights/ChurnRateInsights'))
+    const AddBusiness = lazy(() => import('../screens/Businesses/AddBusiness'))
 
 
     const classes = useStyles()
@@ -41,7 +42,7 @@ const RoutesFile = () => {
                     </Drawer>
                     <main className={classes.content}>
                         <Container maxWidth="lg" className={classes.container}>
-                            <AppBarMenu />
+                            {/* <AppBarMenu /> */}
 
                             <Routes>
 
@@ -52,6 +53,7 @@ const RoutesFile = () => {
                                 <Route path='/insights/sales' element={<SalesInsightsScreen />} />
                                 <Route path='/insights/customers' element={<CustomersInsightsScreen />} />
                                 <Route path='/insights/churn-rate' element={<ChurnRateInsightsScreen />} />
+                                <Route path='/businesses/add' element={<AddBusiness />} />
 
 
                             </Routes>
