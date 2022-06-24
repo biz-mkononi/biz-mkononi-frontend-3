@@ -1,0 +1,20 @@
+.form-label {
+    font-weight: 550 !important;
+}
+textarea {
+    height: 100px;
+}
+.fiile {
+    height: 100px !important;
+}
+.add-business h2 {
+    font-weight: 600 !important;
+    font-size: 20px;
+    color: #3282B8;
+}
+.active-button {
+    background-color: #0F4C75 !important;
+}
+.add-business p {
+    color: #3282B8;
+}
