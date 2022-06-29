@@ -1,4 +1,4 @@
-import { data } from "../../Data/Data"
+import { data } from "../../Data/Auth/Data"
 import Card from '@mui/material/Card';
 import {
     BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
