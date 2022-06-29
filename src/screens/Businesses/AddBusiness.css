@@ -18,3 +18,12 @@ textarea {
 .add-business p {
     color: #3282B8;
 }
+table {
+    border-collapse: separate;
+    border-spacing: 1em;
+    color: #0F4C75 !important;
+}
+.search {
+    width: 30%;
+    border-radius: 40px;
+}
