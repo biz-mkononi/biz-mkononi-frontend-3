@@ -24,6 +24,6 @@ table {
     color: #0F4C75 !important;
 }
 .search {
-    width: 30%;
-    border-radius: 40px;
+    width: 30% !important;
+    border-radius: 40px !important;
 }

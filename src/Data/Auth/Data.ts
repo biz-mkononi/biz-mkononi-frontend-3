@@ -73,7 +73,7 @@ const data = [
           setErrors(json.message);
         } else {
           console.log(json)
-          // localStorage.setItem("adminProfile", JSON.stringify({ json }));
+          localStorage.setItem("user", JSON.stringify({ json }));
         }
       });
     console.log(post)
@@ -101,6 +101,7 @@ const data = [
 
   export {
       data,
+      url,
       register,
       login,
       verifyPhone

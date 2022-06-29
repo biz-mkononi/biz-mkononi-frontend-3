@@ -7,7 +7,7 @@ import image4 from "../../Assets/customer 1.svg"
 import image5 from "../../Assets/insight 1.svg"
 import image6 from "../../Assets/business-and-finance 1.svg"
 import { TextField, FormControlLabel, Checkbox, InputAdornment, IconButton } from "@mui/material"
-import { login, register, verifyPhone } from "../../Data/Data"
+import { login, register, verifyPhone } from "../../Data/Auth/Data"
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 

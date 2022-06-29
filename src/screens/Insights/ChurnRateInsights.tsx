@@ -1,7 +1,5 @@
 import React from 'react'
-import AppBar from '../AppBar/AppBar'
-import Sidebar from '../sidebar/Sidebar'
-import { data } from "../../Data/Data"
+import { data } from "../../Data/Auth/Data"
 import Card from '@mui/material/Card';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend
