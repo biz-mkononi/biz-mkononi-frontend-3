@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import AppMenu from "../screens/sidebar/AppMenu"
 import AppBarMenu from "../screens/AppBar/AppBar"
 import clsx from 'clsx'
+import BusinessList from '../screens/Businesses/BusinessList'
 
 const RoutesFile = () => {
     const LoginScreen = lazy(() => import("../screens/Login/Login"))
@@ -54,6 +55,7 @@ const RoutesFile = () => {
                                 <Route path='/insights/customers' element={<CustomersInsightsScreen />} />
                                 <Route path='/insights/churn-rate' element={<ChurnRateInsightsScreen />} />
                                 <Route path='/businesses/add' element={<AddBusiness />} />
+                                <Route path='/businesses/list' element={<BusinessList />} />
 
 
                             </Routes>
