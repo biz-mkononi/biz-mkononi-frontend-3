@@ -59,7 +59,8 @@ const data = [
       });
       console.log(phone)
   }
-  const login = (setErrors:any,post:any) => {
+  const login = (setErrors:any,setIsloading:any,post:any) => {
+    setIsloading(true)
     fetch(`${url}/auth/login`, {
       method: "POST",
       headers: {
@@ -70,6 +71,7 @@ const data = [
       .then((res) => res.json())
       .then((json) => {
         if (json.message) {
+          setIsloading(false)
           setErrors(json.message);
         } else {
           console.log(json)
@@ -80,7 +82,8 @@ const data = [
   }
 
   
-  const register = async (setErrors:any,post:any) => {
+  const register = async (setErrors:any,setIsSigned:any,setIsLoading:any,setPhoneNumber:any,post:any) => {
+    setIsLoading(true)
     fetch(`${url}/auth/register`, {
       method: "POST",
       headers: {
@@ -91,8 +94,11 @@ const data = [
       .then((res) => res.json())
       .then((json) => {
         if (json.message) {
+          setIsLoading(false)
           setErrors(json.message);
         } else {
+          setPhoneNumber(json.phone)
+          setIsSigned(true)
           console.log(json)
         }
       });
