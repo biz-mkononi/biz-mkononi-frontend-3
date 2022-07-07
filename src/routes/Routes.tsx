@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography'
 import AppMenu from "../screens/sidebar/AppMenu"
 import AppBarMenu from "../screens/AppBar/AppBar"
 import clsx from 'clsx'
-import BusinessList from '../screens/Businesses/BusinessList'
 
 const RoutesFile = () => {
     const LoginScreen = lazy(() => import("../screens/Login/Login"))
@@ -17,9 +16,17 @@ const RoutesFile = () => {
     const CustomersInsightsScreen = lazy(() => import('../screens/Insights/CustomersInsights'))
     const ChurnRateInsightsScreen = lazy(() => import('../screens/Insights/ChurnRateInsights'))
     const AddBusiness = lazy(() => import('../screens/Businesses/AddBusiness'))
-
+    const AddSale = lazy(() => import('../screens/Sales/AddSale'))
+    const AddCustomer = lazy(() => import('../screens/customers/NewCustomer'))
+    const AddSupplier = lazy(() => import('../screens/suppliers/NewSupplier'))
+    const BusinessList = lazy(() => import('../screens/Businesses/BusinessList'))
+    const NewCategory = lazy(() => import('../screens/Products/NewCategory'))
+    const AddProduct = lazy(() => import('../screens/Products/AddProduct'))
+    const NewEmployee = lazy(() => import('../screens/Employees/NewEmployee'))
+    const PayEmployee = lazy(() => import('../screens/Employees/PayEmployee'))
 
     const classes = useStyles()
+    const isAuthenticated = true
 
     return (
         <Suspense fallback={
@@ -32,36 +39,52 @@ const RoutesFile = () => {
             <div className={clsx('App', classes.root)}>
 
                 <Router>
-                    <CssBaseline />
-                    <Drawer
-                        variant="permanent"
-                        classes={{
-                            paper: classes.drawerPaper,
-                        }}
-                    >
-                        <AppMenu />
-                    </Drawer>
-                    <main className={classes.content}>
-                        <Container maxWidth="lg" className={classes.container}>
-                            {/* <AppBarMenu /> */}
+                    <Routes>
+                        <Route path='/auth/login' element={<LoginScreen />} />
 
-                            <Routes>
+                    </Routes>
+                    {
+                        isAuthenticated && (
+                            <>
+                                <CssBaseline />
+                                <Drawer
+                                    variant="permanent"
+                                    classes={{
+                                        paper: classes.drawerPaper,
+                                    }}
+                                >
+                                    <AppMenu />
+                                </Drawer>
+                                <main className={classes.content}>
+                                    <Container maxWidth="lg" className={classes.container}>
+                                        {/* <AppBarMenu /> */}
 
-
-
-                                <Route path='/auth/login' element={<LoginScreen />} />
-                                <Route path='/insights/overview' element={<OverviewScreen />} />
-                                <Route path='/insights/sales' element={<SalesInsightsScreen />} />
-                                <Route path='/insights/customers' element={<CustomersInsightsScreen />} />
-                                <Route path='/insights/churn-rate' element={<ChurnRateInsightsScreen />} />
-                                <Route path='/businesses/add' element={<AddBusiness />} />
-                                <Route path='/businesses/list' element={<BusinessList />} />
+                                        <Routes>
 
 
-                            </Routes>
-                        </Container>
 
-                    </main>
+                                            <Route path='/insights/overview' element={<OverviewScreen />} />
+                                            <Route path='/insights/sales' element={<SalesInsightsScreen />} />
+                                            <Route path='/insights/customers' element={<CustomersInsightsScreen />} />
+                                            <Route path='/insights/churn-rate' element={<ChurnRateInsightsScreen />} />
+                                            <Route path='/businesses/add' element={<AddBusiness />} />
+                                            <Route path='/businesses/list' element={<BusinessList />} />
+                                            <Route path='/sales/add' element={<AddSale />} />
+                                            <Route path='/customers/new' element={<AddCustomer />} />
+                                            <Route path='/supplier/new' element={<AddSupplier />} />
+                                            <Route path='/category/new' element={<NewCategory />} />
+                                            <Route path='/product/new' element={<AddProduct />} />
+                                            <Route path='/employee/new' element={<NewEmployee />} />
+                                            <Route path='/employee/pay' element={<PayEmployee />} />
+
+
+                                        </Routes>
+                                    </Container>
+
+                                </main>
+                            </>
+                        )
+                    }
 
                 </Router>
             </div>
