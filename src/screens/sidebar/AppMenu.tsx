@@ -67,7 +67,7 @@ const appMenuItems = [
       },
       {
         name: 'Add Sale',
-        link: '/',
+        link: "/sales/add",
       },
 
     ],
@@ -79,16 +79,12 @@ const appMenuItems = [
     Icon: InventoryIcon,
     items: [
       {
-        name: 'Analytics',
+        name: 'Suppliers',
         link: '/',
       },
       {
-        name: 'Supplies',
-        link: '/',
-      },
-      {
-        name: 'Add Supply',
-        link: '/',
+        name: 'new Supplier',
+        link: '/supplier/new',
       },
 
     ],
@@ -104,7 +100,7 @@ const appMenuItems = [
       },
       {
         name: 'New Product',
-        link: '/',
+        link: '/product/new',
       },
       {
         name: 'Product Categories',
@@ -112,10 +108,27 @@ const appMenuItems = [
       },
       {
         name: 'New Category',
-        link: '/',
+        link: '/category/new',
       },
 
     ],
+  },
+  {
+    name: 'Customers',
+    Icon: BusinessIcon,
+    items: [
+      {
+        name: 'customers',
+        link: '/',
+      },
+      {
+        name: 'new customer',
+        link: "/customers/new",
+      },
+
+    ],
+
+
   },
   {
     name: 'Employees',
@@ -127,11 +140,11 @@ const appMenuItems = [
       },
       {
         name: 'Add Employee',
-        link: '/',
+        link: '/employee/new',
       },
       {
         name: 'Pay Employee',
-        link: '/',
+        link: '/employee/pay',
       },
       {
         name: 'Employee Salaries',

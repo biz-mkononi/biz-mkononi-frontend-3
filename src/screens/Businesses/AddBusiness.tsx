@@ -8,6 +8,8 @@ import { Card } from '@mui/material';
 import "./AddBusiness.css"
 import BusinessList from './BusinessList';
 import { addBusiness } from '../../Data/Businesses/Data';
+import { addBusinessItems } from '../../components/AddBusinessData/AddBusinessData';
+import FormField from '../../components/FormFields/FormField';
 const AddBusiness = () => {
     const initialState = { name: "", businessEmail: "", businessPhone: "", location: "", locationDetails: "", productType: "", description: "", longitude: 12, latitude: 13 }
 
@@ -56,6 +58,16 @@ const AddBusiness = () => {
             </div>
 
             <hr className="light mb-3" />
+            <>
+                {
+                    addBusinessItems.map((data) => {
+                        data.items.map((item) => (
+                            <FormField labelName={item.labelName} icon={item.icon} onChange={handleChange} name={item.name} />
+                        ))
+                    })
+                }
+            </>
+
             {
                 isActive ?
                     <BusinessList /> :

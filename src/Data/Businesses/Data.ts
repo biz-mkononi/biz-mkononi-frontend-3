@@ -4,7 +4,6 @@ import authHeader from '../Auth/authHelper';
 const addBusiness = (post:any) => {
     fetch(`${url}/businesses`, {
         method: "POST",
-        headers:authHeader(),
         body: JSON.stringify(post),
       })
         .then((res) => res.json())
@@ -16,7 +15,6 @@ const addBusiness = (post:any) => {
 const getBusiness = () => {
     fetch(`${url}/businesses`, {
         method: "get",
-        headers:authHeader(),
       })
         .then((res) => res.json())
         .then((json) => {

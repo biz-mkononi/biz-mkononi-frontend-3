@@ -2,9 +2,9 @@
     font-weight: 550 !important;
 }
 textarea {
-    height: 100px;
+    height: 50px;
 }
-.fiile {
+.file {
     height: 100px !important;
 }
 .add-business h2 {
@@ -19,8 +19,8 @@ textarea {
     color: #3282B8;
 }
 table {
-    border-collapse: separate;
-    border-spacing: 1em;
+    border-collapse: separate !important;
+    border-spacing: 1em !important;
     color: #0F4C75 !important;
 }
 .search {
