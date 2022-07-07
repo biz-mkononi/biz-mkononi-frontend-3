@@ -10,9 +10,11 @@ import { TextField, FormControlLabel, Checkbox, InputAdornment, IconButton } fro
 import { login, register, verifyPhone } from "../../Data/Auth/Data"
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import { useNavigate } from "react-router-dom"
 
 
 const Login = () => {
+    const navigate = useNavigate()
     const initialState = { name: "", email: "", password: "", phone: "", password2: "" }
     const [isSignup, setIsSignup] = useState(false)
     const [isRegistered, setIsRegistered] = useState(false)
@@ -37,7 +39,7 @@ const Login = () => {
             register(setErrors, formData)
         }
         else {
-            login(setErrors, formData)
+            login(setErrors, formData, navigate)
         }
         // verifyPhone(formData.phone)
     }

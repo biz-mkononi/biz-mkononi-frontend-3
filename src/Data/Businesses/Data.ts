@@ -1,5 +1,5 @@
 import { url } from "../Auth/Data";
-import authHeader from '../Auth/authHelper';
+import { auth } from "../Auth/authHelper";
 
 const addBusiness = (post:any) => {
     fetch(`${url}/businesses`, {

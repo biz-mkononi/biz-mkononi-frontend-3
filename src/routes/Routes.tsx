@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography'
 import AppMenu from "../screens/sidebar/AppMenu"
 import AppBarMenu from "../screens/AppBar/AppBar"
 import clsx from 'clsx'
+import { auth } from '../Data/Auth/authHelper'
+import PrivateRoute from './PrivateRoute'
 
 const RoutesFile = () => {
     const LoginScreen = lazy(() => import("../screens/Login/Login"))
@@ -26,7 +28,6 @@ const RoutesFile = () => {
     const PayEmployee = lazy(() => import('../screens/Employees/PayEmployee'))
 
     const classes = useStyles()
-    const isAuthenticated = true
 
     return (
         <Suspense fallback={
@@ -36,15 +37,16 @@ const RoutesFile = () => {
                 </div>
             </div>
         }>
-            <div className={clsx('App', classes.root)}>
 
-                <Router>
-                    <Routes>
-                        <Route path='/auth/login' element={<LoginScreen />} />
+            <Router>
+                <Routes>
+                    <Route path='/auth/login' element={<LoginScreen />} />
 
-                    </Routes>
+                </Routes>
+                <div className={clsx('App', classes.root)}>
+
                     {
-                        isAuthenticated && (
+                        auth.isAuthenticated() && (
                             <>
                                 <CssBaseline />
                                 <Drawer
@@ -55,39 +57,90 @@ const RoutesFile = () => {
                                 >
                                     <AppMenu />
                                 </Drawer>
-                                <main className={classes.content}>
-                                    <Container maxWidth="lg" className={classes.container}>
-                                        {/* <AppBarMenu /> */}
-
-                                        <Routes>
-
-
-
-                                            <Route path='/insights/overview' element={<OverviewScreen />} />
-                                            <Route path='/insights/sales' element={<SalesInsightsScreen />} />
-                                            <Route path='/insights/customers' element={<CustomersInsightsScreen />} />
-                                            <Route path='/insights/churn-rate' element={<ChurnRateInsightsScreen />} />
-                                            <Route path='/businesses/add' element={<AddBusiness />} />
-                                            <Route path='/businesses/list' element={<BusinessList />} />
-                                            <Route path='/sales/add' element={<AddSale />} />
-                                            <Route path='/customers/new' element={<AddCustomer />} />
-                                            <Route path='/supplier/new' element={<AddSupplier />} />
-                                            <Route path='/category/new' element={<NewCategory />} />
-                                            <Route path='/product/new' element={<AddProduct />} />
-                                            <Route path='/employee/new' element={<NewEmployee />} />
-                                            <Route path='/employee/pay' element={<PayEmployee />} />
-
-
-                                        </Routes>
-                                    </Container>
-
-                                </main>
                             </>
                         )
                     }
+                    <main className={classes.content}>
+                        <Container maxWidth="lg" className={classes.container}>
+                            {/* <AppBarMenu /> */}
 
-                </Router>
-            </div>
+                            <Routes>
+
+                                <Route path='/insights/overview' element={
+                                    <PrivateRoute>
+                                        <OverviewScreen />
+                                    </PrivateRoute>
+                                } />
+                                <Route path='/insights/sales' element={
+                                    <PrivateRoute>
+                                        <SalesInsightsScreen />
+                                    </PrivateRoute>
+                                } />
+                                <Route path='/insights/customers' element={
+                                    <PrivateRoute>
+                                        <CustomersInsightsScreen />
+                                    </PrivateRoute>
+                                } />
+                                <Route path='/insights/churn-rate' element={
+                                    <PrivateRoute>
+                                        <ChurnRateInsightsScreen />
+                                    </PrivateRoute>
+                                } />
+                                <Route path='/businesses/add' element={
+                                    <PrivateRoute>
+                                        <AddBusiness />
+                                    </PrivateRoute>
+                                } />
+                                <Route path='/businesses/list' element={
+                                    <PrivateRoute>
+                                        <BusinessList />
+                                    </PrivateRoute>
+                                } />
+                                <Route path='/sales/add' element={
+                                    <PrivateRoute>
+                                        <AddSale />
+                                    </PrivateRoute>
+                                } />
+                                <Route path='/customers/new' element={
+                                    <PrivateRoute>
+                                        <AddCustomer />
+                                    </PrivateRoute>
+                                } />
+                                <Route path='/supplier/new' element={
+                                    <PrivateRoute>
+                                        <AddSupplier />
+                                    </PrivateRoute>
+                                } />
+                                <Route path='/category/new' element={
+                                    <PrivateRoute>
+                                        <NewCategory />
+                                    </PrivateRoute>
+                                } />
+                                <Route path='/product/new' element={
+                                    <PrivateRoute>
+                                        <AddProduct />
+                                    </PrivateRoute>
+                                } />
+                                <Route path='/employee/new' element={
+                                    <PrivateRoute>
+                                        <NewEmployee />
+                                    </PrivateRoute>
+                                } />
+                                <Route path='/employee/pay' element={
+                                    <PrivateRoute>
+                                        <PayEmployee />
+                                    </PrivateRoute>
+                                } />
+
+
+                            </Routes>
+                        </Container>
+
+                    </main>
+
+                </div>
+
+            </Router>
         </Suspense>
     )
 }
