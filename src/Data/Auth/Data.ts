@@ -59,7 +59,7 @@ const data = [
       });
       console.log(phone)
   }
-  const login = (setErrors:any,post:any) => {
+  const login = (setErrors:any,post:any,navigate:any) => {
     fetch(`${url}/auth/login`, {
       method: "POST",
       headers: {
@@ -74,6 +74,7 @@ const data = [
         } else {
           console.log(json)
           localStorage.setItem("user", JSON.stringify({ json }));
+          navigate('/businesses/list')
         }
       });
     console.log(post)
