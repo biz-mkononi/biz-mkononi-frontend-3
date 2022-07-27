@@ -24,6 +24,7 @@ const Sidebar = () => {
         </div>
     )
 }
+
 const drawerWidth = 240
 
 const useStyles = makeStyles(theme => ({
