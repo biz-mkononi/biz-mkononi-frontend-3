@@ -46,12 +46,11 @@ const Overview = () => {
                 </div>
                 <div className="container charts">
                     <div className="row padding">
-                        <div className="col-lg-8 col-sm-6">
+                        <div className="col-lg-6 col-sm-6">
                             <Card className="Card">
                                 <h2 className="text-center mb-3">Customer Churn Rate</h2>
                                 <LineChart
-                                    width={700}
-                                    height={358}
+
                                     data={data}
                                     margin={{
                                         top: 5,
@@ -69,7 +68,7 @@ const Overview = () => {
                                 </LineChart>
                             </Card>
                         </div>
-                        <div className="col-lg-4">
+                        <div className="col-lg-6">
                             <Card className="Card">
                                 <h2 className="text-center mb-3">Most Selling Products</h2>
 
@@ -103,7 +102,7 @@ const Overview = () => {
                         </div>
                     </div>
                     <div className="row padding">
-                        <div className="col-lg-8 col-sm-6">
+                        <div className="col-lg-6 col-sm-6">
                             <Card className="Card">
                                 <h2 className="text-center mb-3">Revenue</h2>
                                 <LineChart
@@ -128,7 +127,7 @@ const Overview = () => {
                                 </LineChart>
                             </Card>
                         </div>
-                        <div className="col-lg-4">
+                        <div className="col-lg-5">
                             <Card className="Card">
                                 <h2 className="text-center mb-3">Customer Visit and Buying</h2>
 

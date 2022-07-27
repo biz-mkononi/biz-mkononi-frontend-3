@@ -7,6 +7,9 @@ position: relative;
 }
 
 .bar-container {
-  background-color: #BBE1FA !important; 
+  background-color: #e1f3ff !important; 
 
+}
+.sidebar-logo {
+  height: 30px !important;
 }

@@ -10,6 +10,7 @@ import AppBarMenu from "../screens/AppBar/AppBar"
 import clsx from 'clsx'
 import { auth } from '../Data/Auth/authHelper'
 import PrivateRoute from './PrivateRoute'
+import "./sidebar.css"
 
 const RoutesFile = () => {
     const LoginScreen = lazy(() => import("../screens/Login/Login"))
@@ -50,6 +51,7 @@ const RoutesFile = () => {
                             <>
                                 <CssBaseline />
                                 <Drawer
+                                    className='shadow'
                                     variant="permanent"
                                     classes={{
                                         paper: classes.drawerPaper,
@@ -144,7 +146,7 @@ const RoutesFile = () => {
         </Suspense>
     )
 }
-const drawerWidth = 240
+const drawerWidth = 300
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -156,13 +158,16 @@ const useStyles = makeStyles(theme => ({
         width: drawerWidth,
         paddingTop: theme.spacing(4),
         paddingBottom: theme.spacing(4),
-        background: '#BBE1FA',
+        background: '#e1f3ff',
         color: '#1B262C',
+        paddingRight: theme.spacing(4),
+        paddingLeft: theme.spacing(2),
     },
     content: {
         flexGrow: 1,
         height: '100vh',
         overflow: 'auto',
+
     },
     container: {
         paddingTop: theme.spacing(4),
