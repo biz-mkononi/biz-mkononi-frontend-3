@@ -1,28 +1,17 @@
 import { url } from "../Auth/Data";
-import { auth } from "../Auth/authHelper";
+import { auth,reqInstance } from "../Auth/authHelper";
 
 const addBusiness = (post:any) => {
-    fetch(`${url}/businesses`, {
-        method: "POST",
-        body: JSON.stringify(post),
-      })
-        .then((res) => res.json())
-        .then((json) => {
-          console.log(json)
-        });
-      console.log(post)
+    reqInstance.post(`${url}/businesses`,post)
+    .then((data) => console.log(data))
 }
-const getBusiness = () => {
-    fetch(`${url}/businesses`, {
-        method: "get",
-      })
-        .then((res) => res.json())
-        .then((json) => {
-          console.log(json)
-        });
+const getBusiness = (setData:any) => {
+  reqInstance.get(`${url}/businesses`)
+  .then ((data) => setData(data.data.rows))
 }
 
+
 export {
-    addBusiness,
-    getBusiness
+    getBusiness,
+    addBusiness
 }

@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 
 import List from '@material-ui/core/List'
 import image2 from "../../Assets/logo.png"
-
+import "./sidebar.css"
+import { useNavigate } from 'react-router-dom'
 
 
 import InsightsIcon from '@mui/icons-material/Insights';
@@ -13,8 +14,10 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import BadgeIcon from '@mui/icons-material/Badge';
 import AppMenuItem from './AppMenuItem'
+import MenuIcon from '@mui/icons-material/Menu';
 
 const appMenuItems = [
+
   {
     name: 'Insights',
     Icon: InsightsIcon,
@@ -57,6 +60,9 @@ const appMenuItems = [
     ],
 
   },
+
+]
+const otherItems = [
   {
     name: 'Sales',
     Icon: BusinessIcon,
@@ -156,25 +162,75 @@ const appMenuItems = [
 ]
 
 const AppMenu: React.FC = () => {
+  const navigate = useNavigate()
   const classes = useStyles()
+  const [drawerNewWidth, setDrawerWidth] = useState(drawerWidth)
+  const [businessId, setBusinessId] = useState(JSON.parse(localStorage.getItem("businessId")!))
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")!))
+
+
+
+  useEffect(() => {
+    setBusinessId(JSON.parse(localStorage.getItem("businessId")!));
+    setUser(JSON.parse(localStorage.getItem("user")!));
+
+  }, [location]);
+  const onClick = () => {
+    setDrawerWidth(0)
+  }
+  const logout = () => {
+    localStorage.clear()
+    navigate("/auth/login")
+  }
+
 
   return (
     <List component="nav" className={classes.appMenu} disablePadding>
       {/* <AppMenuItem {...appMenuItems[0]} /> */}
       <div className="mb-3" style={{ display: "flex", marginLeft: "10px" }}>
-        <img src={image2} className="img-fluid" alt="..." />
-        <h5 className="font-medium leading-tight text-xl mt-0 mb-2 " style={{ padding: "20px" }}>BizMkononi</h5>
+        <img src={image2} className="img-fluid sidebar-logo" alt="..." />
+        <h5 className="font-medium leading-tight text-xl mt-0 mb-2 " style={{ paddingLeft: "10px", fontWeight: 'bold' }}>BizMkononi</h5>
       </div>
       {
         appMenuItems.map((item, index) => (
-          <AppMenuItem {...item} key={index} />
+          <div className='mb-4'>
+            <AppMenuItem {...item} key={index} />
+
+          </div>
         ))
       }
+      {
+        businessId && (
+          <>
+            <>
+              <hr />
+              <h5 className='mt-4'>section</h5>
+            </>
+            {
+              otherItems.map((item, index) => (
+                <div className='mb-4 mt-2' style={{ fontWeight: 'bold' }}>
+                  <AppMenuItem {...item} key={index} />
+
+                </div>
+              ))
+            }
+          </>
+        )
+      }
+      {
+        user && (
+          <h4>{user.json.user.name}</h4>
+
+        )
+      }
+      <button className="btn btn-danger btn-md" onClick={logout}>Logout</button>
+
     </List >
   )
 }
 
-const drawerWidth = 240
+
+const drawerWidth = 0
 
 const useStyles = makeStyles(theme =>
   createStyles({

@@ -74,7 +74,9 @@ const data = [
         } else {
           console.log(json)
           localStorage.setItem("user", JSON.stringify({ json }));
+
           navigate('/businesses/list')
+         
         }
       });
     console.log(post)

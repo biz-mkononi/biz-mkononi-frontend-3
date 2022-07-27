@@ -45,7 +45,7 @@ const SalesInsights = () => {
                 </div>
                 <div className="container charts">
                     <div className="row padding">
-                        <div className="col-lg-8 col-sm-6">
+                        <div className="col-lg-6 col-sm-6">
                             <Card className="Card">
                                 <h2 className="text-center mb-3">Customer most buying day</h2>
                                 <BarChart
@@ -68,7 +68,7 @@ const SalesInsights = () => {
                                 </BarChart>
                             </Card>
                         </div>
-                        <div className="col-lg-4">
+                        <div className="col-lg-5">
                             <Card className="Card">
                                 <h2 className="text-center mb-3">Most Selling Products</h2>
 
