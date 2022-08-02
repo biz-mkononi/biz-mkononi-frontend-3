@@ -2,7 +2,7 @@ import { url } from "../Auth/Data";
 import { reqInstance } from "../Auth/authHelper";
 const businessId = JSON.parse(localStorage.getItem("businessId")!)
 
-const newUrl = `${url}/${businessId}`
+const newUrl = `${url}/businesses/${businessId.id}`
 
 const addEmployee = (post:any) => {
     reqInstance.post(`${newUrl}/employees`,post)

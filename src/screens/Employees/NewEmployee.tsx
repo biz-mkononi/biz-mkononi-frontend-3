@@ -3,8 +3,10 @@ import BusinessIcon from '@mui/icons-material/Business';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import { Card } from '@mui/material';
+import { addEmployee } from '../../Data/Employees/Data';
+
 const NewEmployee = () => {
-    const initialState = { name: "", age: "", gender: "", phone: "", email: "", description: "" }
+    const initialState = { name: "", phone: "", email: "", idNumber: "", position: "" }
 
 
     const [formData, setFormData] = useState(initialState)
@@ -13,14 +15,9 @@ const NewEmployee = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
-    const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value })
-    }
-
-
-
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        addEmployee(formData)
 
     }
 
@@ -51,7 +48,7 @@ const NewEmployee = () => {
                             <label htmlFor="basic-url" className="form-label">Phone</label>
                             <div className="input-group mb-5">
                                 <span className="input-group-text" id="basic-addon1"><PhoneIcon /></span>
-                                <input type="text" onChange={handleChange} name="locationDetails" className="form-control" placeholder="phone number" aria-label="Username" aria-describedby="basic-addon1" />
+                                <input type="text" onChange={handleChange} name="phone" className="form-control" placeholder="phone number" aria-label="Username" aria-describedby="basic-addon1" />
                             </div>
                         </div>
                     </div>
@@ -60,14 +57,14 @@ const NewEmployee = () => {
                             <label htmlFor="basic-url" className="form-label ">ID Number</label>
                             <div className="input-group mb-5">
                                 <span className="input-group-text" id="basic-addon1"><EmailIcon /></span>
-                                <input type="text" onChange={handleChange} name="email" className="form-control" placeholder="id number" aria-label="Username" aria-describedby="basic-addon1" />
+                                <input type="text" onChange={handleChange} name="idNumber" className="form-control" placeholder="id number" aria-label="Username" aria-describedby="basic-addon1" />
                             </div>
                         </div>
                         <div className="col-lg-4">
                             <label htmlFor="basic-url" className="form-label">Position</label>
                             <div className="input-group mb-5">
                                 <span className="input-group-text" id="basic-addon1"><PhoneIcon /></span>
-                                <input type="text" onChange={handleChange} name="locationDetails" className="form-control" placeholder="position" aria-label="Username" aria-describedby="basic-addon1" />
+                                <input type="text" onChange={handleChange} name="position" className="form-control" placeholder="position" aria-label="Username" aria-describedby="basic-addon1" />
                             </div>
                         </div>
                         <div className="col-lg-4">
