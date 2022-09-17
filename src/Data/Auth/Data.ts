@@ -59,7 +59,7 @@ const data = [
       });
       console.log(phone)
   }
-  const login = (setErrors:any,post:any,navigate:any) => {
+  const login = (setErrors:any,post:any,navigate:any,setIsSignIn:any) => {
     fetch(`${url}/auth/login`, {
       method: "POST",
       headers: {
@@ -70,6 +70,7 @@ const data = [
       .then((res) => res.json())
       .then((json) => {
         if (json.message) {
+          setIsSignIn(false)
           setErrors(json.message);
         } else {
           console.log(json)
@@ -83,8 +84,48 @@ const data = [
   }
 
   
-  const register = async (setErrors:any,post:any) => {
+  const registerUser = async (setErrors:any,post:any,setIsRegistering:any,setIsVerified:any) => {
     fetch(`${url}/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(post),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.message) {
+          setIsRegistering(false)
+          setErrors(json.message);
+        } else {
+          setIsRegistering(false)
+          setIsVerified(true)
+          console.log(json)
+        }
+      });
+    console.log(post)
+  }
+
+  const forgotPassword = async (setErrors:any,post:any) => {
+    fetch(`${url}/auth/forgot-password`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(post),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.message) {
+          setErrors(json.message);
+        } else {
+          console.log(json)
+        }
+      });
+    console.log(post)
+  }
+  const changePassword = async (setErrors:any,post:any) => {
+    fetch(`${url}/auth/reset-password`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -105,8 +146,10 @@ const data = [
   export {
       data,
       url,
-      register,
+      registerUser,
       login,
-      verifyPhone
+      verifyPhone,
+      forgotPassword,
+      changePassword
   }
   

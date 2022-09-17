@@ -50,24 +50,24 @@ const RoutesFile = () => {
                     <Route path='/auth/login' element={<LoginScreen />} />
 
                 </Routes>
+
                 <div className={clsx('App', classes.root)}>
 
-                    {
-                        auth.isAuthenticated() && (
-                            <>
-                                <CssBaseline />
-                                <Drawer
-                                    className='shadow'
-                                    variant="permanent"
-                                    classes={{
-                                        paper: classes.drawerPaper,
-                                    }}
-                                >
-                                    <AppMenu />
-                                </Drawer>
-                            </>
-                        )
-                    }
+                    <PrivateRoute>
+                        <>
+                            <CssBaseline />
+                            <Drawer
+                                className='shadow'
+                                variant="permanent"
+                                classes={{
+                                    paper: classes.drawerPaper,
+                                }}
+                            >
+                                <AppMenu />
+                            </Drawer>
+                        </>
+                    </PrivateRoute>
+
                     <main className={classes.content}>
                         <Container maxWidth="lg" className={classes.container}>
                             {/* <AppBarMenu /> */}

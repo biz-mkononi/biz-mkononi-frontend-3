@@ -175,9 +175,7 @@ const AppMenu: React.FC = () => {
     setUser(JSON.parse(localStorage.getItem("user")!));
 
   }, [location]);
-  const onClick = () => {
-    setDrawerWidth(0)
-  }
+
   const logout = () => {
     localStorage.clear()
     navigate("/auth/login")
