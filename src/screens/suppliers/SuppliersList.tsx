@@ -1,31 +1,28 @@
 import React, { useEffect, useState } from 'react'
-import "./AddBusiness.css"
+import "../Businesses/AddBusiness.css"
 import { Pagination } from '@mui/material'
-import { getBusiness } from "../../Data/Businesses/Data"
+import { getSuppliers } from "../../Data/Suppliers/Data"
 import { useNavigate } from "react-router-dom"
 
-const BusinessList = () => {
+const SuppliersList = () => {
     const navigate = useNavigate()
     const [data, setData] = useState<any[]>([])
     useEffect(() => {
-        getBusiness(setData)
+        getSuppliers(setData)
     }, [])
 
     console.log(data)
     const onClick = (id: any) => {
-        localStorage.setItem("businessId", JSON.stringify({ id }));
+        localStorage.setItem("supplierId", JSON.stringify({ id }));
         navigate(0)
     }
     return (
-        <div className='container p-3'>
+        <div className='container '>
             <input className="form-control search mb-3" type="search" placeholder="Search by location" aria-label="Search"></input>
             <table className="table">
                 <thead>
                     <tr>
                         <th scope="col">Name</th>
-                        <th scope="col">Location</th>
-                        <th scope="col">Admin</th>
-                        <th scope="col">Product Type</th>
                         <th scope="col">Email</th>
                         <th scope="col">Phone</th>
                         <th scope="col">Actions</th>
@@ -33,20 +30,16 @@ const BusinessList = () => {
                     </tr>
                 </thead>
                 {
-                    data.map((business) => (
+                    data.map((supplier) => (
                         <tbody>
                             <tr>
-                                <th scope="row" >{business.name}</th>
-                                <td>{business.location}</td>
-                                <td>{business.owner.name}</td>
-                                <td>{business.productType}</td>
-                                <td>{business.businessEmail}</td>
-                                <td>{business.businessPhone}</td>
+                                <th scope="row" >{supplier.name}</th>
+                                <td>{supplier.email}</td>
+                                <td>{supplier.phone}</td>
                                 <td>
-                                    <button className="btn btn-warning btn-sm" onClick={(() => { onClick(business.id) })}>Manage</button>
-                                </td>
-                                <td>
-                                    <button className="btn btn-success btn-sm">Details</button>
+                                    <button className="btn btn-warning btn-sm ml-2" onClick={(() => { onClick(supplier.id) })}>View</button>
+                                    <button className="btn btn-success btn-sm ml-2">Edit</button>
+                                    <button className="btn btn-danger btn-sm ml-2">Delete</button>
                                 </td>
 
 
@@ -64,4 +57,4 @@ const BusinessList = () => {
     )
 }
 
-export default BusinessList
+export default SuppliersList

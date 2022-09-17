@@ -3,8 +3,10 @@ import BusinessIcon from '@mui/icons-material/Business';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import { Card } from '@mui/material';
+import { addSupplier } from '../../Data/Suppliers/Data';
+
 const AddSupplier = () => {
-    const initialState = { name: "", age: "", gender: "", phone: "", email: "", description: "" }
+    const initialState = { name: "", phone: "", email: "", description: "" }
 
 
     const [formData, setFormData] = useState(initialState)
@@ -21,6 +23,7 @@ const AddSupplier = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        addSupplier(formData)
 
     }
 
@@ -51,7 +54,7 @@ const AddSupplier = () => {
                             <label htmlFor="basic-url" className="form-label">Phone</label>
                             <div className="input-group mb-5">
                                 <span className="input-group-text" id="basic-addon1"><PhoneIcon /></span>
-                                <input type="text" onChange={handleChange} name="locationDetails" className="form-control" placeholder="phone number" aria-label="Username" aria-describedby="basic-addon1" />
+                                <input type="text" onChange={handleChange} name="phone" className="form-control" placeholder="phone number" aria-label="Username" aria-describedby="basic-addon1" />
                             </div>
                         </div>
                     </div>

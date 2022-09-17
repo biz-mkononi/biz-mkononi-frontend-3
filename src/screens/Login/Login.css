@@ -1,9 +1,17 @@
-.login {
-    background-color: #BBE1FA;
-    padding: 50px;
-}
+
 .login-banner {
-    padding: 10px;
+    padding: 60px;
+
+}
+.sign-container {
+    padding: 80px;
+    background-color: #f2f8FF;
+    background-image: url('../../Assets/Group 2.svg');
+    background-size: 500px 300px;
+    background-repeat: no-repeat;
+    background-position: top right;
+    height: 100% !important;
+
 }
 .login-banner p {
     padding: 20px;
@@ -11,20 +19,19 @@
 .login-banner h5 {
     padding: 20px;
 }
-.login-img{
-    width: 300px;
 
-}
 .login-card {
-    margin-top: 5%;
     position: relative;
+    border-width: 0ch !important;
     background-color: transparent;
     padding: 10px;
+    margin-bottom: 10%;
 }
-.textfield {
-    border-radius: 0px;
-    padding: 0.75rem 0;
-    background: transparent !important;
+
+.login-card .textfield:active {
+    border-top: none !important;
+    outline:none !important;
+    border-color: red !important;
 }
 .sign-button .btn {
     border-radius: 200px !important;

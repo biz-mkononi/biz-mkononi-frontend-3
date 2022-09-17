@@ -86,7 +86,7 @@ const otherItems = [
     items: [
       {
         name: 'Suppliers',
-        link: '/',
+        link: '/suppliers/list',
       },
       {
         name: 'new Supplier',
@@ -102,7 +102,7 @@ const otherItems = [
     items: [
       {
         name: 'Product',
-        link: '/',
+        link: '/products/list',
       },
       {
         name: 'New Product',
@@ -110,7 +110,7 @@ const otherItems = [
       },
       {
         name: 'Product Categories',
-        link: '/',
+        link: '/categories/list',
       },
       {
         name: 'New Category',
@@ -125,7 +125,7 @@ const otherItems = [
     items: [
       {
         name: 'customers',
-        link: '/',
+        link: '/customers/list',
       },
       {
         name: 'new customer',
@@ -142,7 +142,7 @@ const otherItems = [
     items: [
       {
         name: 'Employees',
-        link: '/',
+        link: '/employees/list',
       },
       {
         name: 'Add Employee',
@@ -154,7 +154,7 @@ const otherItems = [
       },
       {
         name: 'Employee Salaries',
-        link: '/',
+        link: '/employees/salaries',
       },
 
     ],
@@ -175,9 +175,7 @@ const AppMenu: React.FC = () => {
     setUser(JSON.parse(localStorage.getItem("user")!));
 
   }, [location]);
-  const onClick = () => {
-    setDrawerWidth(0)
-  }
+
   const logout = () => {
     localStorage.clear()
     navigate("/auth/login")

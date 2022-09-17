@@ -20,13 +20,19 @@ const RoutesFile = () => {
     const ChurnRateInsightsScreen = lazy(() => import('../screens/Insights/ChurnRateInsights'))
     const AddBusiness = lazy(() => import('../screens/Businesses/AddBusiness'))
     const AddSale = lazy(() => import('../screens/Sales/AddSale'))
+    const CustomersList = lazy(() => import('../screens/customers/CustomersList'))
     const AddCustomer = lazy(() => import('../screens/customers/NewCustomer'))
     const AddSupplier = lazy(() => import('../screens/suppliers/NewSupplier'))
+    const SuppliersList = lazy(() => import('../screens/suppliers/SuppliersList'))
     const BusinessList = lazy(() => import('../screens/Businesses/BusinessList'))
     const NewCategory = lazy(() => import('../screens/Products/NewCategory'))
+    const CategoriesList = lazy(() => import('../screens/Products/CategoriesList'))
     const AddProduct = lazy(() => import('../screens/Products/AddProduct'))
+    const ProductsList = lazy(() => import('../screens/Products/ProductList'))
     const NewEmployee = lazy(() => import('../screens/Employees/NewEmployee'))
+    const EmployeesList = lazy(() => import('../screens/Employees/EmployeesList'))
     const PayEmployee = lazy(() => import('../screens/Employees/PayEmployee'))
+    const EmployeesSalaries = lazy(() => import('../screens/Employees/EmployeesSalaries'))
 
     const classes = useStyles()
 
@@ -44,24 +50,24 @@ const RoutesFile = () => {
                     <Route path='/auth/login' element={<LoginScreen />} />
 
                 </Routes>
+
                 <div className={clsx('App', classes.root)}>
 
-                    {
-                        auth.isAuthenticated() && (
-                            <>
-                                <CssBaseline />
-                                <Drawer
-                                    className='shadow'
-                                    variant="permanent"
-                                    classes={{
-                                        paper: classes.drawerPaper,
-                                    }}
-                                >
-                                    <AppMenu />
-                                </Drawer>
-                            </>
-                        )
-                    }
+                    <PrivateRoute>
+                        <>
+                            <CssBaseline />
+                            <Drawer
+                                className='shadow'
+                                variant="permanent"
+                                classes={{
+                                    paper: classes.drawerPaper,
+                                }}
+                            >
+                                <AppMenu />
+                            </Drawer>
+                        </>
+                    </PrivateRoute>
+
                     <main className={classes.content}>
                         <Container maxWidth="lg" className={classes.container}>
                             {/* <AppBarMenu /> */}
@@ -108,9 +114,19 @@ const RoutesFile = () => {
                                         <AddCustomer />
                                     </PrivateRoute>
                                 } />
+                                <Route path='/customers/list' element={
+                                    <PrivateRoute>
+                                        <CustomersList />
+                                    </PrivateRoute>
+                                } />
                                 <Route path='/supplier/new' element={
                                     <PrivateRoute>
                                         <AddSupplier />
+                                    </PrivateRoute>
+                                } />
+                                <Route path='/suppliers/list' element={
+                                    <PrivateRoute>
+                                        <SuppliersList />
                                     </PrivateRoute>
                                 } />
                                 <Route path='/category/new' element={
@@ -118,9 +134,19 @@ const RoutesFile = () => {
                                         <NewCategory />
                                     </PrivateRoute>
                                 } />
+                                <Route path='/categories/list' element={
+                                    <PrivateRoute>
+                                        <CategoriesList />
+                                    </PrivateRoute>
+                                } />
                                 <Route path='/product/new' element={
                                     <PrivateRoute>
                                         <AddProduct />
+                                    </PrivateRoute>
+                                } />
+                                <Route path='/products/list' element={
+                                    <PrivateRoute>
+                                        <ProductsList />
                                     </PrivateRoute>
                                 } />
                                 <Route path='/employee/new' element={
@@ -128,9 +154,19 @@ const RoutesFile = () => {
                                         <NewEmployee />
                                     </PrivateRoute>
                                 } />
+                                <Route path='/employees/list' element={
+                                    <PrivateRoute>
+                                        <EmployeesList />
+                                    </PrivateRoute>
+                                } />
                                 <Route path='/employee/pay' element={
                                     <PrivateRoute>
                                         <PayEmployee />
+                                    </PrivateRoute>
+                                } />
+                                <Route path='/employees/salaries' element={
+                                    <PrivateRoute>
+                                        <EmployeesSalaries />
                                     </PrivateRoute>
                                 } />
 
