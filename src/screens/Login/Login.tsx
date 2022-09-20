@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState,useEffect } from "react"
 import "./Login.css"
 import image2 from "../../Assets/logo.png"
 import image3 from "../../Assets/ai-1.svg"
@@ -6,7 +6,7 @@ import image4 from "../../Assets/customer 1.svg"
 import image5 from "../../Assets/insight 1.svg"
 import image6 from "../../Assets/business-and-finance 1.svg"
 import { TextField, FormControlLabel, Checkbox, InputAdornment, IconButton } from "@mui/material"
-import { forgotPassword, changePassword, login, registerUser, verifyPhone } from "../../Data/Auth/Data"
+import { forgotPassword, changePassword, login, registerUser, verifyPhone, resendVerification } from "../../Data/Auth/Data"
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { useNavigate } from "react-router-dom"
@@ -80,6 +80,8 @@ const Login = () => {
         setIsResetPassword(true)
     }
 
+    
+
 
     const onForgotPassword = () => {
         forgotPassword(setDataErrors, formData)
@@ -97,10 +99,10 @@ const Login = () => {
     }
 
     const backToLogin = () => {
-        setIsSignup(false)
+        navigate(0)
     }
 
-    const onSubmitData = (e: React.FormEvent<HTMLFormElement>) => {
+    const onSubmitLoginData = (e: React.FormEvent<HTMLFormElement>) => {
         setIsSigningIn(true)
         e.preventDefault()
         console.log(formData)
@@ -113,6 +115,14 @@ const Login = () => {
         registerUser(setDataErrors, data, setIsRegistering, setIsVerified)
 
     };
+
+    const resendVerificationCode = () => {
+        resendVerification(formData)
+        setIsVerified(true)
+    }
+    const alreadyHaveCode = () => {
+        setIsVerified(true)
+    }
 
 
 
@@ -130,6 +140,7 @@ const Login = () => {
 
 
                         <p>Biz Mkononi is an AI powered insights platform that provides decision making tools, solutions and analytics to the small and medium enterprises in Kenya and the rest of the world.</p>
+                        <div className="text-center mt-3" style={{marginLeft:"100px"}}>
                         <div className="mb-4" style={{ display: "flex" }}>
                             <img src={image3} className="img-fluid" alt="..." />
                             <p>AI Powered Business Intelligence</p>
@@ -150,6 +161,8 @@ const Login = () => {
                             <p>Revenue Projection Charts</p>
                         </div>
 
+                        </div>
+
                     </div>
                 </div>
                 <div className="col-lg-6 ">
@@ -164,10 +177,10 @@ const Login = () => {
                                                 <>
                                                     <h3 className="mt-2 mb-5 text-center " style={{ fontWeight: "bold" }}>Verify Phone</h3>
                                                     <div className="mb-2 field">
-                                                        <TextField id="outlined-basic" name="phone" value={formData.phone} onChange={handleChange} variant="filled" className="textfield mb-3" />
+                                                        <TextField id="outlined-basic" name="phone" label="phone" required onChange={handleChange} variant="filled" className="textfield mb-3" />
                                                     </div>
                                                     <div className="mb-2 field">
-                                                        <TextField id="outlined-basic" label="Code" name="code" onChange={handleChange} variant="filled" className="textfield mb-3" />
+                                                        <TextField id="outlined-basic" label="Code" name="code" onChange={handleChange} variant="filled" className="textfield mb-3" required />
                                                     </div>
                                                     <div className="mt-3 text-center sign-button">
                                                         <button className="btn btn-primary btn-md" onClick={phoneVerification}>Verify Phone</button>
@@ -241,10 +254,10 @@ const Login = () => {
                                                             <p>Already have an account yet? <a href="#" onClick={switchMode} >Sign In</a></p>
                                                         </div>
                                                         <div className="text-center mt-2">
-                                                            <p>Resend Verification SMS? <a href="#" >Resend</a></p>
+                                                            <p>Resend Verification SMS? <a href="#" onClick={resendVerificationCode}>Resend</a></p>
                                                         </div>
                                                         <div className=" text-center mt-2">
-                                                            <p>Verify Phone? <a href="#" >Verify Phone</a></p>
+                                                            <p>Verify Phone? <a href="#" onClick={alreadyHaveCode} >Verify Phone</a></p>
                                                         </div>
                                                     </form>
                                                 </>
@@ -279,10 +292,10 @@ const Login = () => {
                                                                             <>
                                                                                 <h3 className="mt-3 mb-5 text-center" style={{ fontWeight: "bold" }}>Reset Password</h3>
                                                                                 <div className="field mb-3">
-                                                                                    <TextField id="outlined-basic" label="Phone" name="phone" onChange={handleChange} variant="filled" className="textfield mb-3" />
+                                                                                    <TextField id="outlined-basic" label="Phone" name="phone" value={formData.phone} onChange={handleChange} variant="filled" className="textfield mb-3" />
                                                                                 </div>
                                                                                 <div className="field mb-3">
-                                                                                    <TextField id="outlined-basic" label="Code" name="code" onChange={handleChange} variant="filled" className="textfield mb-3" />
+                                                                                    <TextField id="outlined-basic" label="Code" name="code" onChange={handleChange} variant="filled" className="textfield mb-3" required />
                                                                                 </div>
                                                                                 <div className="mb-2 field">
                                                                                     <TextField id="outlined-basic" label="new password" onChange={handleChange} type={showPassword ? 'text' : 'password'} name="password"
@@ -298,7 +311,7 @@ const Login = () => {
                                                                                                 </InputAdornment>
                                                                                             ),
                                                                                         }}
-                                                                                        variant="filled" className="textfield mb-3" />
+                                                                                        variant="filled" className="textfield mb-3" required />
                                                                                 </div>
                                                                                 <div className="mb-2 field">
                                                                                     <TextField id="outlined-basic" label="Confirm Password" onChange={handleChange} type={showPassword ? 'text' : 'password'} name="password2" variant="filled"
@@ -314,7 +327,7 @@ const Login = () => {
                                                                                                 </InputAdornment>
                                                                                             ),
                                                                                         }}
-                                                                                        className="textfield mb-3" />
+                                                                                        className="textfield mb-3" required />
                                                                                 </div>
                                                                                 <div className="mt-3 text-center sign-button">
                                                                                     <button className="btn btn-primary btn-md" onClick={changingPassword}>Reset Password</button>
@@ -341,10 +354,9 @@ const Login = () => {
                                                     :
                                                     <>
                                                         <h3 className="mt-3 mb-5 text-center" style={{ fontWeight: "bold" }}>Sign In</h3>
-                                                        <form onSubmit={onSubmitData}>
+                                                        <form onSubmit={onSubmitLoginData}>
                                                             <div className="field mb-3">
                                                                 <TextField id="outlined-basic" label="Phone" name="phone" onChange={handleChange} variant="filled" className="textfield mb-3" required />
-                                                                <p className="text-danger">{errors.phone?.message}</p>
                                                             </div>
 
                                                             <div className="mb-3 field">
@@ -362,7 +374,6 @@ const Login = () => {
                                                                         ),
                                                                     }}
                                                                     variant="filled" className="textfield mb-3" />
-                                                                <p className="text-danger">{errors.password?.message}</p>
 
                                                             </div>
                                                             <div className="text-center mb-2">

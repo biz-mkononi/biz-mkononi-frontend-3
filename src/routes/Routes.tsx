@@ -53,8 +53,9 @@ const RoutesFile = () => {
 
                 <div className={clsx('App', classes.root)}>
 
-                    <PrivateRoute>
-                        <>
+                    {
+                        auth.isAuthenticated() && (
+                            <>
                             <CssBaseline />
                             <Drawer
                                 className='shadow'
@@ -66,7 +67,8 @@ const RoutesFile = () => {
                                 <AppMenu />
                             </Drawer>
                         </>
-                    </PrivateRoute>
+                        )
+                    }
 
                     <main className={classes.content}>
                         <Container maxWidth="lg" className={classes.container}>

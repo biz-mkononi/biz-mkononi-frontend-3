@@ -59,6 +59,21 @@ const data = [
       });
       console.log(phone)
   }
+
+  const resendVerification = (phone:any) => {
+    fetch(`${url}/auth/verify/resend`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(phone),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json)
+      });
+      console.log(phone)
+  }
   const login = (setErrors:any,post:any,navigate:any,setIsSignIn:any) => {
     fetch(`${url}/auth/login`, {
       method: "POST",
@@ -73,14 +88,10 @@ const data = [
           setIsSignIn(false)
           setErrors(json.message);
         } else {
-          console.log(json)
-          localStorage.setItem("user", JSON.stringify({ json }));
-
-          navigate('/businesses/list')
-         
+          localStorage.setItem("user", JSON.stringify({ json }));         
         }
-      });
-    console.log(post)
+      })
+      .then(() => navigate('/businesses/list'))
   }
 
   
@@ -150,6 +161,7 @@ const data = [
       login,
       verifyPhone,
       forgotPassword,
-      changePassword
+      changePassword,
+      resendVerification
   }
   

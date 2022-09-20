@@ -6,7 +6,7 @@ interface Props {
 }
 
 const PrivateRoute = ({ children }: Props) => {
-    const newAuth = auth?.isAuthenticated();
+    const newAuth = auth.isAuthenticated();
     return newAuth ? (
         <>
             {children}
