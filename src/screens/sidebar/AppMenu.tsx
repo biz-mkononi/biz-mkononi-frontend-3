@@ -14,8 +14,8 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import BadgeIcon from '@mui/icons-material/Badge';
 import AppMenuItem from './AppMenuItem'
-import MenuIcon from '@mui/icons-material/Menu';
-
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import MoneyOffIcon from '@mui/icons-material/MoneyOff';
 const appMenuItems = [
 
   {
@@ -50,7 +50,7 @@ const appMenuItems = [
     items: [
       {
         name: 'My Businesses',
-        link: '/businesses/list',
+        link: '/',
       },
       {
         name: 'New Business',
@@ -69,7 +69,7 @@ const otherItems = [
     items: [
       {
         name: 'Sales',
-        link: '/',
+        link: '/sales/list',
       },
       {
         name: 'Add Sale',
@@ -81,6 +81,49 @@ const otherItems = [
 
   },
   {
+    name: 'Supplies',
+    Icon: InventoryIcon,
+    items: [
+      {
+        name: 'Supplies',
+        link: '/supplies/list',
+      },
+      {
+        name: 'Add Supply',
+        link: "/supplies/add",
+      },
+
+    ],
+
+
+  },
+  {
+    name: 'Finance',
+    Icon: AttachMoneyIcon,
+    items: [
+      {
+        name: 'Add Expense',
+        link: "/expense/add",
+      },
+      {
+        name: 'Expenses',
+        link: "/expense/list",
+      },
+      {
+        name: 'Other Income',
+        link: '/income/list',
+      },
+      {
+        name: 'Add Extra Income',
+        link: "/income/add",
+      },
+
+    ],
+
+
+  },
+
+  {
     name: 'Suppliers',
     Icon: InventoryIcon,
     items: [
@@ -89,7 +132,7 @@ const otherItems = [
         link: '/suppliers/list',
       },
       {
-        name: 'new Supplier',
+        name: 'New Supplier',
         link: '/supplier/new',
       },
 
@@ -124,11 +167,11 @@ const otherItems = [
     Icon: BusinessIcon,
     items: [
       {
-        name: 'customers',
+        name: 'Customers',
         link: '/customers/list',
       },
       {
-        name: 'new customer',
+        name: 'New Customer',
         link: "/customers/new",
       },
 

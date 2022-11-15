@@ -7,7 +7,7 @@ textarea {
 .file {
     height: 100px !important;
 }
-.add-business h2 {
+ h2 {
     font-weight: 600 !important;
     font-size: 20px;
     color: #3282B8;
@@ -27,3 +27,53 @@ table {
     width: 30% !important;
     border-radius: 40px !important;
 }
+.input-group-text {
+    color: rgb(180, 180, 180);
+}
+.form-control {
+    border-color: rgb(180, 180, 180);
+}
+.form-select {
+    border-color: rgb(180, 180, 180);
+}
+textarea {
+    height: 150px;
+}
+.business-form-image {
+    height: 150px;
+    margin-top: 10px;
+    width: 300px;
+}
+.image-upload>input {
+    display: none;
+  }
+
+  
+  .business-image {
+    height: 40px;
+    width: 40px;
+    margin-right: 10px;
+margin-top: 0px !important;
+  }
+  table {
+    color: #3282B8;
+  }
+
+  .business-details-image {
+    height: 200px;
+    margin-top: 50px;
+    width: 300px;
+  }
+  .details-button button {
+margin-left: 10px;
+border-radius: 20px;
+width: 100px;
+  }
+  .places {
+    width: 300px !important;
+  }
+  .money {
+    font-weight: 600 !important;
+    font-size: 16px;
+    color: #3282B8;
+  }

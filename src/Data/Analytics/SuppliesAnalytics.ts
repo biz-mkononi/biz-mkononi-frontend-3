@@ -1,6 +1,6 @@
 import { reqInstance } from "../Auth/authHelper";
 import {newUrl} from "../Employees/Data"
-
+import { data } from "./SalesAnalytics";
 const url = `${newUrl}/supplies-analytics`
 const getGroupedSupplies= (setData:any) => {
   reqInstance.get(`${url}/grouped-supplies`)
@@ -8,8 +8,8 @@ const getGroupedSupplies= (setData:any) => {
 }
 
 const getTotalSupplies= (setData:any) => {
-    reqInstance.get(`${url}/total-supplies`)
-    .then ((data) => setData(data.data.rows))
+    reqInstance.get(`${url}/total-supplies`,{params:data})
+    .then ((data) => setData(data.data.total))
   }
 
   export {

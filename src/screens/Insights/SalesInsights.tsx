@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { data } from "../../Data/Auth/Data"
 import Card from '@mui/material/Card';
 import {
@@ -7,9 +7,17 @@ import {
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables } from "chart.js";
 import "./Overview.css"
+import { getSalesTrend } from '../../Data/Analytics/SalesAnalytics';
 
 ChartJS.register(...registerables);
 const SalesInsights = () => {
+
+    const [data, setData] = useState<any[]>([])
+    const [isLoading, setIsLoading] = useState(false)
+    useEffect(() => {
+        getSalesTrend(setData)
+    }, [])
+    console.log(data)
     return (
         <div>
             {/* <AppBar />

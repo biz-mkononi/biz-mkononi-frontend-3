@@ -1,10 +1,28 @@
 import { reqInstance } from "../Auth/authHelper";
-import {newUrl} from "../Employees/Data"
+import {newUrl,businessId} from "../Employees/Data"
 
 const url = `${newUrl}/sales-analytics`
+var d = new Date();
+
+    // Set it to one month ago
+    d.setMonth(d.getMonth() - 1);
+
+    // Zero the time component
+    d.setHours(0, 0, 0, 0);
+
+    // Get the time value in milliseconds and convert to seconds
+    console.log(d.toISOString());
+    var now = new Date ()
+const data = {
+    from:d.toISOString(),
+    to:now.toISOString(),
+    group:"day",
+    businessId:businessId
+  }
 const getSalesTrend= (setData:any) => {
-  reqInstance.get(`${url}/sales-trend`)
-  .then ((data) => setData(data.data.rows))
+   
+  reqInstance.get(`${url}/sales-trend`, {params:data})
+  .then ((data) => setData(data.data))
 }
 
 const getTotalDateSales= (setData:any) => {
@@ -37,5 +55,6 @@ export {
     getTotalSales,
     getAverageOrder,
     getProductSales,
-    getRepeatCustomerRate
+    getRepeatCustomerRate,
+    data
 }

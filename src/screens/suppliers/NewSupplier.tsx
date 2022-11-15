@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
-import BusinessIcon from '@mui/icons-material/Business';
+import PersonIcon from '@mui/icons-material/Person';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import { Card } from '@mui/material';
 import { addSupplier } from '../../Data/Suppliers/Data';
+import { useNavigate } from 'react-router-dom';
+import image from "../../Assets/placeholder.jpg"
+import "../Businesses/AddBusiness.css"
+
 
 const AddSupplier = () => {
     const initialState = { name: "", phone: "", email: "", description: "" }
-
+    const navigate = useNavigate()
 
     const [formData, setFormData] = useState(initialState)
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -23,7 +28,7 @@ const AddSupplier = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        addSupplier(formData)
+        addSupplier(formData, navigate, setIsLoading)
 
     }
 
@@ -39,7 +44,7 @@ const AddSupplier = () => {
                         <div className="col-lg-4">
                             <label htmlFor="basic-url" className="form-label ">Name</label>
                             <div className="input-group mb-5">
-                                <span className="input-group-text" id="basic-addon1"><BusinessIcon /></span>
+                                <span className="input-group-text" id="basic-addon1"><PersonIcon /></span>
                                 <input type="text" onChange={handleChange} name="name" className="form-control" placeholder="name" aria-label="Username" aria-describedby="basic-addon1" />
                             </div>
                         </div>
@@ -59,7 +64,6 @@ const AddSupplier = () => {
                         </div>
                     </div>
                     <div className="row padding">
-
                         <div className="col-lg-4">
                             <label htmlFor="basic-url" className="form-label ">Description</label>
                             <div className="input-group mb-3">
@@ -67,14 +71,26 @@ const AddSupplier = () => {
                             </div>
                         </div>
                         <div className="col-lg-4">
-                            <div className="mb-3">
-                                <label htmlFor="formFile" className="form-label">Click below to upload business image</label>
-                                <input className="form-control file mt-5" name='image' type="file" id="formFile" />
+                            <div className="mb-3 image-upload">
+
+
+                                <label htmlFor="formFile" className="form-label">
+                                    Click to set business image
+                                    <img src={image} alt="" className='business-form-image' />
+                                </label>
+                                <input className="form-control file " name='image' type="file" id="formFile" />
+
+
                             </div>
                         </div>
+
                     </div>
                     <div className="text-center mt-3">
-                        <button className="btn btn-success btn-md">Add Supplier</button>
+                        {
+                            isLoading ? <button className="btn btn-success btn-md" disabled>Adding</button> :
+                                <button className="btn btn-success btn-md">Add Supplier</button>
+                        }
+
                     </div>
 
                 </form>

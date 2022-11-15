@@ -60,7 +60,7 @@ const data = [
       console.log(phone)
   }
 
-  const resendVerification = (phone:any) => {
+  const resendVerification = (phone:any,setIsLoading:any,setErrors:any,navigate:any) => {
     fetch(`${url}/auth/verify/resend`, {
       method: "POST",
       headers: {
@@ -70,7 +70,14 @@ const data = [
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json)
+        if (json.message) {
+          setIsLoading(false)
+          setErrors(json.message);
+        } else {
+          setIsLoading(false)
+          navigate(0)
+          console.log(json)
+        }
       });
       console.log(phone)
   }
@@ -88,10 +95,10 @@ const data = [
           setIsSignIn(false)
           setErrors(json.message);
         } else {
-          localStorage.setItem("user", JSON.stringify({ json }));         
+          localStorage.setItem("user", JSON.stringify({ json })); 
         }
       })
-      .then(() => navigate('/businesses/list'))
+      .then(() => navigate('/'))
   }
 
   
@@ -117,7 +124,7 @@ const data = [
     console.log(post)
   }
 
-  const forgotPassword = async (setErrors:any,post:any) => {
+  const forgotPassword = async (setErrors:any,post:any,setIsLoading:any,setIsResetPassword:any) => {
     fetch(`${url}/auth/forgot-password`, {
       method: "POST",
       headers: {
@@ -128,14 +135,18 @@ const data = [
       .then((res) => res.json())
       .then((json) => {
         if (json.message) {
+          setIsLoading(false)
           setErrors(json.message);
         } else {
+          setIsLoading(false)
+          setIsResetPassword(true)
+
           console.log(json)
         }
       });
     console.log(post)
   }
-  const changePassword = async (setErrors:any,post:any) => {
+  const changePassword = async (setErrors:any,post:any,setIsLoading:any,navigate:any) => {
     fetch(`${url}/auth/reset-password`, {
       method: "POST",
       headers: {
@@ -146,8 +157,11 @@ const data = [
       .then((res) => res.json())
       .then((json) => {
         if (json.message) {
+          setIsLoading(false)
           setErrors(json.message);
         } else {
+          setIsLoading(false)
+          navigate(0)
           console.log(json)
         }
       });

@@ -7,10 +7,27 @@ import {
 import { Doughnut, Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables } from "chart.js";
 import "./Overview.css"
-
+import { useEffect, useState } from "react";
+import { getChurnCustomerRate, getGenderStats, getNewCustomers, getRepeatCustomerRate, getTotalCustomers } from "../../Data/Analytics/CustomerAnalytics";
+import { getSalesTrend } from "../../Data/Analytics/SalesAnalytics";
 ChartJS.register(...registerables);
 const CustomersInsights = () => {
 
+    const [totalCustomers, setTotalCustomers] = useState<any[]>([])
+    const [newCustomers, setNewCustomers] = useState<any[]>([])
+    const [repeatPurchaseRate, setRepeatPurchaseRate] = useState<any[]>([])
+    const [churnRate, setChurnRate] = useState<any[]>([])
+    const [genderStats, setGenderStats] = useState<any[]>([])
+    const [salesTrend, setSalesTrend] = useState<any[]>([])
+    useEffect(() => {
+        getTotalCustomers(setTotalCustomers)
+        getNewCustomers(setNewCustomers)
+        getRepeatCustomerRate(setRepeatPurchaseRate)
+        getChurnCustomerRate(setChurnRate)
+        getGenderStats(setGenderStats)
+        getSalesTrend(setSalesTrend)
+    }, [])
+    console.log(salesTrend)
     return (
         <div>
 
@@ -19,19 +36,19 @@ const CustomersInsights = () => {
                     <div className="row padding">
                         <div className="col-lg-4 col-sm-12">
                             <div className="card text-center">
-                                <h2 className='mb-2'>200</h2>
+                                <h2 className='mb-2'>{newCustomers}</h2>
                                 <h3>New Users Acquired</h3>
                             </div>
                         </div>
                         <div className="col-lg-4 ">
                             <div className="card text-center">
-                                <h2 className='mb-2'>8.5%</h2>
+                                <h2 className='mb-2'>{repeatPurchaseRate} %</h2>
                                 <h3>Repeat Purchase Rate</h3>
                             </div>
                         </div>
                         <div className="col-lg-4">
                             <div className="card text-center">
-                                <h2 className='mb-2'>1.2%</h2>
+                                <h2 className='mb-2'>{churnRate} %</h2>
                                 <h3>Customer Churn Rate</h3>
                             </div>
                         </div>
@@ -39,7 +56,7 @@ const CustomersInsights = () => {
                 </div>
                 <div className="container charts">
                     <div className="row padding">
-                        <div className="col-lg-8 col-sm-6">
+                        <div className="col-lg-6 col-sm-6">
                             <Card className="Card">
                                 <h2 className="text-center mb-3">Customer Phone Calls</h2>
                                 <ComposedChart
@@ -63,17 +80,18 @@ const CustomersInsights = () => {
                                 </ComposedChart>
                             </Card>
                         </div>
-                        <div className="col-lg-4">
+                        <div className="col-lg-6">
                             <Card className="Card">
                                 <h2 className="text-center mb-3">Customer Visit and Buying</h2>
 
                                 <Pie data={
+
                                     {
-                                        labels: ['visit', 'buy'],
+                                        labels: ['Male', 'Female', 'Other'],
                                         datasets: [
                                             {
                                                 label: '# of Votes',
-                                                data: [12, 3],
+                                                data: [12, 3, 9],
                                                 backgroundColor: [
                                                     '#3282B8',
                                                     '#BBe1FA',
