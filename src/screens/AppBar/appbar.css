@@ -1,4 +1,30 @@
-.appbar {
-    position: relative;
-    z-index: -2;
-}
+.bar-icons {
+    font-size: 32px;
+    margin-left: 50px;
+    text-align: right;
+    
+  }
+  .bar-icons span {
+    padding-left: 10px;
+    margin-right: 30px;
+    color: #3282B8;
+  }
+  .menu-icons  {
+    
+    text-align: left;
+    color: #3282B8;
+  }
+  .menu-icon {
+    font-size: 60px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .menu-icons span {
+    padding-left: 10px;
+    margin-right: 30px;
+    color: #3282B8;
+  }
+
+  .topBar {
+    background-color: #fbfcfd!important;
+  }

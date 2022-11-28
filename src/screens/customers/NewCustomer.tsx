@@ -1,13 +1,25 @@
 import React, { useState } from 'react';
-import BusinessIcon from '@mui/icons-material/Business';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import { Card } from '@mui/material';
+import { addCustomer } from '../../Data/Customers/Data';
+import { useNavigate } from 'react-router-dom';
+import image from "../../Assets/placeholder.jpg"
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import "../Businesses/AddBusiness.css"
+import PersonIcon from '@mui/icons-material/Person';
+
+
+
 const AddCustomer = () => {
-    const initialState = { name: "", age: "", gender: "", phone: "", email: "", description: "" }
+    const initialState = { name: "", gender: "", yearOfBirth: "", phone: "", email: "", description: "" }
 
-
+    const navigate = useNavigate()
     const [formData, setFormData] = useState(initialState)
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -21,8 +33,11 @@ const AddCustomer = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        addCustomer(formData, navigate, setIsLoading)
+        console.log(formData)
 
     }
+    console.log(formData)
 
     return (
         <div className='add-business container p-4 '>
@@ -36,23 +51,30 @@ const AddCustomer = () => {
                         <div className="col-lg-4">
                             <label htmlFor="basic-url" className="form-label ">Name</label>
                             <div className="input-group mb-5">
-                                <span className="input-group-text" id="basic-addon1"><BusinessIcon /></span>
+                                <span className="input-group-text" id="basic-addon1"><PersonIcon /></span>
                                 <input type="text" onChange={handleChange} name="name" className="form-control" placeholder="name" aria-label="Username" aria-describedby="basic-addon1" />
                             </div>
                         </div>
                         <div className="col-lg-4">
-                            <label htmlFor="basic-url" className="form-label">Estimate Age</label>
+                            <label htmlFor="basic-url" className="form-label">Year of Birth</label>
                             <div className="input-group mb-5">
-                                <span className="input-group-text" id="basic-addon1"><EmailIcon /></span>
-                                <input type="text" onChange={handleChange} name="age" className="form-control" placeholder="age" aria-label="Username" aria-describedby="basic-addon1" />
+                                <span className="input-group-text" id="basic-addon1"><PersonIcon /></span>
+                                <input type="text" onChange={handleChange} name="yearOfBirth" className="form-control" placeholder="year of birth" aria-label="Username" aria-describedby="basic-addon1" />
                             </div>
                         </div>
                         <div className="col-lg-4">
-                            <label htmlFor="basic-url" className="form-label">Gender</label>
-                            <div className="input-group mb-5">
-                                <span className="input-group-text" id="basic-addon1"><PhoneIcon /></span>
-                                <input type="text" onChange={handleChange} name="gender" className="form-control" placeholder="gender" aria-label="Username" aria-describedby="basic-addon1" />
-                            </div>
+                            <FormControl>
+                                <label htmlFor="basic-url" className="form-label">Gender</label>
+                                <RadioGroup
+                                    aria-labelledby="demo-radio-buttons-group-label"
+                                    defaultValue="male"
+                                    name="gender"
+                                    onChange={handleChange}
+                                >
+                                    <FormControlLabel value="FEMALE" control={<Radio />} label="Female" />
+                                    <FormControlLabel value="MALE" control={<Radio />} label="Male" />
+                                </RadioGroup>
+                            </FormControl>
                         </div>
                     </div>
                     <div className="row padding">
@@ -67,28 +89,39 @@ const AddCustomer = () => {
                             <label htmlFor="basic-url" className="form-label">Phone</label>
                             <div className="input-group mb-5">
                                 <span className="input-group-text" id="basic-addon1"><PhoneIcon /></span>
-                                <input type="text" onChange={handleChange} name="locationDetails" className="form-control" placeholder="phone number" aria-label="Username" aria-describedby="basic-addon1" />
+                                <input type="text" onChange={handleChange} name="phone" className="form-control" placeholder="phone number" aria-label="Username" aria-describedby="basic-addon1" />
                             </div>
                         </div>
+
+                    </div>
+                    <div className="row padding">
                         <div className="col-lg-4">
                             <label htmlFor="basic-url" className="form-label ">Description</label>
                             <div className="input-group mb-3">
                                 <textarea className="form-control" onChange={handleDescriptionChange} name='description' aria-label="With textarea"></textarea>
                             </div>
                         </div>
-                    </div>
-                    <div className="text-center row padding">
-
                         <div className="col-lg-4">
-                            <div className="mb-3">
-                                <label htmlFor="formFile" className="form-label">Click below to upload business image</label>
-                                <input className="form-control file mt-5" name='image' type="file" id="formFile" />
+                            <div className="mb-3 image-upload">
+
+
+                                <label htmlFor="formFile" className="form-label">
+                                    Click to set business image
+                                    <img src={image} alt="" className='business-form-image' />
+                                </label>
+                                <input className="form-control file " name='image' type="file" id="formFile" />
+
+
                             </div>
                         </div>
 
                     </div>
                     <div className="text-center mt-3">
-                        <button className="btn btn-success btn-md">Add Customer</button>
+                        {
+                            isLoading ? <button className="btn btn-success btn-md" disabled>Adding</button> :
+                                <button className="btn btn-success btn-md">Add Customer</button>
+                        }
+
                     </div>
 
                 </form>

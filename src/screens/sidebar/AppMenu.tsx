@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 
 import List from '@material-ui/core/List'
@@ -14,8 +14,8 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import BadgeIcon from '@mui/icons-material/Badge';
 import AppMenuItem from './AppMenuItem'
-import MenuIcon from '@mui/icons-material/Menu';
-
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { DataContext } from '../../context/ContextProvider'
 const appMenuItems = [
 
   {
@@ -40,7 +40,7 @@ const appMenuItems = [
       },
       {
         name: 'Revenue Insights',
-        link: '/',
+        link: '/insights/revenue',
       },
     ],
   },
@@ -50,7 +50,7 @@ const appMenuItems = [
     items: [
       {
         name: 'My Businesses',
-        link: '/businesses/list',
+        link: '/',
       },
       {
         name: 'New Business',
@@ -69,7 +69,7 @@ const otherItems = [
     items: [
       {
         name: 'Sales',
-        link: '/',
+        link: '/sales/list',
       },
       {
         name: 'Add Sale',
@@ -81,6 +81,49 @@ const otherItems = [
 
   },
   {
+    name: 'Supplies',
+    Icon: InventoryIcon,
+    items: [
+      {
+        name: 'Supplies',
+        link: '/supplies/list',
+      },
+      {
+        name: 'Add Supply',
+        link: "/supplies/add",
+      },
+
+    ],
+
+
+  },
+  {
+    name: 'Finance',
+    Icon: AttachMoneyIcon,
+    items: [
+      {
+        name: 'Add Expense',
+        link: "/expense/add",
+      },
+      {
+        name: 'Expenses',
+        link: "/expense/list",
+      },
+      {
+        name: 'Other Income',
+        link: '/income/list',
+      },
+      {
+        name: 'Add Extra Income',
+        link: "/income/add",
+      },
+
+    ],
+
+
+  },
+
+  {
     name: 'Suppliers',
     Icon: InventoryIcon,
     items: [
@@ -89,7 +132,7 @@ const otherItems = [
         link: '/suppliers/list',
       },
       {
-        name: 'new Supplier',
+        name: 'New Supplier',
         link: '/supplier/new',
       },
 
@@ -124,11 +167,11 @@ const otherItems = [
     Icon: BusinessIcon,
     items: [
       {
-        name: 'customers',
+        name: 'Customers',
         link: '/customers/list',
       },
       {
-        name: 'new customer',
+        name: 'New Customer',
         link: "/customers/new",
       },
 
@@ -162,26 +205,9 @@ const otherItems = [
 ]
 
 const AppMenu: React.FC = () => {
-  const navigate = useNavigate()
   const classes = useStyles()
-  const [drawerNewWidth, setDrawerWidth] = useState(drawerWidth)
-  const [businessId, setBusinessId] = useState(JSON.parse(localStorage.getItem("businessId")!))
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")!))
 
-
-
-  useEffect(() => {
-    setBusinessId(JSON.parse(localStorage.getItem("businessId")!));
-    setUser(JSON.parse(localStorage.getItem("user")!));
-
-  }, [location]);
-
-  const logout = () => {
-    localStorage.clear()
-    navigate("/auth/login")
-  }
-
-
+  const { business } = useContext(DataContext)
   return (
     <List component="nav" className={classes.appMenu} disablePadding>
       {/* <AppMenuItem {...appMenuItems[0]} /> */}
@@ -198,7 +224,7 @@ const AppMenu: React.FC = () => {
         ))
       }
       {
-        businessId && (
+        business && (
           <>
             <>
               <hr />
@@ -215,13 +241,6 @@ const AppMenu: React.FC = () => {
           </>
         )
       }
-      {
-        user && (
-          <h4>{user.json.user.name}</h4>
-
-        )
-      }
-      <button className="btn btn-danger btn-md" onClick={logout}>Logout</button>
 
     </List >
   )

@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
-import BusinessIcon from '@mui/icons-material/Business';
-import EmailIcon from '@mui/icons-material/Email';
-import PhoneIcon from '@mui/icons-material/Phone';
+import CategoryIcon from '@mui/icons-material/Category';
 import { Card } from '@mui/material';
+import "../Businesses/AddBusiness.css"
+import image from "../../Assets/placeholder.jpg"
+import { addCategory } from '../../Data/Categories/Data';
+import { useNavigate } from 'react-router-dom';
+
+
 const NewCategory = () => {
-    const initialState = { name: "", age: "", gender: "", phone: "", email: "", description: "" }
+    const initialState = { name: "", description: "" }
 
-
+    const navigate = useNavigate()
     const [formData, setFormData] = useState(initialState)
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -21,6 +26,7 @@ const NewCategory = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        addCategory(formData, navigate, setIsLoading)
 
     }
 
@@ -34,19 +40,30 @@ const NewCategory = () => {
                 <form onSubmit={onSubmit}>
                     <label htmlFor="basic-url" className="form-label ">Name</label>
                     <div className="input-group mb-5">
-                        <span className="input-group-text" id="basic-addon1"><BusinessIcon /></span>
+                        <span className="input-group-text" id="basic-addon1"><CategoryIcon /></span>
                         <input type="text" onChange={handleChange} name="name" className="form-control" placeholder="name" aria-label="Username" aria-describedby="basic-addon1" />
                     </div>
                     <label htmlFor="basic-url" className="form-label ">Description</label>
                     <div className="input-group mb-3">
                         <textarea className="form-control" onChange={handleDescriptionChange} name='description' aria-label="With textarea"></textarea>
                     </div>
-                    <div className="mb-3 mt-3">
-                        <label htmlFor="formFile" className="form-label">Click below to upload business image</label>
-                        <input className="form-control file mt-2" name='image' type="file" id="formFile" />
+                    <div className="mb-3 image-upload">
+
+
+                        <label htmlFor="formFile" className="form-label">
+                            Click to set category image
+                            <img src={image} alt="" className='business-form-image' />
+                        </label>
+                        <input className="form-control file " name='image' type="file" id="formFile" />
+
+
                     </div>
                     <div className="text-center mt-3">
-                        <button className="btn btn-success btn-md">Add Category</button>
+                        {
+                            isLoading ? <button className="btn btn-success btn-md" disabled>Adding</button> :
+                                <button className="btn btn-success btn-md">Add Category</button>
+                        }
+
                     </div>
 
                 </form>

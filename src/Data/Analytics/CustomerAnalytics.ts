@@ -1,43 +1,118 @@
 import { reqInstance } from "../Auth/authHelper";
-import {newUrl} from "../Employees/Data"
+import {businessId} from "../Employees/Data"
+import { now,d, prevDate, firstDay } from "./SalesAnalytics";
+import { url } from "../Auth/Data";
 
-const url = `${newUrl}/customer-analytics`
-const getTotalCustomers= (setData:any) => {
-  reqInstance.get(`${url}/total-customers`)
-  .then ((data) => setData(data.data.rows))
+const newUrl = `${url}/businesses`
+
+const getTotalCustomers= (setData:any,setIsLoading:any,id:any) => {
+    setIsLoading(true)
+  reqInstance.get(`${newUrl}/${id}/customer-analytics/total-customers`)
+  .then ((data) => setData(data.data))
+  .then(() => setIsLoading(false))
 }
 
-const getTotalDateSales= (setData:any) => {
-    reqInstance.get(`${url}/total-date-part-sales`)
+
+const getTotalDateSales= (setData:any,id:any) => {
+    reqInstance.get(`${newUrl}/${id}/customer-analytics/total-date-part-sales`)
     .then ((data) => setData(data.data.rows))
   }
 
-const getNewCustomers= (setData:any) => {
-    reqInstance.get(`${url}/new-customers`)
-    .then ((data) => setData(data.data.rows))
+const getNewCustomers= (setData:any,setIsLoading:any,id:any) => {
+    setIsLoading(true)
+    const data = {
+        from:d.toISOString(),
+    to:now.toISOString(),
+    }
+    reqInstance.get(`${newUrl}/${id}/customer-analytics/new-customers`,{params:data})
+    .then ((data) => setData(data.data))
+    .then(() => setIsLoading(false))
+}
+const getCurrentMonthNewCustomers= (setData:any,setIsLoading:any,id:any) => {
+    setIsLoading(true)
+    const data = {
+        from:firstDay.toISOString(),
+    to:now.toISOString(),
+    }
+    reqInstance.get(`${newUrl}/${id}/customer-analytics/new-customers`,{params:data})
+    .then ((data) => setData(data.data))
+    .then(() => setIsLoading(false))
+}
+const getDailyNewCustomers= (setData:any,setIsLoading:any,id:any) => {
+    setIsLoading(true)
+    const data = {
+        from:prevDate.toISOString(),
+    to:now.toISOString(),
+    }
+    reqInstance.get(`${newUrl}/${id}/customer-analytics/new-customers`,{params:data})
+    .then ((data) => setData(data.data))
+    .then(() => setIsLoading(false))
 }
 
-const getGenderStats= (setData:any) => {
-    reqInstance.get(`${url}/gender-stats`)
-    .then ((data) => setData(data.data.rows))
+const getGenderStats= (setData:any,setIsLoading:any,id:any) => {
+    setIsLoading(true)
+    const data = {
+        from:d.toISOString(),
+    to:now.toISOString(),
+    }
+    reqInstance.get(`${newUrl}/${id}/customer-analytics/gender-stats`,{params:data})
+    .then ((data) => setData(data.data))
+    .then(() => setIsLoading(false))
     }
 
-const getAgeStats= (setData:any) => {
-    reqInstance.get(`${url}/age-stats`)
-    .then ((data) => setData(data.data.rows))
+const getAgeStats= (setData:any,setIsLoading:any,id:any) => {
+    setIsLoading(true)
+    const data = {
+        from:d.toISOString(),
+    to:now.toISOString(),
     }
-const getRepeatCustomerRate= (setData:any) => {
-    reqInstance.get(`${url}/repeat-customer-rate`)
-    .then ((data) => setData(data.data.rows))
+    reqInstance.get(`${newUrl}/${id}/customer-analytics/age-stats`,{params:data})
+    .then ((data) => setData(data.data))
+    .then(() => setIsLoading(false))
     }
-const getChurnCustomerRate= (setData:any) => {
-    reqInstance.get(`${url}/churn-customer-rate`)
-    .then ((data) => setData(data.data.rows))
+const getRepeatCustomerRate= (setData:any,setIsLoading:any,id:any) => {
+    setIsLoading(true)
+    const data = {
+        from:d.toISOString(),
+    to:now.toISOString(),
     }
-const getMostActiveCustomers= (setData:any) => {
-    reqInstance.get(`${url}/most-active-customers`)
-    .then ((data) => setData(data.data.rows))
+    reqInstance.get(`${newUrl}/${id}/customer-analytics/repeat-customer-rate`,{params:data})
+    .then ((data) => setData(data.data.rate))
+    .then(() => setIsLoading(false))
     }
+const getChurnCustomerRate= (setData:any,setIsLoading:any,id:any) => {
+    setIsLoading(true)
+    const data = {
+        from:d.toISOString(),
+    to:now.toISOString(),
+    }
+    reqInstance.get(`${newUrl}/${id}/customer-analytics/churn-customer-rate`,{params:data})
+    .then ((data) => setData(data.data.rate))
+    .then(() => setIsLoading(false))
+    }
+const getMostActiveCustomers= (setData:any,setIsLoading:any,id:any) => {
+    setIsLoading(true)
+    const data = {
+        from:d.toISOString(),
+    to:now.toISOString(),
+    limit:10
+    }
+    reqInstance.get(`${newUrl}/${id}/customer-analytics/most-active-customers`,{params:data})
+    .then ((data) => setData(data.data))
+    .then(() => setIsLoading(false))
+    }
+    const getMostActiveInCurrentCustomers= (setData:any,setIsLoading:any,id:any) => {
+        setIsLoading(true)
+        const data = {
+            from:firstDay.toISOString(),
+        to:now.toISOString(),
+        limit:10
+        }
+        reqInstance.get(`${newUrl}/${id}/customer-analytics/most-active-customers`,{params:data})
+        .then ((data) => setData(data.data))
+        .then(() => setIsLoading(false))
+        }
+ 
 
 export {
     getTotalCustomers,
@@ -47,5 +122,8 @@ export {
     getAgeStats,
     getRepeatCustomerRate,
     getChurnCustomerRate,
-    getMostActiveCustomers
+    getMostActiveCustomers,
+    getDailyNewCustomers,
+    getCurrentMonthNewCustomers,
+    getMostActiveInCurrentCustomers
 }

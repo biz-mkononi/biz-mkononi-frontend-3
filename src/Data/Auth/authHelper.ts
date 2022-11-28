@@ -1,7 +1,6 @@
-const user = JSON.parse(localStorage.getItem('user'));
+const user = JSON.parse(localStorage.getItem('user')!);
 
 import axios,{AxiosInstance} from "axios"
-import { useDebugValue } from "react";
 
 const auth = {
 
@@ -9,13 +8,12 @@ const auth = {
 isAuthenticated() {
 
   if (user)
-    return user;
+    return true;
   else return false;
 },
 authHeader() {
 
   if (user && user.json.jwt) {
-    // for Node.js Express back-end
     return { Authorization: 'Bearer ' + user.json.jwt };
   } else {
     return {};
@@ -32,12 +30,13 @@ const instance =  () => {
 const reqInstance:AxiosInstance = axios.create({
 
     headers: {
-      Authorization: `Bearer ${instance()}`
+      Authorization: `Bearer ${instance()}`,
+      "Content-Type": "multipart/form-data",
    
   }
   
 }
 )
 
-export { auth,reqInstance };
+export { auth,reqInstance,user };
 

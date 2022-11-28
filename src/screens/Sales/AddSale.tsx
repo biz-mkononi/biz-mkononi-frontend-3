@@ -1,109 +1,154 @@
-import React, { useState } from 'react';
-import BusinessIcon from '@mui/icons-material/Business';
-import EmailIcon from '@mui/icons-material/Email';
-import PhoneIcon from '@mui/icons-material/Phone';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import React, { useState, useEffect } from 'react';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
+import PersonIcon from '@mui/icons-material/Person';
+import ScaleIcon from '@mui/icons-material/Scale';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Card } from '@mui/material';
+import { getCustomers } from '../../Data/Customers/Data';
+import { getProducts } from '../../Data/Products/Data';
+import "../Businesses/AddBusiness.css"
+import { addSale } from '../../Data/Sales/Data';
+import { useNavigate } from 'react-router-dom';
+import { businessId } from '../../Data/Employees/Data';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+
 const AddSale = () => {
-    const initialState = { name: "", businessEmail: "", businessPhone: "", location: "", locationDetails: "", productType: "", description: "", longitude: 12, latitude: 13 }
+    const navigate = useNavigate()
+    const [customers, setCustomers] = useState<any[]>([])
+    const [products, setProducts] = useState<any[]>([])
+    const [isLoading, setIsLoading] = useState(false)
+    const [price, setPrice] = useState("0")
+    const [amountCharged, setAmountCharged] = useState("0")
+    const [amountPaid, setAmountPaid] = useState("0")
+    const [totalAmount, setTotalAmount] = useState("0")
+    const [customerId, setCustomer] = useState("")
 
+    useEffect(() => {
+        getCustomers(setCustomers, setIsLoading)
+        getProducts(setProducts, setIsLoading)
+    }, [price])
 
-    const [formData, setFormData] = useState(initialState)
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value })
+    const handleCustomerChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setCustomer(e.target.value)
     }
-    const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value })
-    }
-    const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value })
+    const handlePriceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setPrice(e.target.value)
     }
 
+    const handleAmountChargedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setAmountCharged(parseInt(e.target.value).toString())
+    }
+    const handleAmountPaidChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setAmountPaid(parseInt(e.target.value).toString())
+    }
 
+    const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setAmountCharged((parseInt(e.target.value) * parseFloat(price)).toString())
+        setAmountPaid((parseInt(e.target.value) * parseFloat(price)).toString())
+        setTotalAmount((parseInt(e.target.value) * parseFloat(price)).toString())
+    }
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-    }
+        const data = {
+            customerId,
+            totalAmount,
+            amountCharged,
+            amountPaid,
+            businessId: businessId.id
+        }
+        console.log(data)
+        addSale(data, navigate)
 
+    }
+    const balance = parseInt(amountPaid) - parseInt(amountCharged)
     return (
         <div className='add-business container p-4 '>
-            <h2 className='mb-3'>Add Businesses</h2>
+            <h2 className='mb-3'>Add a Sale</h2>
 
             <hr className="light mb-3" />
-            <p className="mb-4">Add a new business to start managing it now</p>
+            <p className="mb-4">Add a new Sale</p>
             <Card className='p-3'>
                 <form onSubmit={onSubmit}>
                     <div className="row padding mt-3">
-                        <div className="col-lg-4">
-                            <label htmlFor="basic-url" className="form-label ">Business Name</label>
+                        <div className="col-lg-6">
+                            <label htmlFor="basic-url" className="form-label">Customer</label>
                             <div className="input-group mb-5">
-                                <span className="input-group-text" id="basic-addon1"><BusinessIcon /></span>
-                                <input type="text" onChange={handleChange} name="name" className="form-control" placeholder="name" aria-label="Username" aria-describedby="basic-addon1" />
-                            </div>
-                        </div>
-                        <div className="col-lg-4">
-                            <label htmlFor="basic-url" className="form-label">Business Email</label>
-                            <div className="input-group mb-5">
-                                <span className="input-group-text" id="basic-addon1"><EmailIcon /></span>
-                                <input type="text" onChange={handleChange} name="businessEmail" className="form-control" placeholder="email" aria-label="Username" aria-describedby="basic-addon1" />
-                            </div>
-                        </div>
-                        <div className="col-lg-4">
-                            <label htmlFor="basic-url" className="form-label">Business Phone</label>
-                            <div className="input-group mb-5">
-                                <span className="input-group-text" id="basic-addon1"><PhoneIcon /></span>
-                                <input type="text" onChange={handleChange} name="businessPhone" className="form-control" placeholder="phone" aria-label="Username" aria-describedby="basic-addon1" />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row padding">
-                        <div className="col-lg-4">
-                            <label htmlFor="basic-url" className="form-label ">Location</label>
-                            <div className="input-group mb-5">
-                                <span className="input-group-text" id="basic-addon1"><LocationOnIcon /></span>
-                                <input type="text" onChange={handleChange} name="location" className="form-control" placeholder="location" aria-label="Username" aria-describedby="basic-addon1" />
-                            </div>
-                        </div>
-                        <div className="col-lg-4">
-                            <label htmlFor="basic-url" className="form-label">Location Details</label>
-                            <div className="input-group mb-5">
-                                <span className="input-group-text" id="basic-addon1"><LocationOnIcon /></span>
-                                <input type="text" onChange={handleChange} name="locationDetails" className="form-control" placeholder="details" aria-label="Username" aria-describedby="basic-addon1" />
-                            </div>
-                        </div>
-                        <div className="col-lg-4">
-                            <label htmlFor="basic-url" className="form-label">Product Type</label>
-                            <div className="input-group mb-5">
-                                <span className="input-group-text" id="basic-addon1"><ProductionQuantityLimitsIcon /></span>
-                                <select className="form-select" onChange={handleTypeChange} name="productType" aria-label="Default select example" id="basic-addon1">
-                                    <option selected>select a product type</option>
-                                    <option value="PRODUCT">Product</option>
-                                    <option value="SERVICE">Service</option>
-                                    <option value="SERVICE_PRODUCT">Service_product</option>
+                                <span className="input-group-text" id="basic-addon1"><PersonIcon /></span>
+                                <select className="form-select" onChange={handleCustomerChange} name="category" aria-label="Default select example" id="basic-addon1">
+                                    <option selected>Select customer</option>
+                                    {customers.map((customer) => {
+                                        return (
+                                            <option value={customer.id} key={customer.id}>
+                                                {customer.name}
+                                            </option>
+                                        );
+                                    })}
                                 </select>
                             </div>
                         </div>
-                    </div>
-                    <div className="row padding">
-                        <div className="col-lg-4">
-                            <label htmlFor="basic-url" className="form-label ">Description</label>
-                            <div className="input-group mb-3">
-                                <textarea className="form-control" onChange={handleDescriptionChange} name='description' aria-label="With textarea"></textarea>
+                        <div className="col-lg-6">
+                            <label htmlFor="basic-url" className="form-label">Product</label>
+                            <div className="input-group mb-5">
+                                <span className="input-group-text" id="basic-addon1"><ProductionQuantityLimitsIcon /></span>
+                                <select className="form-select" onChange={handlePriceChange} name="category" aria-label="Default select example" id="basic-addon1">
+                                    <option selected>Select product</option>
+                                    {products.map((product) => {
+
+                                        return (
+                                            <option value={product.sellingPrice} key={product.id}>
+                                                {product.name}
+                                            </option>
+
+                                        );
+
+                                    })}
+                                </select>
                             </div>
                         </div>
-                        <div className="col-lg-4">
-                            <div className="mb-3">
-                                <label htmlFor="formFile" className="form-label">Click below to upload business image</label>
-                                <input className="form-control file mt-5" name='image' type="file" id="formFile" />
+
+                    </div>
+                    <div className="row padding">
+                        <div className="col-lg-6">
+                            <label htmlFor="basic-url" className="form-label ">Quantity</label>
+                            <div className="input-group mb-5">
+                                <span className="input-group-text" id="basic-addon1"><ScaleIcon /></span>
+                                <input type="text" onChange={handleQuantityChange} name="location" className="form-control" placeholder="quantity" aria-label="Username" aria-describedby="basic-addon1" />
                             </div>
+                        </div>
+                        <div className="col-lg-6">
+                            <label htmlFor="basic-url" className="form-label">Item Price</label>
+                            <div className="input-group mb-5">
+                                <span className="input-group-text" id="basic-addon1"><AttachMoneyIcon /></span>
+                                <input type="text" value={price} name="locationDetails" className="form-control" placeholder="details" aria-label="Username" aria-describedby="basic-addon1" />
+                            </div>
+                        </div>
+
+                        <h2 className='mb-4'>Grand Total : Ksh: {totalAmount}</h2>
+
+                    </div>
+                    <div className="row padding">
+                        <div className="col-lg-6">
+
+                        </div>
+                        <div className="col-lg-6">
+                            <label htmlFor="basic-url" className="form-label ">Amount Charged</label>
+                            <div className="input-group mb-5">
+                                <span className="input-group-text" id="basic-addon1"><AttachMoneyIcon /></span>
+                                <input type="text" value={amountCharged} onChange={handleAmountChargedChange} name="location" className="form-control" placeholder="location" aria-label="Username" aria-describedby="basic-addon1" />
+                            </div>
+                            <label htmlFor="basic-url" className="form-label">Amount Paid</label>
+                            <div className="input-group mb-5">
+                                <span className="input-group-text" id="basic-addon1"><AttachMoneyIcon /></span>
+                                <input type="text" value={amountPaid} onChange={handleAmountPaidChange} name="locationDetails" className="form-control" placeholder="details" aria-label="Username" aria-describedby="basic-addon1" />
+                            </div>
+                            <h2 className='mb-4'>Balance : Ksh: {balance}</h2>
                         </div>
 
                     </div>
                     <div className="text-center mt-3">
-                        <button className="btn btn-success btn-md">Add Business</button>
+                        <button className="btn btn-success btn-md">Add Sale</button>
                     </div>
 
                 </form>

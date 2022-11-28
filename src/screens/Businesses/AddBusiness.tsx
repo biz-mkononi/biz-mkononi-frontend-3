@@ -3,19 +3,31 @@ import BusinessIcon from '@mui/icons-material/Business';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import NotificationAddIcon from '@mui/icons-material/NotificationAdd';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import { Card } from '@mui/material';
 import "./AddBusiness.css"
 import BusinessList from './BusinessList';
 import { addBusiness } from '../../Data/Businesses/Data';
-import { addBusinessItems } from '../../components/AddBusinessData/AddBusinessData';
-import FormField from '../../components/FormFields/FormField';
-const AddBusiness = () => {
-    const initialState = { name: "", businessEmail: "", businessPhone: "", location: "", locationDetails: "", productType: "", description: "", longitude: 12, latitude: 13 }
+import image from "../../Assets/placeholder.jpg"
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+import { useNavigate } from 'react-router-dom';
+import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 
-    const [isActive, setIsActive] = useState(true)
-    const [isActive2, setIsActive2] = useState(false)
+
+
+
+const AddBusiness = () => {
+    const data = { label: "" }
+
+    const [location, selectLocation] = useState(data);
+    const initialState = { name: "", businessEmail: "", businessPhone: "", location: location.label, locationDetails: "", productType: "", description: "", longitude: "12", latitude: "13" }
+    const navigate = useNavigate()
+    const [isActive, setIsActive] = useState(false)
+    const [isActive2, setIsActive2] = useState(true)
     const [formData, setFormData] = useState(initialState)
+    const [isLoading, setIsLoading] = useState(false)
+    const [file, setFile] = useState<any>()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -26,6 +38,9 @@ const AddBusiness = () => {
     const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        // setFile(e.target.files)
+    }
 
     const onClickActive = () => {
         setIsActive(true)
@@ -35,12 +50,28 @@ const AddBusiness = () => {
         setIsActive(false)
         setIsActive2(true)
     }
-
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        const newData = new FormData()
+
+
+        newData.set("name", formData.name)
+        newData.set("businessEmail", formData.businessEmail)
+        newData.set("businessPhone", formData.businessPhone)
+        newData.set("location", location.label)
+        newData.set("locationDetails", formData.locationDetails)
+        newData.set("productType", formData.productType)
+        newData.set("description", formData.description)
+        newData.set("longitude", formData.longitude)
+        newData.set("latitude", formData.latitude)
+        newData.append("image", file)
+
         e.preventDefault()
-        addBusiness(formData)
+        addBusiness(newData, navigate, setIsLoading)
+        console.log(newData)
+
 
     }
+    console.log(file)
 
     return (
         <div className='add-business container p-4 '>
@@ -53,33 +84,26 @@ const AddBusiness = () => {
 
                     </div>
                 </div>
-                <div className="col-lg-6  ">
-                </div>
+
             </div>
 
+
             <hr className="light mb-3" />
-            <>
-                {
-                    addBusinessItems.map((data) => {
-                        data.items.map((item) => (
-                            <FormField labelName={item.labelName} icon={item.icon} onChange={handleChange} name={item.name} />
-                        ))
-                    })
-                }
-            </>
 
             {
                 isActive ?
                     <BusinessList /> :
                     <>
                         <p className="mb-4">Add a new business to start managing it now</p>
+
+
                         <Card className='p-3'>
                             <form onSubmit={onSubmit}>
                                 <div className="row padding mt-3">
                                     <div className="col-lg-4">
                                         <label htmlFor="basic-url" className="form-label ">Business Name</label>
                                         <div className="input-group mb-5">
-                                            <span className="input-group-text" id="basic-addon1"><BusinessIcon /></span>
+                                            <span className="input-group-text" id="basic-addon1"  ><BusinessIcon /></span>
                                             <input type="text" onChange={handleChange} name="name" className="form-control" placeholder="name" aria-label="Username" aria-describedby="basic-addon1" />
                                         </div>
                                     </div>
@@ -102,8 +126,16 @@ const AddBusiness = () => {
                                     <div className="col-lg-4">
                                         <label htmlFor="basic-url" className="form-label ">Location</label>
                                         <div className="input-group mb-5">
-                                            <span className="input-group-text" id="basic-addon1"><LocationOnIcon /></span>
-                                            <input type="text" onChange={handleChange} name="location" className="form-control" placeholder="location" aria-label="Username" aria-describedby="basic-addon1" />
+                                            <GooglePlacesAutocomplete
+
+                                                selectProps={{
+                                                    location,
+                                                    onChange: selectLocation,
+                                                    placeholder: "property location",
+                                                    className: "places"
+
+                                                }}
+                                            />
                                         </div>
                                     </div>
                                     <div className="col-lg-4">
@@ -134,15 +166,26 @@ const AddBusiness = () => {
                                         </div>
                                     </div>
                                     <div className="col-lg-4">
-                                        <div className="mb-3">
-                                            <label htmlFor="formFile" className="form-label">Click below to upload business image</label>
-                                            <input className="form-control file mt-5" name='image' type="file" id="formFile" />
+                                        <div className="mb-3 image-upload">
+
+
+                                            <label htmlFor="formFile" className="form-label">
+                                                Click to set business image
+                                                <img src={image} alt="" className='business-form-image' />
+                                            </label>
+                                            <input className="form-control file " name='image' type="file" id="formFile" onChange={handleFileChange} />
+
+
                                         </div>
                                     </div>
 
                                 </div>
                                 <div className="text-center mt-3">
-                                    <button className="btn btn-success btn-md">Add Business</button>
+                                    {
+                                        isLoading ? <button className="btn btn-success btn-md" disabled >Adding</button> :
+                                            <button className="btn btn-success btn-md">Add Business</button>
+                                    }
+
                                 </div>
 
                             </form>

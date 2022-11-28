@@ -1,20 +1,17 @@
+import { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { auth } from "../Data/Auth/authHelper";
+import { DataContext } from "../context/ContextProvider";
 
-interface Props {
-    children: JSX.Element
-}
 
-const PrivateRoute = ({ children }: Props) => {
-    const newAuth = auth.isAuthenticated();
-    return newAuth ? (
-        <>
-            {children}
-            <Outlet />
-        </>
-    ) : (
-        <Navigate to="/auth/login" replace />
-    )
+const PrivateRoute: React.FC = () => {
+    const { loggedUser } = useContext(DataContext)
+
+    if (!loggedUser) {
+        return <Navigate to="/auth/login" replace />
+    }
+    return <Outlet />;
+
+
 };
 
 export default PrivateRoute;
