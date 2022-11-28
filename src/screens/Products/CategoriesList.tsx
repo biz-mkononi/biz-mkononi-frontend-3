@@ -50,8 +50,11 @@ const CategoriesList = () => {
                                             <td>{category.description}</td>
                                             <td>{new Date(category.createdAt).toLocaleDateString(undefined, options)}</td>
                                             <td>
-                                                <button className="btn btn-warning btn-sm ml-2" onClick={(() => { onClick(category.id) })}>View</button>
-                                                <button className="btn btn-success btn-sm ml-2" onClick={(() => navigate(`/categories/${category.id}/update-details`))}>Edit</button>
+                                                <div style={{ display: "flex" }}>
+                                                    <button className="btn btn-warning btn-sm ml-2" onClick={(() => { onClick(category.id) })}>View</button>
+                                                    <button className="btn btn-success btn-sm ml-2" onClick={(() => navigate(`/categories/${category.id}/update-details`))}>Edit</button>
+                                                </div>
+
                                             </td>
 
 

@@ -54,8 +54,11 @@ const SuppliesList = () => {
                                             <td>{supply.amountPaid}</td>
                                             <td>{supply.amountCharged - supply.amountPaid}</td>
                                             <td>
-                                                <button className="btn btn-warning btn-sm ml-2" onClick={(() => { onClick(supply.id) })}>View</button>
-                                                <button className="btn btn-success btn-sm ml-2" onClick={(() => navigate(`/supplies/${supply.id}/update-details`))}>Edit</button>
+                                                <div style={{ display: "flex" }}>
+                                                    <button className="btn btn-warning btn-sm ml-2" onClick={(() => { onClick(supply.id) })}>View</button>
+                                                    <button className="btn btn-success btn-sm ml-2" onClick={(() => navigate(`/supplies/${supply.id}/update-details`))}>Edit</button>
+                                                </div>
+
                                             </td>
 
                                         </tr>

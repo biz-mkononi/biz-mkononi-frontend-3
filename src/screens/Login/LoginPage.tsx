@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import "./Login.css"
 import { TextField, FormControlLabel, Checkbox, InputAdornment, IconButton } from "@mui/material"
 import { login, } from "../../Data/Auth/Data"
@@ -6,6 +6,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { useNavigate } from "react-router-dom"
 import GetForgotPasswordCode from './GetForgotPasswordCode';
+import { DataContext } from '../../context/ContextProvider';
 
 interface functions {
     switchmode: any,
@@ -17,7 +18,7 @@ const LoginPage = ({ switchmode }: functions) => {
     const [isSigningIn, setIsSigningIn] = useState(false)
     const [isGetForgotPasswordCode, setIsGetForgotPasswordCode] = useState(false)
 
-
+    const { setLoggedUser } = useContext(DataContext)
     const [formData, setFormData] = useState(initialState)
     const [dataErrors, setDataErrors] = useState<any>([])
 
@@ -30,7 +31,7 @@ const LoginPage = ({ switchmode }: functions) => {
         setIsSigningIn(true)
         e.preventDefault()
         console.log(formData)
-        login(setDataErrors, formData, navigate, setIsSigningIn)
+        login(setDataErrors, formData, navigate, setIsSigningIn, setLoggedUser)
 
     }
 

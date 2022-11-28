@@ -94,10 +94,10 @@ const UpdateCustomerDetails = () => {
                                         </div>
                                     </div>
                                     <div className="col-lg-4">
-                                        <label htmlFor="basic-url" className="form-label">Estimate Age</label>
+                                        <label htmlFor="basic-url" className="form-label">Year Of Birth</label>
                                         <div className="input-group mb-5">
                                             <span className="input-group-text" id="basic-addon1"><PersonIcon /></span>
-                                            <input type="text" onChange={handleChange} defaultValue={data.yearOfBirth} name="yearOfBirth" className="form-control" placeholder="age" aria-label="Username" aria-describedby="basic-addon1" />
+                                            <input type="text" onChange={handleChange} defaultValue={data.yearOfBirth} name="yearOfBirth" className="form-control" placeholder="year of birth" aria-label="Username" aria-describedby="basic-addon1" />
                                         </div>
                                     </div>
                                     <div className="col-lg-4">
@@ -109,8 +109,8 @@ const UpdateCustomerDetails = () => {
                                                 name="gender"
                                                 onChange={handleChange}
                                             >
-                                                <FormControlLabel value="female" control={<Radio />} label="Female" />
-                                                <FormControlLabel value="male" control={<Radio />} label="Male" />
+                                                <FormControlLabel value="FEMALE" control={<Radio />} label="Female" />
+                                                <FormControlLabel value="MALE" control={<Radio />} label="Male" />
                                             </RadioGroup>
                                         </FormControl>
                                     </div>

@@ -1,12 +1,16 @@
 import React, { useState } from "react";
+import { useLocalStorage, useReadLocalStorage } from 'usehooks-ts'
 
-const DataContext = React.createContext({ isTrue: true, setIsTrue: (_value: any) => { } });
+const DataContext = React.createContext({ open: true, businessId: null, setBusinessId: (_value: any) => { }, loggedUser: false, setLoggedUser: (_value: any) => { }, business: false, setBusiness: (_value: any) => { }, user: {}, setOpen: (_value: any) => { } });
 const DataProvider = ({ children }: any) => {
-  const [isTrue, setIsTrue] = useState(true);
-
+  const [open, setOpen] = useState(false);
+  const [business, setBusiness] = useLocalStorage("business", false);
+  const user = useReadLocalStorage<any>("user")
+  const [businessId, setBusinessId] = useLocalStorage("businessID", null)
+  const [loggedUser, setLoggedUser] = useLocalStorage("loggedUser", false);
 
   return (
-    <DataContext.Provider value={{ isTrue, setIsTrue }}>
+    <DataContext.Provider value={{ open, setOpen, user, businessId, loggedUser, setLoggedUser, business, setBusiness, setBusinessId }}>
       {children}
     </DataContext.Provider>
   );

@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import Login from "./screens/Login/Login"
 import React from "react"
 import 'animate.css';
-const App = () => {
+const App: React.FC = () => {
 
   return (
     <React.Fragment>

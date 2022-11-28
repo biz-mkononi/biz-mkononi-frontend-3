@@ -39,7 +39,8 @@ const CustomerDetails = () => {
     const handleClose = () => {
         setOpen(false)
     }
-    console.log(data)
+    const d = new Date();
+    let year = d.getFullYear();
     return (
         <>
             {
@@ -96,11 +97,11 @@ const CustomerDetails = () => {
                                             </tr>
                                             <tr>
                                                 <th>Gender</th>
-                                                <td>{data.gender}</td>
+                                                <td>{data.gender.toLowerCase()}</td>
                                             </tr>
                                             <tr>
-                                                <th>Gender</th>
-                                                <td>{data.yearOfBirth}</td>
+                                                <th>Age</th>
+                                                <td>{year - data.yearOfBirth}</td>
                                             </tr>
                                             <tr>
                                                 <th>Description</th>

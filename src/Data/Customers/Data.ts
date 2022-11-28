@@ -13,6 +13,13 @@ const getCustomers = (setData:any,setIsLoading:any) => {
   .then (() => setIsLoading(false))
 }
 
+const sendCustomersSms = (post:any,setIsLoading:any,navigate:any) => {
+  setIsLoading(true)
+  reqInstance.post(`${newUrl}/customers/sms`, JSON.stringify(post))
+  .then (() => (navigate('/customers/list')))
+  .then (() => setIsLoading(false))
+}
+
 const getSingleCustomer  = async (setData:any,id:any,setIsLoading:any,setFormData:any) => {
   setIsLoading(true)
   await reqInstance.get(`${newUrl}/customers/${id}`)
@@ -41,5 +48,6 @@ export {
     getCustomers,
     getSingleCustomer,
     deleteCustomer,
-    updateSingleCustomer
+    updateSingleCustomer,
+    sendCustomersSms
 }

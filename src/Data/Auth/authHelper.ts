@@ -14,7 +14,6 @@ isAuthenticated() {
 authHeader() {
 
   if (user && user.json.jwt) {
-    // for Node.js Express back-end
     return { Authorization: 'Bearer ' + user.json.jwt };
   } else {
     return {};

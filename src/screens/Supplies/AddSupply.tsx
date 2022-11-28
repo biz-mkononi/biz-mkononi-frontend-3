@@ -22,7 +22,7 @@ const AddSupply = () => {
     const [amountCharged, setAmountCharged] = useState("0")
     const [amountPaid, setAmountPaid] = useState("0")
     const [totalAmount, setTotalAmount] = useState("0")
-    const [SupplierId, setSupplierId] = useState("")
+    const [supplierId, setSupplierId] = useState("")
     const [quantity, setQuantity] = useState("")
 
     useEffect(() => {
@@ -60,11 +60,12 @@ const AddSupply = () => {
             supplyPrice: price,
             quantity: parseInt(quantity)
         }]
-        const formData = new FormData()
-        formData.set("supplierId", JSON.stringify(SupplierId))
-        formData.set("amountCharged", JSON.stringify(amountCharged))
-        formData.set("amountPaid", JSON.stringify(amountPaid))
-        formData.append("supplyItems", JSON.stringify(supplyItems))
+        const formData = {
+            supplyItems,
+            amountCharged,
+            amountPaid,
+            supplierId
+        }
 
         addSupply(formData, navigate, setIsLoading)
 

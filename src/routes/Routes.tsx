@@ -6,14 +6,46 @@ import Drawer from '@material-ui/core/Drawer'
 import Container from '@material-ui/core/Container'
 import AppMenu from "../screens/sidebar/AppMenu"
 import clsx from 'clsx'
-import { auth, user } from '../Data/Auth/authHelper'
 import PrivateRoute from './PrivateRoute'
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
+import { createTheme, ThemeProvider, useTheme, styled } from '@mui/material/styles';
 import { DataContext } from '../context/ContextProvider'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
 import "./sidebar.css"
 import AppBar from '../screens/AppBar/AppBar'
+import Box from '@mui/material/Box';
 
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
+    open?: boolean;
+}>(({ theme, open }) => ({
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: `-${drawerWidth}px`,
+    ...(open && {
+        transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+        marginLeft: 0,
+    }),
+}));
+
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
+}));
 
 const RoutesFile = () => {
     const ProductDetails = lazy(() => import('../screens/Products/ProductDetails'))
@@ -62,304 +94,224 @@ const RoutesFile = () => {
     const SuppliesList = lazy(() => import('../screens/Supplies/SuppliesList'))
     const SuppliesDetails = lazy(() => import('../screens/Supplies/SuppliesDetails'))
     const AddSupply = lazy(() => import('../screens/Supplies/AddSupply'))
-
+    const RevenueInsights = lazy(() => import('../screens/Insights/RevenueInsights'))
 
     const classes = useStyles()
     const theme = useTheme();
-    const matches = useMediaQuery(() => theme.breakpoints.up('sm'));
-    const { isTrue, setIsTrue } = useContext(DataContext)
-
+    const { open, setOpen, user, loggedUser } = useContext(DataContext)
+    const handleDrawerOpen = () => {
+        setOpen(true);
+    };
+    const handleDrawerClose = () => {
+        setOpen(false);
+    };
     return (
 
 
-        <>
+        <div className={clsx('App', classes.root)}>
+            {
+                loggedUser && (
+                    <>
+                        <CssBaseline />
+                        <Drawer
+                            classes={{
+                                paper: classes.drawerPaper,
+                            }}
+                            className={!open ? `not-shadow` : `shadow`}
+                            variant="persistent"
+                            anchor="left"
+                            open={open}
+                        >
+                            <DrawerHeader>
+                                <IconButton onClick={handleDrawerClose}>
+                                    {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                                </IconButton>
+                            </DrawerHeader>
+                            <AppMenu />
+                        </Drawer>
+
+                    </>
+                )
+            }
 
 
-
-            <div className={clsx('App', classes.root)}>
-                {
-                    user && (
-                        <>
-                            <CssBaseline />
-                            {
-                                isTrue || matches ?
-                                    <Drawer
-                                        className='shadow animate__backInLeft'
-                                        variant="permanent"
-                                        classes={{
-                                            paper: classes.drawerPaper,
-                                        }}
-                                    >
-
-                                        <AppMenu />
-                                    </Drawer>
-                                    :
-                                    ""
-                            }
-
-                        </>
-                    )
-                }
-
-
-                <Suspense fallback={
-                    <div className="flex justify-center items-center mt-3">
-                        <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0 text-blue-600" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                        </div>
+            <Suspense fallback={
+                <div className="flex justify-center items-center mt-3">
+                    <div className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0 text-blue-600" role="status">
+                        <span className="visually-hidden">Loading...</span>
                     </div>
-                }>
+                </div>
+            }>
 
-                    <main className={classes.content}>
-                        <Container maxWidth="lg" className={classes.container}>
-                            {/* <AppBarMenu /> */}
-                            <PrivateRoute>
-                                <AppBar />
-                            </PrivateRoute>
+                <Main open={open} >
+                    <DrawerHeader />
+                    <div className={classes.content}>
+                        {/* <AppBarMenu /> */}
+                        <AppBar />
 
-                            <Routes>
-
+                        <Routes>
+                            <Route element={<PrivateRoute />}>
                                 <Route path='/insights/overview' element={
-                                    <PrivateRoute>
-                                        <OverviewScreen />
-                                    </PrivateRoute>
+                                    <OverviewScreen />
                                 } />
                                 <Route path='/insights/sales' element={
-                                    <PrivateRoute>
-                                        <SalesInsightsScreen />
-                                    </PrivateRoute>
+                                    <SalesInsightsScreen />
                                 } />
                                 <Route path='/insights/customers' element={
-                                    <PrivateRoute>
-                                        <CustomersInsightsScreen />
-                                    </PrivateRoute>
+                                    <CustomersInsightsScreen />
                                 } />
                                 <Route path='/insights/churn-rate' element={
-                                    <PrivateRoute>
-                                        <ChurnRateInsightsScreen />
-                                    </PrivateRoute>
+                                    <ChurnRateInsightsScreen />
+                                } />
+                                <Route path='/insights/revenue' element={
+                                    <RevenueInsights />
                                 } />
                                 <Route path='/businesses/add' element={
-                                    <PrivateRoute>
-                                        <AddBusiness />
-                                    </PrivateRoute>
+                                    <AddBusiness />
                                 } />
                                 <Route path='/' element={
-                                    <PrivateRoute>
-                                        <BusinessList />
-                                    </PrivateRoute>
+                                    <BusinessList />
                                 } />
                                 <Route path='/business/:id/details' element={
-                                    <PrivateRoute>
-                                        <BusinessDetails />
-                                    </PrivateRoute>
+                                    <BusinessDetails />
                                 } />
                                 <Route path='/business/:id/update-details' element={
-                                    <PrivateRoute>
-                                        <UpdateBusinessDetails />
-                                    </PrivateRoute>
+                                    <UpdateBusinessDetails />
                                 } />
                                 <Route path='/sales/add' element={
-                                    <PrivateRoute>
-                                        <AddSale />
-                                    </PrivateRoute>
+                                    <AddSale />
                                 } />
                                 <Route path='/sales/list' element={
-                                    <PrivateRoute>
-                                        <SalesList />
-                                    </PrivateRoute>
+                                    <SalesList />
                                 } />
                                 <Route path='/sales/:id/details' element={
-                                    <PrivateRoute>
-                                        <SalesDetails />
-                                    </PrivateRoute>
+                                    <SalesDetails />
                                 } />
                                 <Route path='/supplies/add' element={
-                                    <PrivateRoute>
-                                        <AddSupply />
-                                    </PrivateRoute>
+                                    <AddSupply />
                                 } />
                                 <Route path='/supplies/list' element={
-                                    <PrivateRoute>
-                                        <SuppliesList />
-                                    </PrivateRoute>
+                                    <SuppliesList />
                                 } />
                                 <Route path='/supplies/:id/details' element={
-                                    <PrivateRoute>
-                                        <SuppliesDetails />
-                                    </PrivateRoute>
+                                    <SuppliesDetails />
                                 } />
                                 <Route path='/income/add' element={
-                                    <PrivateRoute>
-                                        <AddIncome />
-                                    </PrivateRoute>
+                                    <AddIncome />
                                 } />
                                 <Route path='/income/list' element={
-                                    <PrivateRoute>
-                                        <Income />
-                                    </PrivateRoute>
+                                    <Income />
                                 } />
                                 <Route path='/income/:id/details' element={
-                                    <PrivateRoute>
-                                        <IncomeDetails />
-                                    </PrivateRoute>
+                                    <IncomeDetails />
                                 } />
                                 <Route path='/income/:id/update-details' element={
-                                    <PrivateRoute>
-                                        <UpdateIncomeDetails />
-                                    </PrivateRoute>
+                                    <UpdateIncomeDetails />
                                 } />
                                 <Route path='/expense/add' element={
-                                    <PrivateRoute>
-                                        <AddExpense />
-                                    </PrivateRoute>
+                                    <AddExpense />
                                 } />
                                 <Route path='/expense/list' element={
-                                    <PrivateRoute>
-                                        <Expense />
-                                    </PrivateRoute>
+                                    <Expense />
                                 } />
                                 <Route path='/expense/:id/details' element={
-                                    <PrivateRoute>
-                                        <ExpenseDetails />
-                                    </PrivateRoute>
+                                    <ExpenseDetails />
                                 } />
                                 <Route path='/expense/:id/update-details' element={
-                                    <PrivateRoute>
-                                        <UpdateExpenseDetails />
-                                    </PrivateRoute>
+                                    <UpdateExpenseDetails />
                                 } />
                                 <Route path='/customers/new' element={
-                                    <PrivateRoute>
-                                        <AddCustomer />
-                                    </PrivateRoute>
+                                    <AddCustomer />
                                 } />
                                 <Route path='/customers/list' element={
-                                    <PrivateRoute>
-                                        <CustomersList />
-                                    </PrivateRoute>
+                                    <CustomersList />
                                 } />
                                 <Route path='/customers/:id/details' element={
-                                    <PrivateRoute>
-                                        <CustomerDetails />
-                                    </PrivateRoute>
+                                    <CustomerDetails />
                                 } />
                                 <Route path='/customers/:id/update-details' element={
-                                    <PrivateRoute>
-                                        <UpdateCustomerDetails />
-                                    </PrivateRoute>
+                                    <UpdateCustomerDetails />
                                 } />
                                 <Route path='/supplier/new' element={
-                                    <PrivateRoute>
-                                        <AddSupplier />
-                                    </PrivateRoute>
+                                    <AddSupplier />
                                 } />
                                 <Route path='/suppliers/list' element={
-                                    <PrivateRoute>
-                                        <SuppliersList />
-                                    </PrivateRoute>
+                                    <SuppliersList />
                                 } />
                                 <Route path='/suppliers/:id/details' element={
-                                    <PrivateRoute>
-                                        <SupplierDetails />
-                                    </PrivateRoute>
+                                    <SupplierDetails />
                                 } />
                                 <Route path='/suppliers/:id/update-details' element={
-                                    <PrivateRoute>
-                                        <UpdateSupplierDetails />
-                                    </PrivateRoute>
+                                    <UpdateSupplierDetails />
                                 } />
                                 <Route path='/category/new' element={
-                                    <PrivateRoute>
-                                        <NewCategory />
-                                    </PrivateRoute>
+                                    <NewCategory />
                                 } />
                                 <Route path='/categories/list' element={
-                                    <PrivateRoute>
-                                        <CategoriesList />
-                                    </PrivateRoute>
+                                    <CategoriesList />
                                 } />
                                 <Route path='/categories/:id/details' element={
-                                    <PrivateRoute>
-                                        <CategoryDetails />
-                                    </PrivateRoute>
+                                    <CategoryDetails />
                                 } />
                                 <Route path='/categories/:id/update-details' element={
-                                    <PrivateRoute>
-                                        <UpdateCategories />
-                                    </PrivateRoute>
+                                    <UpdateCategories />
                                 } />
                                 <Route path='/product/new' element={
-                                    <PrivateRoute>
-                                        <AddProduct />
-                                    </PrivateRoute>
+                                    <AddProduct />
                                 } />
                                 <Route path='/products/list' element={
-                                    <PrivateRoute>
-                                        <ProductsList />
-                                    </PrivateRoute>
+                                    <ProductsList />
                                 } />
                                 <Route path='/products/:id/details' element={
-                                    <PrivateRoute>
-                                        <ProductDetails />
-                                    </PrivateRoute>
+                                    <ProductDetails />
                                 } />
                                 <Route path='/products/:id/update-details' element={
-                                    <PrivateRoute>
-                                        <UpdateProductDetails />
-                                    </PrivateRoute>
+                                    <UpdateProductDetails />
                                 } />
                                 <Route path='/employee/new' element={
-                                    <PrivateRoute>
-                                        <NewEmployee />
-                                    </PrivateRoute>
+                                    <NewEmployee />
                                 } />
                                 <Route path='/employees/list' element={
-                                    <PrivateRoute >
-                                        <EmployeesList />
-                                    </PrivateRoute>
+
+                                    <EmployeesList />
                                 } />
                                 <Route path='/employee/:id/details' element={
-                                    <PrivateRoute>
-                                        <EmployeeDetails />
-                                    </PrivateRoute>
+                                    <EmployeeDetails />
                                 } />
                                 <Route path='/employee/:id/update-details' element={
-                                    <PrivateRoute>
-                                        <EmployeeUpdateDetails />
-                                    </PrivateRoute>
+                                    <EmployeeUpdateDetails />
                                 } />
                                 <Route path='/employee/pay' element={
-                                    <PrivateRoute >
-                                        <PayEmployee />
-                                    </PrivateRoute>
+
+                                    <PayEmployee />
                                 } />
                                 <Route path='/employees/salaries' element={
-                                    <PrivateRoute >
-                                        <EmployeesSalaries />
-                                    </PrivateRoute>
+
+                                    <EmployeesSalaries />
                                 } />
                                 <Route path='/employees/salaries/:id/details' element={
-                                    <PrivateRoute >
-                                        <SalariesDetails />
-                                    </PrivateRoute>
+
+                                    <SalariesDetails />
                                 } />
                                 <Route path='/employees/salaries/:id/update-details' element={
-                                    <PrivateRoute>
-                                        <UpdateSalariesDetails />
-                                    </PrivateRoute>
+                                    <UpdateSalariesDetails />
                                 } />
+                            </Route>
 
 
-                            </Routes>
-                        </Container>
 
-                    </main>
-                </Suspense>
 
-            </div>
 
-        </>
+                        </Routes>
+                    </div>
+
+                </Main>
+            </Suspense>
+
+        </div>
+
+
+
     )
 }
 const drawerWidth = 300
@@ -378,12 +330,14 @@ const useStyles = makeStyles(theme => ({
         color: '#1B262C',
         paddingRight: theme.spacing(4),
         paddingLeft: theme.spacing(2),
+        height: "100vh"
+
     },
     content: {
-        flexGrow: 1,
-        height: '100vh',
-        overflow: 'auto',
 
+        flexGrow: 1,
+        height: 'auto',
+        overflow: 'auto',
     },
     container: {
         paddingTop: theme.spacing(4),

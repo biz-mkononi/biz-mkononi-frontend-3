@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 
 import List from '@material-ui/core/List'
@@ -15,7 +15,7 @@ import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantity
 import BadgeIcon from '@mui/icons-material/Badge';
 import AppMenuItem from './AppMenuItem'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import MoneyOffIcon from '@mui/icons-material/MoneyOff';
+import { DataContext } from '../../context/ContextProvider'
 const appMenuItems = [
 
   {
@@ -40,7 +40,7 @@ const appMenuItems = [
       },
       {
         name: 'Revenue Insights',
-        link: '/',
+        link: '/insights/revenue',
       },
     ],
   },
@@ -205,26 +205,9 @@ const otherItems = [
 ]
 
 const AppMenu: React.FC = () => {
-  const navigate = useNavigate()
   const classes = useStyles()
-  const [drawerNewWidth, setDrawerWidth] = useState(drawerWidth)
-  const [businessId, setBusinessId] = useState(JSON.parse(localStorage.getItem("businessId")!))
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")!))
 
-
-
-  useEffect(() => {
-    setBusinessId(JSON.parse(localStorage.getItem("businessId")!));
-    setUser(JSON.parse(localStorage.getItem("user")!));
-
-  }, [location]);
-
-  const logout = () => {
-    localStorage.clear()
-    navigate("/auth/login")
-  }
-
-
+  const { business } = useContext(DataContext)
   return (
     <List component="nav" className={classes.appMenu} disablePadding>
       {/* <AppMenuItem {...appMenuItems[0]} /> */}
@@ -241,7 +224,7 @@ const AppMenu: React.FC = () => {
         ))
       }
       {
-        businessId && (
+        business && (
           <>
             <>
               <hr />
@@ -258,13 +241,6 @@ const AppMenu: React.FC = () => {
           </>
         )
       }
-      {
-        user && (
-          <h4>{user.json.user.name}</h4>
-
-        )
-      }
-      <button className="btn btn-danger btn-md" onClick={logout}>Logout</button>
 
     </List >
   )

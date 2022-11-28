@@ -1,219 +1,218 @@
-import React, { useEffect, useState } from 'react'
-import { data } from "../../Data/Auth/Data"
+import React, { useEffect, useState, useContext } from 'react'
 import Card from '@mui/material/Card';
 import {
-    BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+    BarChart, Bar, LabelList, XAxis, YAxis, CartesianGrid, Tooltip, Legend, FunnelChart, Funnel, Pie, ResponsiveContainer
 } from 'recharts';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables } from "chart.js";
 import "./Overview.css"
-import { getSalesTrend } from '../../Data/Analytics/SalesAnalytics';
+import { getCurrentMonthSales, getCurrentSales, getDailySales, getRepeatCustomerRate, getSalesTrend, getTotalDatePartSales, getTotalSales } from '../../Data/Analytics/SalesAnalytics';
+import { getTotalSupplies, months } from '../../Data/Analytics/SuppliesAnalytics';
+import { getTotalProfits } from '../../Data/Analytics/ProfitsAnalytics';
+import CircularProgress from '@mui/material/CircularProgress';
+import { DataContext } from '../../context/ContextProvider';
 
 ChartJS.register(...registerables);
 const SalesInsights = () => {
-
-    const [data, setData] = useState<any[]>([])
+    const [salesTrend, setSalesTrend] = useState<any[]>([])
+    const [totalSales, setTotalSales] = useState<any>({})
+    const [repeatCustomerRate, setRepeatCustomerRate] = useState<any>({})
+    const [totalProfits, setTotalProfits] = useState<any>()
+    const [totalSupplies, setTotalSupplies] = useState<any>()
+    const [partSales, setPartSales] = useState<any[]>([])
+    const [dailySales, setDailySales] = useState<any>({})
+    const [currentMonthSales, setCurrentMonthSales] = useState<any>({})
+    const [newMonthSales, setNewMonthSales] = useState<any>({})
     const [isLoading, setIsLoading] = useState(false)
+    const { open, businessId } = useContext(DataContext)
+
     useEffect(() => {
-        getSalesTrend(setData)
+        getSalesTrend(setSalesTrend, setIsLoading, businessId)
+        getTotalSales(setTotalSales, setIsLoading, businessId)
+        getRepeatCustomerRate(setRepeatCustomerRate, setIsLoading, businessId)
+        getTotalProfits(setTotalProfits, setIsLoading, businessId)
+        getTotalSupplies(setTotalSupplies, setIsLoading, businessId)
+        getTotalDatePartSales(setPartSales, setIsLoading, businessId)
+        getDailySales(setDailySales, setIsLoading, businessId)
+        getCurrentMonthSales(setCurrentMonthSales, setIsLoading, businessId)
+        getCurrentSales(setNewMonthSales, setIsLoading, businessId)
     }, [])
-    console.log(data)
+    console.log(currentMonthSales)
+    let date = new Date()
+    const month = date.getMonth()
+
+    const funnelData = [
+        {
+            name: "total Supplies",
+            total: totalSupplies
+        },
+        {
+            name: "total Sales",
+            total: totalSales.total
+        },
+        {
+            name: "total Profits",
+            total: totalProfits
+        }
+    ]
     return (
         <div>
-            {/* <AppBar />
-            <Sidebar /> */}
-            <div className='container-fluid overview'>
-                <div className="insights container">
-                    <div className="row padding">
-                        <div className="col-lg-3 col-sm-12">
-                            <div className="card text-center">
-                                <h2 className='mb-2'>200</h2>
-                                <h3>Total Orders</h3>
+            {
+                isLoading ? <div className="text-center"><CircularProgress color="success" /></div> :
+                    <div className='container-fluid overview'>
+                        <div className="insights container">
+                            <div className="row padding">
+                                <div className="col-lg-4 col-sm-12 mt-3">
+                                    <div className="card text-center">
+                                        <h5 className='mb-2 top-cards'><span className='money'>Ksh</span> {totalSupplies}</h5>
+                                        <h3>Total Supplies</h3>
+                                    </div>
+                                </div>
+
+                                <div className="col-lg-4">
+                                    <div className="card text-center mt-3">
+                                        <h5 className='mb-2 top-cards'><span className='money'>Ksh</span> {totalSales.total}</h5>
+                                        <h3>Total Sales</h3>
+                                    </div>
+                                </div>
+                                <div className="col-lg-4 ">
+                                    <div className="card text-center mt-3">
+                                        <h5 className='mb-2 top-cards'><span className='money'>Ksh</span> {totalProfits}</h5>
+                                        <h3>Total Profits</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="row padding">
+                                <div className="col-lg-4 mt-3">
+                                    <div className="card text-center">
+                                        <h5 className='mb-2 top-cards'>{repeatCustomerRate.rate}%</h5>
+                                        <h3>Repeat Purchase Rate</h3>
+                                    </div>
+                                </div>
+                                <div className="col-lg-4 mt-3">
+                                    <div className="card text-center">
+                                        <h5 className='mb-2 top-cards'><span className='money'>Ksh</span> {dailySales.total}</h5>
+                                        <h3>Today's Sales</h3>
+                                    </div>
+                                </div>
+                                <div className="col-lg-4 mt-3">
+                                    <div className="card text-center">
+                                        <h5 className='mb-2 top-cards'><span className='money'>Ksh</span> {newMonthSales.total}</h5>
+                                        <h3>{months[month]} Sales</h3>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div className="col-lg-3 ">
-                            <div className="card text-center">
-                                <h2 className='mb-2'>8.5%</h2>
-                                <h3>Repeat Purchase Rate</h3>
+                        <div className="container charts">
+                            <div className="row padding">
+                                <div className="col-lg-6 col-sm-12">
+                                    <Card className=" new-card">
+                                        <h5 className="text-center mb-5">weekly sales in last one month</h5>
+                                        <ResponsiveContainer width="95%" height={400}>
+                                            <BarChart
+
+                                                data={salesTrend}
+                                                margin={{
+                                                    top: 10,
+                                                    right: 30,
+                                                    left: 5,
+                                                    bottom: 5,
+                                                }}
+                                            >
+                                                <CartesianGrid strokeDasharray="1 6" />
+                                                <XAxis dataKey={`group`} />
+                                                <YAxis />
+                                                <Tooltip />
+                                                <Legend />
+                                                <Bar dataKey="total" barSize={20} fill='#3282B8' />
+                                            </BarChart>
+                                        </ResponsiveContainer>
+
+                                    </Card>
+                                </div>
+                                <div className="col-lg-6 col-sm-12">
+                                    <Card className="new-card">
+                                        <h5 className="text-center mb-4">Sales statistics</h5>
+                                        <ResponsiveContainer width="95%" height={400}>
+                                            <FunnelChart >
+                                                <Tooltip />
+                                                <Funnel
+                                                    dataKey="total"
+                                                    data={funnelData}
+                                                    isAnimationActive
+                                                    fill="#3282B8"
+                                                >
+                                                    <LabelList position="right" fill="#3282B8" stroke="none" dataKey="name" />
+                                                </Funnel>
+                                            </FunnelChart>
+                                        </ResponsiveContainer>
+
+
+                                    </Card>
+                                </div>
                             </div>
-                        </div>
-                        <div className="col-lg-3">
-                            <div className="card text-center">
-                                <h2 className='mb-2'>5000</h2>
-                                <h3>Total Sales</h3>
+                            <div className="row padding">
+                                <div className="col-lg-6 col-sm-12">
+                                    <Card className="new-card">
+                                        <h5 className="text-center mb-5">Sales for the month of {months[month]}</h5>
+                                        <ResponsiveContainer width="95%" height={400}>
+                                            <BarChart
+
+                                                data={currentMonthSales}
+                                                margin={{
+                                                    top: 5,
+                                                    right: 30,
+                                                    left: 20,
+                                                    bottom: 5,
+                                                }}
+                                            >
+                                                <CartesianGrid strokeDasharray="3 3" />
+                                                <XAxis dataKey="group" />
+                                                <YAxis />
+                                                <Tooltip />
+                                                <Legend />
+                                                <Bar dataKey="count" barSize={20} fill='#BBe1FA' />
+                                                <Bar dataKey="total" barSize={20} fill='#3282B8' />
+                                            </BarChart>
+                                        </ResponsiveContainer>
+
+                                    </Card>
+                                </div>
+                                <div className="col-lg-6 col-sm-12">
+                                    <Card className="new-card">
+                                        <h5 className="text-center mb-5">Partly Weekly sales in last one month</h5>
+                                        <ResponsiveContainer width="95%" height={400}>
+                                            <BarChart
+                                                width={400}
+                                                height={359}
+                                                data={partSales}
+                                                margin={{
+                                                    top: 5,
+                                                    right: 30,
+                                                    left: 20,
+                                                    bottom: 5,
+                                                }}
+                                            >
+                                                <CartesianGrid strokeDasharray="3 3" />
+                                                <XAxis dataKey="part" />
+                                                <YAxis />
+                                                <Tooltip />
+                                                <Legend />
+                                                <Bar dataKey="count" barSize={20} fill='#BBe1FA' />
+                                                <Bar dataKey="total" barSize={20} fill='#3282B8' />
+                                            </BarChart>
+                                        </ResponsiveContainer>
+
+                                    </Card>
+                                </div>
                             </div>
-                        </div>
-                        <div className="col-lg-3 ">
-                            <div className="card text-center">
-                                <h2 className='mb-2'>Ksh 4000</h2>
-                                <h3>Average Revenue</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="container charts">
-                    <div className="row padding">
-                        <div className="col-lg-6 col-sm-6">
-                            <Card className="Card">
-                                <h2 className="text-center mb-3">Customer most buying day</h2>
-                                <BarChart
-                                    width={700}
-                                    height={359}
-                                    data={data}
-                                    margin={{
-                                        top: 5,
-                                        right: 30,
-                                        left: 20,
-                                        bottom: 5,
-                                    }}
-                                >
-                                    <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="name" />
-                                    <YAxis />
-                                    <Tooltip />
-                                    <Legend />
-                                    <Bar dataKey="pv" fill='#3282B8' />
-                                </BarChart>
-                            </Card>
-                        </div>
-                        <div className="col-lg-5">
-                            <Card className="Card">
-                                <h2 className="text-center mb-3">Most Selling Products</h2>
 
-                                <Doughnut data={
-                                    {
-                                        labels: ['apples', 'oranges', 'mangoes', 'peaches', 'plums', 'bananas'],
-                                        datasets: [
-                                            {
-                                                label: '# of Votes',
-                                                data: [12, 19, 3, 5, 2, 3],
-                                                backgroundColor: [
-                                                    '#3282B8',
-                                                    '#BBe1FA',
-                                                    '#0F4c75',
-                                                    '#1B262C',
-                                                    '#F2F8FF',
-                                                ],
-                                                borderColor: [
-                                                    '#3282B8',
-                                                    '#BBe1FA',
-                                                    '#0F4c75',
-                                                    '#1B262C',
-                                                    '#F2F8FF',
-                                                ],
-                                                borderWidth: 1,
-                                            },
-                                        ],
-                                    }
-                                } />
-                            </Card>
                         </div>
-                    </div>
-                    <div className="row padding">
-                        <div className="col-lg-6 col-sm-6">
-                            <Card className="Card">
-                                <h2 className="text-center mb-3">Sales</h2>
-                                <LineChart
-                                    width={700}
-                                    height={358}
-                                    data={data}
-                                    margin={{
-                                        top: 5,
-                                        right: 30,
-                                        left: 20,
-                                        bottom: 5,
-                                    }}
-                                >
-                                    <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="name" />
-                                    <YAxis />
-                                    <Tooltip />
-                                    <Legend />
-                                    <Line type="monotone" dataKey="pv" stroke="#3282B8" activeDot={{ r: 8 }} />
-                                </LineChart>
-                            </Card>
-                        </div>
-                        <div className="col-lg-6">
-                            <Card className="Card">
-                                <h2 className="text-center mb-3">Customer Visit vs Buy</h2>
 
-                                <BarChart
-                                    width={500}
-                                    height={359}
-                                    data={data}
-                                    margin={{
-                                        top: 5,
-                                        right: 30,
-                                        left: 20,
-                                        bottom: 5,
-                                    }}
-                                >
-                                    <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="name" />
-                                    <YAxis />
-                                    <Tooltip />
-                                    <Legend />
-                                    <Bar dataKey="pv" fill='#3282B8' />
-                                    <Bar dataKey="uv" fill='#BBe1FA' />
-                                </BarChart>
-                            </Card>
-                        </div>
-                    </div>
-                    <div className="row padding">
-                        <div className="col-lg-6 col-sm-6">
-                            <Card className="Card">
-                                <h2 className="text-center mb-3">Orders</h2>
-
-                                <BarChart
-                                    width={500}
-                                    height={359}
-                                    data={data}
-                                    margin={{
-                                        top: 5,
-                                        right: 30,
-                                        left: 20,
-                                        bottom: 5,
-                                    }}
-                                >
-                                    <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="name" />
-                                    <YAxis />
-                                    <Tooltip />
-                                    <Legend />
-                                    <Bar dataKey="pv" fill='#3282B8' />
-                                    <Bar dataKey="uv" fill='#BBe1FA' />
-                                </BarChart>
-                            </Card>
-                        </div>
-                        <div className="col-lg-6">
-                            <Card className="Card">
-                                <h2 className="text-center mb-3">Most Selling Time of the Day</h2>
-
-                                <LineChart
-                                    width={700}
-                                    height={358}
-                                    data={data}
-                                    margin={{
-                                        top: 5,
-                                        right: 30,
-                                        left: 20,
-                                        bottom: 5,
-                                    }}
-                                >
-                                    <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="name" />
-                                    <YAxis />
-                                    <Tooltip />
-                                    <Legend />
-                                    <Line type="monotone" dataKey="pv" stroke="#3282B8" activeDot={{ r: 8 }} />
-                                </LineChart>
-                            </Card>
-                        </div>
                     </div>
 
-                </div>
+            }
 
-            </div>
         </div>
     )
 }

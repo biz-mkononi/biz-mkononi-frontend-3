@@ -2,7 +2,7 @@ import { reqInstance } from "../Auth/authHelper";
 import {newUrl} from "../Employees/Data"
 
 const addSale = (post:any,navigate:any) => {
-    reqInstance.post(`${newUrl}/sales`,post)
+    reqInstance.post(`${newUrl}/sales`, JSON.stringify (post))
     .then((data) => console.log(data))
     .then (() => navigate('/sales/list'))
 }

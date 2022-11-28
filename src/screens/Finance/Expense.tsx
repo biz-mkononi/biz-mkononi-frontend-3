@@ -54,8 +54,11 @@ const Expense = () => {
                                             <td>{expense.description}</td>
 
                                             <td>
-                                                <button className="btn btn-warning btn-sm ml-2" onClick={(() => { onClick(expense.id) })}>View</button>
-                                                <button className="btn btn-success btn-sm ml-2" onClick={(() => navigate(`/expense/${expense.id}/update-details`))}>Edit</button>
+                                                <div style={{ display: "flex" }}>
+                                                    <button className="btn btn-warning btn-sm ml-2" onClick={(() => { onClick(expense.id) })}>View</button>
+                                                    <button className="btn btn-success btn-sm m;-2" onClick={(() => navigate(`/expense/${expense.id}/update-details`))}>Edit</button>
+                                                </div>
+
                                             </td>
 
                                         </tr>

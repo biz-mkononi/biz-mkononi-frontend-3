@@ -2,8 +2,9 @@ import { reqInstance } from "../Auth/authHelper";
 import {newUrl} from "../Employees/Data"
 
 const addSupply = (post:any,navigate:any,setIsLoading:any) => {
+  console.log(post)
   setIsLoading(true)
-    reqInstance.post(`${newUrl}/supplies`,post)
+    reqInstance.post(`${newUrl}/supplies`, post)
     .then (() => navigate('/supplies/list'))
 }
 const getSupplies = (setData:any,setIsLoading:any) => {
