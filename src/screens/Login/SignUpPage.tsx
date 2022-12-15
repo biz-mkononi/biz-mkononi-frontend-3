@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { TextField, FormControlLabel, Checkbox, InputAdornment, IconButton } from "@mui/material"
 import { registerUser, resendVerification } from "../../Data/Auth/Data"
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import "./Login.css"
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';

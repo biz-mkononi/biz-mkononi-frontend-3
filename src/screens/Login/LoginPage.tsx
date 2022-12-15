@@ -2,8 +2,8 @@ import React, { useContext, useState } from 'react'
 import "./Login.css"
 import { TextField, FormControlLabel, Checkbox, InputAdornment, IconButton } from "@mui/material"
 import { login, } from "../../Data/Auth/Data"
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useNavigate } from "react-router-dom"
 import GetForgotPasswordCode from './GetForgotPasswordCode';
 import { DataContext } from '../../context/ContextProvider';

@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react'
-import ListItem from '@material-ui/core/ListItem'
+import ListItem from '@mui/material/ListItem'
 import { NavLink, NavLinkProps } from 'react-router-dom'
 
 export interface AppMenuItemComponentProps {
@@ -16,6 +16,14 @@ const AppMenuItemComponent: React.FC<AppMenuItemComponentProps> = props => {
   if (!link || typeof link !== 'string') {
     return (
       <ListItem
+      sx = {{
+        '&.active': {
+          background: 'rgba(0, 0, 0, 0.08)',
+          '& .MuiListItemIcon-root': {
+            color: '#fff',
+          },
+        },
+      }} 
         button
         className={className}
         children={children}
@@ -27,6 +35,14 @@ const AppMenuItemComponent: React.FC<AppMenuItemComponentProps> = props => {
   // Return a LitItem with a link component
   return (
     <ListItem
+    sx = {{
+      '&.active': {
+        background: 'rgba(0, 0, 0, 0.08)',
+        '& .MuiListItemIcon-root': {
+          color: '#fff',
+        },
+      },
+    }} 
       button
       className={className}
       children={children}

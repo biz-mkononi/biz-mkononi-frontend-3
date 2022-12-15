@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { makeStyles, createStyles } from '@material-ui/core/styles'
+import { styled, useTheme } from '@mui/material/styles';
 
-import List from '@material-ui/core/List'
+import List from '@mui/material/List'
 import image2 from "../../Assets/logo.png"
 import "./sidebar.css"
 import { useNavigate } from 'react-router-dom'
@@ -205,11 +205,10 @@ const otherItems = [
 ]
 
 const AppMenu: React.FC = () => {
-  const classes = useStyles()
 
   const { business } = useContext(DataContext)
   return (
-    <List component="nav" className={classes.appMenu} disablePadding>
+    <List component="nav" sx={{width:"100%"}} disablePadding>
       {/* <AppMenuItem {...appMenuItems[0]} /> */}
       <div className="mb-3" style={{ display: "flex", marginLeft: "10px" }}>
         <img src={image2} className="img-fluid sidebar-logo" alt="..." />
@@ -246,25 +245,6 @@ const AppMenu: React.FC = () => {
   )
 }
 
-
-const drawerWidth = 0
-
-const useStyles = makeStyles(theme =>
-  createStyles({
-    appMenu: {
-      width: '100%',
-    },
-    navList: {
-      width: drawerWidth,
-    },
-    menuItem: {
-      width: drawerWidth,
-    },
-    menuItemIcon: {
-      color: '#1B262C',
-    },
-  }),
-)
 
 export default AppMenu
 

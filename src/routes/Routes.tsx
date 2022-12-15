@@ -1,9 +1,9 @@
 import React, { Suspense, lazy, useEffect, useState, useContext } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import Drawer from '@material-ui/core/Drawer'
-import Container from '@material-ui/core/Container'
+import { makeStyles } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline';
+import Drawer from '@mui/material/Drawer'
+import Container from '@mui/material/Container'
 import AppMenu from "../screens/sidebar/AppMenu"
 import clsx from 'clsx'
 import PrivateRoute from './PrivateRoute'
@@ -96,7 +96,6 @@ const RoutesFile = () => {
     const AddSupply = lazy(() => import('../screens/Supplies/AddSupply'))
     const RevenueInsights = lazy(() => import('../screens/Insights/RevenueInsights'))
 
-    const classes = useStyles()
     const theme = useTheme();
     const { open, setOpen, user, loggedUser } = useContext(DataContext)
     const handleDrawerOpen = () => {
@@ -108,15 +107,31 @@ const RoutesFile = () => {
     return (
 
 
-        <div className={clsx('App', classes.root)}>
+        <Box sx={{display: 'flex'}}>
             {
                 loggedUser && (
                     <>
                         <CssBaseline />
                         <Drawer
-                            classes={{
-                                paper: classes.drawerPaper,
-                            }}
+                        sx={{
+                            width: drawerWidth,
+                            flexShrink: 0,
+                            '& .MuiDrawer-paper': {
+                              width: drawerWidth,
+                              boxSizing: 'border-box',
+                              backgroundColor: '#e1f3ff',
+                            color: '#1B262C',
+                            height:'100%'
+                            },
+                            position: 'relative',
+                            whiteSpace: 'nowrap',
+                            paddingTop: theme.spacing(4),
+                            paddingBottom: theme.spacing(4),
+                            height:'auto',
+                            paddingRight: theme.spacing(4),
+                            paddingLeft: theme.spacing(2),
+                          }}
+                            
                             className={!open ? `not-shadow` : `shadow`}
                             variant="persistent"
                             anchor="left"
@@ -143,9 +158,11 @@ const RoutesFile = () => {
                 </div>
             }>
 
-                <Main open={open} >
+                <Main sx={{flexGrow: 1,
+                                    height: "100vh",
+                                    overflow: 'auto',}}  open={open} >
                     <DrawerHeader />
-                    <div className={classes.content}>
+                    <Container>
                         {/* <AppBarMenu /> */}
                         <AppBar />
 
@@ -303,12 +320,12 @@ const RoutesFile = () => {
 
 
                         </Routes>
-                    </div>
+                    </Container>
 
                 </Main>
             </Suspense>
 
-        </div>
+        </Box>
 
 
 
@@ -316,34 +333,6 @@ const RoutesFile = () => {
 }
 const drawerWidth = 300
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        display: 'flex',
-    },
-    drawerPaper: {
-        position: 'relative',
-        whiteSpace: 'nowrap',
-        width: drawerWidth,
-        paddingTop: theme.spacing(4),
-        paddingBottom: theme.spacing(4),
-        background: '#e1f3ff',
-        color: '#1B262C',
-        paddingRight: theme.spacing(4),
-        paddingLeft: theme.spacing(2),
-        height: "100vh"
-
-    },
-    content: {
-
-        flexGrow: 1,
-        height: 'auto',
-        overflow: 'auto',
-    },
-    container: {
-        paddingTop: theme.spacing(4),
-        paddingBottom: theme.spacing(4),
-    },
-}))
 
 
 export default RoutesFile
