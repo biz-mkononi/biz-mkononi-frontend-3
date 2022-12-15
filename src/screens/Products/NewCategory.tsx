@@ -7,7 +7,7 @@ import { addCategory } from '../../Data/Categories/Data';
 import { useNavigate } from 'react-router-dom';
 
 
-const NewCategory = () => {
+const NewCategory = ({ id }: any) => {
     const initialState = { name: "", description: "" }
 
     const navigate = useNavigate()
@@ -26,7 +26,7 @@ const NewCategory = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        addCategory(formData, navigate, setIsLoading)
+        addCategory(formData, navigate, setIsLoading, id)
 
     }
 

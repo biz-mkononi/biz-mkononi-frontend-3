@@ -26,7 +26,7 @@ interface data {
     gender: ""
 }
 
-const UpdateCustomerDetails = () => {
+const UpdateCustomerDetails = ({ id }: any) => {
     const [data, setData] = useState<data | any>({})
     const [isLoading, setIsloading] = useState(false)
     const [isUpdating, setIsUpdating] = useState(false)
@@ -38,7 +38,7 @@ const UpdateCustomerDetails = () => {
     const params = useParams()
 
     useEffect(() => {
-        getSingleCustomer(setData, params.id, setIsloading, setFormData)
+        getSingleCustomer(setData, params.id, setIsloading, setFormData, id)
 
 
     }, [location])
@@ -55,7 +55,7 @@ const UpdateCustomerDetails = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        updateSingleCustomer(formData, params.id, navigate, setIsUpdating)
+        updateSingleCustomer(formData, params.id, navigate, setIsUpdating, id)
     }
     console.log(formData)
 

@@ -30,6 +30,7 @@ const BusinessList = () => {
         navigate(`/business/${id}/details`)
     }
     const onManage = (id: any) => {
+        console.log(id)
         setBusiness(true)
         setBusinessId(id)
         navigate('/insights/overview')

@@ -5,7 +5,7 @@ import { getCategory } from "../../Data/Categories/Data"
 import { useNavigate } from "react-router-dom"
 import CircularProgress from '@mui/material/CircularProgress';
 
-const CategoriesList = () => {
+const CategoriesList = ({ id }: any) => {
     const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "long", day: "numeric", hour: '2-digit', minute: '2-digit' }
     const navigate = useNavigate()
     const [data, setData] = useState<any[]>([])
@@ -19,7 +19,7 @@ const CategoriesList = () => {
     const indexOfFirstPost = indexOfLastPost - postsPerPage
     const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost)
     useEffect(() => {
-        getCategory(setData, setIsLoading)
+        getCategory(setData, setIsLoading, id)
     }, [])
 
     console.log(data)

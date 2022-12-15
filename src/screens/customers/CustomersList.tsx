@@ -7,7 +7,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import SmsDialog from './SmsDialog';
 
 
-const CustomersList = () => {
+const CustomersList = ({ id }: any) => {
     const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "long", day: "numeric", hour: '2-digit', minute: '2-digit' }
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState()
@@ -23,7 +23,7 @@ const CustomersList = () => {
     const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost)
 
     useEffect(() => {
-        getCustomers(setData, setIsLoading)
+        getCustomers(setData, setIsLoading, id)
     }, [])
 
 
@@ -46,7 +46,7 @@ const CustomersList = () => {
                 isLoading ? <div className="text-center"><CircularProgress color="success" /></div> :
                     <div className='container p-3'>
                         {
-                            open ? <SmsDialog open={open} handleClose={handleClose} /> : ""
+                            open ? <SmsDialog open={open} id={id} handleClose={handleClose} /> : ""
                         }
                         <div className="row padding">
                             <div className="col-lg-6 col-sm-12 mb-3 mt-3">

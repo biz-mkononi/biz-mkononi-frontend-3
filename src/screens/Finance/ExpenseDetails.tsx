@@ -11,7 +11,7 @@ interface data {
     description: "",
     date: ""
 }
-const ExpenseDetails = () => {
+const ExpenseDetails = ({ id }: any) => {
     const [open, setOpen] = useState(false)
     const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "long", day: "numeric" }
 
@@ -22,11 +22,11 @@ const ExpenseDetails = () => {
 
     const params = useParams()
     const handleDelete = () => {
-        deleteExpense(navigate, params.id, setIsloading)
+        deleteExpense(navigate, params.id, setIsloading, id)
         setOpen(false)
     }
     useEffect(() => {
-        getSingleExpense(setData, params.id, setIsloading, setFormData)
+        getSingleExpense(setData, params.id, setIsloading, setFormData, id)
 
 
     }, [location]);

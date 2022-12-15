@@ -1,7 +1,5 @@
 import { reqInstance } from "../Auth/authHelper";
-import { url } from "../Auth/Data";
-
-const newUrl = `${url}/businesses`
+import { newUrl } from "../Sales/Data";
 import { d,now, prevDate } from "./SalesAnalytics";
 const getGroupedProfits= (setData:any,id:any) => {
   reqInstance.get(`${newUrl}/${id}/profits-analytics/grouped-profits`)

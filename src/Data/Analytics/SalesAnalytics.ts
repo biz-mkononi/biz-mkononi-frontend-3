@@ -1,8 +1,5 @@
 import { reqInstance } from "../Auth/authHelper";
-import {businessId} from "../Employees/Data"
-import { url } from "../Auth/Data";
-
-const newUrl = `${url}/businesses`
+import { newUrl } from "../Sales/Data";
 var d = new Date();
     d.setMonth(d.getMonth() - 1);
     d.setHours(0, 0, 0, 0);
@@ -21,7 +18,6 @@ const getSalesTrend= (setData:any,setIsLoading:any,id:any) => {
         from:d.toISOString(),
         to:now.toISOString(),
         group:"day",
-        businessId:businessId
       }
       setIsLoading(true)
   reqInstance.get(`${newUrl}/${id}/sales-analytics/sales-trend`, {params:data})
@@ -39,7 +35,6 @@ const getCurrentMonthSales= (setData:any,setIsLoading:any,id:any) => {
         from:firstDay.toISOString(),
         to:now.toISOString(),
         group:"day",
-        businessId:businessId
       }
       setIsLoading(true)
     reqInstance.get(`${newUrl}/${id}/sales-analytics/sales-trend`, {params:data})
@@ -63,6 +58,8 @@ const getTotalSales= (setData:any,setIsLoading:any,id:any) => {
     .then ((data) => setData(data.data))
     .then(() => setIsLoading(false))
 }
+
+
 
 const getDailySales= (setData:any,setIsLoading:any,id:any) => {
     const data = {

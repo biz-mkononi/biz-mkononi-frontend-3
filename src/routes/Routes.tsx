@@ -98,7 +98,7 @@ const RoutesFile = () => {
 
     const classes = useStyles()
     const theme = useTheme();
-    const { open, setOpen, user, loggedUser } = useContext(DataContext)
+    const { open, setOpen, user, loggedUser, businessId } = useContext(DataContext)
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -179,122 +179,122 @@ const RoutesFile = () => {
                                     <UpdateBusinessDetails />
                                 } />
                                 <Route path='/sales/add' element={
-                                    <AddSale />
+                                    <AddSale id={businessId} />
                                 } />
                                 <Route path='/sales/list' element={
-                                    <SalesList />
+                                    <SalesList id={businessId} />
                                 } />
                                 <Route path='/sales/:id/details' element={
-                                    <SalesDetails />
+                                    <SalesDetails id={businessId} />
                                 } />
                                 <Route path='/supplies/add' element={
-                                    <AddSupply />
+                                    <AddSupply id={businessId} />
                                 } />
                                 <Route path='/supplies/list' element={
-                                    <SuppliesList />
+                                    <SuppliesList id={businessId} />
                                 } />
                                 <Route path='/supplies/:id/details' element={
-                                    <SuppliesDetails />
+                                    <SuppliesDetails id={businessId} />
                                 } />
                                 <Route path='/income/add' element={
-                                    <AddIncome />
+                                    <AddIncome id={businessId} />
                                 } />
                                 <Route path='/income/list' element={
-                                    <Income />
+                                    <Income id={businessId} />
                                 } />
                                 <Route path='/income/:id/details' element={
-                                    <IncomeDetails />
+                                    <IncomeDetails id={businessId} />
                                 } />
                                 <Route path='/income/:id/update-details' element={
-                                    <UpdateIncomeDetails />
+                                    <UpdateIncomeDetails id={businessId} />
                                 } />
                                 <Route path='/expense/add' element={
-                                    <AddExpense />
+                                    <AddExpense id={businessId} />
                                 } />
                                 <Route path='/expense/list' element={
-                                    <Expense />
+                                    <Expense id={businessId} />
                                 } />
                                 <Route path='/expense/:id/details' element={
-                                    <ExpenseDetails />
+                                    <ExpenseDetails id={businessId} />
                                 } />
                                 <Route path='/expense/:id/update-details' element={
-                                    <UpdateExpenseDetails />
+                                    <UpdateExpenseDetails id={businessId} />
                                 } />
                                 <Route path='/customers/new' element={
-                                    <AddCustomer />
+                                    <AddCustomer id={businessId} />
                                 } />
                                 <Route path='/customers/list' element={
-                                    <CustomersList />
+                                    <CustomersList id={businessId} />
                                 } />
                                 <Route path='/customers/:id/details' element={
-                                    <CustomerDetails />
+                                    <CustomerDetails id={businessId} />
                                 } />
                                 <Route path='/customers/:id/update-details' element={
-                                    <UpdateCustomerDetails />
+                                    <UpdateCustomerDetails id={businessId} />
                                 } />
                                 <Route path='/supplier/new' element={
-                                    <AddSupplier />
+                                    <AddSupplier id={businessId} />
                                 } />
                                 <Route path='/suppliers/list' element={
-                                    <SuppliersList />
+                                    <SuppliersList id={businessId} />
                                 } />
                                 <Route path='/suppliers/:id/details' element={
-                                    <SupplierDetails />
+                                    <SupplierDetails id={businessId} />
                                 } />
                                 <Route path='/suppliers/:id/update-details' element={
-                                    <UpdateSupplierDetails />
+                                    <UpdateSupplierDetails id={businessId} />
                                 } />
                                 <Route path='/category/new' element={
-                                    <NewCategory />
+                                    <NewCategory id={businessId} />
                                 } />
                                 <Route path='/categories/list' element={
-                                    <CategoriesList />
+                                    <CategoriesList id={businessId} />
                                 } />
                                 <Route path='/categories/:id/details' element={
-                                    <CategoryDetails />
+                                    <CategoryDetails id={businessId} />
                                 } />
                                 <Route path='/categories/:id/update-details' element={
-                                    <UpdateCategories />
+                                    <UpdateCategories id={businessId} />
                                 } />
                                 <Route path='/product/new' element={
-                                    <AddProduct />
+                                    <AddProduct id={businessId} />
                                 } />
                                 <Route path='/products/list' element={
-                                    <ProductsList />
+                                    <ProductsList id={businessId} />
                                 } />
                                 <Route path='/products/:id/details' element={
-                                    <ProductDetails />
+                                    <ProductDetails id={businessId} />
                                 } />
                                 <Route path='/products/:id/update-details' element={
-                                    <UpdateProductDetails />
+                                    <UpdateProductDetails id={businessId} />
                                 } />
                                 <Route path='/employee/new' element={
-                                    <NewEmployee />
+                                    <NewEmployee id={businessId} />
                                 } />
                                 <Route path='/employees/list' element={
 
-                                    <EmployeesList />
+                                    <EmployeesList id={businessId} />
                                 } />
                                 <Route path='/employee/:id/details' element={
-                                    <EmployeeDetails />
+                                    <EmployeeDetails id={businessId} />
                                 } />
                                 <Route path='/employee/:id/update-details' element={
-                                    <EmployeeUpdateDetails />
+                                    <EmployeeUpdateDetails id={businessId} />
                                 } />
                                 <Route path='/employee/pay' element={
 
-                                    <PayEmployee />
+                                    <PayEmployee id={businessId} />
                                 } />
                                 <Route path='/employees/salaries' element={
 
-                                    <EmployeesSalaries />
+                                    <EmployeesSalaries id={businessId} />
                                 } />
                                 <Route path='/employees/salaries/:id/details' element={
 
-                                    <SalariesDetails />
+                                    <SalariesDetails id={businessId} />
                                 } />
                                 <Route path='/employees/salaries/:id/update-details' element={
-                                    <UpdateSalariesDetails />
+                                    <UpdateSalariesDetails id={businessId} />
                                 } />
                             </Route>
 

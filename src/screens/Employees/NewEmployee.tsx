@@ -10,7 +10,7 @@ import "../Businesses/AddBusiness.css"
 import { useNavigate } from 'react-router-dom';
 
 
-const NewEmployee = () => {
+const NewEmployee = ({ id }: any) => {
     const initialState = { name: "", phone: "", email: "", idNumber: "", position: "" }
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(false)
@@ -22,7 +22,7 @@ const NewEmployee = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        addEmployee(formData, navigate, setIsLoading)
+        addEmployee(formData, navigate, setIsLoading, id)
 
     }
 

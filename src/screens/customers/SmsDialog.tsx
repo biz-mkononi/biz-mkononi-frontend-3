@@ -10,7 +10,7 @@ import "./sms.css"
 import { sendCustomersSms } from '../../Data/Customers/Data';
 import { useNavigate } from 'react-router-dom';
 
-export default function SmsDialog({ handleClose, open }: any) {
+export default function SmsDialog({ handleClose, open, id }: any) {
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = React.useState(false)
     const [showTips, setShowTips] = React.useState(false)
@@ -32,7 +32,7 @@ export default function SmsDialog({ handleClose, open }: any) {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        sendCustomersSms(formData, setIsLoading, navigate)
+        sendCustomersSms(formData, setIsLoading, navigate, id)
 
     }
     console.log(formData)

@@ -1,20 +1,22 @@
 import { reqInstance } from "../Auth/authHelper";
-import {newUrl} from "../Employees/Data"
+import { url } from "../Auth/Data";
 
-const addSale = (post:any,navigate:any) => {
-    reqInstance.post(`${newUrl}/sales`, JSON.stringify (post))
+const newUrl = `${url}/businesses`
+
+const addSale = (post:any,navigate:any,id:any) => {
+    reqInstance.post(`${newUrl}/${id}/sales`, JSON.stringify ({post}))
     .then((data) => console.log(data))
     .then (() => navigate('/sales/list'))
 }
-const getSales = (setData:any,setIsLoading:any) => {
+const getSales = (setData:any,setIsLoading:any,id:any) => {
   setIsLoading(true)
-  reqInstance.get(`${newUrl}/sales`)
+  reqInstance.get(`${newUrl}/${id}/sales`)
   .then ((data) => setData(data.data.rows))
   .then(() => setIsLoading(false))
 }
-const getSingleSale  = async (setData:any,setCustomer:any,setProduct:any, id:any,setIsLoading:any) => {
+const getSingleSale  = async (setData:any,setCustomer:any,setProduct:any, id:any,setIsLoading:any,businessid:any) => {
   setIsLoading(true)
-  await reqInstance.get(`${newUrl}/sales/${id}`)
+  await reqInstance.get(`${newUrl}/${businessid}/sales/${id}`)
   .then ((data) =>{
     setData(data.data)
     setCustomer(data.data.customer)
@@ -26,9 +28,9 @@ const getSingleSale  = async (setData:any,setCustomer:any,setProduct:any, id:any
   .then(() => setIsLoading(false))
 }
 
-const deleteSale  = async (navigate:any,id:any,setIsLoading:any) => {
+const deleteSale  = async (navigate:any,id:any,setIsLoading:any,businessid:any) => {
   setIsLoading(true)
-  await reqInstance.delete(`${newUrl}/sales/${id}`)
+  await reqInstance.delete(`${newUrl}/${businessid}/sales/${id}`)
   .then (() => navigate('/sales/list'))
   .then(() => setIsLoading(false))
 }
@@ -37,5 +39,6 @@ export {
     addSale,
     getSales,
     getSingleSale,
-    deleteSale
+    deleteSale,
+    newUrl
 }

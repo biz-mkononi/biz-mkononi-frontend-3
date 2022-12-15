@@ -9,7 +9,7 @@ import image from "../../Assets/placeholder.jpg"
 import "../Businesses/AddBusiness.css"
 
 
-const AddSupplier = () => {
+const AddSupplier = ({ id }: any) => {
     const initialState = { name: "", phone: "", email: "", description: "" }
     const navigate = useNavigate()
 
@@ -28,7 +28,7 @@ const AddSupplier = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        addSupplier(formData, navigate, setIsLoading)
+        addSupplier(formData, navigate, setIsLoading, id)
 
     }
 

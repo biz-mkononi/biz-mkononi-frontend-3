@@ -14,7 +14,7 @@ interface data {
     description: "",
     date: ""
 }
-const SalariesDetails = () => {
+const SalariesDetails = ({ id }: any) => {
     const [open, setOpen] = useState(false)
     const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "long", day: "numeric" }
 
@@ -25,11 +25,11 @@ const SalariesDetails = () => {
     const [formData, setFormData] = useState(false)
     const params = useParams()
     const handleDelete = () => {
-        deleteSalary(navigate, params.id, setIsloading)
+        deleteSalary(navigate, params.id, setIsloading, id)
         setOpen(false)
     }
     useEffect(() => {
-        getSingleSalary(setData, params.id, setIsloading, setEmployee, setFormData)
+        getSingleSalary(setData, params.id, setIsloading, setEmployee, setFormData, id)
 
 
     }, [location]);

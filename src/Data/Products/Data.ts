@@ -1,21 +1,20 @@
 import { reqInstance } from "../Auth/authHelper";
-import {newUrl} from "../Employees/Data"
-
-const addProduct = (post:any,navigate:any,setIsLoading:any) => {
+import { newUrl } from "../Sales/Data";
+const addProduct = (post:any,navigate:any,setIsLoading:any,id:any) => {
   setIsLoading(true)
-    reqInstance.post(`${newUrl}/products`,post)
+    reqInstance.post(`${newUrl}/${id}/products`,post)
     .then(() => navigate('/products/list'))
     .then(() => setIsLoading(false))
 }
-const getProducts = (setData:any,setIsLoading:any) => {
+const getProducts = (setData:any,setIsLoading:any,id:any) => {
   setIsLoading(true)
-  reqInstance.get(`${newUrl}/products`)
+  reqInstance.get(`${newUrl}/${id}/products`)
   .then ((data) => setData(data.data.rows))
   .then(() => setIsLoading(false))
 }
-const getSingleProduct = async (setData:any,id:any,setIsLoading:any,setCategory:any,setFormData:any) => {
+const getSingleProduct = async (setData:any,id:any,setIsLoading:any,setCategory:any,setFormData:any,businessid:any) => {
   setIsLoading(true)
-  await reqInstance.get(`${newUrl}/products/${id}`)
+  await reqInstance.get(`${newUrl}/${businessid}/products/${id}`)
   .then ((data) => {
     setData(data.data)
     setCategory(data.data.category)
@@ -23,15 +22,15 @@ const getSingleProduct = async (setData:any,id:any,setIsLoading:any,setCategory:
   } )
   .then(() => setIsLoading(false))
 }
-const updateSingleProduct  = async (post:any,navigate:any,id:any,setIsLoading:any) => {
+const updateSingleProduct  = async (post:any,navigate:any,id:any,setIsLoading:any,businessid:any) => {
   setIsLoading(true)
-  await reqInstance.put(`${newUrl}/products/${id}`,post)
+  await reqInstance.put(`${newUrl}/${businessid}/products/${id}`,post)
   .then (() => navigate('/products/list'))
   .then(() => setIsLoading(false))
 }
-const deleteProduct  = async (navigate:any,id:any,setIsLoading:any) => {
+const deleteProduct  = async (navigate:any,id:any,setIsLoading:any,businessid:any) => {
   setIsLoading(true)
-  await reqInstance.delete(`${newUrl}/products/${id}`)
+  await reqInstance.delete(`${newUrl}/${businessid}/products/${id}`)
   .then (() => navigate('/products/list'))
   .then(() => setIsLoading(false))
 }

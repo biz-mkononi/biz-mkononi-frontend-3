@@ -15,7 +15,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 import "../Businesses/AddBusiness.css"
 
 
-const AddProduct = () => {
+const AddProduct = ({ id }: any) => {
     const initialState = { name: "", categoryId: "", productType: "", size: "", unit: "", buyingPrice: "", sellingPrice: "", description: "", tags: "" }
     const navigate = useNavigate()
 
@@ -23,7 +23,7 @@ const AddProduct = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [categories, setCategories] = useState<any[]>([])
     useEffect(() => {
-        getCategory(setCategories, setIsLoading)
+        getCategory(setCategories, setIsLoading, id)
     }, [])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +44,7 @@ const AddProduct = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        addProduct(formData, navigate, setIsLoading)
+        addProduct(formData, navigate, setIsLoading, id)
         console.log(formData)
 
     }

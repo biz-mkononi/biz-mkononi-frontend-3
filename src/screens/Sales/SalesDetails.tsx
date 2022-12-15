@@ -12,7 +12,7 @@ interface data {
     description: "",
     date: ""
 }
-const SalesDetails = () => {
+const SalesDetails = ({ id }: any) => {
     const [open, setOpen] = useState(false)
     const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "long", day: "numeric" }
 
@@ -25,11 +25,11 @@ const SalesDetails = () => {
 
     const params = useParams()
     const handleDelete = () => {
-        deleteSale(navigate, params.id, setIsloading)
+        deleteSale(navigate, params.id, setIsloading, id)
         setOpen(false)
     }
     useEffect(() => {
-        getSingleSale(setData, setCustomer, setProduct, params.id, setIsloading)
+        getSingleSale(setData, setCustomer, setProduct, params.id, setIsloading, id)
 
 
     }, [location]);

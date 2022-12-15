@@ -14,7 +14,7 @@ import PersonIcon from '@mui/icons-material/Person';
 
 
 
-const AddCustomer = () => {
+const AddCustomer = ({ id }: any) => {
     const initialState = { name: "", gender: "", yearOfBirth: "", phone: "", email: "", description: "" }
 
     const navigate = useNavigate()
@@ -33,7 +33,7 @@ const AddCustomer = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        addCustomer(formData, navigate, setIsLoading)
+        addCustomer(formData, navigate, setIsLoading, id)
         console.log(formData)
 
     }

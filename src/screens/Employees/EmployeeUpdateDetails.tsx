@@ -27,7 +27,7 @@ interface data {
     description: "",
 }
 
-const EmployeeUpdateDetails = () => {
+const EmployeeUpdateDetails = ({ id }: any) => {
     const [data, setData] = useState<data | any>({})
     const [isLoading, setIsloading] = useState(false)
     const [isUpdating, setIsUpdating] = useState(false)
@@ -37,7 +37,7 @@ const EmployeeUpdateDetails = () => {
     const params = useParams()
 
     useEffect(() => {
-        getSingleEmployee(setData, params.id, setIsloading, setFormData)
+        getSingleEmployee(setData, params.id, setIsloading, setFormData, id)
 
 
     }, [])
@@ -50,7 +50,7 @@ const EmployeeUpdateDetails = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        updateSingleEmployee(formData, params.id, navigate, setIsUpdating)
+        updateSingleEmployee(formData, params.id, navigate, setIsUpdating, id)
         console.log(formData)
 
     }

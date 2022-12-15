@@ -14,7 +14,7 @@ interface data {
     description: "",
     date: ""
 }
-const CustomerDetails = () => {
+const CustomerDetails = ({ id }: any) => {
     const [open, setOpen] = useState(false)
 
     const navigate = useNavigate()
@@ -25,11 +25,11 @@ const CustomerDetails = () => {
 
     const params = useParams()
     const handleDelete = () => {
-        deleteCustomer(navigate, params.id, setIsloading)
+        deleteCustomer(navigate, params.id, setIsloading, id)
         setOpen(false)
     }
     useEffect(() => {
-        getSingleCustomer(setData, params.id, setIsloading, setFormData)
+        getSingleCustomer(setData, params.id, setIsloading, setFormData, id)
 
 
     }, [location]);

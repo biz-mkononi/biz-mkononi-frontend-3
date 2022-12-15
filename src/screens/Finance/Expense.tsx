@@ -6,7 +6,7 @@ import { getExpenses } from '../../Data/Expenses/Data'
 import CircularProgress from '@mui/material/CircularProgress';
 
 
-const Expense = () => {
+const Expense = ({ id }: any) => {
     const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "long", day: "numeric" }
     const navigate = useNavigate()
     const [data, setData] = useState<any[]>([])
@@ -20,7 +20,7 @@ const Expense = () => {
     const indexOfFirstPost = indexOfLastPost - postsPerPage
     const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost)
     useEffect(() => {
-        getExpenses(setData, setIsLoading)
+        getExpenses(setData, setIsLoading, id)
     }, [])
 
     console.log(data)
