@@ -23,7 +23,7 @@ interface data {
     description: "",
 }
 
-const UpdateIncomeDetails = () => {
+const UpdateIncomeDetails = ({ id }: any) => {
     const [data, setData] = useState<data | any>({})
     const [isLoading, setIsloading] = useState(false)
     const [isUpdating, setIsUpdating] = useState(false)
@@ -47,7 +47,7 @@ const UpdateIncomeDetails = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        updateSingleIncome(formData, navigate, params.id, setIsUpdating)
+        updateSingleIncome(formData, navigate, params.id, setIsUpdating, id)
     }
 
 
@@ -55,7 +55,7 @@ const UpdateIncomeDetails = () => {
     const params = useParams()
 
     useEffect(() => {
-        getSingleIncome(setData, params.id, setIsloading, setFormData)
+        getSingleIncome(setData, params.id, setIsloading, setFormData, id)
 
 
     }, [location])

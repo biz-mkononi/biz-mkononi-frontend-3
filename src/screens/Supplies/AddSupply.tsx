@@ -8,11 +8,10 @@ import { getProducts } from '../../Data/Products/Data';
 import "../Businesses/AddBusiness.css"
 import { addSale } from '../../Data/Sales/Data';
 import { useNavigate } from 'react-router-dom';
-import { businessId } from '../../Data/Employees/Data';
 import { getSuppliers } from '../../Data/Suppliers/Data';
 import { addSupply } from '../../Data/Supplies/Data';
 
-const AddSupply = () => {
+const AddSupply = ({ id }: any) => {
     const navigate = useNavigate()
     const [suppliers, setSuppliers] = useState<any[]>([])
     const [products, setProducts] = useState<any[]>([])
@@ -26,8 +25,8 @@ const AddSupply = () => {
     const [quantity, setQuantity] = useState("")
 
     useEffect(() => {
-        getSuppliers(setSuppliers, setIsLoading)
-        getProducts(setProducts, setIsLoading)
+        getSuppliers(setSuppliers, setIsLoading, id)
+        getProducts(setProducts, setIsLoading, id)
     }, [])
 
     const handleSupplierChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -60,14 +59,23 @@ const AddSupply = () => {
             supplyPrice: price,
             quantity: parseInt(quantity)
         }]
+
         const formData = {
-            supplyItems,
-            amountCharged,
-            amountPaid,
+            supplyItems: supplyItems.map((item: any) => {
+                return {
+                    productId: item.productId,
+                    supplyPrice: item.supplyPrice,
+                    quantity: parseInt(item.quantity)
+                }
+            }),
+            amountCharged: parseInt(amountCharged),
+            amountPaid: parseInt(amountPaid),
             supplierId
         }
 
-        addSupply(formData, navigate, setIsLoading)
+        console.log(JSON.stringify(formData))
+
+        addSupply(JSON.stringify(formData), navigate, setIsLoading, id)
 
     }
     const balance = parseInt(amountPaid) - parseInt(amountCharged)

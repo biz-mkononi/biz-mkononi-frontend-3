@@ -6,7 +6,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { getSupplies } from '../../Data/Supplies/Data';
 
 
-const SuppliesList = () => {
+const SuppliesList = ({ id }: any) => {
     const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "long", day: "numeric" }
     const navigate = useNavigate()
     const [data, setData] = useState<any[]>([])
@@ -20,7 +20,7 @@ const SuppliesList = () => {
     const indexOfFirstPost = indexOfLastPost - postsPerPage
     const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost)
     useEffect(() => {
-        getSupplies(setData, setIsLoading)
+        getSupplies(setData, setIsLoading, id)
     }, [])
 
     const onClick = (id: any) => {

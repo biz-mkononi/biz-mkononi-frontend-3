@@ -14,7 +14,7 @@ interface data {
     description: "",
     date: ""
 }
-const SupplierDetails = () => {
+const SupplierDetails = ({ id }: any) => {
     const [open, setOpen] = useState(false)
 
     const navigate = useNavigate()
@@ -24,7 +24,7 @@ const SupplierDetails = () => {
 
     const params = useParams()
     useEffect(() => {
-        getSingleSupplier(setData, params.id, setIsloading, setFormData)
+        getSingleSupplier(setData, params.id, setIsloading, setFormData, id)
 
 
     }, [location]);
@@ -35,7 +35,7 @@ const SupplierDetails = () => {
         setOpen(false)
     }
     const handleDelete = () => {
-        deleteSupplier(navigate, params.id, setIsloading)
+        deleteSupplier(navigate, params.id, setIsloading, id)
         setOpen(false)
     }
     return (

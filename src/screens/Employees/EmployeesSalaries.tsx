@@ -5,7 +5,7 @@ import { getSalaries } from "../../Data/Salaries/Data"
 import { useNavigate } from "react-router-dom"
 import CircularProgress from '@mui/material/CircularProgress';
 
-const EmployeesSalaries = () => {
+const EmployeesSalaries = ({ id }: any) => {
     const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "long", day: "numeric" }
     const navigate = useNavigate()
     const [data, setData] = useState<any[]>([])
@@ -19,7 +19,7 @@ const EmployeesSalaries = () => {
     const indexOfFirstPost = indexOfLastPost - postsPerPage
     const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost)
     useEffect(() => {
-        getSalaries(setData, setIsLoading)
+        getSalaries(setData, setIsLoading, id)
     }, [])
 
     console.log(data)

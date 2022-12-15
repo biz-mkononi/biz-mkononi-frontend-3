@@ -1,26 +1,23 @@
-import { url } from "../Auth/Data";
 import { reqInstance } from "../Auth/authHelper";
-const businessId = JSON.parse(localStorage.getItem("businessId")!)
+import { newUrl } from "../Sales/Data";
 
-const newUrl = `${url}/businesses/${businessId.id}`
-
-const addEmployee = (post:any,navigate:any,setIsLoading:any) => {
+const addEmployee = (post:any,navigate:any,setIsLoading:any,id:any) => {
   setIsLoading(true)
-    reqInstance.post(`${newUrl}/employees`,post)
+    reqInstance.post(`${newUrl}/${id}/employees`,post)
     .then(() => navigate ('/employees/list'))
 }
-const getEmployees = (setData:any,setIsLoading:any) => {
+const getEmployees = (setData:any,setIsLoading:any,id:any) => {
   setIsLoading(true)
-  reqInstance.get(`${newUrl}/employees`)
+  reqInstance.get(`${newUrl}/${id}/employees`)
   .then ((data) => {
     setData(data.data.rows)
   } )
   .then(() => setIsLoading(false))
 }
 
-const getSingleEmployee = (setData:any,id:any,setIsLoading:any,setFormData:any) => {
+const getSingleEmployee = (setData:any,id:any,setIsLoading:any,setFormData:any,businessid:any) => {
   setIsLoading(true)
-  reqInstance.get(`${newUrl}/employees/${id}`)
+  reqInstance.get(`${newUrl}/${businessid}/employees/${id}`)
   .then ((data) =>{
     setFormData({ name: data.data.name, phone: data.data.phone, email: data.data.email, idNumber: data.data.idNumber, position: data.data.position }
       )
@@ -28,15 +25,15 @@ const getSingleEmployee = (setData:any,id:any,setIsLoading:any,setFormData:any) 
   } )
   .then(() => setIsLoading(false))
 }
-const updateSingleEmployee = (post:any,id:any,navigate:any,setIsLoading:any) => {
+const updateSingleEmployee = (post:any,id:any,navigate:any,setIsLoading:any,businessid:any) => {
   setIsLoading(true)
-  reqInstance.put(`${newUrl}/employees/${id}`,post)
+  reqInstance.put(`${newUrl}/${businessid}/employees/${id}`,post)
   .then((err) => console.log(err))
   .then(() => navigate('/employees/list'))
 }
-const deleteEmployee  = async (navigate:any,id:any,setIsLoading:any) => {
+const deleteEmployee  = async (navigate:any,id:any,setIsLoading:any,businessid:any) => {
   setIsLoading(true)
-  await reqInstance.delete(`${newUrl}/employees/${id}`)
+  await reqInstance.delete(`${newUrl}/${businessid}/employees/${id}`)
   .then (() => navigate('/employees/list'))
   .then(() => setIsLoading(false))
 }
@@ -47,6 +44,4 @@ export {
     deleteEmployee,
     getSingleEmployee,
   updateSingleEmployee,
-    newUrl,
-    businessId
 }

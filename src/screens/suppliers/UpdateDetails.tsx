@@ -20,7 +20,7 @@ interface data {
     description: "",
 }
 
-const UpdateSupplierDetails = () => {
+const UpdateSupplierDetails = ({ id }: any) => {
     const [data, setData] = useState<data | any>({})
     const [isLoading, setIsloading] = useState(false)
     const [isUpdating, setIsUpdating] = useState(false)
@@ -32,7 +32,7 @@ const UpdateSupplierDetails = () => {
     const params = useParams()
 
     useEffect(() => {
-        getSingleSupplier(setData, params.id, setIsloading, setFormData)
+        getSingleSupplier(setData, params.id, setIsloading, setFormData, id)
 
     }, [location]);
 
@@ -48,7 +48,7 @@ const UpdateSupplierDetails = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        updateSingleSupplier(formData, navigate, params.id, setIsUpdating)
+        updateSingleSupplier(formData, navigate, params.id, setIsUpdating, id)
     }
     console.log(formData)
     return (

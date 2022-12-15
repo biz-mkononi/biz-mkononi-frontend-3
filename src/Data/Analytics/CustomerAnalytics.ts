@@ -1,9 +1,6 @@
 import { reqInstance } from "../Auth/authHelper";
-import {businessId} from "../Employees/Data"
 import { now,d, prevDate, firstDay } from "./SalesAnalytics";
-import { url } from "../Auth/Data";
-
-const newUrl = `${url}/businesses`
+import { newUrl } from "../Sales/Data";
 
 const getTotalCustomers= (setData:any,setIsLoading:any,id:any) => {
     setIsLoading(true)

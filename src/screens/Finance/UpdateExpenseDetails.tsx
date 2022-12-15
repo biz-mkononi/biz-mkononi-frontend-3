@@ -23,7 +23,7 @@ interface data {
     description: "",
 }
 
-const UpdateExpenseDetails = () => {
+const UpdateExpenseDetails = ({ id }: any) => {
     const [data, setData] = useState<data | any>({})
     const [isLoading, setIsloading] = useState(false)
     const [isUpdating, setIsUpdating] = useState(false)
@@ -47,7 +47,7 @@ const UpdateExpenseDetails = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        updateSingleExpense(formData, params.id, navigate, setIsUpdating)
+        updateSingleExpense(formData, params.id, navigate, setIsUpdating, id)
     }
 
 
@@ -55,7 +55,7 @@ const UpdateExpenseDetails = () => {
     const params = useParams()
 
     useEffect(() => {
-        getSingleExpense(setData, params.id, setIsloading, setFormData)
+        getSingleExpense(setData, params.id, setIsloading, setFormData, id)
 
 
     }, [location])

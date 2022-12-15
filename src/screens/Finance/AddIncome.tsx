@@ -11,7 +11,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-const AddIncome = () => {
+const AddIncome = ({ id }: any) => {
 
     const navigate = useNavigate()
     const initialState = { title: "", amount: "", txDate: "", description: "" }
@@ -35,7 +35,7 @@ const AddIncome = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        addIncome(formData, setIsLoading, navigate)
+        addIncome(formData, setIsLoading, navigate, id)
     }
 
     return (

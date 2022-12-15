@@ -12,7 +12,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-const PayEmployee = () => {
+const PayEmployee = ({ id }: any) => {
 
     const navigate = useNavigate()
     const initialState = { employeeId: "", amount: "", txDate: "", description: "" }
@@ -25,7 +25,7 @@ const PayEmployee = () => {
 
 
     useEffect(() => {
-        getEmployees(setEmployees, setIsLoading)
+        getEmployees(setEmployees, setIsLoading, id)
     }, [])
     const handleDateChange = (newValue: Dayjs | any) => {
         setValue(newValue);
@@ -43,7 +43,7 @@ const PayEmployee = () => {
     }
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        addSalary(formData, navigate, setIsLoading)
+        addSalary(formData, navigate, setIsLoading, id)
 
     }
     console.log(formData)

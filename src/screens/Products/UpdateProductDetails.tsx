@@ -27,7 +27,7 @@ interface data {
     stock: ""
 }
 
-const UpdateProductDetails = () => {
+const UpdateProductDetails = ({ id }: any) => {
     const [data, setData] = useState<data | any>({})
     const [isLoading, setIsloading] = useState(false)
     const [isUpdating, setIsUpdating] = useState(false)
@@ -42,8 +42,8 @@ const UpdateProductDetails = () => {
     const params = useParams()
 
     useEffect(() => {
-        getSingleProduct(setData, params.id, setIsloading, setCategory, setFormData)
-        getCategory(setCategories, setIsloading)
+        getSingleProduct(setData, params.id, setIsloading, setCategory, setFormData, id)
+        getCategory(setCategories, setIsloading, id)
     }, [location]);
 
 
@@ -66,7 +66,7 @@ const UpdateProductDetails = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        updateSingleProduct(formData, navigate, params.id, setIsUpdating)
+        updateSingleProduct(formData, navigate, params.id, setIsUpdating, id)
 
     }
     console.log(formData)

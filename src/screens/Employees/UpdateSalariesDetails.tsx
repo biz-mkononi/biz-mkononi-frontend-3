@@ -22,7 +22,7 @@ interface data {
     description: "",
 }
 
-const UpdateSalariesDetails = () => {
+const UpdateSalariesDetails = ({ id }: any) => {
     const [data, setData] = useState<data | any>({})
     const [isLoading, setIsloading] = useState(false)
     const [isUpdating, setIsUpdating] = useState(false)
@@ -34,8 +34,8 @@ const UpdateSalariesDetails = () => {
 
 
     useEffect(() => {
-        getEmployees(setEmployees, setIsloading)
-        getSingleSalary(setData, params.id, setIsloading, setCurrentEmployee, setFormData)
+        getEmployees(setEmployees, setIsloading, id)
+        getSingleSalary(setData, params.id, setIsloading, setCurrentEmployee, setFormData, id)
     }, [])
     const handleDateChange = (newValue: Dayjs | any) => {
         setValue(newValue);
@@ -59,7 +59,7 @@ const UpdateSalariesDetails = () => {
     }
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        updateSingleSalary(formData, navigate, params.id, setIsUpdating)
+        updateSingleSalary(formData, navigate, params.id, setIsUpdating, id)
 
     }
     console.log(formData)

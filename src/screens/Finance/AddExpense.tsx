@@ -10,7 +10,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { addExpense } from '../../Data/Expenses/Data';
-const AddExpense = () => {
+const AddExpense = ({ id }: any) => {
 
     const navigate = useNavigate()
     const initialState = { title: "", amount: "", txDate: "", description: "" }
@@ -34,7 +34,7 @@ const AddExpense = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        addExpense(formData, setIsLoading, navigate)
+        addExpense(formData, setIsLoading, navigate, id)
     }
 
     return (

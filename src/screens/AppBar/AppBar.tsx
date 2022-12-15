@@ -51,7 +51,7 @@ const TopBar = () => {
     };
 
     const logout = () => {
-        localStorage.removeItem("user")
+        localStorage.clear()
         setLoggedUser(false)
         navigate("/auth/login")
     }

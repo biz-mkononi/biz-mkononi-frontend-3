@@ -12,7 +12,7 @@ interface data {
     description: "",
     date: ""
 }
-const CategoryDetails = () => {
+const CategoryDetails = ({ id }: any) => {
     const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "long", day: "numeric", hour: '2-digit', minute: '2-digit' }
     const [open, setOpen] = useState(false)
 
@@ -25,7 +25,7 @@ const CategoryDetails = () => {
 
     const params = useParams()
     useEffect(() => {
-        getSingleCategory(setData, params.id, setIsloading, setFormData)
+        getSingleCategory(setData, params.id, setIsloading, setFormData, id)
 
 
     }, [location]);
@@ -36,7 +36,7 @@ const CategoryDetails = () => {
         setOpen(false)
     }
     const handleDelete = () => {
-        deleteCategory(navigate, params.id, setIsloading)
+        deleteCategory(navigate, params.id, setIsloading, id)
         setOpen(false)
     }
     return (

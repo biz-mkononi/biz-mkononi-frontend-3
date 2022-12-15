@@ -19,7 +19,7 @@ interface data {
     description: "",
 }
 
-const UpdateCategories = () => {
+const UpdateCategories = ({ id }: any) => {
     const [data, setData] = useState<data | any>({})
     const [isLoading, setIsloading] = useState(false)
     const [isUpdating, setIsUpdating] = useState(false)
@@ -32,7 +32,7 @@ const UpdateCategories = () => {
     const params = useParams()
 
     useEffect(() => {
-        getSingleCategory(setData, params.id, setIsloading, setFormData)
+        getSingleCategory(setData, params.id, setIsloading, setFormData, id)
 
     }, [location]);
 
@@ -50,7 +50,7 @@ const UpdateCategories = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        updateSingleCategory(formData, navigate, params.id, setIsUpdating)
+        updateSingleCategory(formData, navigate, params.id, setIsUpdating, id)
 
     }
     return (

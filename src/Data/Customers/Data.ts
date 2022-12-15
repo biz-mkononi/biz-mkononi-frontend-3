@@ -1,43 +1,42 @@
 import { reqInstance } from "../Auth/authHelper";
-import {newUrl} from "../Employees/Data"
-
-const addCustomer = (post:any,navigate:any,setIsLoading:any) => {
+import { newUrl } from "../Sales/Data";
+const addCustomer = (post:any,navigate:any,setIsLoading:any,id:any) => {
   setIsLoading(true)
-    reqInstance.post(`${newUrl}/customers`,post)
+    reqInstance.post(`${newUrl}/${id}/customers`,post)
     .then(() => navigate('/customers/list'))
 }
-const getCustomers = (setData:any,setIsLoading:any) => {
+const getCustomers = (setData:any,setIsLoading:any,id:any) => {
   setIsLoading(true)
-  reqInstance.get(`${newUrl}/customers`)
+  reqInstance.get(`${newUrl}/${id}/customers`)
   .then ((data) => setData(data.data.rows))
   .then (() => setIsLoading(false))
 }
 
-const sendCustomersSms = (post:any,setIsLoading:any,navigate:any) => {
+const sendCustomersSms = (post:any,setIsLoading:any,navigate:any,id:any) => {
   setIsLoading(true)
-  reqInstance.post(`${newUrl}/customers/sms`, JSON.stringify(post))
+  reqInstance.post(`${newUrl}/${id}/customers/sms`, post)
   .then (() => (navigate('/customers/list')))
   .then (() => setIsLoading(false))
 }
 
-const getSingleCustomer  = async (setData:any,id:any,setIsLoading:any,setFormData:any) => {
+const getSingleCustomer  = async (setData:any,id:any,setIsLoading:any,setFormData:any,businessid:any) => {
   setIsLoading(true)
-  await reqInstance.get(`${newUrl}/customers/${id}`)
+  await reqInstance.get(`${newUrl}/${businessid}/customers/${id}`)
   .then ((data) => {
     setFormData({name: data.data.name, email: data.data.email, phone: data.data.phone, description: data.data.description, yearOfBirth: data.data.yearOfBirth, gender: data.data.gender})
     setData(data.data)
   } )
   .then(() => setIsLoading(false))
 }
-const updateSingleCustomer  = async (post:any,id:any,navigate:any,setIsLoading:any) => {
+const updateSingleCustomer  = async (post:any,id:any,navigate:any,setIsLoading:any,businessid:any) => {
   setIsLoading(true)
-  await reqInstance.put(`${newUrl}/customers/${id}`,post)
+  await reqInstance.put(`${newUrl}/${businessid}/customers/${id}`,post)
   .then(() => navigate('/customers/list'))
 }
 
-const deleteCustomer  = async (navigate:any,id:any,setIsLoading:any) => {
+const deleteCustomer  = async (navigate:any,id:any,setIsLoading:any,businessid:any) => {
   setIsLoading(true)
-  await reqInstance.delete(`${newUrl}/customers/${id}`)
+  await reqInstance.delete(`${newUrl}/${businessid}/customers/${id}`)
   .then (() => navigate('/customers/list'))
   .then(() => setIsLoading(false))
 }

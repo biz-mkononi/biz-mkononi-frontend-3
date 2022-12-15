@@ -19,7 +19,7 @@ interface data {
     sellingPrice: "",
     stock: ""
 }
-const ProductDetails = () => {
+const ProductDetails = ({ id }: any) => {
     const [open, setOpen] = useState(false)
     const navigate = useNavigate()
     const [data, setData] = useState<data | any>({})
@@ -29,7 +29,7 @@ const ProductDetails = () => {
 
     const params = useParams()
     useEffect(() => {
-        getSingleProduct(setData, params.id, setIsloading, setCategory, setFormData)
+        getSingleProduct(setData, params.id, setIsloading, setCategory, setFormData, id)
 
 
     }, [location]);
@@ -40,7 +40,7 @@ const ProductDetails = () => {
         setOpen(false)
     }
     const handleDelete = () => {
-        deleteProduct(navigate, params.id, setIsloading)
+        deleteProduct(navigate, params.id, setIsloading, id)
         setOpen(false)
     }
     return (

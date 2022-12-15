@@ -1,22 +1,21 @@
 import { reqInstance } from "../Auth/authHelper";
-import {newUrl} from "../Employees/Data"
-
-const addSalary = (post:any,navigate:any,setIsLoading:any) => {
+import { newUrl } from "../Sales/Data";
+const addSalary = (post:any,navigate:any,setIsLoading:any,id:any) => {
   setIsLoading(true)
-    reqInstance.post(`${newUrl}/salaries`,post)
+    reqInstance.post(`${newUrl}/${id}/salaries`,post)
     .then (() => navigate ('/employees/salaries'))
     .then (() => setIsLoading(false))
 
 }
-const getSalaries = (setData:any,setIsLoading:any) => {
+const getSalaries = (setData:any,setIsLoading:any,id:any) => {
   setIsLoading(true)
-  reqInstance.get(`${newUrl}/salaries`)
+  reqInstance.get(`${newUrl}/${id}/salaries`)
   .then ((data) => setData(data.data.rows))
   .then (() => setIsLoading(false))
 }
-const getSingleSalary = async (setData:any,id:any,setIsLoading:any,setEmployee:any,setFormData:any) => {
+const getSingleSalary = async (setData:any,id:any,setIsLoading:any,setEmployee:any,setFormData:any,businessid:any) => {
   setIsLoading(true)
-  await reqInstance.get(`${newUrl}/salaries/${id}`)
+  await reqInstance.get(`${newUrl}/${businessid}/salaries/${id}`)
   .then ((data) =>{
     setData(data.data)
     setEmployee(data.data.employee)
@@ -25,15 +24,15 @@ const getSingleSalary = async (setData:any,id:any,setIsLoading:any,setEmployee:a
   .then(() => setIsLoading(false))
 }
 
-const updateSingleSalary  = async (post:any,navigate:any,id:any,setIsLoading:any) => {
+const updateSingleSalary  = async (post:any,navigate:any,id:any,setIsLoading:any,businessid:any) => {
   setIsLoading(true)
-  await reqInstance.put(`${newUrl}/salaries/${id}`,post)
+  await reqInstance.put(`${newUrl}/${businessid}/salaries/${id}`,post)
   .then (() => navigate('/employees/salaries'))
   .then(() => setIsLoading(false))
 }
-const deleteSalary  = async (navigate:any,id:any,setIsLoading:any) => {
+const deleteSalary  = async (navigate:any,id:any,setIsLoading:any,businessid:any) => {
   setIsLoading(true)
-  await reqInstance.delete(`${newUrl}/salaries/${id}`)
+  await reqInstance.delete(`${newUrl}/${businessid}/salaries/${id}`)
   .then (() => navigate('/employees/salaries'))
   .then(() => setIsLoading(false))
 }

@@ -13,7 +13,7 @@ interface data {
     description: "",
     date: ""
 }
-const EmployeeDetails = () => {
+const EmployeeDetails = ({ id }: any) => {
     const [open, setOpen] = useState(false)
     const navigate = useNavigate()
     const [data, setData] = useState<data | any>({})
@@ -22,7 +22,7 @@ const EmployeeDetails = () => {
 
     const params = useParams()
     useEffect(() => {
-        getSingleEmployee(setData, params.id, setIsloading, setFormData)
+        getSingleEmployee(setData, params.id, setIsloading, setFormData, id)
 
 
     }, [location]);
@@ -33,7 +33,7 @@ const EmployeeDetails = () => {
         setOpen(false)
     }
     const handleDelete = () => {
-        deleteEmployee(navigate, params.id, setIsloading)
+        deleteEmployee(navigate, params.id, setIsloading, id)
         setOpen(false)
     }
     return (

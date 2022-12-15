@@ -13,7 +13,7 @@ interface data {
     description: "",
     date: ""
 }
-const IncomeDetails = () => {
+const IncomeDetails = ({ id }: any) => {
     const [open, setOpen] = useState(false)
     const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "long", day: "numeric" }
 
@@ -25,11 +25,11 @@ const IncomeDetails = () => {
 
     const params = useParams()
     const handleDelete = () => {
-        deleteIncome(navigate, params.id, setIsloading)
+        deleteIncome(navigate, params.id, setIsloading, id)
         setOpen(false)
     }
     useEffect(() => {
-        getSingleIncome(setData, params.id, setIsloading, setFormData)
+        getSingleIncome(setData, params.id, setIsloading, setFormData, id)
 
 
     }, [location]);

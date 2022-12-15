@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"
 import CircularProgress from '@mui/material/CircularProgress';
 
 
-const SuppliersList = () => {
+const SuppliersList = ({ id }: any) => {
     const navigate = useNavigate()
     const [data, setData] = useState<any[]>([])
     const [isLoading, setIsLoading] = useState(false)
@@ -19,7 +19,7 @@ const SuppliersList = () => {
     const indexOfFirstPost = indexOfLastPost - postsPerPage
     const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost)
     useEffect(() => {
-        getSuppliers(setData, setIsLoading)
+        getSuppliers(setData, setIsLoading, id)
     }, [])
 
     console.log(data)

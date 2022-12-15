@@ -26,7 +26,7 @@ const Overview = () => {
     const [mostActive, setMostActive] = useState<any[]>([])
     const [newCustomers, setNewCustomers] = useState<any>({})
     const { open, businessId } = useContext(DataContext)
-
+    console.log(businessId)
 
     useEffect(() => {
         getSalesTrend(setSalesTrend, setIsLoading, businessId)

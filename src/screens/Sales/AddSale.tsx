@@ -9,10 +9,9 @@ import { getProducts } from '../../Data/Products/Data';
 import "../Businesses/AddBusiness.css"
 import { addSale } from '../../Data/Sales/Data';
 import { useNavigate } from 'react-router-dom';
-import { businessId } from '../../Data/Employees/Data';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
-const AddSale = () => {
+const AddSale = ({ id }: any) => {
     const navigate = useNavigate()
     const [customers, setCustomers] = useState<any[]>([])
     const [products, setProducts] = useState<any[]>([])
@@ -24,8 +23,8 @@ const AddSale = () => {
     const [customerId, setCustomer] = useState("")
 
     useEffect(() => {
-        getCustomers(setCustomers, setIsLoading)
-        getProducts(setProducts, setIsLoading)
+        getCustomers(setCustomers, setIsLoading, id)
+        getProducts(setProducts, setIsLoading, id)
     }, [price])
 
     const handleCustomerChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -56,10 +55,10 @@ const AddSale = () => {
             totalAmount,
             amountCharged,
             amountPaid,
-            businessId: businessId.id
+            businessId: id
         }
         console.log(data)
-        addSale(data, navigate)
+        addSale(data, navigate, id)
 
     }
     const balance = parseInt(amountPaid) - parseInt(amountCharged)
