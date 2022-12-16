@@ -38,5 +38,14 @@ const reqInstance:AxiosInstance = axios.create({
 }
 )
 
-export { auth,reqInstance,user };
+const reqInstance2:AxiosInstance = axios.create({
+
+  headers: {
+    Authorization: `Bearer ${instance()}` 
+}
+
+}
+)
+
+export { auth,reqInstance,reqInstance2,user };
 

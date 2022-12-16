@@ -58,7 +58,7 @@ const SalesList = ({ id }: any) => {
                                             <td>
                                                 <div style={{ display: "flex" }}>
                                                     <button className="btn btn-warning btn-sm ml-2" onClick={(() => { onClick(sale.id) })}>View</button>
-                                                    <button className="btn btn-success btn-sm ml-2" onClick={(() => navigate(`/sale/${sale.id}/update-details`))}>Edit</button>
+                                                    <button className="btn btn-success btn-sm ml-2" onClick={(() => navigate(`/sales/${sale.id}/update-details`))}>Edit</button>
                                                 </div>
 
                                             </td>
@@ -71,7 +71,7 @@ const SalesList = ({ id }: any) => {
 
                         </table>
                         <div className="mt-5 text-center">
-                            <Pagination className='text-center' count={Math.floor(data.length / postsPerPage)} onChange={handleChange} color="secondary" />
+                            <Pagination className='text-center' count={Math.ceil(data.length / postsPerPage)} onChange={handleChange} color="secondary" />
                         </div>
                     </div>
             }

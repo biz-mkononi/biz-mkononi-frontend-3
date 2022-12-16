@@ -87,7 +87,7 @@ const BusinessList = () => {
 
                         </table>
                         <div className="mt-5 text-center">
-                            <Pagination className='text-center' count={Math.floor(data.length / 3)} onChange={handleChange} color="secondary" />
+                            <Pagination className='text-center' count={Math.ceil(data.length / postsPerPage)} onChange={handleChange} color="secondary" />
                         </div>
                     </div>
             }

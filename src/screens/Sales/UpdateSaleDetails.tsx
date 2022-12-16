@@ -2,39 +2,48 @@ import React, { useState, useEffect } from 'react';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import PersonIcon from '@mui/icons-material/Person';
 import ScaleIcon from '@mui/icons-material/Scale';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Card } from '@mui/material';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { getCustomers } from '../../Data/Customers/Data';
 import { getProducts } from '../../Data/Products/Data';
 import "../Businesses/AddBusiness.css"
-import { addSale } from '../../Data/Sales/Data';
-import { useNavigate } from 'react-router-dom';
-import { getSuppliers } from '../../Data/Suppliers/Data';
-import { addSupply } from '../../Data/Supplies/Data';
+import { addSale, getSingleSale } from '../../Data/Sales/Data';
+import { useNavigate, useParams } from 'react-router-dom';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
-const AddSupply = ({ id }: any) => {
+interface data {
+    name: "",
+    description: "",
+    date: ""
+}
+const UpdateSale = ({ id }: any) => {
     const navigate = useNavigate()
-    const [suppliers, setSuppliers] = useState<any[]>([])
+    const [data, setData] = useState<data | any>({})
+    const [customerSale, setCustomerSale] = useState<data | any>({})
+    const [product, setProduct] = useState<data | any>([])
+    const [customers, setCustomers] = useState<any[]>([])
     const [products, setProducts] = useState<any[]>([])
     const [isLoading, setIsLoading] = useState(false)
     const [price, setPrice] = useState("0")
-    const [productId, setProductId] = useState("")
     const [amountCharged, setAmountCharged] = useState("0")
     const [amountPaid, setAmountPaid] = useState("0")
     const [totalAmount, setTotalAmount] = useState("0")
-    const [supplierId, setSupplierId] = useState("")
+    const [customerId, setCustomer] = useState("")
+    const [productId,setProductId] = useState()
     const [quantity, setQuantity] = useState("")
-
+    const params = useParams()
     useEffect(() => {
-        getSuppliers(setSuppliers, setIsLoading, id)
+        getCustomers(setCustomers, setIsLoading, id)
         getProducts(setProducts, setIsLoading, id)
-    }, [])
+        getSingleSale(setData, setCustomerSale, setProduct, params.id, setIsLoading, id)
+    }, [price,isLoading])
 
-    const handleSupplierChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSupplierId(e.target.value)
+    const handleCustomerChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setCustomer(e.target.value)
     }
     const handlePriceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         let obj = JSON.parse(e.target.value)
-        setPrice(obj.buyingPrice)
+        setPrice(obj.sellingPrice)
         setProductId(obj.id)
     }
 
@@ -54,50 +63,57 @@ const AddSupply = ({ id }: any) => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        const supplyItems = [{
+
+        const items = [{
             productId,
-            supplyPrice: price,
+            salePrice: price,
             quantity: parseInt(quantity)
         }]
 
         const formData = {
-            supplyItems: supplyItems.map((item: any) => {
+            saleItems: items.map((item: any) => {
                 return {
                     productId: item.productId,
-                    supplyPrice: item.supplyPrice,
+                    salePrice: item.salePrice,
                     quantity: parseInt(item.quantity)
                 }
             }),
             amountCharged: parseInt(amountCharged),
             amountPaid: parseInt(amountPaid),
-            supplierId
+            customerId
         }
 
 
-        addSupply(formData, navigate, setIsLoading, id)
+        addSale(formData, navigate, setIsLoading, id)
 
     }
+    // console.log(product.quantity)
     const balance = parseInt(amountPaid) - parseInt(amountCharged)
-    console.log(productId)
     return (
         <div className='add-business container p-4 '>
-            <h2 className='mb-3'>Add a Supply</h2>
+               <h2 className='mb-3'>Update Sale Details</h2>
+                        <div className="row padding">
+                            <div className="col-lg-6">
+                                <div className='details-button' style={{ display: "flex" }}>
+                                    <button className='btn btn-secondary btn-md' onClick={(() => navigate(-1))}> Back</button>
+                                    <button className='btn btn-primary btn-md' onClick={(() => navigate(`/categories/${params.id}/details`))}>Manage</button>
+                                </div>
+                            </div>
 
-            <hr className="light mb-3" />
-            <p className="mb-4">Add a new Supply</p>
+                        </div>
             <Card className='p-3'>
                 <form onSubmit={onSubmit}>
                     <div className="row padding mt-3">
                         <div className="col-lg-6">
-                            <label htmlFor="basic-url" className="form-label">supplier</label>
+                            <label htmlFor="basic-url" className="form-label">Customer</label>
                             <div className="input-group mb-5">
                                 <span className="input-group-text" id="basic-addon1"><PersonIcon /></span>
-                                <select className="form-select" onChange={handleSupplierChange} name="category" aria-label="Default select example" id="basic-addon1">
-                                    <option selected>Select supplier</option>
-                                    {suppliers.map((supplier) => {
+                                <select className="form-select" onChange={handleCustomerChange} name="category" aria-label="Default select example" id="basic-addon1">
+                                    <option selected>{customerSale.name}</option>
+                                    {customers.map((customer) => {
                                         return (
-                                            <option value={supplier.id} key={supplier.id}>
-                                                {supplier.name}
+                                            <option value={customer.id} key={customer.id}>
+                                                {customer.name}
                                             </option>
                                         );
                                     })}
@@ -109,8 +125,9 @@ const AddSupply = ({ id }: any) => {
                             <div className="input-group mb-5">
                                 <span className="input-group-text" id="basic-addon1"><ProductionQuantityLimitsIcon /></span>
                                 <select className="form-select" onChange={handlePriceChange} name="category" aria-label="Default select example" id="basic-addon1">
-                                    <option selected>Select product</option>
-                                    {products.map((product, index) => {
+                                    <option selected>{product.name}</option>
+                                    {products.map((product,index) => {
+
                                         return (
                                             <option value={JSON.stringify(product)} key={index}>
                                                 {product.name}
@@ -129,14 +146,14 @@ const AddSupply = ({ id }: any) => {
                             <label htmlFor="basic-url" className="form-label ">Quantity</label>
                             <div className="input-group mb-5">
                                 <span className="input-group-text" id="basic-addon1"><ScaleIcon /></span>
-                                <input type="text" onChange={handleQuantityChange} name="location" className="form-control" placeholder="quantity" aria-label="Username" aria-describedby="basic-addon1" />
+                                <input type="text" value={quantity} onChange={handleQuantityChange} name="location" className="form-control" placeholder="quantity" aria-label="Username" aria-describedby="basic-addon1" />
                             </div>
                         </div>
                         <div className="col-lg-6">
                             <label htmlFor="basic-url" className="form-label">Item Price</label>
                             <div className="input-group mb-5">
                                 <span className="input-group-text" id="basic-addon1"><AttachMoneyIcon /></span>
-                                <input type="text" value={price} name="locationDetails" className="form-control" placeholder="details" aria-label="Username" aria-describedby="basic-addon1" />
+                                <input type="text"  value={price}  name="locationDetails" className="form-control" placeholder="details" aria-label="Username" aria-describedby="basic-addon1" />
                             </div>
                         </div>
 
@@ -163,11 +180,7 @@ const AddSupply = ({ id }: any) => {
 
                     </div>
                     <div className="text-center mt-3">
-                        {
-                            isLoading ? <button className="btn btn-success btn-md" disabled>Adding</button> :
-                                <button className="btn btn-success btn-md">Add Supply</button>
-                        }
-
+                        <button className="btn btn-success btn-md"disabled={isLoading?true:false} > {isLoading?"Adding":"Update Sale"} </button>
                     </div>
 
                 </form>
@@ -176,4 +189,4 @@ const AddSupply = ({ id }: any) => {
     )
 }
 
-export default AddSupply
+export default UpdateSale

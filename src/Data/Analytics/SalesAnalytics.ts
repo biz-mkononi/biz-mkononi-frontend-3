@@ -1,7 +1,7 @@
 import { reqInstance } from "../Auth/authHelper";
 import { newUrl } from "../Sales/Data";
 var d = new Date();
-    d.setMonth(d.getMonth() - 1);
+    d.setFullYear(d.getFullYear() - 1);
     d.setHours(0, 0, 0, 0);
 
 var now = new Date ()

@@ -21,6 +21,8 @@ const AddSale = ({ id }: any) => {
     const [amountPaid, setAmountPaid] = useState("0")
     const [totalAmount, setTotalAmount] = useState("0")
     const [customerId, setCustomer] = useState("")
+    const [productId,setProductId] = useState("")
+    const [quantity, setQuantity] = useState("")
 
     useEffect(() => {
         getCustomers(setCustomers, setIsLoading, id)
@@ -31,7 +33,9 @@ const AddSale = ({ id }: any) => {
         setCustomer(e.target.value)
     }
     const handlePriceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setPrice(e.target.value)
+        let obj = JSON.parse(e.target.value)
+        setPrice(obj.sellingPrice)
+        setProductId(obj.id)
     }
 
     const handleAmountChargedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,6 +46,7 @@ const AddSale = ({ id }: any) => {
     }
 
     const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setQuantity(e.target.value)
         setAmountCharged((parseInt(e.target.value) * parseFloat(price)).toString())
         setAmountPaid((parseInt(e.target.value) * parseFloat(price)).toString())
         setTotalAmount((parseInt(e.target.value) * parseFloat(price)).toString())
@@ -50,15 +55,27 @@ const AddSale = ({ id }: any) => {
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        const data = {
-            customerId,
-            totalAmount,
-            amountCharged,
-            amountPaid,
-            businessId: id
+        const items = [{
+            productId,
+            salePrice: price,
+            quantity: parseInt(quantity)
+        }]
+
+        const formData = {
+            saleItems: items.map((item: any) => {
+                return {
+                    productId: item.productId,
+                    salePrice: item.salePrice,
+                    quantity: parseInt(item.quantity)
+                }
+            }),
+            amountCharged: parseInt(amountCharged),
+            amountPaid: parseInt(amountPaid),
+            customerId
         }
-        console.log(data)
-        addSale(data, navigate, id)
+
+
+        addSale(formData, navigate, setIsLoading, id)
 
     }
     const balance = parseInt(amountPaid) - parseInt(amountCharged)
@@ -93,10 +110,10 @@ const AddSale = ({ id }: any) => {
                                 <span className="input-group-text" id="basic-addon1"><ProductionQuantityLimitsIcon /></span>
                                 <select className="form-select" onChange={handlePriceChange} name="category" aria-label="Default select example" id="basic-addon1">
                                     <option selected>Select product</option>
-                                    {products.map((product) => {
+                                    {products.map((product,index) => {
 
                                         return (
-                                            <option value={product.sellingPrice} key={product.id}>
+                                            <option value={JSON.stringify(product)} key={index}>
                                                 {product.name}
                                             </option>
 
@@ -147,7 +164,7 @@ const AddSale = ({ id }: any) => {
 
                     </div>
                     <div className="text-center mt-3">
-                        <button className="btn btn-success btn-md">Add Sale</button>
+                        <button className="btn btn-success btn-md"disabled={isLoading?true:false} > {isLoading?"Adding":"Add Sale"} </button>
                     </div>
 
                 </form>

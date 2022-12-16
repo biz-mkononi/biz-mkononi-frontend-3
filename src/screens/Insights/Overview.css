@@ -48,7 +48,35 @@
   margin-bottom: 30px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+.notfound h3 {
+  font-weight: 550;
+  font-size: 18px;
+  margin-top: 30% !important;
+}
+.notfound h4 {
+  font-weight: 510;
+  font-size: 17px;
+}
+.notfound {
+text-align: center !important;
+justify-content: center !important;
+}
+.notfound .Card {
+  padding: 40px;
+  background-color: #fff;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.notfound-card {
+  width: 440px;
+  padding: 20px;
 
+}
+.notfound-card h5 {
+  font-weight: 600;
+  color: #3282B8;
+  font-size: 17px;
+}
 
 @media only screen and (max-width: 1200px){
   .Card{

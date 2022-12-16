@@ -60,7 +60,7 @@ const SalesDetails = ({ id }: any) => {
                             <div className="col-lg-6">
                                 <div className='details-button' style={{ display: "flex" }}>
                                     <button className='btn btn-secondary btn-md' onClick={(() => navigate(-1))}> Back</button>
-                                    <button className='btn btn-warning btn-md' onClick={(() => navigate(`/expense/${params.id}/update-details`))}> Update</button>
+                                    <button className='btn btn-warning btn-md' onClick={(() => navigate(`/sales/${params.id}/update-details`))}> Update</button>
                                     <button className='btn btn-danger btn-md' onClick={onDelete}> Delete</button>
 
                                 </div>
