@@ -26,6 +26,8 @@ const SuppliesList = ({ id }: any) => {
     const onClick = (id: any) => {
         navigate(`/supplies/${id}/details`)
     }
+
+    console.log(data)
     return (
         <>
             {
@@ -69,7 +71,7 @@ const SuppliesList = ({ id }: any) => {
 
                         </table>
                         <div className="mt-5 text-center">
-                            <Pagination className='text-center' count={Math.floor(data.length / postsPerPage)} onChange={handleChange} color="secondary" />
+                            <Pagination className='text-center' count={Math.ceil(data.length / postsPerPage)} onChange={handleChange} color="secondary" />
                         </div>
                     </div>
             }

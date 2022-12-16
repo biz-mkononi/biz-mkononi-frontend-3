@@ -1,10 +1,11 @@
-import { reqInstance } from "../Auth/authHelper";
+import { reqInstance, reqInstance2 } from "../Auth/authHelper";
 import { url } from "../Auth/Data";
 
 const newUrl = `${url}/businesses`
 
-const addSale = (post:any,navigate:any,id:any) => {
-    reqInstance.post(`${newUrl}/${id}/sales`, JSON.stringify ({post}))
+const addSale = (post:any,navigate:any,setIsLoading:any,id:any) => {
+  setIsLoading(true)
+    reqInstance2.post(`${newUrl}/${id}/sales`, post)
     .then((data) => console.log(data))
     .then (() => navigate('/sales/list'))
 }

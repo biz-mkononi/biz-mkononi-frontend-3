@@ -94,6 +94,7 @@ const RoutesFile = () => {
     const SuppliesList = lazy(() => import('../screens/Supplies/SuppliesList'))
     const SuppliesDetails = lazy(() => import('../screens/Supplies/SuppliesDetails'))
     const AddSupply = lazy(() => import('../screens/Supplies/AddSupply'))
+    const UpdateSale = lazy(() => import('../screens/Sales/UpdateSaleDetails'))
     const RevenueInsights = lazy(() => import('../screens/Insights/RevenueInsights'))
 
     const theme = useTheme();
@@ -203,6 +204,9 @@ const RoutesFile = () => {
                                 } />
                                 <Route path='/sales/:id/details' element={
                                     <SalesDetails id={businessId} />
+                                } />
+                                <Route path='/sales/:id/update-details' element={
+                                    <UpdateSale id={businessId} />
                                 } />
                                 <Route path='/supplies/add' element={
                                     <AddSupply id={businessId} />

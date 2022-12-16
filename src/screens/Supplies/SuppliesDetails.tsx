@@ -47,7 +47,7 @@ const SuppliesDetails = ({ id }: any) => {
                     <div className="container p-3">
 
                         {
-                            open ? <AlertDialog open={open} handleClose={handleClose} title="this sale" handleDelete={handleDelete} /> : ""
+                            open ? <AlertDialog open={open} handleClose={handleClose} title="this supply" handleDelete={handleDelete} /> : ""
                         }
                         <div className="row padding">
                             <div className="col-lg-6">

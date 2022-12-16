@@ -12,7 +12,9 @@ import { getTotalProfits } from '../../Data/Analytics/ProfitsAnalytics';
 import CircularProgress from '@mui/material/CircularProgress';
 import { DataContext } from '../../context/ContextProvider';
 import { getSales } from '../../Data/Sales/Data';
-import image from "../../Assets/Startup life-pana-3 1.svg"
+import NotFound from '../NotFoundPage/NotFound';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+
 ChartJS.register(...registerables);
 const SalesInsights = () => {
     const [sales, setSales] = useState<any[]>([])
@@ -60,13 +62,14 @@ const SalesInsights = () => {
     console.log(sales)
     return (
         <div>
-            {
-                sales.length === 0 ?
-                    <img src={image} /> :
+            {isLoading ? <div className="text-center"><CircularProgress color="success" /></div>
+                 :
 
                     <>
                         {
-                            isLoading ? <div className="text-center"><CircularProgress color="success" /></div> :
+                            sales.length === 0 ?
+                            <NotFound icon={<AttachMoneyIcon/>} title="Sale" link='/sales/add' />
+                             :
                                 <div className='container-fluid overview'>
                                     <div className="insights container">
                                         <div className="row padding">
@@ -115,7 +118,7 @@ const SalesInsights = () => {
                                         <div className="row padding">
                                             <div className="col-lg-6 col-sm-12">
                                                 <Card className=" new-card">
-                                                    <h5 className="text-center mb-5">weekly sales in last one month</h5>
+                                                    <h5 className="text-center mb-5">weekly sales in last one year</h5>
                                                     <ResponsiveContainer width="95%" height={400}>
                                                         <BarChart
 
@@ -188,7 +191,7 @@ const SalesInsights = () => {
                                             </div>
                                             <div className="col-lg-6 col-sm-12">
                                                 <Card className="new-card">
-                                                    <h5 className="text-center mb-5">Partly Weekly sales in last one month</h5>
+                                                    <h5 className="text-center mb-5">Partly Weekly sales in last one year</h5>
                                                     <ResponsiveContainer width="95%" height={400}>
                                                         <BarChart
                                                             width={400}
