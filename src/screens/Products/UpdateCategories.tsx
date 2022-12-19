@@ -45,6 +45,12 @@ const UpdateCategories = ({ id }: any) => {
     const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            setFormData({...formData,[e.target.name]:e.target.files[0]})
+        }
+    }
+
 
 
 
@@ -86,7 +92,7 @@ const UpdateCategories = ({ id }: any) => {
                                         Click to set category image
                                         <img src={image} alt="" className='business-form-image' />
                                     </label>
-                                    <input className="form-control file " name='image' type="file" id="formFile" />
+                                    <input className="form-control file " onChange={handleFileChange} name='image' type="file" id="formFile" />
 
 
                                 </div>

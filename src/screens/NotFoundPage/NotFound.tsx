@@ -7,13 +7,13 @@ import { useNavigate } from 'react-router-dom';
 
 const NotFound = ({icon,title,link}:any) => {
     const navigate = useNavigate()
-    const {user,loggedUser} = useContext(DataContext)
+    const {user,loggedUser,userName} = useContext(DataContext)
   return (
     <div className='container notfound'>
         <div className="row padding">
             <div className="col-lg-6 mt-5">
-                <h3 className=' mt-5 mb-4'>Welcome, {user !== null && (user.json.user.name)}</h3>
-                <h4 >To setup your business effectively and smoothely,</h4>
+                <h3 className=' mt-5 mb-4'>Welcome, {user !== null && (userName)}</h3>
+                <h4 >To setup your business effectively and smoothly,</h4>
             </div>
             <div className="col-lg-6 text-right mt-3">
             <img src={image} alt="" />

@@ -13,8 +13,8 @@ isAuthenticated() {
 },
 authHeader() {
 
-  if (user && user.json.jwt) {
-    return { Authorization: 'Bearer ' + user.json.jwt };
+  if (user && user.data.jwt) {
+    return { Authorization: 'Bearer ' + user.data.jwt };
   } else {
     return {};
   }
@@ -22,7 +22,7 @@ authHeader() {
   };
 const instance =  () => {
   if (user) {
-    return user.json.jwt
+    return user.data.jwt
   }
 }
 

@@ -3,14 +3,12 @@ import BusinessIcon from '@mui/icons-material/Business';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import NotificationAddIcon from '@mui/icons-material/NotificationAdd';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import { Card } from '@mui/material';
 import "./AddBusiness.css"
 import BusinessList from './BusinessList';
 import { addBusiness } from '../../Data/Businesses/Data';
 import image from "../../Assets/placeholder.jpg"
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import { useNavigate } from 'react-router-dom';
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 
@@ -38,7 +36,10 @@ const AddBusiness = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({...formData,[e.target.name]:e.target.files[0]})
+        if (e.target.files) {
+            setFormData({...formData,[e.target.name]:e.target.files[0]})
+        }
+        
     }
 
     const onClickActive = () => {

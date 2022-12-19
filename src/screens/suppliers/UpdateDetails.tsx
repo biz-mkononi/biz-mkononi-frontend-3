@@ -46,7 +46,9 @@ const UpdateSupplierDetails = ({ id }: any) => {
     }
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.files[0] })
+        if (e.target.files) {
+            setFormData({...formData,[e.target.name]:e.target.files[0]})
+        }
     }
 
 

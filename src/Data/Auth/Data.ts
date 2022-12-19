@@ -46,13 +46,13 @@
       body: JSON.stringify(post),
     })
       .then((res) => res.json())
-      .then((json) => {
-        if (json.message) {
+      .then((data) => {
+        if (data.message) {
           setIsSignIn(false)
-          setErrors(json.message);
+          setErrors(data.message);
         } else {
           setLoggedUser(true)
-          localStorage.setItem("user", JSON.stringify({ json })); 
+          localStorage.setItem("user", JSON.stringify({ data })); 
         }
       })
       .then(() => navigate('/'))

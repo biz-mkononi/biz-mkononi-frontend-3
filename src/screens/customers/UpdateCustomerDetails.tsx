@@ -52,7 +52,9 @@ const UpdateCustomerDetails = ({ id }: any) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
     const handlFileeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.files[0] })
+        if (e.target.files) {
+            setFormData({...formData,[e.target.name]:e.target.files[0]})
+        }
     }
 
 
