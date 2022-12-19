@@ -6,7 +6,11 @@ const DataProvider = ({ children }: any) => {
   const [open, setOpen] = useState(true);
   const [business, setBusiness] = useLocalStorage("business", false);
   const user = useReadLocalStorage<any>("user")
-  const userName = user.data.user.name
+  let userName = ''
+
+  if (user !== null) {
+   userName = user.data.user.name
+  }
   const [businessId, setBusinessId] = useLocalStorage("businessID", null)
   const [loggedUser, setLoggedUser] = useLocalStorage("loggedUser", false);
 
