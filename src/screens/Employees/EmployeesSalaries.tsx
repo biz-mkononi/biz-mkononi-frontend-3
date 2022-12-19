@@ -67,7 +67,7 @@ const EmployeesSalaries = ({ id }: any) => {
 
                     </table>
                     <div className="mt-5 text-center">
-                        <Pagination className='text-center' count={Math.floor(data.length / postsPerPage)} onChange={handleChange} color="secondary" />
+                        <Pagination className='text-center' count={Math.ceil(data.length / postsPerPage)} onChange={handleChange} color="secondary" />
                     </div>
                 </div>
         }

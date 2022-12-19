@@ -73,7 +73,7 @@ const SalesDetails = ({ id }: any) => {
                         <div className="row padding">
                             <h2 className='mt-3'>Customer</h2>
                             <div className="col-lg-6">
-                                <img className='business-details-image ' src={image2} />
+                                <img className='business-details-image ' src={customer.imageUrl === null?image2:customer.imageUrl} />
                             </div>
 
                             <div className="col-lg-6">
@@ -112,7 +112,7 @@ const SalesDetails = ({ id }: any) => {
                         <div className="row padding">
                             <h2 className='mt-3'>Product</h2>
                             <div className="col-lg-6">
-                                <img className='business-details-image ' src={image2} />
+                                <img className='business-details-image ' src={product.imageUrl === null?image2:product.imageUrl} />
                             </div>
 
                             <div className="col-lg-6">

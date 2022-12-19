@@ -3,6 +3,9 @@ import { newUrl } from "../Sales/Data";
 var d = new Date();
     d.setFullYear(d.getFullYear() - 1);
     d.setHours(0, 0, 0, 0);
+var prevMonth = new Date();
+prevMonth.setMonth(prevMonth.getMonth() - 1);
+prevMonth.setHours(0, 0, 0, 0);
 
 var now = new Date ()
 
@@ -16,6 +19,22 @@ var firstDay = new Date(fd.getFullYear(), fd.getMonth(), 1);
 const getSalesTrend= (setData:any,setIsLoading:any,id:any) => {
     const data = {
         from:d.toISOString(),
+        to:now.toISOString(),
+        group:"day",
+      }
+      setIsLoading(true)
+  reqInstance.get(`${newUrl}/${id}/sales-analytics/sales-trend`, {params:data})
+  .then ((data) => {
+    const newSalesTrend = data.data.map((sale: any) => {
+        return { ...sale, group: new Date(sale.group).toLocaleDateString() }
+    })
+    setData(newSalesTrend)
+  })
+  .then(() => setIsLoading(false))
+}
+const getSalesInLastMonthTrend= (setData:any,setIsLoading:any,id:any) => {
+    const data = {
+        from:prevMonth.toISOString(),
         to:now.toISOString(),
         group:"day",
       }
@@ -130,8 +149,10 @@ export {
     getDailySales,
     getCurrentMonthSales,
     getCurrentSales,
+    getSalesInLastMonthTrend,
     prevDate,
     d,
     firstDay,
+    prevMonth,
     now
 }

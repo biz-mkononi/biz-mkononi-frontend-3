@@ -11,13 +11,16 @@ import { useNavigate } from 'react-router-dom';
 
 
 const NewEmployee = ({ id }: any) => {
-    const initialState = { name: "", phone: "", email: "", idNumber: "", position: "" }
+    const initialState = { name: "", phone: "", email: "", idNumber: "", position: "",image:{} }
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(false)
     const [formData, setFormData] = useState(initialState)
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
+    }
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({ ...formData, [e.target.name]: e.target.files[0] })
     }
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -81,7 +84,7 @@ const NewEmployee = ({ id }: any) => {
                             Click to set employee image
                             <img src={image} alt="" className='business-form-image' />
                         </label>
-                        <input className="form-control file " name='image' type="file" id="formFile" />
+                        <input className="form-control file " onChange={handleFileChange} name='image' type="file" id="formFile" />
 
 
                     </div>

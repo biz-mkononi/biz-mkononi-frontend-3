@@ -1,5 +1,5 @@
 import { reqInstance } from "../Auth/authHelper";
-import { now,d, prevDate, firstDay } from "./SalesAnalytics";
+import { now,d, prevDate, firstDay, prevMonth } from "./SalesAnalytics";
 import { newUrl } from "../Sales/Data";
 
 const getTotalCustomers= (setData:any,setIsLoading:any,id:any) => {
@@ -90,7 +90,7 @@ const getChurnCustomerRate= (setData:any,setIsLoading:any,id:any) => {
 const getMostActiveCustomers= (setData:any,setIsLoading:any,id:any) => {
     setIsLoading(true)
     const data = {
-        from:d.toISOString(),
+        from:prevMonth.toISOString(),
     to:now.toISOString(),
     limit:10
     }

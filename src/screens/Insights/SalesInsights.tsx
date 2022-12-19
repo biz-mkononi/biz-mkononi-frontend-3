@@ -6,7 +6,7 @@ import {
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables } from "chart.js";
 import "./Overview.css"
-import { getCurrentMonthSales, getCurrentSales, getDailySales, getRepeatCustomerRate, getSalesTrend, getTotalDatePartSales, getTotalSales } from '../../Data/Analytics/SalesAnalytics';
+import { getCurrentMonthSales, getCurrentSales, getDailySales, getRepeatCustomerRate, getSalesInLastMonthTrend, getSalesTrend, getTotalDatePartSales, getTotalSales } from '../../Data/Analytics/SalesAnalytics';
 import { getTotalSupplies, months } from '../../Data/Analytics/SuppliesAnalytics';
 import { getTotalProfits } from '../../Data/Analytics/ProfitsAnalytics';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -19,6 +19,7 @@ ChartJS.register(...registerables);
 const SalesInsights = () => {
     const [sales, setSales] = useState<any[]>([])
     const [salesTrend, setSalesTrend] = useState<any[]>([])
+    const [monthSalesTrend, setMonthSalesTrend] = useState<any[]>([])
     const [totalSales, setTotalSales] = useState<any>({})
     const [repeatCustomerRate, setRepeatCustomerRate] = useState<any>({})
     const [totalProfits, setTotalProfits] = useState<any>()
@@ -32,6 +33,7 @@ const SalesInsights = () => {
 
     useEffect(() => {
         getSalesTrend(setSalesTrend, setIsLoading, businessId)
+        getSalesInLastMonthTrend(setMonthSalesTrend, setIsLoading, businessId)
         getTotalSales(setTotalSales, setIsLoading, businessId)
         getRepeatCustomerRate(setRepeatCustomerRate, setIsLoading, businessId)
         getTotalProfits(setTotalProfits, setIsLoading, businessId)
@@ -117,12 +119,12 @@ const SalesInsights = () => {
                                     <div className="container charts">
                                         <div className="row padding">
                                             <div className="col-lg-6 col-sm-12">
-                                                <Card className=" new-card">
-                                                    <h5 className="text-center mb-5">weekly sales in last one year</h5>
+                                            <Card className=" new-card">
+                                                    <h5 className="text-center mb-5">Sales Trend in last one month</h5>
                                                     <ResponsiveContainer width="95%" height={400}>
                                                         <BarChart
 
-                                                            data={salesTrend}
+                                                            data={monthSalesTrend}
                                                             margin={{
                                                                 top: 10,
                                                                 right: 30,
@@ -142,6 +144,7 @@ const SalesInsights = () => {
                                                 </Card>
                                             </div>
                                             <div className="col-lg-6 col-sm-12">
+                                            
                                                 <Card className="new-card">
                                                     <h5 className="text-center mb-4">Sales statistics</h5>
                                                     <ResponsiveContainer width="95%" height={400}>

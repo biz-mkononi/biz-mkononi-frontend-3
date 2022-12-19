@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom"
 import image2 from "../../Assets/placeholder.jpg"
 import CircularProgress from '@mui/material/CircularProgress';
 import { DataContext } from '../../context/ContextProvider'
+import NotFound from '../NotFoundPage/NotFound'
+import BusinessIcon from '@mui/icons-material/Business';
 
 
 const BusinessList = () => {
@@ -35,11 +37,15 @@ const BusinessList = () => {
         setBusinessId(id)
         navigate('/insights/overview')
     }
+    console.log(data)
     return (
         <>
             {
                 isLoading ? <div className="text-center"><CircularProgress color="success" /></div> :
-                    <div className='container p-3'>
+                <>
+                    {
+                        data.length === 0?<NotFound icon={<BusinessIcon/>} title="business" link="/businesses/add" />:
+                        <div className='container p-3'>
                         <div className='row padding'>
                             <div className="col-lg-6">
                                 <input className="form-control search mb-3" type="search" placeholder="Search by location" aria-label="Search"></input>
@@ -66,7 +72,7 @@ const BusinessList = () => {
                                     <tbody>
                                         <tr>
 
-                                            <th scope="row" style={{ display: "flex" }}  ><img className='business-image' src={image2} />{business.name} </th>
+                                            <th scope="row" style={{ display: "flex" }}  ><img className='business-image' src={ business.imageUrl === null? image2:business.imageUrl} />{business.name} </th>
                                             <td>{business.owner.name}</td>
                                             <td>{business.businessPhone}</td>
                                             <td>
@@ -90,6 +96,10 @@ const BusinessList = () => {
                             <Pagination className='text-center' count={Math.ceil(data.length / postsPerPage)} onChange={handleChange} color="secondary" />
                         </div>
                     </div>
+                    }
+                </>
+                
+                    
             }
         </>
     )

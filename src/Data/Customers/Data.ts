@@ -1,4 +1,4 @@
-import { reqInstance } from "../Auth/authHelper";
+import { reqInstance, reqInstance2 } from "../Auth/authHelper";
 import { newUrl } from "../Sales/Data";
 const addCustomer = (post:any,navigate:any,setIsLoading:any,id:any) => {
   setIsLoading(true)
@@ -12,10 +12,10 @@ const getCustomers = (setData:any,setIsLoading:any,id:any) => {
   .then (() => setIsLoading(false))
 }
 
-const sendCustomersSms = (post:any,setIsLoading:any,navigate:any,id:any) => {
+const sendCustomersSms = (post:any,setIsLoading:any,navigate:any,id:any,handleClose:any) => {
   setIsLoading(true)
-  reqInstance.post(`${newUrl}/${id}/customers/sms`, post)
-  .then (() => (navigate('/customers/list')))
+  reqInstance2.post(`${newUrl}/${id}/customers/sms`, post)
+  .then (() => (handleClose()))
   .then (() => setIsLoading(false))
 }
 

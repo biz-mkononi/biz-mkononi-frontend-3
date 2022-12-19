@@ -21,13 +21,12 @@ const AddBusiness = () => {
     const data = { label: "" }
 
     const [location, selectLocation] = useState(data);
-    const initialState = { name: "", businessEmail: "", businessPhone: "", location: location.label, locationDetails: "", productType: "", description: "", longitude: "12", latitude: "13" }
+    const initialState = { name: "", businessEmail: "", businessPhone: "", location: location.label, locationDetails: "", productType: "", description: "", longitude: "12", latitude: "13",image:{} }
     const navigate = useNavigate()
     const [isActive, setIsActive] = useState(false)
     const [isActive2, setIsActive2] = useState(true)
     const [formData, setFormData] = useState(initialState)
     const [isLoading, setIsLoading] = useState(false)
-    const [file, setFile] = useState<any>()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -39,7 +38,7 @@ const AddBusiness = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // setFile(e.target.files)
+        setFormData({...formData,[e.target.name]:e.target.files[0]})
     }
 
     const onClickActive = () => {
@@ -51,27 +50,12 @@ const AddBusiness = () => {
         setIsActive2(true)
     }
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        const newData = new FormData()
-
-
-        newData.set("name", formData.name)
-        newData.set("businessEmail", formData.businessEmail)
-        newData.set("businessPhone", formData.businessPhone)
-        newData.set("location", location.label)
-        newData.set("locationDetails", formData.locationDetails)
-        newData.set("productType", formData.productType)
-        newData.set("description", formData.description)
-        newData.set("longitude", formData.longitude)
-        newData.set("latitude", formData.latitude)
-        newData.append("image", file)
-
         e.preventDefault()
-        addBusiness(newData, navigate, setIsLoading)
-        console.log(newData)
+        addBusiness(formData, navigate, setIsLoading)
+        console.log(formData)
 
 
     }
-    console.log(file)
 
     return (
         <div className='add-business container p-4 '>
@@ -131,7 +115,7 @@ const AddBusiness = () => {
                                                 selectProps={{
                                                     location,
                                                     onChange: selectLocation,
-                                                    placeholder: "property location",
+                                                    placeholder: "business location",
                                                     className: "places"
 
                                                 }}

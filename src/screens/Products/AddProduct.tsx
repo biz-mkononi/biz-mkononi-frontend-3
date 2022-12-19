@@ -16,7 +16,7 @@ import "../Businesses/AddBusiness.css"
 
 
 const AddProduct = ({ id }: any) => {
-    const initialState = { name: "", categoryId: "", productType: "", size: "", unit: "", buyingPrice: "", sellingPrice: "", description: "", tags: "" }
+    const initialState = { name: "", categoryId: "", productType: "", size: "", unit: "", buyingPrice: "", sellingPrice: "", description: "", tags: "",image:{} }
     const navigate = useNavigate()
 
     const [formData, setFormData] = useState(initialState)
@@ -38,6 +38,9 @@ const AddProduct = ({ id }: any) => {
 
     const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
+    }
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({ ...formData, [e.target.name]: e.target.files[0] })
     }
 
 
@@ -151,7 +154,7 @@ const AddProduct = ({ id }: any) => {
                                     Click to set product image
                                     <img src={image} alt="" className='business-form-image' />
                                 </label>
-                                <input className="form-control file " name='image' type="file" id="formFile" />
+                                <input className="form-control file " onChange={handleFileChange} name='image' type="file" id="formFile" />
 
 
                             </div>

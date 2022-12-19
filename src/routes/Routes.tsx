@@ -128,7 +128,6 @@ const RoutesFile = () => {
                             whiteSpace: 'nowrap',
                             paddingTop: theme.spacing(4),
                             paddingBottom: theme.spacing(4),
-                            height:'auto',
                             paddingRight: theme.spacing(4),
                             paddingLeft: theme.spacing(2),
                           }}

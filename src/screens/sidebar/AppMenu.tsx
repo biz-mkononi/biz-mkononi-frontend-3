@@ -16,6 +16,7 @@ import BadgeIcon from '@mui/icons-material/Badge';
 import AppMenuItem from './AppMenuItem'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { DataContext } from '../../context/ContextProvider'
+import { Divider } from '@mui/material';
 const appMenuItems = [
 
   {
@@ -226,8 +227,7 @@ const AppMenu: React.FC = () => {
         business && (
           <>
             <>
-              <hr />
-              <h5 className='mt-4'>section</h5>
+              <Divider />
             </>
             {
               otherItems.map((item, index) => (

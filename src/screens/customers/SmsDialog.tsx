@@ -32,7 +32,7 @@ export default function SmsDialog({ handleClose, open, id }: any) {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        sendCustomersSms(formData, setIsLoading, navigate, id)
+        sendCustomersSms(formData, setIsLoading, navigate, id,handleClose)
 
     }
     console.log(formData)

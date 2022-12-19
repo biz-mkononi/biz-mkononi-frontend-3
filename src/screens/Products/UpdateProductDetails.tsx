@@ -61,6 +61,9 @@ const UpdateProductDetails = ({ id }: any) => {
     const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setFormData({ ...formData, ['categoryId']: e.target.value })
     }
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({ ...formData, [e.target.name]: e.target.files[0] })
+    }
 
 
 
@@ -189,7 +192,7 @@ const UpdateProductDetails = ({ id }: any) => {
                                                 Click to set product image
                                                 <img src={image} alt="" className='business-form-image' />
                                             </label>
-                                            <input className="form-control file " name='image' type="file" id="formFile" />
+                                            <input className="form-control file " onChange={handleFileChange} name='image' type="file" id="formFile" />
 
 
                                         </div>

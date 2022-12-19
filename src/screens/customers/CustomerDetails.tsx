@@ -74,7 +74,7 @@ const CustomerDetails = ({ id }: any) => {
                         </div>
                         <div className="row padding">
                             <div className="col-lg-6">
-                                <img className='business-details-image ' src={image2} />
+                                <img className='business-details-image ' src={data.imageUrl === null?image2:data.imageUrl} />
                             </div>
 
                             <div className="col-lg-6">
@@ -97,7 +97,7 @@ const CustomerDetails = ({ id }: any) => {
                                             </tr>
                                             <tr>
                                                 <th>Gender</th>
-                                                <td>{data.gender.toLowerCase()}</td>
+                                                <td>{data.gender}</td>
                                             </tr>
                                             <tr>
                                                 <th>Age</th>

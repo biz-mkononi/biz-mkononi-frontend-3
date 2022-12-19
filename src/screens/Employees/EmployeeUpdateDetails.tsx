@@ -46,6 +46,9 @@ const EmployeeUpdateDetails = ({ id }: any) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({ ...formData, [e.target.name]: e.target.files[0] })
+    }
 
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -125,7 +128,7 @@ const EmployeeUpdateDetails = ({ id }: any) => {
                                         Click to update employee image
                                         <img src={image} alt="" className='business-form-image' />
                                     </label>
-                                    <input className="form-control file " name='image' type="file" id="formFile" />
+                                    <input className="form-control file " onChange={handleFileChange} name='image' type="file" id="formFile" />
 
 
                                 </div>

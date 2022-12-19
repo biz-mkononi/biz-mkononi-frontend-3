@@ -74,7 +74,7 @@ const EmployeeDetails = ({ id }: any) => {
                         </div>
                         <div className="row padding">
                             <div className="col-lg-6">
-                                <img className='business-details-image ' src={image2} />
+                                <img className='business-details-image ' src={data.imageUrl === null?image2:data.imageUrl} />
                             </div>
 
                             <div className="col-lg-6">
