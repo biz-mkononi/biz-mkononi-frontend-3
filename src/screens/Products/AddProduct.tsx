@@ -22,6 +22,7 @@ const AddProduct = ({ id }: any) => {
     const [formData, setFormData] = useState(initialState)
     const [isLoading, setIsLoading] = useState(false)
     const [categories, setCategories] = useState<any[]>([])
+    const [displayImage, setDisplayImage] = useState ("")
     useEffect(() => {
         getCategory(setCategories, setIsLoading, id)
     }, [])
@@ -42,6 +43,7 @@ const AddProduct = ({ id }: any) => {
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             setFormData({...formData,[e.target.name]:e.target.files[0]})
+            setDisplayImage(URL.createObjectURL(e.target.files[0]));
         }
     }
 
@@ -154,7 +156,7 @@ const AddProduct = ({ id }: any) => {
 
                                 <label htmlFor="formFile" className="form-label">
                                     Click to set product image
-                                    <img src={image} alt="" className='business-form-image' />
+                                    <img src={displayImage === ''?image:displayImage} alt="" className='business-form-image' />
                                 </label>
                                 <input className="form-control file " onChange={handleFileChange} name='image' type="file" id="formFile" />
 

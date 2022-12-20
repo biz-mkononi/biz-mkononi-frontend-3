@@ -17,7 +17,7 @@ const LoginBanner = () => {
 
 
                 <p>Biz Mkononi is an AI powered insights platform that provides decision making tools, solutions and analytics to the small and medium enterprises in Kenya and the rest of the world.</p>
-                <div className="text-center mt-3" style={{ marginLeft: "100px" }}>
+                <div className="text-center mt-3 login-icons" style={{ marginLeft: "100px" }}>
                     <div className="mb-4" style={{ display: "flex" }}>
                         <img src={image3} className="img-fluid" alt="..." />
                         <p>AI Powered Business Intelligence</p>

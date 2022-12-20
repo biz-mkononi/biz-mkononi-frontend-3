@@ -77,3 +77,15 @@ width: 100px;
     font-size: 16px;
     color: #3282B8;
   }
+
+  @media only screen and (max-width: 1200px){
+    
+  }
+  @media only screen and (max-width: 600px){
+  .business-image {
+    display: none !important;
+  }
+  }
+  @media only screen and (max-width: 425px){
+  /*Small smartphones [325px -> 425px]*/
+  }

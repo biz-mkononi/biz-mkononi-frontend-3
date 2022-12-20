@@ -34,11 +34,7 @@ const ProductsList = ({ id }: any) => {
                                 <tr>
                                     <th scope="col">Name</th>
                                     <th scope="col">Category</th>
-                                    <th scope="col">Product Type</th>
                                     <th scope="col">Size</th>
-                                    <th scope="col">Unit</th>
-                                    <th scope="col">Buying Price</th>
-                                    <th scope="col">Selling Price</th>
                                     <th scope="col">Stock</th>
                                     <th scope="col">Actions</th>
 
@@ -50,11 +46,7 @@ const ProductsList = ({ id }: any) => {
                                         <tr>
                                             <th scope="row" >{product.name}</th>
                                             <td>{product.category.name}</td>
-                                            <td>{product.productType}</td>
                                             <td>{product.size}</td>
-                                            <td>{product.unit}</td>
-                                            <td>{product.buyingPrice}</td>
-                                            <td>{product.sellingPrice}</td>
                                             <td>{product.stock}</td>
 
 

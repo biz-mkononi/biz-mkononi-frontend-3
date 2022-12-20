@@ -15,13 +15,14 @@ const NewEmployee = ({ id }: any) => {
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(false)
     const [formData, setFormData] = useState(initialState)
-
+    const [displayImage, setDisplayImage] = useState ("")
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             setFormData({...formData,[e.target.name]:e.target.files[0]})
+            setDisplayImage(URL.createObjectURL(e.target.files[0]));
         }
     }
 
@@ -84,7 +85,7 @@ const NewEmployee = ({ id }: any) => {
 
                         <label htmlFor="formFile" className="form-label">
                             Click to set employee image
-                            <img src={image} alt="" className='business-form-image' />
+                            <img src={displayImage === ''?image:displayImage} alt="" className='business-form-image' />
                         </label>
                         <input className="form-control file " onChange={handleFileChange} name='image' type="file" id="formFile" />
 

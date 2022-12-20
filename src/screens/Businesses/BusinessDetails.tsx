@@ -40,7 +40,7 @@ const BusinessDetails = () => {
         <>
             {
                 isLoading ? <div className="text-center"><CircularProgress color="success" /></div> :
-                    <div className="container p-3">
+                    <div className="container p-2">
 
 
                         <div className="row padding">

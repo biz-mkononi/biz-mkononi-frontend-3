@@ -16,7 +16,7 @@ import PersonIcon from '@mui/icons-material/Person';
 
 const AddCustomer = ({ id }: any) => {
     const initialState = { name: "", gender: "", yearOfBirth: "", phone: "", email: "", description: "", image:{} }
-
+    const [displayImage, setDisplayImage] = useState ("")
     const navigate = useNavigate()
     const [formData, setFormData] = useState(initialState)
     const [isLoading, setIsLoading] = useState(false)
@@ -27,11 +27,13 @@ const AddCustomer = ({ id }: any) => {
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             setFormData({...formData,[e.target.name]:e.target.files[0]})
+            setDisplayImage(URL.createObjectURL(e.target.files[0]));
         }
     }
 
     const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
+        
     }
 
 
@@ -112,7 +114,7 @@ const AddCustomer = ({ id }: any) => {
 
                                 <label htmlFor="formFile" className="form-label">
                                     Click to set business image
-                                    <img src={image} alt="" className='business-form-image' />
+                                    <img src={displayImage === ''?image:displayImage} alt="" className='business-form-image' />
                                 </label>
                                 <input className="form-control file " onChange={handleFileChange} name='image' type="file" id="formFile" />
 

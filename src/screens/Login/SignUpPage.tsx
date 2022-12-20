@@ -157,9 +157,6 @@ const SignUpPage = ({ switchmode }: functions) => {
                                                 className="textfield mb-3" />
                                             <p className="text-danger">{errors.password2?.message}</p>
                                         </div>
-                                        <div className="text-center" >
-                                            <FormControlLabel control={<Checkbox defaultChecked />} label="Remember me" />
-                                        </div>
                                         <div className="text-center mt-3 sign-button">
                                             {
                                                 isRegistering ? <button className="btn btn-primary btn-md" disabled>Registering</button> :

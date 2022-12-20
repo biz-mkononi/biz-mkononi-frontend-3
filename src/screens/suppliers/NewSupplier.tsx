@@ -12,7 +12,7 @@ import "../Businesses/AddBusiness.css"
 const AddSupplier = ({ id }: any) => {
     const initialState = { name: "", phone: "", email: "", description: "", image:{} }
     const navigate = useNavigate()
-
+    const [displayImage, setDisplayImage] = useState ("")
     const [formData, setFormData] = useState(initialState)
     const [isLoading, setIsLoading] = useState(false)
 
@@ -26,6 +26,7 @@ const AddSupplier = ({ id }: any) => {
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             if (e.target.files) {
                 setFormData({...formData,[e.target.name]:e.target.files[0]})
+                setDisplayImage(URL.createObjectURL(e.target.files[0]));
             }
     
     }
@@ -82,7 +83,7 @@ const AddSupplier = ({ id }: any) => {
 
                                 <label htmlFor="formFile" className="form-label">
                                     Click to set business image
-                                    <img src={image} alt="" className='business-form-image' />
+                                    <img src={displayImage === ''?image:displayImage} alt="" className='business-form-image' />
                                 </label>
                                 <input className="form-control file " onChange={handleFileChange} name='image' type="file" id="formFile" />
 

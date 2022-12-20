@@ -37,7 +37,6 @@ const CategoriesList = ({ id }: any) => {
                                 <tr>
                                     <th scope="col">Name</th>
                                     <th scope="col">Description</th>
-                                    <th scope="col">Date Added</th>
                                     <th scope="col">Actions</th>
 
                                 </tr>
@@ -48,7 +47,6 @@ const CategoriesList = ({ id }: any) => {
                                         <tr>
                                             <th scope="row" >{category.name}</th>
                                             <td>{category.description}</td>
-                                            <td>{new Date(category.createdAt).toLocaleDateString(undefined, options)}</td>
                                             <td>
                                                 <div style={{ display: "flex" }}>
                                                     <button className="btn btn-warning btn-sm ml-2" onClick={(() => { onClick(category.id) })}>View</button>

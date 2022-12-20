@@ -72,7 +72,6 @@ const UpdateExpenseDetails = ({ id }: any) => {
                             <div className="col-lg-6">
                                 <div className='details-button' style={{ display: "flex" }}>
                                     <button className='btn btn-secondary btn-md' onClick={(() => navigate(-1))}> Back</button>
-                                    <button className='btn btn-primary btn-md' onClick={(() => navigate(`/expense/${params.id}/details`))}>Manage</button>
                                 </div>
                             </div>
 

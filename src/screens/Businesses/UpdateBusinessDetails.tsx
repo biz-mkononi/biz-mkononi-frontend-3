@@ -36,6 +36,7 @@ const UpdateBusinessDetails = () => {
     const [data, setData] = useState<data | any>({})
     const [isLoading, setIsloading] = useState(false)
     const [isUpdating, setIsUpdating] = useState(false)
+    const [displayImage, setDisplayImage] = useState ("")
     const navigate = useNavigate()
 
     const [formData, setFormData] = useState({})
@@ -60,6 +61,7 @@ const UpdateBusinessDetails = () => {
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             setFormData({...formData,[e.target.name]:e.target.files[0]})
+            setDisplayImage(URL.createObjectURL(e.target.files[0]));
         }
     }
 
@@ -83,7 +85,6 @@ const UpdateBusinessDetails = () => {
                             <div className="col-lg-6">
                                 <div className='details-button' style={{ display: "flex" }}>
                                     <button className='btn btn-secondary btn-md' onClick={(() => navigate(-1))}> Back</button>
-                                    <button className='btn btn-primary btn-md' onClick={(() => navigate(`/business/${params.id}/details`))}>Manage</button>
                                 </div>
                             </div>
 
@@ -168,8 +169,8 @@ const UpdateBusinessDetails = () => {
 
 
                                             <label htmlFor="formFile" className="form-label">
-                                                Click to set business image
-                                                <img src={image} alt="" className='business-form-image' />
+                                                Click to update business image
+                                                <img src={ displayImage === ""?data.imageUrl ===null? image:data.imageUrl:displayImage} alt="" className='business-form-image' />
                                             </label>
                                             <input className="form-control file " name='image' type="file" id="formFile" onChange={handleImageChange} />
 

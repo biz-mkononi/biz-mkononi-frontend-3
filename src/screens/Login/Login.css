@@ -26,12 +26,22 @@
     background-color: transparent;
     padding: 10px;
     margin-bottom: 10%;
+} 
+.field .textfield:focus {
+    border: transparent !important;
+    outline: none !important;
+
 }
 
 .login-card .textfield:active {
     border-top: none !important;
     outline:none !important;
     border-color: red !important;
+}
+.login-card .textfield:active:focus {
+    border: transparent !important;
+    outline: none !important;
+
 }
 .sign-button .btn {
     border-radius: 200px !important;
@@ -43,3 +53,19 @@ a {
 .field {
     margin-left:25%;
 }
+
+@media only screen and (max-width: 1200px){
+    
+  }
+  @media only screen and (max-width: 600px){
+  .login-icons {
+    display: none !important;
+
+  }
+  .field {
+    margin-left:0% !important;
+}
+  }
+  @media only screen and (max-width: 425px){
+  /*Small smartphones [325px -> 425px]*/
+  }

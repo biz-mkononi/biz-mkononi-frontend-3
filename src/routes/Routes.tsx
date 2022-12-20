@@ -128,8 +128,7 @@ const RoutesFile = () => {
                             whiteSpace: 'nowrap',
                             paddingTop: theme.spacing(4),
                             paddingBottom: theme.spacing(4),
-                            paddingRight: theme.spacing(4),
-                            paddingLeft: theme.spacing(2),
+                       
                           }}
                             
                             className={!open ? `not-shadow` : `shadow`}
@@ -159,7 +158,7 @@ const RoutesFile = () => {
             }>
 
                 <Main sx={{flexGrow: 1,
-                                    height: "100vh",
+                                    height: "auto",
                                     overflow: 'auto',}}  open={open} >
                     <DrawerHeader />
                     <Container>

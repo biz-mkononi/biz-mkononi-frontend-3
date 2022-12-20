@@ -17,7 +17,7 @@ import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 
 const AddBusiness = () => {
     const data = { label: "" }
-
+    const [displayImage, setDisplayImage] = useState ("")
     const [location, selectLocation] = useState(data);
     const initialState = { name: "", businessEmail: "", businessPhone: "", location: location.label, locationDetails: "", productType: "", description: "", longitude: "12", latitude: "13",image:{} }
     const navigate = useNavigate()
@@ -38,6 +38,7 @@ const AddBusiness = () => {
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             setFormData({...formData,[e.target.name]:e.target.files[0]})
+            setDisplayImage(URL.createObjectURL(e.target.files[0]));
         }
         
     }
@@ -53,10 +54,10 @@ const AddBusiness = () => {
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         addBusiness(formData, navigate, setIsLoading)
-        console.log(formData)
 
 
     }
+    console.log(formData)
 
     return (
         <div className='add-business container p-4 '>
@@ -156,7 +157,7 @@ const AddBusiness = () => {
 
                                             <label htmlFor="formFile" className="form-label">
                                                 Click to set business image
-                                                <img src={image} alt="" className='business-form-image' />
+                                                <img src={displayImage === ''?image:displayImage} alt="" className='business-form-image' />
                                             </label>
                                             <input className="form-control file " name='image' type="file" id="formFile" onChange={handleFileChange} />
 

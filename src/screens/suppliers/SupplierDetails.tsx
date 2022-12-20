@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
-import NotificationAddIcon from '@mui/icons-material/NotificationAdd';
 import image2 from "../../Assets/placeholder.jpg"
 import "../Businesses/AddBusiness.css"
 import { deleteSupplier, getSingleSupplier } from '../../Data/Suppliers/Data';
@@ -66,10 +64,7 @@ const SupplierDetails = ({ id }: any) => {
 
                             </div>
                             <div className="col-lg-6">
-                                <div className=" bar-icons " >
-                                    <span style={{ textAlign: "right" }} ><NotificationAddIcon /></span>
-                                    <span ><PowerSettingsNewIcon /></span>
-                                </div>
+                                
                             </div>
                         </div>
                         <div className="row padding">
