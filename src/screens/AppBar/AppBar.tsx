@@ -95,7 +95,7 @@ const TopBar = () => {
                                         <button className="btn btn-outline btn-md" onClick={logout}>Logout</button>
                                     </MenuItem>
                                 </Menu>
-                                <span style={{ textAlign: "right" }} ><NotificationAddIcon /></span>
+                                {/* <span style={{ textAlign: "right" }} ><NotificationAddIcon /></span> */}
                             </div>
                         </Toolbar>
 

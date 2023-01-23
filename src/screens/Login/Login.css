@@ -1,15 +1,22 @@
 
 .login-banner {
     padding: 60px;
+    background-color: white !important;
+    margin: 0px !important;
 
 }
 .sign-container {
     padding: 80px;
-    background-color: #f2f8FF;
+   
+
+}
+.login {
     background-image: url('../../Assets/Group 2.svg');
     background-size: 500px 300px;
     background-repeat: no-repeat;
     background-position: top right;
+    background-color: #f2f8FF;
+    padding: 0px !important;
     height: 100% !important;
 
 }
@@ -25,7 +32,6 @@
     border-width: 0ch !important;
     background-color: transparent;
     padding: 10px;
-    margin-bottom: 10%;
 } 
 .field .textfield:focus {
     border: transparent !important;
@@ -58,9 +64,33 @@ a {
     
   }
   @media only screen and (max-width: 600px){
+    
+    .login-banner {
+        padding: 60px;
+        background-color: #f2f8FF !important;
+        margin: 0px !important;
+    
+    }
+    .login {
+        background-size: 50px 30px;
+    
+    }
+    .login-banner p {
+        display: none !important;  
+    }
+    .banner-logo {
+        margin-left: 100px;
+    }
+    .banner-heading {
+        text-align: center !important;
+    }
   .login-icons {
     display: none !important;
 
+  }
+  .login-card {
+    text-align: center !important;
+    margin-top: 0rem !important;
   }
   .field {
     margin-left:0% !important;
@@ -68,4 +98,7 @@ a {
   }
   @media only screen and (max-width: 425px){
   /*Small smartphones [325px -> 425px]*/
+  .banner-logo {
+    margin-left: 40px;
+}
   }

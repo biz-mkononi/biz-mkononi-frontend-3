@@ -17,6 +17,11 @@
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
 }
+.insights h3 {
+  font-size: 16px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
 .charts {
   padding: 20px;
 }
@@ -24,8 +29,9 @@
   font-weight: 500;
 }
 .charts h5{
-  font-weight: 600;
+  font-weight: 500;
   color: #3282B8;
+  font-size: 18px;
 }
 .top-cards {
   font-weight: 600;

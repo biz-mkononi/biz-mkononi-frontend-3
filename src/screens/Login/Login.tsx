@@ -19,7 +19,6 @@ const Login = () => {
 
     return (
         <div className="container-fluid login">
-            <img src="" alt="" />
             <div className="row padding">
                 <div className="col-lg-6 col-sm-12">
                     <LoginBanner />
@@ -36,7 +35,7 @@ const Login = () => {
                                     </div>
                                 </div> :
                                 <div className="container">
-                                    <div className="card login-card mt-5">
+                                    <div className="card login-card">
 
                                         <LoginPage switchmode={switchMode} />
 

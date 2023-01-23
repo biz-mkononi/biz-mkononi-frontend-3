@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TextField, InputAdornment, IconButton } from "@mui/material"
+import { TextField, InputAdornment, IconButton, Alert } from "@mui/material"
 import { changePassword } from "../../Data/Auth/Data"
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -11,7 +11,7 @@ const ResetPassword = () => {
     const [formData, setFormData] = useState(initialState)
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
-    const [dataErrors, setDataErrors] = useState<any>([])
+    const [dataErrors, setDataErrors] = useState('')
 
 
     const handleShowPassword = () => setShowPassword(!showPassword);
@@ -25,7 +25,14 @@ const ResetPassword = () => {
 
     return (
         <React.Fragment>
-            <h3 className="mt-3 mb-5 text-center" style={{ fontWeight: "bold" }}>Reset Password</h3>
+            {
+                dataErrors !== '' && (
+                    <Alert variant="filled" onClose={(() => setDataErrors(''))} severity="error">
+                        {dataErrors}
+                    </Alert>
+                )
+            }
+            <h5 className="mt-3 mb-5 text-center" style={{ fontWeight: "bold" }}>Reset Password</h5>
             <div className="field mb-3">
                 <TextField id="outlined-basic" label="Phone" name="phone" value={formData.phone} onChange={handleChange} variant="filled" className="textfield mb-3" />
             </div>

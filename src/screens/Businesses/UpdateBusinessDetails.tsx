@@ -3,13 +3,11 @@ import BusinessIcon from '@mui/icons-material/Business';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import NotificationAddIcon from '@mui/icons-material/NotificationAdd';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import { Card } from '@mui/material';
 import "./AddBusiness.css"
-import { addBusiness, getSingleBusiness, updateSingleBusiness } from '../../Data/Businesses/Data';
+import { getSingleBusiness, updateSingleBusiness } from '../../Data/Businesses/Data';
 import image from "../../Assets/placeholder.jpg"
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import { useNavigate, useParams } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
@@ -36,7 +34,7 @@ const UpdateBusinessDetails = () => {
     const [data, setData] = useState<data | any>({})
     const [isLoading, setIsloading] = useState(false)
     const [isUpdating, setIsUpdating] = useState(false)
-    const [displayImage, setDisplayImage] = useState ("")
+    const [displayImage, setDisplayImage] = useState("")
     const navigate = useNavigate()
 
     const [formData, setFormData] = useState({})
@@ -60,7 +58,7 @@ const UpdateBusinessDetails = () => {
     }
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
-            setFormData({...formData,[e.target.name]:e.target.files[0]})
+            setFormData({ ...formData, [e.target.name]: e.target.files[0] })
             setDisplayImage(URL.createObjectURL(e.target.files[0]));
         }
     }
@@ -69,8 +67,8 @@ const UpdateBusinessDetails = () => {
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        const newData = new FormData ()
-        
+        const newData = new FormData()
+
         updateSingleBusiness(formData, navigate, params.id, setIsUpdating)
 
     }
@@ -170,7 +168,7 @@ const UpdateBusinessDetails = () => {
 
                                             <label htmlFor="formFile" className="form-label">
                                                 Click to update business image
-                                                <img src={ displayImage === ""?data.imageUrl ===null? image:data.imageUrl:displayImage} alt="" className='business-form-image' />
+                                                <img src={displayImage === "" ? data.imageUrl === null ? image : data.imageUrl : displayImage} alt="" className='business-form-image' />
                                             </label>
                                             <input className="form-control file " name='image' type="file" id="formFile" onChange={handleImageChange} />
 

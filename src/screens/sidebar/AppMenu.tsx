@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { styled, useTheme } from '@mui/material/styles';
+import React, { useContext } from 'react'
 
 import List from '@mui/material/List'
 import image2 from "../../Assets/logo.png"
 import "./sidebar.css"
-import { useNavigate } from 'react-router-dom'
 
 
 import InsightsIcon from '@mui/icons-material/Insights';
@@ -208,21 +206,43 @@ const otherItems = [
 const AppMenu: React.FC = () => {
 
   const { business } = useContext(DataContext)
+
+  const filteredListItems = appMenuItems.filter((item: any) => {
+    return item.name === 'Businesses'
+  })
+
   return (
-    <List component="nav" sx={{width:"100%"}} disablePadding>
+    <List component="nav" sx={{ width: "100%" }} disablePadding>
       {/* <AppMenuItem {...appMenuItems[0]} /> */}
       <div className="mb-3" style={{ display: "flex", marginLeft: "10px" }}>
         <img src={image2} className="img-fluid sidebar-logo" alt="..." />
         <h5 className="font-medium leading-tight text-xl mt-0 mb-2 " style={{ paddingLeft: "10px", fontWeight: 'bold' }}>BizMkononi</h5>
       </div>
       {
-        appMenuItems.map((item, index) => (
-          <div className='mb-4'>
-            <AppMenuItem {...item} key={index} />
+        business ?
+          <>
+            {
+              appMenuItems.map((item, index) => (
+                <div className='mb-4'>
+                  <AppMenuItem {...item} key={index} />
 
-          </div>
-        ))
+                </div>
+              ))
+            }
+          </> :
+          <>
+            {
+              filteredListItems.map((item, index) => (
+                <div className='mb-4'>
+                  <AppMenuItem {...item} key={index} />
+
+                </div>
+              ))
+            }
+          </>
       }
+
+
       {
         business && (
           <>
