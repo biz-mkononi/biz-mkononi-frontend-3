@@ -57,8 +57,8 @@ const SalesList = ({ id }: any) => {
                                             <td>{sale.amountCharged - sale.amountPaid}</td>
                                             <td>
                                                 <div style={{ display: "flex" }}>
-                                                    <button className="btn btn-warning btn-sm ml-2" onClick={(() => { onClick(sale.id) })}>View</button>
-                                                    <button className="btn btn-success btn-sm ml-2" onClick={(() => navigate(`/sales/${sale.id}/update-details`))}>Edit</button>
+                                                    <button className="btn btn-warning btn-sm m-2" onClick={(() => { onClick(sale.id) })}>View</button>
+                                                    <button className="btn btn-success btn-sm m-2" onClick={(() => navigate(`/sales/${sale.id}/update-details`))}>Edit</button>
                                                 </div>
 
                                             </td>

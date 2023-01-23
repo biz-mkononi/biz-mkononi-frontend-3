@@ -21,7 +21,7 @@ const AddSale = ({ id }: any) => {
     const [amountPaid, setAmountPaid] = useState("0")
     const [totalAmount, setTotalAmount] = useState("0")
     const [customerId, setCustomer] = useState("")
-    const [productId,setProductId] = useState("")
+    const [productId, setProductId] = useState("")
     const [quantity, setQuantity] = useState("")
 
     useEffect(() => {
@@ -110,7 +110,7 @@ const AddSale = ({ id }: any) => {
                                 <span className="input-group-text" id="basic-addon1"><ProductionQuantityLimitsIcon /></span>
                                 <select className="form-select" onChange={handlePriceChange} name="category" aria-label="Default select example" id="basic-addon1">
                                     <option selected>Select product</option>
-                                    {products.map((product,index) => {
+                                    {products.map((product, index) => {
 
                                         return (
                                             <option value={JSON.stringify(product)} key={index}>
@@ -120,6 +120,7 @@ const AddSale = ({ id }: any) => {
                                         );
 
                                     })}
+
                                 </select>
                             </div>
                         </div>
@@ -164,7 +165,7 @@ const AddSale = ({ id }: any) => {
 
                     </div>
                     <div className="text-center mt-3">
-                        <button className="btn btn-success btn-md"disabled={isLoading?true:false} > {isLoading?"Adding":"Add Sale"} </button>
+                        <button className="btn btn-success btn-md" disabled={isLoading ? true : false} > {isLoading ? "Adding" : "Add Sale"} </button>
                     </div>
 
                 </form>

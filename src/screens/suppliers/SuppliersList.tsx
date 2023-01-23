@@ -53,8 +53,8 @@ const SuppliersList = ({ id }: any) => {
                                             <td>{supplier.phone}</td>
                                             <td>
                                                 <div style={{ display: "flex" }}>
-                                                    <button className="btn btn-warning btn-sm ml-2" onClick={(() => { onClick(supplier.id) })}>View</button>
-                                                    <button className="btn btn-success btn-sm ml-2" onClick={(() => navigate(`/suppliers/${supplier.id}/update-details`))}>Edit</button>
+                                                    <button className="btn btn-warning btn-sm m-2" onClick={(() => { onClick(supplier.id) })}>View</button>
+                                                    <button className="btn btn-success btn-sm m-2" onClick={(() => navigate(`/suppliers/${supplier.id}/update-details`))}>Edit</button>
                                                 </div>
 
                                             </td>

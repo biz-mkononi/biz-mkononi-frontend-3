@@ -26,18 +26,17 @@
     })
       .then((res) => res.json())
       .then((json) => {
-        if (json.message) {
+        if (json.statusCode === 403) {
           setIsLoading(false)
           setErrors(json.message);
         } else {
           setIsLoading(false)
           navigate(0)
-          console.log(json)
         }
       });
-      console.log(phone)
   }
   const login = (setErrors:any,post:any,navigate:any,setIsSignIn:any,setLoggedUser:any) => {
+    setIsSignIn(true)
     fetch(`${url}/auth/login`, {
       method: "POST",
       headers: {
@@ -47,15 +46,15 @@
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.message) {
+        if (data.statusCode === 401) {
           setIsSignIn(false)
-          setErrors(data.message);
+          setErrors("You are unauthorized, verify your details");
         } else {
           setLoggedUser(true)
-          localStorage.setItem("user", JSON.stringify({ data })); 
+          localStorage.setItem("user", JSON.stringify({ data }));
+          navigate("/") 
         }
       })
-      .then(() => navigate('/'))
   }
 
   
@@ -69,16 +68,14 @@
     })
       .then((res) => res.json())
       .then((json) => {
-        if (json.message) {
+        if (json.statusCode === 403) {
           setIsRegistering(false)
           setErrors(json.message);
         } else {
           setIsRegistering(false)
           setIsVerified(true)
-          console.log(json)
         }
       });
-    console.log(post)
   }
 
   const forgotPassword = async (setErrors:any,post:any,setIsLoading:any,setIsResetPassword:any) => {
@@ -91,10 +88,11 @@
     })
       .then((res) => res.json())
       .then((json) => {
-        if (json.message) {
+        if (json.statusCode ===403) {
           setIsLoading(false)
-          setErrors(json.message);
-        } else {
+          console.log(json.message);
+          setErrors(json.message)
+        }  else {
           setIsLoading(false)
           setIsResetPassword(true)
 
@@ -113,13 +111,13 @@
     })
       .then((res) => res.json())
       .then((json) => {
-        if (json.message) {
+        if (json.statusCode ===403) {
           setIsLoading(false)
-          setErrors(json.message);
+          console.log(json.message);
+          setErrors("invalid code")
         } else {
           setIsLoading(false)
           navigate(0)
-          console.log(json)
         }
       });
     console.log(post)

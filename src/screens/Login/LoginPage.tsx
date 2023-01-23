@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import "./Login.css"
-import { TextField, FormControlLabel, Checkbox, InputAdornment, IconButton } from "@mui/material"
+import { TextField, FormControlLabel, Checkbox, InputAdornment, IconButton, Alert } from "@mui/material"
 import { login, } from "../../Data/Auth/Data"
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -16,11 +16,12 @@ const LoginPage = ({ switchmode }: functions) => {
     const initialState = { code: "", password: "", phone: "", password2: "" }
     const [showPassword, setShowPassword] = useState(false);
     const [isSigningIn, setIsSigningIn] = useState(false)
+
     const [isGetForgotPasswordCode, setIsGetForgotPasswordCode] = useState(false)
 
     const { setLoggedUser } = useContext(DataContext)
     const [formData, setFormData] = useState(initialState)
-    const [dataErrors, setDataErrors] = useState<any>([])
+    const [dataErrors, setDataErrors] = useState('')
 
     const handleShowPassword = () => setShowPassword(!showPassword);
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,12 +29,12 @@ const LoginPage = ({ switchmode }: functions) => {
     }
 
     const onSubmitLoginData = (e: React.FormEvent<HTMLFormElement>) => {
-        setIsSigningIn(true)
         e.preventDefault()
-        console.log(formData)
         login(setDataErrors, formData, navigate, setIsSigningIn, setLoggedUser)
 
     }
+
+    console.log(dataErrors)
 
     const forgotPassword = () => setIsGetForgotPasswordCode(true)
     return (
@@ -42,14 +43,22 @@ const LoginPage = ({ switchmode }: functions) => {
             {
                 isGetForgotPasswordCode ? <GetForgotPasswordCode /> :
                     <React.Fragment>
-                        <h3 className="mt-3 mb-5 text-center" style={{ fontWeight: "bold" }}>Sign In</h3>
+                        {
+                            dataErrors !== '' && (
+                                <Alert variant="filled" onClose={(() => setDataErrors(''))} severity="error">
+                                    {dataErrors}
+                                </Alert>
+                            )
+                        }
+                        <h5 className="mt-3 mb-3 text-center" style={{ fontWeight: "bold" }}>Sign In</h5>
+
                         <form onSubmit={onSubmitLoginData}>
                             <div className="field mb-3">
-                                <TextField id="outlined-basic" label="Phone" name="phone" onChange={handleChange} variant="filled" className="textfield mb-3" required />
+                                <TextField size="small" id="outlined-basic" label="Phone" name="phone" onChange={handleChange} variant="filled" className="textfield mb-3" required />
                             </div>
 
                             <div className="mb-3 field">
-                                <TextField id="outlined-basic" label="Password" onChange={handleChange} type={showPassword ? 'text' : 'password'} name="password" required
+                                <TextField size="small" id="outlined-basic" label="Password" onChange={handleChange} type={showPassword ? 'text' : 'password'} name="password" required
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">

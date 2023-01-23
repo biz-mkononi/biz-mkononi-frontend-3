@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TextField } from "@mui/material"
+import { TextField, Alert } from "@mui/material"
 import { forgotPassword } from "../../Data/Auth/Data"
 import ResetPassword from './ResetPassword'
 
@@ -7,7 +7,7 @@ import ResetPassword from './ResetPassword'
 const GetForgotPasswordCode = () => {
     const initialState = { code: "", password: "", phone: "", password2: "" }
 
-    const [dataErrors, setDataErrors] = useState<any>([])
+    const [dataErrors, setDataErrors] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [isResetPassword, setIsResetPassword] = useState(false)
     const [formData, setFormData] = useState(initialState)
@@ -25,7 +25,14 @@ const GetForgotPasswordCode = () => {
             {
                 isResetPassword ? <ResetPassword /> :
                     <React.Fragment>
-                        <h3 className="mt-3 mb-5 text-center" style={{ fontWeight: "bold" }}>Forgot Password</h3>
+                        {
+                            dataErrors !== '' && (
+                                <Alert variant="filled" onClose={(() => setDataErrors(''))} severity="error">
+                                    {dataErrors}
+                                </Alert>
+                            )
+                        }
+                        <h5 className="mt-3 mb-5 text-center" style={{ fontWeight: "bold" }}>Forgot Password</h5>
                         <div className="field mb-3">
                             <TextField id="outlined-basic" label="Phone" name="phone" onChange={handleChange} variant="filled" className="textfield mb-3" />
                         </div>

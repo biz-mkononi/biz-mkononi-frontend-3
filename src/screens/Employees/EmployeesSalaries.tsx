@@ -53,8 +53,8 @@ const EmployeesSalaries = ({ id }: any) => {
 
                                         <td>
                                             <div style={{ display: "flex" }}>
-                                                <button className="btn btn-warning btn-sm ml-2" onClick={(() => { onClick(salary.id) })}>View</button>
-                                                <button className="btn btn-success btn-sm ml-2" onClick={(() => navigate(`/employees/salaries/${salary.id}/update-details`))}>Edit</button>
+                                                <button className="btn btn-warning btn-sm m-2" onClick={(() => { onClick(salary.id) })}>View</button>
+                                                <button className="btn btn-success btn-sm m-2" onClick={(() => navigate(`/employees/salaries/${salary.id}/update-details`))}>Edit</button>
                                             </div>
 
                                         </td>
