@@ -55,7 +55,9 @@ const BusinessDetails = () => {
                         <div className="row padding">
                             <div className="col-lg-6">
                                 <div className='details-button' style={{ display: "flex" }}>
-                                    <button className='btn btn-secondary btn-md' onClick={(() => navigate(-1))}> Back</button>
+                                    <div className="text-center">
+                                        <button className='btn btn-secondary btn-md' onClick={(() => navigate(-1))}> Back</button>
+                                    </div>
                                     <button className='btn btn-warning btn-md' onClick={(() => navigate(`/business/${params.id}/update-details`))}> Update</button>
                                 </div>
 
@@ -65,7 +67,7 @@ const BusinessDetails = () => {
                         </div>
                         <div className="row padding">
                             <div className="col-lg-6">
-                                <img className='business-details-image ' src={data.imageUrl ===null?image2:data.imageUrl} />
+                                <img className='business-details-image ' src={data.imageUrl === null ? image2 : data.imageUrl} />
                             </div>
 
                             <div className="col-lg-6">

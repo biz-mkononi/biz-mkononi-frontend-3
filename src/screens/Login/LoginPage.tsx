@@ -50,15 +50,15 @@ const LoginPage = ({ switchmode }: functions) => {
                                 </Alert>
                             )
                         }
-                        <h5 className="mt-3 mb-3 text-center" style={{ fontWeight: "bold" }}>Sign In</h5>
+                        <h5 className="mt-5 mb-3 text-center" style={{ fontWeight: "bold" }}>Sign In</h5>
 
                         <form onSubmit={onSubmitLoginData}>
                             <div className="field mb-3">
-                                <TextField size="small" id="outlined-basic" label="Phone" name="phone" onChange={handleChange} variant="filled" className="textfield mb-3" required />
+                                <TextField size="small" id="standard-basic" label="Phone" name="phone" onChange={handleChange} variant="standard" className="textfield mb-3" required />
                             </div>
 
                             <div className="mb-3 field">
-                                <TextField size="small" id="outlined-basic" label="Password" onChange={handleChange} type={showPassword ? 'text' : 'password'} name="password" required
+                                <TextField size="small" id="standard-basic" label="Password" onChange={handleChange} type={showPassword ? 'text' : 'password'} name="password" required
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -71,7 +71,7 @@ const LoginPage = ({ switchmode }: functions) => {
                                             </InputAdornment>
                                         ),
                                     }}
-                                    variant="filled" className="textfield mb-3" />
+                                    variant="standard" className="textfield mb-3" />
 
                             </div>
                             <div className="text-center mb-2">

@@ -96,7 +96,7 @@ const SignUpPage = ({ switchmode }: functions) => {
                                         )
                                     }
                                     <div className="field mb-3">
-                                        <TextField size="small" id="outlined-basic" label="Phone" name="phone" onChange={handleChange} variant="filled" className="textfield mb-3" />
+                                        <TextField size="small" id="standard-basic" label="Phone" name="phone" onChange={handleChange} variant="standard" className="textfield mb-3" />
                                     </div>
                                     <div className="mt-3 text-center sign-button">
                                         {
@@ -110,7 +110,7 @@ const SignUpPage = ({ switchmode }: functions) => {
                                 <React.Fragment>
                                     {
                                         dataErrors !== '' && (
-                                            <Alert variant="filled" onClose={(() => setDataErrors(''))} severity="error">
+                                            <Alert variant="standard" onClose={(() => setDataErrors(''))} severity="error">
                                                 {dataErrors}
                                             </Alert>
                                         )
@@ -118,20 +118,20 @@ const SignUpPage = ({ switchmode }: functions) => {
                                     <h5 className="mt-2 mb-5 text-center " style={{ fontWeight: "bold" }}>Create an Account</h5>
                                     <form onSubmit={handleSubmit(onSubmit)}>
                                         <div className="mb-2 field">
-                                            <TextField size="small" id="outlined-basic" label="Name" {...register("name")} variant="filled" className="textfield mb-3" />
+                                            <TextField size="small" id="standard-basic" label="Name" {...register("name")} variant="standard" className="textfield mb-3" />
                                             <p className="text-danger">{errors.name?.message}</p>
                                         </div>
 
                                         <div className="mb-2 field">
-                                            <TextField size="small" id="outlined-basic" label="Phone" {...register("phone")} variant="filled" className="textfield mb-3" />
+                                            <TextField size="small" id="standard-basic" label="Phone" {...register("phone")} variant="standard" className="textfield mb-3" />
                                             <p className="text-danger">{errors.phone?.message}</p>
                                         </div>
                                         <div className="mb-2 field">
-                                            <TextField size="small" id="outlined-basic" label="email" {...register("email")} variant="filled" className="textfield mb-3" />
+                                            <TextField size="small" id="standard-basic" label="email" {...register("email")} variant="standard" className="textfield mb-3" />
                                             <p className="text-danger">{errors.email?.message}</p>
                                         </div>
                                         <div className="mb-2 field">
-                                            <TextField size="small" id="outlined-basic" label="Password" type={showPassword ? 'text' : 'password'} {...register("password")}
+                                            <TextField size="small" id="standard-basic" label="Password" type={showPassword ? 'text' : 'password'} {...register("password")}
                                                 InputProps={{
                                                     endAdornment: (
                                                         <InputAdornment position="end">
@@ -144,11 +144,11 @@ const SignUpPage = ({ switchmode }: functions) => {
                                                         </InputAdornment>
                                                     ),
                                                 }}
-                                                variant="filled" className="textfield mb-3" />
+                                                variant="standard" className="textfield mb-3" />
                                             <p className="text-danger">{errors.password?.message}</p>
                                         </div>
                                         <div className="mb-2 field">
-                                            <TextField size="small" id="outlined-basic" label="Confirm Password" type={showPassword ? 'text' : 'password'} {...register("password2")} variant="filled"
+                                            <TextField size="small" id="standard-basic" label="Confirm Password" type={showPassword ? 'text' : 'password'} {...register("password2")} variant="standard"
                                                 InputProps={{
                                                     endAdornment: (
                                                         <InputAdornment position="end">

@@ -34,7 +34,7 @@ const GetForgotPasswordCode = () => {
                         }
                         <h5 className="mt-3 mb-5 text-center" style={{ fontWeight: "bold" }}>Forgot Password</h5>
                         <div className="field mb-3">
-                            <TextField id="outlined-basic" label="Phone" name="phone" onChange={handleChange} variant="filled" className="textfield mb-3" />
+                            <TextField id="standard-basic" label="Phone" name="phone" onChange={handleChange} variant="standard" className="textfield mb-3" />
                         </div>
                         <div className="mt-3 text-center sign-button">
                             {
