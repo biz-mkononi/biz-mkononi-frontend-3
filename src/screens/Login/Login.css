@@ -1,16 +1,23 @@
-
-.login-banner {
+.banner-logo {
+    height: 50px;
+    width: 50px;
+  }
+  .banner-heading {
+    text-align: center !important;
+  }
+  .login-banner {
     padding: 60px;
     background-color: white !important;
     margin: 0px !important;
-
-}
-.sign-container {
+    justify-items: center;
+  
+  }
+  .sign-container {
     padding: 80px;
    
-
-}
-.login {
+  
+  }
+  .login {
     background-image: url('../../Assets/Group 2.svg');
     background-size: 500px 300px;
     background-repeat: no-repeat;
@@ -18,49 +25,49 @@
     background-color: #f2f8FF;
     padding: 0px !important;
     height: 100% !important;
-
-}
-.login-banner p {
+  
+  }
+  .login-banner p {
     padding: 20px;
-}
-.login-banner h5 {
+  }
+  .login-banner h5 {
     padding: 20px;
-}
-
-.login-card {
+  }
+  
+  .login-card {
     position: relative;
     border-width: 0ch !important;
     background-color: transparent;
     padding: 10px;
-} 
-.field .textfield:focus {
+  } 
+  .field .textfield:focus {
     border: transparent !important;
     outline: none !important;
-
-}
-
-.login-card .textfield:active {
+  
+  }
+  
+  .login-card .textfield:active {
     border-top: none !important;
     outline:none !important;
     border-color: red !important;
-}
-.login-card .textfield:active:focus {
+  }
+  .login-card .textfield:active:focus {
     border: transparent !important;
     outline: none !important;
-
-}
-.sign-button .btn {
+  
+  }
+  .sign-button .btn {
     border-radius: 200px !important;
     background-color: #1572E8;
-}
-a {
+  }
+  a {
     text-decoration: none;
-}
-.field {
+  }
+  .field {
     margin-left:25%;
-}
-
-@media only screen and (max-width: 1200px){
+  }
+  
+  @media only screen and (max-width: 1200px){
     
   }
   @media only screen and (max-width: 600px){
@@ -86,7 +93,7 @@ a {
     }
   .login-icons {
     display: none !important;
-
+  
   }
   .login-card {
     text-align: center !important;
@@ -94,11 +101,12 @@ a {
   }
   .field {
     margin-left:0% !important;
-}
+  }
   }
   @media only screen and (max-width: 425px){
   /*Small smartphones [325px -> 425px]*/
   .banner-logo {
     margin-left: 40px;
-}
   }
+  }
+  

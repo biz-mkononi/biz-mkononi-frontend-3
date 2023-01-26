@@ -3,11 +3,16 @@ import { url } from "../Auth/Data";
 
 const newUrl = `${url}/businesses`
 
-const addSale = (post:any,navigate:any,setIsLoading:any,id:any) => {
+const addSale = (post:any,navigate:any,setIsLoading:any,id:any,setErrors:any) => {
   setIsLoading(true)
     reqInstance2.post(`${newUrl}/${id}/sales`, post)
-    .then((data) => console.log(data))
-    .then (() => navigate('/sales/list'))
+    .then((data) => {
+      if (data.data.statusCode !==201) {
+        setErrors(data.data.message)
+        setIsLoading(false)
+      }
+    })
+    .then(() => navigate('/sales/list'))
 }
 const getSales = (setData:any,setIsLoading:any,id:any) => {
   setIsLoading(true)
@@ -21,10 +26,8 @@ const getSingleSale  = async (setData:any,setCustomer:any,setProduct:any, id:any
   .then ((data) =>{
     setData(data.data)
     setCustomer(data.data.customer)
-    data.data.saleItems.map((product:any) => {
-      setProduct(product.product)
-
-    })
+    setProduct(data.data.saleItems)
+   
   })
   .then(() => setIsLoading(false))
 }

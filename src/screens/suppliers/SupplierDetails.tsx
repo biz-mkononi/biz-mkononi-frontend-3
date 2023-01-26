@@ -64,12 +64,12 @@ const SupplierDetails = ({ id }: any) => {
 
                             </div>
                             <div className="col-lg-6">
-                                
+
                             </div>
                         </div>
                         <div className="row padding">
                             <div className="col-lg-6">
-                                <img className='business-details-image ' src={data.imageUrl === null?image2:data.imageUrl} />
+                                <img className='business-details-image ' src={data.imageUrl === null ? image2 : data.imageUrl} />
                             </div>
 
                             <div className="col-lg-6">
