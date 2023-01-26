@@ -39,7 +39,7 @@ const SalesDetails = ({ id }: any) => {
     const handleClose = () => {
         setOpen(false)
     }
-    console.log(data)
+    console.log(product)
     return (
         <>
             {
@@ -73,7 +73,7 @@ const SalesDetails = ({ id }: any) => {
                         <div className="row padding">
                             <h2 className='mt-3'>Customer</h2>
                             <div className="col-lg-6">
-                                <img className='business-details-image ' src={customer.imageUrl === null?image2:customer.imageUrl} />
+                                <img className='business-details-image ' src={customer.imageUrl === null ? image2 : customer.imageUrl} />
                             </div>
 
                             <div className="col-lg-6">
@@ -109,43 +109,53 @@ const SalesDetails = ({ id }: any) => {
                                 </table>
                             </div>
                         </div>
-                        <div className="row padding">
-                            <h2 className='mt-3'>Product</h2>
-                            <div className="col-lg-6">
-                                <img className='business-details-image ' src={product.imageUrl === null?image2:product.imageUrl} />
-                            </div>
 
-                            <div className="col-lg-6">
-                                <table className="table mt-3">
+                        <h2 className='mt-3'>Product</h2>
+                        {
+                            product.map((product: any) => (
+                                <>
+                                    <div className="row padding">
 
-                                    <>
+                                        <div className="col-lg-6">
+                                            <img className='business-details-image ' src={product.product.imageUrl === null ? image2 : product.product.imageUrl} />
+                                        </div>
 
-                                        <tbody >
-                                            <tr >
-                                                <th>Product</th>
-                                                <td>{product.name}</td>
-                                            </tr>
+                                        <div className="col-lg-6">
+                                            <table className="table mt-3">
 
-                                            <tr>
-                                                <th>Product Type</th>
-                                                <td>{product.productType}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Buying Price</th>
-                                                <td><span className='money'>Ksh</span> {product.buyingPrice}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Selling Price</th>
-                                                <td><span className='money'>Ksh</span> {product.sellingPrice}</td>
-                                            </tr>
+                                                <tbody >
+                                                    <tr >
+                                                        <th>Product</th>
+                                                        <td>{product.product.name}</td>
+                                                    </tr>
 
-                                        </tbody>
-                                    </>
+                                                    <tr>
+                                                        <th>Product Type</th>
+                                                        <td>{product.product.productType}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Quantity</th>
+                                                        <td>{product.quantity}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Selling Price</th>
+                                                        <td><span className='money'>Ksh</span> {product.product.sellingPrice}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Total Amount</th>
+                                                        <td><span className='money'>Ksh</span> {product.totalAmount}</td>
+                                                    </tr>
 
+                                                </tbody>
 
-                                </table>
-                            </div>
-                        </div>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </>
+                            ))
+                        }
+
                         <h2 className='mt-3'>Sale</h2>
                         <table className="table mt-3">
 
