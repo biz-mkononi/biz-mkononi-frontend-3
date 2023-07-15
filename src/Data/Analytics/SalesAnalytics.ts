@@ -121,6 +121,23 @@ const getTotalDatePartSalesByWeekDay= (setData:any,setIsLoading:any,id:any) => {
     })
     .then(() => setIsLoading(false))
 }
+const getMonthlyTotalDatePartSalesByWeekDay= (setData:any,setIsLoading:any,id:any) => {
+    const data = {
+        part:"dow",
+        from:firstDay.toISOString(),
+    to:now.toISOString(),
+    }
+    setIsLoading(true)
+    reqInstance.get(`${newUrl}/${id}/sales-analytics/total-date-part-sales`,{params:data})
+    .then ((data) => {
+        const newSalesTrend = data.data.map((sale: any) => {
+            return { ...sale, part: weekDays [sale.part] }
+        })
+        console.log(newSalesTrend)
+        setData(newSalesTrend)
+    })
+    .then(() => setIsLoading(false))
+}
 const getTotalDatePartSalesByHour= (setData:any,setIsLoading:any,id:any) => {
     const data = {
         part:"hour",
@@ -133,6 +150,25 @@ const getTotalDatePartSalesByHour= (setData:any,setIsLoading:any,id:any) => {
         const newSalesTrend = data.data.map((sale: any) => {
             const part = parseInt(sale.part);
     const hours = part % 24; //
+            return { ...sale, part: `${hours.toString().padStart(2, '0')}:00` }
+        })
+        console.log(newSalesTrend)
+        setData(newSalesTrend)
+    })
+    .then(() => setIsLoading(false))
+}
+const getMonthlyTotalDatePartSalesByHour= (setData:any,setIsLoading:any,id:any) => {
+    const data = {
+        part:"hour",
+        from:firstDay.toISOString(),
+    to:now.toISOString(),
+    }
+    setIsLoading(true)
+    reqInstance.get(`${newUrl}/${id}/sales-analytics/total-date-part-sales`,{params:data})
+    .then ((data) => {
+        const newSalesTrend = data.data.map((sale: any) => {
+            const part = parseInt(sale.part);
+    const hours = part % 24; 
             return { ...sale, part: `${hours.toString().padStart(2, '0')}:00` }
         })
         console.log(newSalesTrend)
@@ -173,6 +209,8 @@ export {
     getCurrentSales,
     getSalesInLastMonthTrend,
     getTotalDatePartSalesByHour,
+    getMonthlyTotalDatePartSalesByHour,
+    getMonthlyTotalDatePartSalesByWeekDay,
     prevDate,
     d,
     firstDay,
