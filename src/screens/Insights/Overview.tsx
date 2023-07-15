@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from "react";
 import { Chart as ChartJS, registerables } from "chart.js";
 import "./Overview.css"
-import { getSalesTrend, getTotalSales,getSalesInLastMonthTrend } from '../../Data/Analytics/SalesAnalytics';
+import { getSalesTrendByMonth, getTotalSales,getSalesInLastMonthTrend } from '../../Data/Analytics/SalesAnalytics';
 import { getTotalProfits } from "../../Data/Analytics/ProfitsAnalytics";
-import { getTotalSupplies, months } from '../../Data/Analytics/SuppliesAnalytics';
+import { getTotalSupplies} from '../../Data/Analytics/SuppliesAnalytics';
 import { getChurnCustomerRate, getMostActiveCustomers, getNewCustomers, getRepeatCustomerRate, getTotalCustomers } from "../../Data/Analytics/CustomerAnalytics";
 import Card from '@mui/material/Card';
 import {
@@ -35,7 +35,7 @@ const Overview = () => {
     console.log(businessId)
 
     useEffect(() => {
-        getSalesTrend(setSalesTrend, setIsLoading, businessId)
+        getSalesTrendByMonth(setSalesTrend, setIsLoading, businessId)
         getSalesInLastMonthTrend(setMonthSalesTrend, setIsLoading, businessId)
         getTotalSales(setTotalSales, setIsLoading, businessId)
         getTotalProfits(setTotalProfits, setIsLoading, businessId)

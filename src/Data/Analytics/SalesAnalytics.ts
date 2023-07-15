@@ -1,3 +1,4 @@
+import { months, weekDays } from "../../Constants/Constants";
 import { reqInstance } from "../Auth/authHelper";
 import { newUrl } from "../Sales/Data";
 var d = new Date();
@@ -16,17 +17,20 @@ prevDate.setHours(0, 0, 0, 0);
 let fd = new Date ()
 var firstDay = new Date(fd.getFullYear(), fd.getMonth(), 1);
 
-const getSalesTrend= (setData:any,setIsLoading:any,id:any) => {
+const getSalesTrendByMonth= (setData:any,setIsLoading:any,id:any) => {
     const data = {
         from:d.toISOString(),
         to:now.toISOString(),
-        group:"day",
+        group:"month",
       }
       setIsLoading(true)
   reqInstance.get(`${newUrl}/${id}/sales-analytics/sales-trend`, {params:data})
   .then ((data) => {
     const newSalesTrend = data.data.map((sale: any) => {
-        return { ...sale, group: new Date(sale.group).toLocaleDateString() }
+        const newDate = new Date(sale.group)
+        const monthIndex = newDate.getMonth();
+        const monthName = months[monthIndex];
+        return { ...sale, group: monthName }
     })
     setData(newSalesTrend)
   })
@@ -100,18 +104,36 @@ const getCurrentSales= (setData:any,setIsLoading:any,id:any) => {
     .then ((data) => setData(data.data))
     .then(() => setIsLoading(false))
 }
-const getTotalDatePartSales= (setData:any,setIsLoading:any,id:any) => {
+const getTotalDatePartSalesByWeekDay= (setData:any,setIsLoading:any,id:any) => {
     const data = {
         part:"dow",
         from:d.toISOString(),
     to:now.toISOString(),
     }
-    const weekDays = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
     setIsLoading(true)
     reqInstance.get(`${newUrl}/${id}/sales-analytics/total-date-part-sales`,{params:data})
     .then ((data) => {
         const newSalesTrend = data.data.map((sale: any) => {
             return { ...sale, part: weekDays [sale.part] }
+        })
+        console.log(newSalesTrend)
+        setData(newSalesTrend)
+    })
+    .then(() => setIsLoading(false))
+}
+const getTotalDatePartSalesByHour= (setData:any,setIsLoading:any,id:any) => {
+    const data = {
+        part:"hour",
+        from:d.toISOString(),
+    to:now.toISOString(),
+    }
+    setIsLoading(true)
+    reqInstance.get(`${newUrl}/${id}/sales-analytics/total-date-part-sales`,{params:data})
+    .then ((data) => {
+        const newSalesTrend = data.data.map((sale: any) => {
+            const part = parseInt(sale.part);
+    const hours = part % 24; //
+            return { ...sale, part: `${hours.toString().padStart(2, '0')}:00` }
         })
         console.log(newSalesTrend)
         setData(newSalesTrend)
@@ -140,16 +162,17 @@ const getRepeatCustomerRate= (setData:any,setIsLoading:any,id:any) => {
     }
 
 export {
-    getSalesTrend,
+    getSalesTrendByMonth,
     getTotalSales,
     getAverageOrder,
     getProductSales,
     getRepeatCustomerRate,
-    getTotalDatePartSales,
+    getTotalDatePartSalesByWeekDay,
     getDailySales,
     getCurrentMonthSales,
     getCurrentSales,
     getSalesInLastMonthTrend,
+    getTotalDatePartSalesByHour,
     prevDate,
     d,
     firstDay,

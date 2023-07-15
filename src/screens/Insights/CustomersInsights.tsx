@@ -8,10 +8,9 @@ import { Chart as ChartJS, registerables } from "chart.js";
 import "./Overview.css"
 import { useContext, useEffect, useState } from "react";
 import { getAgeStats, getChurnCustomerRate, getCurrentMonthNewCustomers, getDailyNewCustomers, getGenderStats, getMostActiveCustomers, getMostActiveInCurrentCustomers, getNewCustomers, getRepeatCustomerRate, getTotalCustomers } from "../../Data/Analytics/CustomerAnalytics";
-import { getSalesTrend } from "../../Data/Analytics/SalesAnalytics";
-import { months } from '../../Data/Analytics/SuppliesAnalytics';
 import CircularProgress from '@mui/material/CircularProgress';
 import { DataContext } from '../../context/ContextProvider';
+import { months } from '../../Constants/Constants';
 
 ChartJS.register(...registerables);
 const CustomersInsights = () => {

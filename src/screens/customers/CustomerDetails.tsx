@@ -36,6 +36,10 @@ const CustomerDetails = ({ id }: any) => {
     const onDelete = () => {
         setOpen(true)
     }
+
+    const goBack = () => {
+        navigate("/")
+    }
     const handleClose = () => {
         setOpen(false)
     }

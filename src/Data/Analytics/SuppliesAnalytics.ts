@@ -6,7 +6,6 @@ const getGroupedSupplies= (setData:any,id:any) => {
   .then ((data) => setData(data.data.rows))
 }
 
-const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
 const getTotalSupplies= (setData:any,setIsLoading:any,id:any) => {
   const data = {
@@ -35,5 +34,4 @@ setIsLoading(true)
     getGroupedSupplies,
     getTotalSupplies,
     getTodayTotalSupplies,
-    months
   }

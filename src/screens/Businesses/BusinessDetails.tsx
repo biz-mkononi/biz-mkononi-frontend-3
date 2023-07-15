@@ -35,6 +35,11 @@ const BusinessDetails = () => {
 
     }, [location]);
 
+    const goBack = () => {
+        navigate(-1)
+        console.log("clicked")
+    }
+
 
     return (
         <>
@@ -55,8 +60,8 @@ const BusinessDetails = () => {
                         <div className="row padding">
                             <div className="col-lg-6">
                                 <div className='details-button' style={{ display: "flex" }}>
-                                    <button className='btn btn-secondary btn-md' onClick={(() => navigate(-1))}> Back</button>
-                                    <button className='btn btn-warning btn-md' onClick={(() => navigate(`/business/${params.id}/update-details`))}> Update</button>
+                                    <button className='btn btn-secondary btn-md' onClick={ (() => navigate("/"))}> Back</button>
+                                    <button className="btn btn-success btn-sm ml-2" onClick={(() => navigate(`/business/${params.id}/update-details`))}>Update</button>
                                 </div>
 
 

@@ -17,6 +17,9 @@ textarea {
 }
 .add-business p {
     color: #3282B8;
+} 
+.add-business {
+  cursor: pointer !important;
 }
 table {
     border-collapse: separate !important;
@@ -68,6 +71,7 @@ margin-top: 0px !important;
 margin-left: 10px;
 border-radius: 20px;
 width: 100px;
+cursor: pointer !important;
   }
   .places {
     width: 300px !important;
@@ -85,6 +89,7 @@ width: 100px;
   .business-image {
     display: none !important;
   }
+  
   }
   @media only screen and (max-width: 425px){
   /*Small smartphones [325px -> 425px]*/

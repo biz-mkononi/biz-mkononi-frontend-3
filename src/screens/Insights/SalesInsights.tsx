@@ -1,19 +1,20 @@
 import React, { useEffect, useState, useContext } from 'react'
 import Card from '@mui/material/Card';
 import {
-    BarChart, Bar, LabelList, XAxis, YAxis, CartesianGrid, Tooltip, Legend, FunnelChart, Funnel, Pie, ResponsiveContainer
+    BarChart, Bar, LabelList, XAxis, YAxis, CartesianGrid, Tooltip, Legend, FunnelChart, Funnel, Pie, ResponsiveContainer, LineChart, Line
 } from 'recharts';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables } from "chart.js";
 import "./Overview.css"
-import { getCurrentMonthSales, getCurrentSales, getDailySales, getRepeatCustomerRate, getSalesInLastMonthTrend, getSalesTrend, getTotalDatePartSales, getTotalSales } from '../../Data/Analytics/SalesAnalytics';
-import { getTotalSupplies, months } from '../../Data/Analytics/SuppliesAnalytics';
+import { getCurrentMonthSales, getCurrentSales, getDailySales, getRepeatCustomerRate, getSalesInLastMonthTrend,getTotalDatePartSalesByHour, getSalesTrendByMonth, getTotalDatePartSalesByWeekDay, getTotalSales } from '../../Data/Analytics/SalesAnalytics';
+import { getTotalSupplies} from '../../Data/Analytics/SuppliesAnalytics';
 import { getTotalProfits } from '../../Data/Analytics/ProfitsAnalytics';
 import CircularProgress from '@mui/material/CircularProgress';
 import { DataContext } from '../../context/ContextProvider';
 import { getSales } from '../../Data/Sales/Data';
 import NotFound from '../NotFoundPage/NotFound';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { months } from '../../Constants/Constants';
 
 ChartJS.register(...registerables);
 const SalesInsights = () => {
@@ -28,21 +29,23 @@ const SalesInsights = () => {
     const [dailySales, setDailySales] = useState<any>({})
     const [currentMonthSales, setCurrentMonthSales] = useState<any>({})
     const [newMonthSales, setNewMonthSales] = useState<any>({})
+    const [hourlySales,setHourlySales] = useState<string []>([])
     const [isLoading, setIsLoading] = useState(false)
     const { open, businessId } = useContext(DataContext)
 
     useEffect(() => {
-        getSalesTrend(setSalesTrend, setIsLoading, businessId)
+        getSalesTrendByMonth(setSalesTrend, setIsLoading, businessId)
         getSalesInLastMonthTrend(setMonthSalesTrend, setIsLoading, businessId)
         getTotalSales(setTotalSales, setIsLoading, businessId)
         getRepeatCustomerRate(setRepeatCustomerRate, setIsLoading, businessId)
         getTotalProfits(setTotalProfits, setIsLoading, businessId)
         getTotalSupplies(setTotalSupplies, setIsLoading, businessId)
-        getTotalDatePartSales(setPartSales, setIsLoading, businessId)
+        getTotalDatePartSalesByWeekDay(setPartSales, setIsLoading, businessId)
         getDailySales(setDailySales, setIsLoading, businessId)
         getCurrentMonthSales(setCurrentMonthSales, setIsLoading, businessId)
         getCurrentSales(setNewMonthSales, setIsLoading, businessId)
         getSales(setSales, setIsLoading, businessId)
+        getTotalDatePartSalesByHour(setHourlySales,setIsLoading,businessId)
     }, [])
     let date = new Date()
     const month = date.getMonth()
@@ -61,7 +64,7 @@ const SalesInsights = () => {
             total: totalProfits
         }
     ]
-    console.log(sales)
+    console.log(hourlySales)
     return (
         <div>
             {isLoading ? <div className="text-center"><CircularProgress color="success" /></div>
@@ -146,21 +149,27 @@ const SalesInsights = () => {
                                             <div className="col-lg-6 col-sm-12">
                                             
                                                 <Card className="new-card">
-                                                    <h5 className="text-center mb-4">Sales statistics</h5>
+                                                    <h5 className="text-center mb-5">Monthly Sales in the last one year</h5>
                                                     <ResponsiveContainer width="95%" height={400}>
-                                                        <FunnelChart >
-                                                            <Tooltip />
-                                                            <Funnel
-                                                                dataKey="total"
-                                                                data={funnelData}
-                                                                isAnimationActive
-                                                                fill="#3282B8"
-                                                            >
-                                                                <LabelList position="right" fill="#3282B8" stroke="none" dataKey="name" />
-                                                            </Funnel>
-                                                        </FunnelChart>
-                                                    </ResponsiveContainer>
+                                                        <BarChart
 
+                                                            data={salesTrend}
+                                                            margin={{
+                                                                top: 5,
+                                                                right: 30,
+                                                                left: 20,
+                                                                bottom: 5,
+                                                            }}
+                                                        >
+                                                            <CartesianGrid strokeDasharray="3 3" />
+                                                            <XAxis dataKey="group" />
+                                                            <YAxis />
+                                                            <Tooltip />
+                                                            <Legend />
+                                                            <Bar dataKey="count" barSize={20} fill='#BBe1FA' />
+                                                            <Bar dataKey="total" barSize={20} fill='#3282B8' />
+                                                        </BarChart>
+                                                    </ResponsiveContainer>
 
                                                 </Card>
                                             </div>
@@ -194,7 +203,61 @@ const SalesInsights = () => {
                                             </div>
                                             <div className="col-lg-6 col-sm-12">
                                                 <Card className="new-card">
-                                                    <h5 className="text-center mb-5">Partly Weekly sales in last one year</h5>
+                                                    <h5 className="text-center mb-5">Daily sales in the last one year</h5>
+                                                    <ResponsiveContainer width="95%" height={400}>
+                                                        <BarChart
+                                                            width={400}
+                                                            height={359}
+                                                            data={partSales}
+                                                            margin={{
+                                                                top: 5,
+                                                                right: 30,
+                                                                left: 20,
+                                                                bottom: 5,
+                                                            }}
+                                                        >
+                                                            <CartesianGrid strokeDasharray="3 3" />
+                                                            <XAxis dataKey="part" />
+                                                            <YAxis />
+                                                            <Tooltip />
+                                                            <Legend />
+                                                            <Bar dataKey="count" barSize={20} fill='#BBe1FA' />
+                                                            <Bar dataKey="total" barSize={20} fill='#3282B8' />
+                                                        </BarChart>
+                                                    </ResponsiveContainer>
+
+                                                </Card>
+                                            </div>
+                                        </div>
+                                        <div className="row padding">
+                                            <div className="col-lg-6 col-sm-12">
+                                                <Card className="new-card">
+                                                    <h5 className="text-center mb-5">Most active hours in the past one year</h5>
+                                                    <ResponsiveContainer width="95%" height={400}>
+                                                        <LineChart
+
+                                                            data={hourlySales}
+                                                            margin={{
+                                                                top: 5,
+                                                                right: 30,
+                                                                left: 20,
+                                                                bottom: 5,
+                                                            }}
+                                                        >
+                                                            <CartesianGrid strokeDasharray="3 3" />
+                                                            <XAxis dataKey="part" />
+                                                            <YAxis />
+                                                            <Tooltip />
+                                                            <Legend />
+                                                            <Line type="monotone" dataKey="total" stroke="#3282B8" />
+                                                        </LineChart>
+                                                    </ResponsiveContainer>
+
+                                                </Card>
+                                            </div>
+                                            <div className="col-lg-6 col-sm-12">
+                                                <Card className="new-card">
+                                                    <h5 className="text-center mb-5">Daily sales in the last one year</h5>
                                                     <ResponsiveContainer width="95%" height={400}>
                                                         <BarChart
                                                             width={400}

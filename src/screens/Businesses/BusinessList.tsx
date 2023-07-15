@@ -77,7 +77,7 @@ const BusinessList = () => {
                                             <td>
                                                 <div style={{ display: "flex" }}>
                                                     <button className='btn btn-primary btn-sm ml-2 active-button ' onClick={(() => onManage(business.id))} >Manage</button>
-                                                    <button className="btn btn-warning btn-sm ml-2" onClick={(() => { onClick(business.id) })}>View</button>
+                                                    <button className="btn btn-warning btn-sm ml-2" onClick={(() =>   onClick(business.id) )}>View</button>
                                                     <button className="btn btn-success btn-sm ml-2" onClick={(() => navigate(`/business/${business.id}/update-details`))}>Edit</button>
                                                 </div>
 
