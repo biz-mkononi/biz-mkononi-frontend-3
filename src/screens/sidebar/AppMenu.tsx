@@ -1,22 +1,20 @@
 import React, { useContext } from 'react'
 
 import List from '@mui/material/List'
-import image2 from "../../Assets/logo.png"
-import "./sidebar.css"
+import image2 from '../../Assets/logo.png'
+import './sidebar.css'
 
-
-import InsightsIcon from '@mui/icons-material/Insights';
-import AddBusinessIcon from '@mui/icons-material/AddBusiness';
-import BusinessIcon from '@mui/icons-material/Business';
-import InventoryIcon from '@mui/icons-material/Inventory';
-import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
-import BadgeIcon from '@mui/icons-material/Badge';
+import InsightsIcon from '@mui/icons-material/Insights'
+import AddBusinessIcon from '@mui/icons-material/AddBusiness'
+import BusinessIcon from '@mui/icons-material/Business'
+import InventoryIcon from '@mui/icons-material/Inventory'
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits'
+import BadgeIcon from '@mui/icons-material/Badge'
 import AppMenuItem from './AppMenuItem'
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import { DataContext } from '../../context/ContextProvider'
-import { Divider } from '@mui/material';
+import { Divider } from '@mui/material'
 const appMenuItems = [
-
   {
     name: 'Insights',
     Icon: InsightsIcon,
@@ -55,11 +53,8 @@ const appMenuItems = [
         name: 'New Business',
         link: '/businesses/add',
       },
-
     ],
-
   },
-
 ]
 const otherItems = [
   {
@@ -72,12 +67,9 @@ const otherItems = [
       },
       {
         name: 'Add Sale',
-        link: "/sales/add",
+        link: '/sales/add',
       },
-
     ],
-
-
   },
   {
     name: 'Supplies',
@@ -89,12 +81,9 @@ const otherItems = [
       },
       {
         name: 'Add Supply',
-        link: "/supplies/add",
+        link: '/supplies/add',
       },
-
     ],
-
-
   },
   {
     name: 'Finance',
@@ -102,11 +91,11 @@ const otherItems = [
     items: [
       {
         name: 'Add Expense',
-        link: "/expense/add",
+        link: '/expense/add',
       },
       {
         name: 'Expenses',
-        link: "/expense/list",
+        link: '/expense/list',
       },
       {
         name: 'Other Income',
@@ -114,12 +103,9 @@ const otherItems = [
       },
       {
         name: 'Add Extra Income',
-        link: "/income/add",
+        link: '/income/add',
       },
-
     ],
-
-
   },
 
   {
@@ -134,9 +120,7 @@ const otherItems = [
         name: 'New Supplier',
         link: '/supplier/new',
       },
-
     ],
-
   },
   {
     name: 'Products',
@@ -158,7 +142,6 @@ const otherItems = [
         name: 'New Category',
         link: '/category/new',
       },
-
     ],
   },
   {
@@ -171,12 +154,9 @@ const otherItems = [
       },
       {
         name: 'New Customer',
-        link: "/customers/new",
+        link: '/customers/new',
       },
-
     ],
-
-
   },
   {
     name: 'Employees',
@@ -198,13 +178,11 @@ const otherItems = [
         name: 'Employee Salaries',
         link: '/employees/salaries',
       },
-
     ],
   },
 ]
 
 const AppMenu: React.FC = () => {
-
   const { business } = useContext(DataContext)
 
   const filteredListItems = appMenuItems.filter((item: any) => {
@@ -212,60 +190,49 @@ const AppMenu: React.FC = () => {
   })
 
   return (
-    <List component="nav" sx={{ width: "100%" }} disablePadding>
+    <List component="nav" sx={{ width: '100%' }} disablePadding>
       {/* <AppMenuItem {...appMenuItems[0]} /> */}
-      <div className="mb-3" style={{ display: "flex", marginLeft: "10px" }}>
+      <div className="mb-3" style={{ display: 'flex', marginLeft: '10px' }}>
         <img src={image2} className="img-fluid sidebar-logo" alt="..." />
-        <h5 className="font-medium leading-tight text-xl mt-0 mb-2 " style={{ paddingLeft: "10px", fontWeight: 'bold' }}>BizMkononi</h5>
+        <h5
+          className="font-medium leading-tight text-xl mt-0 mb-2 "
+          style={{ paddingLeft: '10px', fontWeight: 'bold' }}
+        >
+          BizMkononi
+        </h5>
       </div>
-      {
-        business ?
-          <>
-            {
-              appMenuItems.map((item, index) => (
-                <div className='mb-4'>
-                  <AppMenuItem {...item} key={index} />
+      {business ? (
+        <>
+          {appMenuItems.map((item, index) => (
+            <div className="mb-4">
+              <AppMenuItem {...item} key={index} />
+            </div>
+          ))}
+        </>
+      ) : (
+        <>
+          {filteredListItems.map((item, index) => (
+            <div className="mb-4">
+              <AppMenuItem {...item} key={index} />
+            </div>
+          ))}
+        </>
+      )}
 
-                </div>
-              ))
-            }
-          </> :
+      {business && (
+        <>
           <>
-            {
-              filteredListItems.map((item, index) => (
-                <div className='mb-4'>
-                  <AppMenuItem {...item} key={index} />
-
-                </div>
-              ))
-            }
+            <Divider />
           </>
-      }
-
-
-      {
-        business && (
-          <>
-            <>
-              <Divider />
-            </>
-            {
-              otherItems.map((item, index) => (
-                <div className='mb-4 mt-2' style={{ fontWeight: 'bold' }}>
-                  <AppMenuItem {...item} key={index} />
-
-                </div>
-              ))
-            }
-          </>
-        )
-      }
-
-    </List >
+          {otherItems.map((item, index) => (
+            <div className="mb-4 mt-2" style={{ fontWeight: 'bold' }}>
+              <AppMenuItem {...item} key={index} />
+            </div>
+          ))}
+        </>
+      )}
+    </List>
   )
 }
 
-
 export default AppMenu
-
-

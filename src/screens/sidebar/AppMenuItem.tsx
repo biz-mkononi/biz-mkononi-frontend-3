@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 // import { SvgIconProps } from '@mui/material/SvgIcon'
-import { styled, useTheme } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles'
 
 import List from '@mui/material/List'
 
@@ -33,7 +33,7 @@ export type AppMenuItemProps = AppMenuItemPropsWithoutItems & {
   items?: AppMenuItemProps[]
 }
 
-const AppMenuItem: React.FC<AppMenuItemProps> = props => {
+const AppMenuItem: React.FC<AppMenuItemProps> = (props) => {
   const { name, link, Icon, items = [] } = props
   const isExpandable = items && items.length > 0
   const [open, setOpen] = React.useState(false)
@@ -43,10 +43,10 @@ const AppMenuItem: React.FC<AppMenuItemProps> = props => {
   }
 
   const MenuItemRoot = (
-    <AppMenuItemComponent  link={link} onClick={handleClick}>
+    <AppMenuItemComponent link={link} onClick={handleClick}>
       <>
         {!!Icon && (
-          <ListItemIcon sx={{color: '#1B262C'}}>
+          <ListItemIcon sx={{ color: '#1B262C' }}>
             <Icon />
           </ListItemIcon>
         )}
@@ -76,7 +76,5 @@ const AppMenuItem: React.FC<AppMenuItemProps> = props => {
     </>
   )
 }
-
-
 
 export default AppMenuItem

@@ -2,7 +2,7 @@
   padding: 20px;
   position: absolute;
   z-index: 2 !important;
-  position:relative;
+  position: relative;
 }
 .insights {
   padding: 20px;
@@ -14,13 +14,13 @@
 .insights h2 {
   color: #3282b8;
   font-size: 23px;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', Arial, sans-serif;
 }
 .insights h3 {
   font-size: 16px;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', Arial, sans-serif;
 }
 .charts {
   padding: 20px;
@@ -28,14 +28,14 @@
 .charts h2 {
   font-weight: 500;
 }
-.charts h5{
+.charts h5 {
   font-weight: 500;
-  color: #3282B8;
+  color: #3282b8;
   font-size: 18px;
 }
 .top-cards {
   font-weight: 600;
-  color: #3282B8;
+  color: #3282b8;
   font-size: 17px;
 }
 .charts .Card {
@@ -44,7 +44,9 @@
   margin-bottom: 30px;
   height: 500px;
   width: 440px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:
+    0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .new-card {
   height: 500px;
@@ -52,7 +54,9 @@
   padding: 20px;
   background-color: #fff;
   margin-bottom: 30px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:
+    0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .notfound h3 {
   font-weight: 550;
@@ -64,49 +68,50 @@
   font-size: 17px;
 }
 .notfound {
-text-align: center !important;
-justify-content: center !important;
+  text-align: center !important;
+  justify-content: center !important;
 }
 .notfound .Card {
   padding: 40px;
   background-color: #fff;
   margin-bottom: 30px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:
+    0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .notfound-card {
   width: 440px;
   padding: 20px;
-
 }
 .notfound-card h5 {
   font-weight: 600;
-  color: #3282B8;
+  color: #3282b8;
   font-size: 17px;
 }
 
-@media only screen and (max-width: 1200px){
+@media only screen and (max-width: 1200px) {
   .notfound-card {
     width: 90% !important;
-  
   }
   .notfound img {
     margin-left: 8% !important;
   }
-  .Card{
+  .Card {
     width: 100% !important;
     padding: 10px;
     height: 100%;
     background-color: #fff;
     margin-bottom: 30px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow:
+      0 4px 8px 0 rgba(0, 0, 0, 0.2),
+      0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
   .new-card {
     padding: 10px;
   }
 }
-@media only screen and (max-width: 600px){
-  
+@media only screen and (max-width: 600px) {
 }
-@media only screen and (max-width: 425px){
-/*Small smartphones [325px -> 425px]*/
+@media only screen and (max-width: 425px) {
+  /*Small smartphones [325px -> 425px]*/
 }

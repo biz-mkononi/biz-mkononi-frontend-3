@@ -1,44 +1,69 @@
-import { reqInstance } from "../Auth/authHelper";
-import { newUrl } from "../Sales/Data";
-const addIncome = (post:any,setIsLoading:any,navigate:any,id:any) => {
+import { reqInstance } from '../Auth/authHelper'
+import { newUrl } from '../Sales/Data'
+const addIncome = (post: any, setIsLoading: any, navigate: any, id: any) => {
   setIsLoading(true)
-    reqInstance.post(`${newUrl}/${id}/incomes`,post)
+  reqInstance
+    .post(`${newUrl}/${id}/incomes`, post)
     .then((data) => console.log(data))
-    .then(() => navigate ("/income/list"))
+    .then(() => navigate('/income/list'))
 }
-const getIncomes = (setData:any,setIsLoading:any,id:any) => {
+const getIncomes = (setData: any, setIsLoading: any, id: any) => {
   setIsLoading(true)
-  reqInstance.get(`${newUrl}/${id}/incomes`)
-  .then ((data) => setData(data.data.rows))
-  .then(() => setIsLoading(false))
+  reqInstance
+    .get(`${newUrl}/${id}/incomes`)
+    .then((data) => setData(data.data.rows))
+    .then(() => setIsLoading(false))
 }
-const getSingleIncome = (setData:any,id:any,setIsLoading:any,setFormData:any,businessid:any) => {
+const getSingleIncome = (
+  setData: any,
+  id: any,
+  setIsLoading: any,
+  setFormData: any,
+  businessid: any,
+) => {
   setIsLoading(true)
-  reqInstance.get(`${newUrl}/${businessid}/incomes/${id}`)
-  .then ((data) => {
-    setFormData({
-      title:data.data.title,amount:data.data.amount,description:data.data.description,txDate:data.data.txDate
+  reqInstance
+    .get(`${newUrl}/${businessid}/incomes/${id}`)
+    .then((data) => {
+      setFormData({
+        title: data.data.title,
+        amount: data.data.amount,
+        description: data.data.description,
+        txDate: data.data.txDate,
+      })
+      setData(data.data)
     })
-    setData(data.data)
-  } )
-  .then(() => setIsLoading(false))
+    .then(() => setIsLoading(false))
 }
-const updateSingleIncome  = async (post:any,navigate:any,id:any,setIsLoading:any,businessid:any) => {
+const updateSingleIncome = async (
+  post: any,
+  navigate: any,
+  id: any,
+  setIsLoading: any,
+  businessid: any,
+) => {
   setIsLoading(true)
-  await reqInstance.put(`${newUrl}/${businessid}/incomes/${id}`,post)
-  .then (() => navigate('/income/list'))
+  await reqInstance
+    .put(`${newUrl}/${businessid}/incomes/${id}`, post)
+    .then(() => navigate('/income/list'))
 }
-const deleteIncome  = async (navigate:any,id:any,setIsLoading:any,businessid:any) => {
+const deleteIncome = async (
+  navigate: any,
+  id: any,
+  setIsLoading: any,
+  businessid: any,
+) => {
   setIsLoading(true)
-  await reqInstance.delete(`${newUrl}/${businessid}/incomes/${id}`)
-  .then (() => navigate('/income/list'))
-  .then(() => setIsLoading(false))
+  await reqInstance
+    .delete(`${newUrl}/${businessid}/incomes/${id}`)
+    .then(() => navigate('/income/list'))
+    .then(() => setIsLoading(false))
 }
 
 export {
-    addIncome,
-    getIncomes,
-    getSingleIncome,
-    deleteIncome,
-    updateSingleIncome
+  addIncome,
+  getIncomes,
+  getSingleIncome,
+  deleteIncome,
+  updateSingleIncome,
 }

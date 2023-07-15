@@ -9,21 +9,21 @@ export interface AppMenuItemComponentProps {
   children: JSX.Element
 }
 
-const AppMenuItemComponent: React.FC<AppMenuItemComponentProps> = props => {
+const AppMenuItemComponent: React.FC<AppMenuItemComponentProps> = (props) => {
   const { className, onClick, link, children } = props
 
   // If link is not set return the orinary ListItem
   if (!link || typeof link !== 'string') {
     return (
       <ListItem
-      sx = {{
-        '&.active': {
-          background: 'rgba(0, 0, 0, 0.08)',
-          '& .MuiListItemIcon-root': {
-            color: '#fff',
+        sx={{
+          '&.active': {
+            background: 'rgba(0, 0, 0, 0.08)',
+            '& .MuiListItemIcon-root': {
+              color: '#fff',
+            },
           },
-        },
-      }} 
+        }}
         button
         className={className}
         children={children}
@@ -35,18 +35,20 @@ const AppMenuItemComponent: React.FC<AppMenuItemComponentProps> = props => {
   // Return a LitItem with a link component
   return (
     <ListItem
-    sx = {{
-      '&.active': {
-        background: 'rgba(0, 0, 0, 0.08)',
-        '& .MuiListItemIcon-root': {
-          color: '#fff',
+      sx={{
+        '&.active': {
+          background: 'rgba(0, 0, 0, 0.08)',
+          '& .MuiListItemIcon-root': {
+            color: '#fff',
+          },
         },
-      },
-    }} 
+      }}
       button
       className={className}
       children={children}
-      component={forwardRef((props: NavLinkProps, ref: any) => <NavLink  {...props} ref={ref} />)}
+      component={forwardRef((props: NavLinkProps, ref: any) => (
+        <NavLink {...props} ref={ref} />
+      ))}
       to={link}
     />
   )

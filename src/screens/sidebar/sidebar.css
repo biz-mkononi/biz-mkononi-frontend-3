@@ -1,14 +1,13 @@
 .sidebar {
-  background-color: #BBE1FA !important; 
+  background-color: #bbe1fa !important;
   padding: 0% !important;
   margin: 0% !important;
-z-index: 1000 !important;
-position: relative;
+  z-index: 1000 !important;
+  position: relative;
 }
 
 .bar-container {
-  background-color: #e1f3ff !important; 
-
+  background-color: #e1f3ff !important;
 }
 .sidebar-logo {
   height: 30px !important;
