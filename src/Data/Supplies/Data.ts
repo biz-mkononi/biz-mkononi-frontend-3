@@ -18,10 +18,7 @@ const getSingleSupply  = async (setData:any,setSupplier:any,setProduct:any, id:a
   .then ((data) =>{
     setData(data.data)
     setSupplier(data.data.supplier)
-    data.data.supplyItems.map((product:any) => {
-      setProduct(product.product)
-
-    })
+    setProduct(data.data.supplyItems)
   })
   .then(() => setIsLoading(false))
 }

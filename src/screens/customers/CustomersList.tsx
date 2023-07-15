@@ -54,7 +54,8 @@ const CustomersList:React.FC = ({ id }: any) => {
                             </div>
                             <div className="col-lg-6 col-sm-12 text-right mb-3 mt-3">
                                 <div className='details-button float-right' style={{ display: "flex" }}>
-                                    <button className='btn btn-secondary btn-md' onClick={() => { console.log("button clicked");}}> Sms</button>
+
+                                    <button className='btn btn-secondary btn-md' onClick={handleOpen}> Sms</button>
                                     <button className='btn btn-info btn-md' onClick={(() => navigate(`/customers/new`))}> Add New</button>
 
                                 </div>

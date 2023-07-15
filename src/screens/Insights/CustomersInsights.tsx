@@ -25,19 +25,19 @@ const CustomersInsights = () => {
     const [mostActive, setMostActive] = useState<any[]>([])
     const [currentMonthNewCustomers, setCurrentMonthNewCustomers] = useState<any>({})
     const [mostActiveInCurrentMonth, setMostActiveInCurrentMonth] = useState<any[]>([])
-    const {businessId} = useContext(DataContext)
+    const { businessId } = useContext(DataContext)
     // const [salesTrend, setSalesTrend] = useState<any>({})
     useEffect(() => {
-        getTotalCustomers(setTotalCustomers, setIsLoading,businessId)
-        getNewCustomers(setNewCustomers, setIsLoading,businessId)
-        getRepeatCustomerRate(setRepeatPurchaseRate, setIsLoading,businessId)
-        getChurnCustomerRate(setChurnRate, setIsLoading,businessId)
-        getAgeStats(setAgeStats, setIsLoading,businessId)
-        getGenderStats(setGenderStats, setIsLoading,businessId)
-        getMostActiveCustomers(setMostActive, setIsLoading,businessId)
-        getDailyNewCustomers(setDailyCustomers, setIsLoading,businessId)
-        getCurrentMonthNewCustomers(setCurrentMonthNewCustomers, setIsLoading,businessId)
-        getMostActiveInCurrentCustomers(setMostActiveInCurrentMonth, setIsLoading,businessId)
+        getTotalCustomers(setTotalCustomers, setIsLoading, businessId)
+        getNewCustomers(setNewCustomers, setIsLoading, businessId)
+        getRepeatCustomerRate(setRepeatPurchaseRate, setIsLoading, businessId)
+        getChurnCustomerRate(setChurnRate, setIsLoading, businessId)
+        getAgeStats(setAgeStats, setIsLoading, businessId)
+        getGenderStats(setGenderStats, setIsLoading, businessId)
+        getMostActiveCustomers(setMostActive, setIsLoading, businessId)
+        getDailyNewCustomers(setDailyCustomers, setIsLoading, businessId)
+        getCurrentMonthNewCustomers(setCurrentMonthNewCustomers, setIsLoading, businessId)
+        getMostActiveInCurrentCustomers(setMostActiveInCurrentMonth, setIsLoading, businessId)
         // getSalesTrend(setSalesTrend)
     }, [])
     const total = genderStats.reduce(function (prev: any, cur: any) {
@@ -155,7 +155,7 @@ const CustomersInsights = () => {
                                 <div className="col-lg-6 col-sm-12">
                                     <Card className="new-card">
                                         <h5 className="text-center mb-4">Customer gender statistics</h5>
-                                        <ResponsiveContainer width="95%" height={400}>
+                                        <ResponsiveContainer width="95%" height={300}>
                                             <PieChart>
                                                 <Pie data={genderStats} dataKey="total" nameKey="group" cx="50%" cy="50%" outerRadius={110} fill="#8884d8" label />
                                             </PieChart>
@@ -163,7 +163,9 @@ const CustomersInsights = () => {
 
                                         {
                                             genderStats.map((gender) => (
-                                                <h5 className="p-2">{gender.group} : <span>{Math.round(gender.total / total * 100)} %</span> </h5>
+                                                <div className='row'>
+                                                    <h5 className="p-2">{gender.group} : <span>{Math.round(gender.total / total * 100)} %</span> </h5>
+                                                </div>
                                             ))
                                         }
                                     </Card>

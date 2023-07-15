@@ -58,8 +58,8 @@ const EmployeesList = ({ id }: any) => {
 
                                             <td>
                                                 <div style={{ display: "flex" }}>
-                                                    <button className="btn btn-warning btn-sm ml-2" onClick={(() => navigate(`/employee/${employee.id}/details`))}>View</button>
-                                                    <button className="btn btn-success btn-sm ml-2" onClick={(() => navigate(`/employee/${employee.id}/update-details`))}>Edit</button>
+                                                    <button className="btn btn-warning btn-sm m-2" onClick={(() => navigate(`/employee/${employee.id}/details`))}>View</button>
+                                                    <button className="btn btn-success btn-sm m-2" onClick={(() => navigate(`/employee/${employee.id}/update-details`))}>Edit</button>
                                                 </div>
                                             </td>
 

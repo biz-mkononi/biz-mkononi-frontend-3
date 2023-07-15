@@ -9,10 +9,10 @@ import image6 from "../../Assets/business-and-finance 1.svg"
 const LoginBanner = () => {
     return (
         <React.Fragment>
-            <div className="container login-banner">
+            <div className="container-fluid login-banner">
                 <div style={{ display: "flex" }}>
-                    <img src={image2} className="img-fluid" alt="..." />
-                    <h5 className="font-medium leading-tight text-xl mt-0 mb-2 " style={{ padding: "20px" }}>BizMkononi</h5>
+                    <img src={image2} className="img-fluid banner-logo" alt="..." />
+                    <h5 className=" banner-heading font-medium leading-tight text-xl mt-0 mb-2 " style={{ padding: "20px" }}>BizMkononi</h5>
                 </div>
 
 
