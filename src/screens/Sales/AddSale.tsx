@@ -44,6 +44,7 @@ const AddSale = ({ id }: any) => {
         });
         setTotalAmount(formTotal);
         setAmountCharged(formTotal)
+        setAmountPaid(formTotal)
     }, [forms]);
 
     const handleAddForm = () => {
@@ -231,7 +232,7 @@ const AddSale = ({ id }: any) => {
                             <label htmlFor="basic-url" className="form-label">Amount Paid</label>
                             <div className="input-group mb-5">
                                 <span className="input-group-text" id="basic-addon1"><AttachMoneyIcon /></span>
-                                <input type="text" defaultValue={amountCharged} onChange={handleAmountPaidChange} name="locationDetails" className="form-control" placeholder="details" aria-label="Username" aria-describedby="basic-addon1" />
+                                <input type="text" value={amountPaid} onChange={handleAmountPaidChange} name="locationDetails" className="form-control" placeholder="details" aria-label="Username" aria-describedby="basic-addon1" />
                             </div>
                             <h2 className='mb-4'>Balance : Ksh: {balance}</h2>
                         </div>

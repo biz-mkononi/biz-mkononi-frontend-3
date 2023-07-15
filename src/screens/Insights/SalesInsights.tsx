@@ -6,7 +6,7 @@ import {
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables } from "chart.js";
 import "./Overview.css"
-import { getCurrentMonthSales, getCurrentSales, getDailySales, getRepeatCustomerRate, getSalesInLastMonthTrend,getTotalDatePartSalesByHour, getSalesTrendByMonth, getTotalDatePartSalesByWeekDay, getTotalSales } from '../../Data/Analytics/SalesAnalytics';
+import { getCurrentMonthSales, getCurrentSales, getDailySales, getRepeatCustomerRate, getSalesInLastMonthTrend,getTotalDatePartSalesByHour, getSalesTrendByMonth, getTotalDatePartSalesByWeekDay, getTotalSales, getMonthlyTotalDatePartSalesByHour, getMonthlyTotalDatePartSalesByWeekDay } from '../../Data/Analytics/SalesAnalytics';
 import { getTotalSupplies} from '../../Data/Analytics/SuppliesAnalytics';
 import { getTotalProfits } from '../../Data/Analytics/ProfitsAnalytics';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -30,6 +30,8 @@ const SalesInsights = () => {
     const [currentMonthSales, setCurrentMonthSales] = useState<any>({})
     const [newMonthSales, setNewMonthSales] = useState<any>({})
     const [hourlySales,setHourlySales] = useState<string []>([])
+    const [monthlyHourlySales,setMonthlyHourlySales] = useState<string []>([])
+    const [monthlyWeeklySales,setMonthlyWeeklySales] = useState<string []>([])
     const [isLoading, setIsLoading] = useState(false)
     const { open, businessId } = useContext(DataContext)
 
@@ -46,25 +48,22 @@ const SalesInsights = () => {
         getCurrentSales(setNewMonthSales, setIsLoading, businessId)
         getSales(setSales, setIsLoading, businessId)
         getTotalDatePartSalesByHour(setHourlySales,setIsLoading,businessId)
+        getMonthlyTotalDatePartSalesByHour(setMonthlyHourlySales,setIsLoading,businessId)
+        getMonthlyTotalDatePartSalesByWeekDay(setMonthlyWeeklySales,setIsLoading,businessId)
     }, [])
     let date = new Date()
     const month = date.getMonth()
 
-    const funnelData = [
-        {
-            name: "total Supplies",
-            total: totalSupplies
-        },
-        {
-            name: "total Sales",
-            total: totalSales.total
-        },
-        {
-            name: "total Profits",
-            total: totalProfits
-        }
-    ]
-    console.log(hourlySales)
+    const createYDomain = (data:any) => {
+        const minValue = Math.min(...data.map((item:any) => parseInt(item.total)));
+    const maxValue = Math.max(...data.map((item:any) => parseInt(item.total)));
+
+  
+  const yDomain = [0 , maxValue ];
+  console.log(yDomain)
+
+  return yDomain
+    }
     return (
         <div>
             {isLoading ? <div className="text-center"><CircularProgress color="success" /></div>
@@ -137,7 +136,7 @@ const SalesInsights = () => {
                                                         >
                                                             <CartesianGrid strokeDasharray="1 6" />
                                                             <XAxis dataKey={`group`} />
-                                                            <YAxis />
+                                                            <YAxis domain={createYDomain(monthSalesTrend)} />
                                                             <Tooltip />
                                                             <Legend />
                                                             <Bar dataKey="total" barSize={20} fill='#3282B8' />
@@ -163,10 +162,9 @@ const SalesInsights = () => {
                                                         >
                                                             <CartesianGrid strokeDasharray="3 3" />
                                                             <XAxis dataKey="group" />
-                                                            <YAxis />
+                                                            <YAxis domain={createYDomain(salesTrend)} />
                                                             <Tooltip />
                                                             <Legend />
-                                                            <Bar dataKey="count" barSize={20} fill='#BBe1FA' />
                                                             <Bar dataKey="total" barSize={20} fill='#3282B8' />
                                                         </BarChart>
                                                     </ResponsiveContainer>
@@ -175,32 +173,6 @@ const SalesInsights = () => {
                                             </div>
                                         </div>
                                         <div className="row padding">
-                                            <div className="col-lg-6 col-sm-12">
-                                                <Card className="new-card">
-                                                    <h5 className="text-center mb-5">Sales for the month of {months[month]}</h5>
-                                                    <ResponsiveContainer width="95%" height={400}>
-                                                        <BarChart
-
-                                                            data={currentMonthSales}
-                                                            margin={{
-                                                                top: 5,
-                                                                right: 30,
-                                                                left: 20,
-                                                                bottom: 5,
-                                                            }}
-                                                        >
-                                                            <CartesianGrid strokeDasharray="3 3" />
-                                                            <XAxis dataKey="group" />
-                                                            <YAxis />
-                                                            <Tooltip />
-                                                            <Legend />
-                                                            <Bar dataKey="count" barSize={20} fill='#BBe1FA' />
-                                                            <Bar dataKey="total" barSize={20} fill='#3282B8' />
-                                                        </BarChart>
-                                                    </ResponsiveContainer>
-
-                                                </Card>
-                                            </div>
                                             <div className="col-lg-6 col-sm-12">
                                                 <Card className="new-card">
                                                     <h5 className="text-center mb-5">Daily sales in the last one year</h5>
@@ -218,10 +190,35 @@ const SalesInsights = () => {
                                                         >
                                                             <CartesianGrid strokeDasharray="3 3" />
                                                             <XAxis dataKey="part" />
-                                                            <YAxis />
+                                                            <YAxis domain={createYDomain(partSales)}/>
                                                             <Tooltip />
                                                             <Legend />
-                                                            <Bar dataKey="count" barSize={20} fill='#BBe1FA' />
+                                                            <Bar dataKey="total" barSize={20} fill='#3282B8' />
+                                                        </BarChart>
+                                                    </ResponsiveContainer>
+
+                                                </Card>
+                                            </div>
+                                            <div className="col-lg-6 col-sm-12">
+                                                <Card className="new-card">
+                                                    <h5 className="text-center mb-5">Daily sales in the last one month</h5>
+                                                    <ResponsiveContainer width="95%" height={400}>
+                                                        <BarChart
+                                                            width={400}
+                                                            height={359}
+                                                            data={monthlyWeeklySales}
+                                                            margin={{
+                                                                top: 5,
+                                                                right: 30,
+                                                                left: 20,
+                                                                bottom: 5,
+                                                            }}
+                                                        >
+                                                            <CartesianGrid strokeDasharray="3 3" />
+                                                            <XAxis dataKey="part" />
+                                                            <YAxis domain={createYDomain(monthlyWeeklySales)}/>
+                                                            <Tooltip />
+                                                            <Legend />
                                                             <Bar dataKey="total" barSize={20} fill='#3282B8' />
                                                         </BarChart>
                                                     </ResponsiveContainer>
@@ -246,7 +243,7 @@ const SalesInsights = () => {
                                                         >
                                                             <CartesianGrid strokeDasharray="3 3" />
                                                             <XAxis dataKey="part" />
-                                                            <YAxis />
+                                                            <YAxis domain={createYDomain(hourlySales)}/>
                                                             <Tooltip />
                                                             <Legend />
                                                             <Line type="monotone" dataKey="total" stroke="#3282B8" />
@@ -257,12 +254,11 @@ const SalesInsights = () => {
                                             </div>
                                             <div className="col-lg-6 col-sm-12">
                                                 <Card className="new-card">
-                                                    <h5 className="text-center mb-5">Daily sales in the last one year</h5>
+                                                    <h5 className="text-center mb-5">Most active hours in the past one month</h5>
                                                     <ResponsiveContainer width="95%" height={400}>
-                                                        <BarChart
-                                                            width={400}
-                                                            height={359}
-                                                            data={partSales}
+                                                        <LineChart
+
+                                                            data={monthlyHourlySales}
                                                             margin={{
                                                                 top: 5,
                                                                 right: 30,
@@ -272,12 +268,11 @@ const SalesInsights = () => {
                                                         >
                                                             <CartesianGrid strokeDasharray="3 3" />
                                                             <XAxis dataKey="part" />
-                                                            <YAxis />
+                                                            <YAxis domain={createYDomain(monthlyHourlySales)}/>
                                                             <Tooltip />
                                                             <Legend />
-                                                            <Bar dataKey="count" barSize={20} fill='#BBe1FA' />
-                                                            <Bar dataKey="total" barSize={20} fill='#3282B8' />
-                                                        </BarChart>
+                                                            <Line type="monotone" dataKey="total" stroke="#3282B8" />
+                                                        </LineChart>
                                                     </ResponsiveContainer>
 
                                                 </Card>
