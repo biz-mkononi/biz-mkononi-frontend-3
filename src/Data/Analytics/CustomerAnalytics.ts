@@ -16,73 +16,36 @@ const getTotalDateSales = (setData: any, id: any) => {
     .then((data) => setData(data.data.rows))
 }
 
-const getNewCustomers = (setData: any, setIsLoading: any, id: any) => {
+const getNewCustomers = (setData: any, setIsLoading: any, id: any,data:any) => {
   setIsLoading(true)
-  const data = {
-    from: d.toISOString(),
-    to: now.toISOString(),
-  }
-  reqInstance
-    .get(`${newUrl}/${id}/customer-analytics/new-customers`, { params: data })
-    .then((data) => setData(data.data))
-    .then(() => setIsLoading(false))
-}
-const getCurrentMonthNewCustomers = (
-  setData: any,
-  setIsLoading: any,
-  id: any,
-) => {
-  setIsLoading(true)
-  const data = {
-    from: firstDay.toISOString(),
-    to: now.toISOString(),
-  }
-  reqInstance
-    .get(`${newUrl}/${id}/customer-analytics/new-customers`, { params: data })
-    .then((data) => setData(data.data))
-    .then(() => setIsLoading(false))
-}
-const getDailyNewCustomers = (setData: any, setIsLoading: any, id: any) => {
-  setIsLoading(true)
-  const data = {
-    from: prevDate.toISOString(),
-    to: now.toISOString(),
-  }
   reqInstance
     .get(`${newUrl}/${id}/customer-analytics/new-customers`, { params: data })
     .then((data) => setData(data.data))
     .then(() => setIsLoading(false))
 }
 
-const getGenderStats = (setData: any, setIsLoading: any, id: any) => {
+
+
+const getGenderStats = (setData: any, setIsLoading: any, id: any,data:any) => {
   setIsLoading(true)
-  const data = {
-    from: d.toISOString(),
-    to: now.toISOString(),
-  }
+  
   reqInstance
     .get(`${newUrl}/${id}/customer-analytics/gender-stats`, { params: data })
     .then((data) => setData(data.data))
     .then(() => setIsLoading(false))
 }
 
-const getAgeStats = (setData: any, setIsLoading: any, id: any) => {
+const getAgeStats = (setData: any, setIsLoading: any, id: any,data:any) => {
   setIsLoading(true)
-  const data = {
-    from: d.toISOString(),
-    to: now.toISOString(),
-  }
+  
   reqInstance
     .get(`${newUrl}/${id}/customer-analytics/age-stats`, { params: data })
     .then((data) => setData(data.data))
     .then(() => setIsLoading(false))
 }
-const getRepeatCustomerRate = (setData: any, setIsLoading: any, id: any) => {
+const getRepeatCustomerRate = (setData: any, setIsLoading: any, id: any,data:any) => {
   setIsLoading(true)
-  const data = {
-    from: d.toISOString(),
-    to: now.toISOString(),
-  }
+
   reqInstance
     .get(`${newUrl}/${id}/customer-analytics/repeat-customer-rate`, {
       params: data,
@@ -90,12 +53,8 @@ const getRepeatCustomerRate = (setData: any, setIsLoading: any, id: any) => {
     .then((data) => setData(data.data.rate))
     .then(() => setIsLoading(false))
 }
-const getChurnCustomerRate = (setData: any, setIsLoading: any, id: any) => {
+const getChurnCustomerRate = (setData: any, setIsLoading: any, id: any,data:any) => {
   setIsLoading(true)
-  const data = {
-    from: d.toISOString(),
-    to: now.toISOString(),
-  }
   reqInstance
     .get(`${newUrl}/${id}/customer-analytics/churn-customer-rate`, {
       params: data,
@@ -103,31 +62,8 @@ const getChurnCustomerRate = (setData: any, setIsLoading: any, id: any) => {
     .then((data) => setData(data.data.rate))
     .then(() => setIsLoading(false))
 }
-const getMostActiveCustomers = (setData: any, setIsLoading: any, id: any) => {
+const getMostActiveCustomers = (setData: any, setIsLoading: any, id: any,data:any) => {
   setIsLoading(true)
-  const data = {
-    from: prevMonth.toISOString(),
-    to: now.toISOString(),
-    limit: 10,
-  }
-  reqInstance
-    .get(`${newUrl}/${id}/customer-analytics/most-active-customers`, {
-      params: data,
-    })
-    .then((data) => setData(data.data))
-    .then(() => setIsLoading(false))
-}
-const getMostActiveInCurrentCustomers = (
-  setData: any,
-  setIsLoading: any,
-  id: any,
-) => {
-  setIsLoading(true)
-  const data = {
-    from: firstDay.toISOString(),
-    to: now.toISOString(),
-    limit: 10,
-  }
   reqInstance
     .get(`${newUrl}/${id}/customer-analytics/most-active-customers`, {
       params: data,
@@ -145,7 +81,4 @@ export {
   getRepeatCustomerRate,
   getChurnCustomerRate,
   getMostActiveCustomers,
-  getDailyNewCustomers,
-  getCurrentMonthNewCustomers,
-  getMostActiveInCurrentCustomers,
 }

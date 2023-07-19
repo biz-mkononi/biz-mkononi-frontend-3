@@ -179,7 +179,7 @@ const AddCustomer = ({ id }: any) => {
             <div className="col-lg-4">
               <div className="mb-3 image-upload">
                 <label htmlFor="formFile" className="form-label">
-                  Click to set business image
+                  Click to set customer image
                   <img
                     src={displayImage === '' ? image : displayImage}
                     alt=""

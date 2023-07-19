@@ -52,17 +52,7 @@ const BusinessList = () => {
             />
           ) : (
             <div className="container p-3">
-              <div className="row padding">
-                <div className="col-lg-6">
-                  <input
-                    className="form-control search mb-3"
-                    type="search"
-                    placeholder="Search by location"
-                    aria-label="Search"
-                  ></input>
-                </div>
-                <div className="col-lg-6"></div>
-              </div>
+             
 
               <table className="table">
                 <thead>

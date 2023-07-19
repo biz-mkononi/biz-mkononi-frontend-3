@@ -7,11 +7,7 @@ const getGroupedProfits = (setData: any, id: any) => {
     .then((data) => setData(data.data.rows))
 }
 
-const getTotalProfits = (setData: any, setIsLoading: any, id: any) => {
-  const data = {
-    from: d.toISOString(),
-    to: now.toISOString(),
-  }
+const getTotalProfits = (setData: any, setIsLoading: any, id: any,data:any) => {
   setIsLoading(true)
   reqInstance
     .get(`${newUrl}/${id}/profits-analytics/total-profits`, { params: data })
@@ -19,11 +15,7 @@ const getTotalProfits = (setData: any, setIsLoading: any, id: any) => {
     .then(() => setIsLoading(false))
 }
 
-const getTodayTotalProfits = (setData: any, setIsLoading: any, id: any) => {
-  const data = {
-    from: prevDate.toISOString(),
-    to: now.toISOString(),
-  }
+const getTodayTotalProfits = (setData: any, setIsLoading: any, id: any,data:any) => {
   setIsLoading(true)
   reqInstance
     .get(`${newUrl}/${id}/profits-analytics/total-profits`, { params: data })
