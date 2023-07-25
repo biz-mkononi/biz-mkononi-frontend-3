@@ -6,7 +6,10 @@ import { useNavigate } from 'react-router-dom'
 import CircularProgress from '@mui/material/CircularProgress'
 import SmsDialog from './SmsDialog'
 
-const CustomersList: React.FC = ({ id }: any) => {
+type Props = {
+  id:any;
+}
+const CustomersList = ({ id }:Props) => {
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'long',

@@ -34,12 +34,7 @@ const SuppliersList = ({ id }: any) => {
         </div>
       ) : (
         <div className="container ">
-          <input
-            className="form-control search mb-3"
-            type="search"
-            placeholder="Search by location"
-            aria-label="Search"
-          ></input>
+          
           <table className="table">
             <thead>
               <tr>

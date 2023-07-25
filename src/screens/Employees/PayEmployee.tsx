@@ -91,7 +91,6 @@ const PayEmployee = ({ id }: any) => {
                 label="Date"
                 value={value}
                 onChange={handleDateChange}
-                renderInput={(params) => <TextField {...params} />}
               />
             </Stack>
           </LocalizationProvider>

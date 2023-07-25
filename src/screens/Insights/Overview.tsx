@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react'
+import moment from 'moment'
 import { Chart as ChartJS, registerables } from 'chart.js'
 import './Overview.css'
 import {
@@ -32,6 +33,7 @@ import { DataContext } from '../../context/ContextProvider'
 import NotFound from '../NotFoundPage/NotFound'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import { getSales } from '../../Data/Sales/Data'
+import DateComponent from '../../components/DateComponent/DateComponent'
 
 ChartJS.register(...registerables)
 const Overview = () => {
@@ -49,22 +51,43 @@ const Overview = () => {
   const [newCustomers, setNewCustomers] = useState<any>({})
   const [sales, setSales] = useState<any[]>([])
 
-  const { open, businessId } = useContext(DataContext)
+  const { open, businessId,endDate,startDate } = useContext(DataContext)
   console.log(businessId)
 
   useEffect(() => {
-    getSalesTrendByMonth(setSalesTrend, setIsLoading, businessId)
-    getSalesInLastMonthTrend(setMonthSalesTrend, setIsLoading, businessId)
-    getTotalSales(setTotalSales, setIsLoading, businessId)
-    getTotalProfits(setTotalProfits, setIsLoading, businessId)
+    const from = new Date(startDate) 
+    const to =new Date(endDate)
+    const groupByMonth ={
+      from:from.toISOString(),
+      to:to.toISOString(),
+      group:"month"
+    }
+    const groupByDayData ={
+      from:from.toISOString(),
+      to:to.toISOString(),
+      group:"day"
+    }
+    const data = {
+      from:from.toISOString(),
+      to:to.toISOString()
+    }
+    const mostActiveCustomers = {
+      from:from.toISOString(),
+      to:to.toISOString(),
+      limit:10
+    }
+    getSalesTrendByMonth(setSalesTrend, setIsLoading, businessId,groupByMonth)
+    getSalesInLastMonthTrend(setMonthSalesTrend, setIsLoading, businessId,groupByDayData)
+    getTotalSales(setTotalSales, setIsLoading, businessId,data)
+    getTotalProfits(setTotalProfits, setIsLoading, businessId,data)
     getTotalCustomers(setTotalCustomers, setIsLoading, businessId)
-    getTotalSupplies(setTotalSupplies, setIsLoading, businessId)
-    getRepeatCustomerRate(setRepeatPurchaseRate, setIsLoading, businessId)
-    getChurnCustomerRate(setChurnRate, setIsLoading, businessId)
-    getMostActiveCustomers(setMostActive, setIsLoading, businessId)
-    getNewCustomers(setNewCustomers, setIsLoading, businessId)
+    getTotalSupplies(setTotalSupplies, setIsLoading, businessId,data)
+    getRepeatCustomerRate(setRepeatPurchaseRate, setIsLoading, businessId,data)
+    getChurnCustomerRate(setChurnRate, setIsLoading, businessId,data)
+    getMostActiveCustomers(setMostActive, setIsLoading, businessId,mostActiveCustomers)
+    getNewCustomers(setNewCustomers, setIsLoading, businessId,data)
     getSales(setSales, setIsLoading, businessId)
-  }, [])
+  }, [startDate,endDate])
   const churnData = [
     {
       name: 'new Customers',
@@ -111,7 +134,7 @@ const Overview = () => {
             />
           ) : (
             <div className="container-fluid overview">
-              <div className="text-right"></div>
+              <DateComponent/>
               <div className="insights container">
                 <div className="row padding">
                   <div className="col-lg-4 mt-3">
@@ -119,7 +142,7 @@ const Overview = () => {
                       <h5 className="mb-2 top-cards">
                         <span className="money">Ksh</span> {totalSales.total}
                       </h5>
-                      <h3>Total Sales in last one Year</h3>
+                      <h3>Total Sales</h3>
                     </div>
                   </div>
                   <div className="col-lg-4 mt-3">
@@ -127,7 +150,7 @@ const Overview = () => {
                       <h5 className="mb-2 top-cards">
                         <span className="money">Ksh</span> {totalProfits}
                       </h5>
-                      <h3>Total Profit in last one Year</h3>
+                      <h3>Total Profit</h3>
                     </div>
                   </div>
                   <div className="col-lg-4 mt-3">
@@ -164,9 +187,12 @@ const Overview = () => {
                 <div className="row padding">
                   <div className="col-lg-6 col-sm-12">
                     <Card className=" new-card">
-                      <h5 className="text-center mb-5">
-                        Sales trend in last one month
+                      <h5 className="text-center mb-2">
+                        Sales trend
                       </h5>
+                      <h6 className="text-center mb-3">
+                        {moment(new Date(startDate)).format('MMMM Do YYYY')} - {moment(new Date(endDate)).format('MMMM Do YYYY')}
+                      </h6>
                       <ResponsiveContainer width="95%" height={400}>
                         <BarChart
                           data={monthSalesTrend}
@@ -189,9 +215,12 @@ const Overview = () => {
                   </div>
                   <div className="col-lg-6 col-sm-12">
                     <Card className="new-card">
-                      <h5 className="text-center mb-4">
-                        Most Active Customers in last 30 days
+                      <h5 className="text-center mb-2">
+                        Most Active Customers
                       </h5>
+                      <h6 className="text-center mb-3">
+                        {moment(new Date(startDate)).format('MMMM Do YYYY')} - {moment(new Date(endDate)).format('MMMM Do YYYY')}
+                      </h6>
                       <ResponsiveContainer width="95%" height={400}>
                         <ComposedChart
                           layout="vertical"
@@ -217,9 +246,12 @@ const Overview = () => {
                 <div className="row padding">
                   <div className="col-lg-12 col-sm-12">
                     <Card className="Card new-card">
-                      <h5 className="text-center mb-5">
-                        Customer Details in the last 30 days
+                      <h5 className="text-center mb-2">
+                        Customer Details
                       </h5>
+                      <h6 className="text-center mb-3">
+                        {moment(new Date(startDate)).format('MMMM Do YYYY')} - {moment(new Date(endDate)).format('MMMM Do YYYY')}
+                      </h6>
                       <ResponsiveContainer width="95%" height={400}>
                         <BarChart
                           data={churnData}
@@ -244,9 +276,12 @@ const Overview = () => {
                 <div className="row padding">
                   <div className="col-lg-12 col-sm-12">
                     <Card className="Card new-card">
-                      <h5 className="text-center mb-5">
-                        Revenue Comparison in the last 30 days
+                      <h5 className="text-center mb-2">
+                        Revenue Comparison
                       </h5>
+                      <h6 className="text-center mb-3">
+                        {moment(new Date(startDate)).format('MMMM Do YYYY')} - {moment(new Date(endDate)).format('MMMM Do YYYY')}
+                      </h6>
                       <ResponsiveContainer width="95%" height={400}>
                         <BarChart
                           data={revenueData}

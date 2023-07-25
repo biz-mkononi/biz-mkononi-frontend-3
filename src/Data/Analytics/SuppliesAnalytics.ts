@@ -7,11 +7,8 @@ const getGroupedSupplies = (setData: any, id: any) => {
     .then((data) => setData(data.data.rows))
 }
 
-const getTotalSupplies = (setData: any, setIsLoading: any, id: any) => {
-  const data = {
-    from: d.toISOString(),
-    to: now.toISOString(),
-  }
+const getTotalSupplies = (setData: any, setIsLoading: any, id: any,data:any) => {
+ 
   setIsLoading(true)
   reqInstance
     .get(`${newUrl}/${id}/supplies-analytics/total-supplies`, { params: data })
@@ -19,11 +16,8 @@ const getTotalSupplies = (setData: any, setIsLoading: any, id: any) => {
     .then(() => setIsLoading(false))
 }
 
-const getTodayTotalSupplies = (setData: any, setIsLoading: any, id: any) => {
-  const data = {
-    from: prevDate.toISOString(),
-    to: now.toISOString(),
-  }
+const getTodayTotalSupplies = (setData: any, setIsLoading: any, id: any,data:any) => {
+  
   setIsLoading(true)
   reqInstance
     .get(`${newUrl}/${id}/supplies-analytics/total-supplies`, { params: data })

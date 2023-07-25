@@ -66,7 +66,7 @@ const SignUpPage = ({ switchmode }: functions) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormInputs>({
+  } = useForm<any>({
     resolver: yupResolver(schema),
   })
 
@@ -74,9 +74,9 @@ const SignUpPage = ({ switchmode }: functions) => {
   const verifyPhoneNumber = () => setIsVerified(true)
   const resendVerificationCode = () => setIsResendCode(true)
 
-  const onSubmit = (data: IFormInputs) => {
+  const onSubmit = () => {
     setIsRegistering(true)
-    registerUser(setDataErrors, data, setIsRegistering, setIsVerified)
+    registerUser(setDataErrors, formData, setIsRegistering, setIsVerified)
   }
 
   const resendCode = () => {
@@ -144,7 +144,7 @@ const SignUpPage = ({ switchmode }: functions) => {
               >
                 Create an Account
               </h5>
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={onSubmit}>
                 <div className="mb-2 field">
                   <TextField
                     size="small"
@@ -154,7 +154,6 @@ const SignUpPage = ({ switchmode }: functions) => {
                     variant="standard"
                     className="textfield mb-3"
                   />
-                  <p className="text-danger">{errors.name?.message}</p>
                 </div>
 
                 <div className="mb-2 field">
@@ -166,7 +165,6 @@ const SignUpPage = ({ switchmode }: functions) => {
                     variant="standard"
                     className="textfield mb-3"
                   />
-                  <p className="text-danger">{errors.phone?.message}</p>
                 </div>
                 <div className="mb-2 field">
                   <TextField
@@ -177,7 +175,6 @@ const SignUpPage = ({ switchmode }: functions) => {
                     variant="standard"
                     className="textfield mb-3"
                   />
-                  <p className="text-danger">{errors.email?.message}</p>
                 </div>
                 <div className="mb-2 field">
                   <TextField
@@ -202,7 +199,6 @@ const SignUpPage = ({ switchmode }: functions) => {
                     variant="standard"
                     className="textfield mb-3"
                   />
-                  <p className="text-danger">{errors.password?.message}</p>
                 </div>
                 <div className="mb-2 field">
                   <TextField
@@ -227,7 +223,6 @@ const SignUpPage = ({ switchmode }: functions) => {
                     }}
                     className="textfield mb-3"
                   />
-                  <p className="text-danger">{errors.password2?.message}</p>
                 </div>
                 <div className="text-center mt-3 sign-button">
                   {isRegistering ? (

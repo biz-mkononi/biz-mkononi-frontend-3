@@ -26,11 +26,17 @@ const ChurnRateInsights = () => {
   const [repeatPurchaseRate, setRepeatPurchaseRate] = useState<any>()
   const [churnRate, setChurnRate] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(false)
-  const { businessId } = useContext(DataContext)
+  const { businessId,startDate,endDate } = useContext(DataContext)
   useEffect(() => {
-    getNewCustomers(setNewCustomers, setIsLoading, businessId)
-    getRepeatCustomerRate(setRepeatPurchaseRate, setIsLoading, businessId)
-    getChurnCustomerRate(setChurnRate, setIsLoading, businessId)
+    const from = new Date(startDate) 
+    const to =new Date(endDate)
+    const data = {
+      from:from.toISOString(),
+      to:to.toISOString()
+    }
+    getNewCustomers(setNewCustomers, setIsLoading, businessId,data)
+    getRepeatCustomerRate(setRepeatPurchaseRate, setIsLoading, businessId,data)
+    getChurnCustomerRate(setChurnRate, setIsLoading, businessId,data)
   }, [])
   const churnData = [
     {

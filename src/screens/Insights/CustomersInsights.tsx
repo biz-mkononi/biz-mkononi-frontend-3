@@ -3,8 +3,6 @@ import {
   ComposedChart,
   BarChart,
   Bar,
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -14,18 +12,14 @@ import {
   Pie,
   ResponsiveContainer,
 } from 'recharts'
-import { Doughnut } from 'react-chartjs-2'
 import { Chart as ChartJS, registerables } from 'chart.js'
 import './Overview.css'
 import { useContext, useEffect, useState } from 'react'
 import {
   getAgeStats,
   getChurnCustomerRate,
-  getCurrentMonthNewCustomers,
-  getDailyNewCustomers,
   getGenderStats,
   getMostActiveCustomers,
-  getMostActiveInCurrentCustomers,
   getNewCustomers,
   getRepeatCustomerRate,
   getTotalCustomers,
@@ -33,50 +27,44 @@ import {
 import CircularProgress from '@mui/material/CircularProgress'
 import { DataContext } from '../../context/ContextProvider'
 import { months } from '../../Constants/Constants'
+import DateComponent from '../../components/DateComponent/DateComponent'
 
 ChartJS.register(...registerables)
 const CustomersInsights = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [totalCustomers, setTotalCustomers] = useState<any>({})
   const [newCustomers, setNewCustomers] = useState<any>({})
-  const [dailyCustomers, setDailyCustomers] = useState<any>({})
   const [repeatPurchaseRate, setRepeatPurchaseRate] = useState<any>()
   const [churnRate, setChurnRate] = useState<any[]>([])
   const [genderStats, setGenderStats] = useState<any[]>([])
   const [ageStats, setAgeStats] = useState<any[]>([])
   const [mostActive, setMostActive] = useState<any[]>([])
-  const [currentMonthNewCustomers, setCurrentMonthNewCustomers] = useState<any>(
-    {},
-  )
-  const [mostActiveInCurrentMonth, setMostActiveInCurrentMonth] = useState<
-    any[]
-  >([])
-  const { businessId } = useContext(DataContext)
+  const { businessId,startDate,endDate } = useContext(DataContext)
   // const [salesTrend, setSalesTrend] = useState<any>({})
   useEffect(() => {
+    const from = new Date(startDate) 
+    const to =new Date(endDate)
+    const data = {
+      from:from.toISOString(),
+      to:to.toISOString()
+    }
+    const mostActiveCustomers = {
+      from:from.toISOString(),
+      to:to.toISOString(),
+      limit:10
+    }
     getTotalCustomers(setTotalCustomers, setIsLoading, businessId)
-    getNewCustomers(setNewCustomers, setIsLoading, businessId)
-    getRepeatCustomerRate(setRepeatPurchaseRate, setIsLoading, businessId)
-    getChurnCustomerRate(setChurnRate, setIsLoading, businessId)
-    getAgeStats(setAgeStats, setIsLoading, businessId)
-    getGenderStats(setGenderStats, setIsLoading, businessId)
-    getMostActiveCustomers(setMostActive, setIsLoading, businessId)
-    getDailyNewCustomers(setDailyCustomers, setIsLoading, businessId)
-    getCurrentMonthNewCustomers(
-      setCurrentMonthNewCustomers,
-      setIsLoading,
-      businessId,
-    )
-    getMostActiveInCurrentCustomers(
-      setMostActiveInCurrentMonth,
-      setIsLoading,
-      businessId,
-    )
-    // getSalesTrend(setSalesTrend)
-  }, [])
+    getNewCustomers(setNewCustomers, setIsLoading, businessId,data)
+    getRepeatCustomerRate(setRepeatPurchaseRate, setIsLoading, businessId,data)
+    getChurnCustomerRate(setChurnRate, setIsLoading, businessId,data)
+    getAgeStats(setAgeStats, setIsLoading, businessId,data)
+    getGenderStats(setGenderStats, setIsLoading, businessId,data)
+    getMostActiveCustomers(setMostActive, setIsLoading, businessId,mostActiveCustomers)
+  }, [startDate,endDate])
   const total = genderStats.reduce(function (prev: any, cur: any) {
     return prev + cur.total
   }, 0)
+  console.log(genderStats)
 
   let date = new Date()
   const month = date.getMonth()
@@ -90,49 +78,35 @@ const CustomersInsights = () => {
         </div>
       ) : (
         <div className="container-fluid overview">
+          <DateComponent/>
           <div className="insights container w-10/12">
             <div className="row padding">
-              <div className="col-lg-4 col-sm-12 mt-3">
+              <div className="col-lg-3 col-sm-12 mt-3">
                 <div className="card text-center">
                   <h5 className="mb-2 top-cards">{totalCustomers.total}</h5>
                   <h3>Total Customers</h3>
                 </div>
               </div>
-              <div className="col-lg-4 col-sm-12 mt-3">
+              <div className="col-lg-3 col-sm-12 mt-3">
                 <div className="card text-center">
                   <h5 className="mb-2 top-cards">{newCustomers.total}</h5>
                   <h3>New Users Acquired</h3>
                 </div>
               </div>
-              <div className="col-lg-4 mt-3">
+              <div className="col-lg-3 mt-3">
                 <div className="card text-center">
                   <h5 className="mb-2 top-cards">{repeatPurchaseRate} %</h5>
                   <h3>Repeat Purchase Rate</h3>
                 </div>
               </div>
-            </div>
-            <div className="row padding">
-              <div className="col-lg-4 mt-3">
+              <div className="col-lg-3 mt-3">
                 <div className="card text-center">
                   <h5 className="mb-2 top-cards">{churnRate} %</h5>
                   <h3>Customer Churn Rate</h3>
                 </div>
               </div>
-              <div className="col-lg-4 mt-3">
-                <div className="card text-center">
-                  <h5 className="mb-2 top-cards">{dailyCustomers.total}</h5>
-                  <h3>Today's new customers</h3>
-                </div>
-              </div>
-              <div className="col-lg-4 mt-3">
-                <div className="card text-center">
-                  <h5 className="mb-2 top-cards">
-                    {currentMonthNewCustomers.total}
-                  </h5>
-                  <h3>New customers in {months[month]}</h3>
-                </div>
-              </div>
             </div>
+            
           </div>
           <div className="container charts">
             <div className="row padding">
@@ -162,23 +136,21 @@ const CustomersInsights = () => {
                   </ResponsiveContainer>
                 </Card>
               </div>
-              <div className="col-lg-6">
+              <div className="col-lg-6 col-sm-12">
                 <Card className="new-card">
-                  <h5 className="text-center mb-5">
-                    Most Active Customers in {months[month]}
-                  </h5>
+                  <h5 className="text-center mb-4">Customer Age statistics</h5>
                   <ResponsiveContainer width="95%" height={400}>
                     <BarChart
-                      data={mostActiveInCurrentMonth}
+                      data={ageStats}
                       margin={{
-                        top: 5,
+                        top: 15,
                         right: 30,
                         left: 20,
-                        bottom: 5,
+                        bottom: 3,
                       }}
                     >
                       <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="name" />
+                      <XAxis dataKey="group" />
                       <YAxis />
                       <Tooltip />
                       <Legend />
@@ -221,29 +193,7 @@ const CustomersInsights = () => {
                   ))}
                 </Card>
               </div>
-              <div className="col-lg-6 col-sm-12">
-                <Card className="new-card">
-                  <h5 className="text-center mb-4">Customer Age statistics</h5>
-                  <ResponsiveContainer width="95%" height={400}>
-                    <BarChart
-                      data={ageStats}
-                      margin={{
-                        top: 15,
-                        right: 30,
-                        left: 20,
-                        bottom: 3,
-                      }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="group" />
-                      <YAxis />
-                      <Tooltip />
-                      <Legend />
-                      <Bar dataKey="total" barSize={20} fill="#3282B8" />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </Card>
-              </div>
+              
             </div>
           </div>
         </div>

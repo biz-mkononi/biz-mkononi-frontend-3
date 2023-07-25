@@ -25,7 +25,7 @@
     "extendedDiagnostics": true,
     "pretty": true,
     "traceResolution": true,
-    "target": "es5",
+    "target": "ESNext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
