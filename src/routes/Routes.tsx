@@ -160,7 +160,7 @@ const RoutesFile = () => {
     <Box sx={{ display: 'flex' }}>
       {loggedUser && (
         <>
-          <CssBaseline />
+          {/* <CssBaseline /> */}
           <Drawer
             sx={{
               width: drawerWidth,
@@ -309,7 +309,7 @@ const RoutesFile = () => {
                 />
                 <Route
                   path="/customers/list"
-                  element={<CustomersList id={businessId} />}
+                  element={<CustomersList  id={businessId}/>}
                 />
                 <Route
                   path="/customers/:id/details"

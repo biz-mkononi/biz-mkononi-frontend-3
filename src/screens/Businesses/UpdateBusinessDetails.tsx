@@ -169,14 +169,14 @@ const UpdateBusinessDetails = () => {
                     Location
                   </label>
                   <div className="input-group mb-5">
-                    <GooglePlacesAutocomplete
+                    {/* <GooglePlacesAutocomplete
                       selectProps={{
                         location,
                         onChange: selectLocation,
                         placeholder: data.location,
                         className: 'places',
                       }}
-                    />
+                    /> */}
                   </div>
                 </div>
                 <div className="col-lg-4">

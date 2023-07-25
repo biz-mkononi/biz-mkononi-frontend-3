@@ -94,7 +94,7 @@ const UpdateSale = ({ id }: any) => {
       customerId,
     }
 
-    addSale(formData, navigate, setIsLoading, id)
+    addSale(formData, navigate, setIsLoading, id,setAmountPaid)
   }
   // console.log(product.quantity)
   const balance = parseInt(amountPaid) - parseInt(amountCharged)

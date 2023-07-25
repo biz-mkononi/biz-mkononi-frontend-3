@@ -131,7 +131,6 @@ const UpdateExpenseDetails = ({ id }: any) => {
                     label="Date&Time picker"
                     value={value}
                     onChange={handleDateChange}
-                    renderInput={(params) => <TextField {...params} />}
                   />
                 </Stack>
               </LocalizationProvider>

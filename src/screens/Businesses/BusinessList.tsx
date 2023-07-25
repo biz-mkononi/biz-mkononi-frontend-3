@@ -54,7 +54,8 @@ const BusinessList = () => {
             <div className="container p-3">
              
 
-              <table className="table">
+              <div className="table-responsive">
+                <table className="table">
                 <thead>
                   <tr>
                     <th scope="col">Name</th>
@@ -111,6 +112,7 @@ const BusinessList = () => {
                   </tbody>
                 ))}
               </table>
+              </div>
               <div className="mt-5 text-center">
                 <Pagination
                   className="text-center"
