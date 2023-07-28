@@ -16,7 +16,9 @@ const DateComponent = () => {
             
           }}>
 <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DatePicker   value={startDate} onChange={(newValue) => setStartDate(newValue)} label="From Date " />
+        <DatePicker sx={{
+          marginRight:"10px"
+        }}   value={startDate} onChange={(newValue) => setStartDate(newValue)} label="From Date " />
         <DatePicker  value={endDate} onChange={(newValue) => setEndDate(newValue)} label="To Date "  />
     </LocalizationProvider>
           </Container>
