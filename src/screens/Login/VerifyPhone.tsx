@@ -3,6 +3,7 @@ import { TextField } from '@mui/material'
 import { verifyPhone } from '../../Data/Auth/Data'
 import { useNavigate } from 'react-router-dom'
 import './Login.css'
+import AuthLayout from '../../Layout/AuthLayout'
 
 const VerifyPhone = () => {
   const navigate = useNavigate()
@@ -16,15 +17,17 @@ const VerifyPhone = () => {
 
   const phoneVerification = () => {
     verifyPhone(formData)
-    navigate(0)
+    navigate("/auth/login")
   }
   return (
-    <React.Fragment>
-      <>
-        <h3 className="mt-2 mb-5 text-center " style={{ fontWeight: 'bold' }}>
+    <AuthLayout>
+      <div className="flex flex-col justify-center items-center login">
+
+      
+        <h3 className="mt-2 mb-5 text-center font-bold" >
           Verify Phone
         </h3>
-        <div className="mb-2 field">
+        <div className="mb-2 ">
           <TextField
             id="standard-basic"
             name="phone"
@@ -32,17 +35,17 @@ const VerifyPhone = () => {
             required
             onChange={handleChange}
             variant="standard"
-            className="textfield mb-3"
+            className="w-64 mb-3"
           />
         </div>
-        <div className="mb-2 field">
+        <div className="mb-2 ">
           <TextField
             id="standard-basic"
             label="Code"
             name="code"
             onChange={handleChange}
             variant="standard"
-            className="textfield mb-3"
+            className="w-64 mb-3"
             required
           />
         </div>
@@ -54,8 +57,8 @@ const VerifyPhone = () => {
             Verify Phone
           </button>
         </div>
-      </>
-    </React.Fragment>
+        </div>
+    </AuthLayout>
   )
 }
 

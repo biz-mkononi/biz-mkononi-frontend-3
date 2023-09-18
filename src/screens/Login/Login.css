@@ -6,7 +6,7 @@
   text-align: center !important;
 }
 .login-banner {
-  padding: 60px;
+  padding: 40px !important;
   background-color: white !important;
   margin: 0px !important;
   justify-items: center;

@@ -4,6 +4,8 @@ import { changePassword } from '../../Data/Auth/Data'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { useNavigate } from 'react-router-dom'
+import AuthLayout from '../../Layout/AuthLayout'
+import './Login.css'
 
 const ResetPassword = () => {
   const navigate = useNavigate()
@@ -23,7 +25,7 @@ const ResetPassword = () => {
   }
 
   return (
-    <React.Fragment>
+    <AuthLayout>
       {dataErrors !== '' && (
         <Alert
           variant="standard"
@@ -33,10 +35,11 @@ const ResetPassword = () => {
           {dataErrors}
         </Alert>
       )}
-      <h5 className="mt-3 mb-5 text-center" style={{ fontWeight: 'bold' }}>
+      <div className="flex flex-col justify-center items-center login  ">
+      <h5 className="mt-3 mb-5 font-bold" >
         Reset Password
       </h5>
-      <div className="field mb-3">
+      <div className="mb-3">
         <TextField
           id="standard-basic"
           label="Phone"
@@ -44,21 +47,21 @@ const ResetPassword = () => {
           value={formData.phone}
           onChange={handleChange}
           variant="standard"
-          className="textfield mb-3"
+          className="w-64 mb-3"
         />
       </div>
-      <div className="field mb-3">
+      <div className="mb-3">
         <TextField
           id="standard-basic"
           label="Code"
           name="code"
           onChange={handleChange}
           variant="standard"
-          className="textfield mb-3"
+          className="w-64 mb-3"
           required
         />
       </div>
-      <div className="mb-2 field">
+      <div className="mb-2 ">
         <TextField
           id="standard-basic"
           label="new password"
@@ -79,11 +82,11 @@ const ResetPassword = () => {
             ),
           }}
           variant="standard"
-          className="textfield mb-3"
+          className="w-64 mb-3"
           required
         />
       </div>
-      <div className="mb-2 field">
+      <div className="mb-2 ">
         <TextField
           id="standard-basic"
           label="Confirm Password"
@@ -104,7 +107,7 @@ const ResetPassword = () => {
               </InputAdornment>
             ),
           }}
-          className="textfield mb-3"
+          className="w-64 mb-3"
           required
         />
       </div>
@@ -119,7 +122,8 @@ const ResetPassword = () => {
           </button>
         )}
       </div>
-    </React.Fragment>
+      </div>
+    </AuthLayout>
   )
 }
 

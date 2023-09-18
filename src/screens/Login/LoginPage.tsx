@@ -12,19 +12,15 @@ import { login } from '../../Data/Auth/Data'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { useNavigate } from 'react-router-dom'
-import GetForgotPasswordCode from './GetForgotPasswordCode'
 import { DataContext } from '../../context/ContextProvider'
+import AuthLayout from '../../Layout/AuthLayout'
 
-interface functions {
-  switchmode: any
-}
-const LoginPage = ({ switchmode }: functions) => {
+const LoginPage = () => {
   const navigate = useNavigate()
   const initialState = { code: '', password: '', phone: '', password2: '' }
   const [showPassword, setShowPassword] = useState(false)
   const [isSigningIn, setIsSigningIn] = useState(false)
 
-  const [isGetForgotPasswordCode, setIsGetForgotPasswordCode] = useState(false)
 
   const { setLoggedUser } = useContext(DataContext)
   const [formData, setFormData] = useState(initialState)
@@ -40,15 +36,11 @@ const LoginPage = ({ switchmode }: functions) => {
     login(setDataErrors, formData, navigate, setIsSigningIn, setLoggedUser)
   }
 
-  console.log(dataErrors)
 
-  const forgotPassword = () => setIsGetForgotPasswordCode(true)
+  const forgotPassword = () => navigate('/auth/get-forgot-password')
   return (
-    <React.Fragment>
-      {isGetForgotPasswordCode ? (
-        <GetForgotPasswordCode />
-      ) : (
-        <React.Fragment>
+    <AuthLayout>
+        <div className='login flex flex-col justify-center items-center'>
           {dataErrors !== '' && (
             <Alert
               variant="filled"
@@ -58,12 +50,12 @@ const LoginPage = ({ switchmode }: functions) => {
               {dataErrors}
             </Alert>
           )}
-          <h5 className="mt-5 mb-3 text-center" style={{ fontWeight: 'bold' }}>
+          <h5 className="mt-5 mb-3  font-bold" >
             Sign In
           </h5>
 
           <form onSubmit={onSubmitLoginData}>
-            <div className="field mb-3">
+            <div className=" mb-3">
               <TextField
                 size="small"
                 id="standard-basic"
@@ -71,12 +63,12 @@ const LoginPage = ({ switchmode }: functions) => {
                 name="phone"
                 onChange={handleChange}
                 variant="standard"
-                className="textfield mb-3"
+                className="w-64 mb-3"
                 required
               />
             </div>
 
-            <div className="mb-3 field">
+            <div className="mb-3 ">
               <TextField
                 size="small"
                 id="standard-basic"
@@ -99,7 +91,7 @@ const LoginPage = ({ switchmode }: functions) => {
                   ),
                 }}
                 variant="standard"
-                className="textfield mb-3"
+                className="w-64 mb-3"
               />
             </div>
             <div className="text-center mb-2">
@@ -109,9 +101,9 @@ const LoginPage = ({ switchmode }: functions) => {
               />
               <p className="mt-3">
                 {' '}
-                <a href="#" onClick={forgotPassword}>
+                <button className='bg-transparent' onClick={forgotPassword}>
                   Forgot password?
-                </a>{' '}
+                </button>{' '}
               </p>
             </div>
             <div className="mt-3 text-center sign-button">
@@ -127,14 +119,13 @@ const LoginPage = ({ switchmode }: functions) => {
           <div className="text-center mt-3">
             <p>
               Don't have an account yet?{' '}
-              <a href="#" onClick={switchmode}>
+              <button className='bg-transparent' onClick={(() => navigate('/auth/sign-up'))}>
                 Sign Up
-              </a>
+              </button>
             </p>
           </div>
-        </React.Fragment>
-      )}
-    </React.Fragment>
+        </div>
+    </AuthLayout>
   )
 }
 

@@ -1,15 +1,19 @@
-import React from 'react'
-import './Login.css'
-import image2 from '../../Assets/logo.png'
-import image3 from '../../Assets/ai-1.svg'
-import image4 from '../../Assets/customer 1.svg'
-import image5 from '../../Assets/insight 1.svg'
-import image6 from '../../Assets/business-and-finance 1.svg'
+import React, { ReactNode } from 'react';
+import '../screens/Login/Login.css'
+import image2 from '../Assets/logo.png'
+import image3 from '../Assets/ai-1.svg'
+import image4 from '../Assets/customer 1.svg'
+import image5 from '../Assets/insight 1.svg'
+import image6 from '../Assets/business-and-finance 1.svg'
+interface AuthLayoutProps {
+  children: ReactNode;
+}
 
-const LoginBanner = () => {
+const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
   return (
-    <React.Fragment>
-      <div className="container-fluid login-banner">
+    <div className="flex ">
+      <div className="w-1/2 p-4">
+        <div className="container-fluid login-banner">
         <div style={{ display: 'flex' }}>
           <img src={image2} className="img-fluid banner-logo" alt="..." />
           <h5
@@ -50,8 +54,12 @@ const LoginBanner = () => {
           </div>
         </div>
       </div>
-    </React.Fragment>
-  )
+      </div>
+      <div className="w-1/2 h-screen">
+        {children}
+      </div>
+    </div>
+  );
 }
 
-export default LoginBanner
+export default AuthLayout;

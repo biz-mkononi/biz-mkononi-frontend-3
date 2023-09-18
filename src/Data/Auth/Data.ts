@@ -71,7 +71,6 @@ const registerUser = async (
   setErrors: any,
   post: any,
   setIsRegistering: any,
-  setIsVerified: any,
 ) => {
   fetch(`${url}/auth/register`, {
     method: 'POST',
@@ -87,7 +86,6 @@ const registerUser = async (
         setErrors(json.message)
       } else {
         setIsRegistering(false)
-        setIsVerified(true)
       }
     })
 }
@@ -96,7 +94,7 @@ const forgotPassword = async (
   setErrors: any,
   post: any,
   setIsLoading: any,
-  setIsResetPassword: any,
+  navigate: any,
 ) => {
   fetch(`${url}/auth/forgot-password`, {
     method: 'POST',
@@ -113,12 +111,10 @@ const forgotPassword = async (
         setErrors(json.message)
       } else {
         setIsLoading(false)
-        setIsResetPassword(true)
+        navigate('/auth/reset-password')
 
-        console.log(json)
       }
     })
-  console.log(post)
 }
 const changePassword = async (
   setErrors: any,

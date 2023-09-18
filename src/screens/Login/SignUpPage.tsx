@@ -7,8 +7,8 @@ import './Login.css'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import VerifyPhone from './VerifyPhone'
 import { useNavigate } from 'react-router-dom'
+import AuthLayout from '../../Layout/AuthLayout'
 
 interface IFormInputs {
   name: string
@@ -46,21 +46,16 @@ const schema = yup.object().shape({
     .oneOf([yup.ref('password')], 'Passwords must and should match'),
 })
 
-const SignUpPage = ({ switchmode }: functions) => {
+const SignUpPage = () => {
   const navigate = useNavigate()
   const [isRegistering, setIsRegistering] = useState(false)
   const [dataErrors, setDataErrors] = useState('')
   const [showPassword, setShowPassword] = useState(false)
-  const [isVerified, setIsVerified] = useState(false)
-  const [isResendCode, setIsResendCode] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
 
   const initialState = { code: '', password: '', phone: '', password2: '' }
   const [formData, setFormData] = useState(initialState)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+
 
   const {
     register,
@@ -71,64 +66,19 @@ const SignUpPage = ({ switchmode }: functions) => {
   })
 
   const handleShowPassword = () => setShowPassword(!showPassword)
-  const verifyPhoneNumber = () => setIsVerified(true)
-  const resendVerificationCode = () => setIsResendCode(true)
+  const verifyPhoneNumber = () => navigate('/auth/verify-phone')
+  const resendVerificationCode = () => navigate('/auth/resend-code')
 
   const onSubmit = () => {
     setIsRegistering(true)
-    registerUser(setDataErrors, formData, setIsRegistering, setIsVerified)
+    registerUser(setDataErrors, formData, setIsRegistering)
   }
 
-  const resendCode = () => {
-    setIsLoading(true)
-    resendVerification(formData, setIsLoading, setDataErrors, navigate)
-  }
   console.log(dataErrors)
   return (
-    <React.Fragment>
-      {isVerified ? (
-        <VerifyPhone />
-      ) : (
-        <>
-          {isResendCode ? (
-            <React.Fragment>
-              <h5
-                className="mt-3 mb-5 text-center"
-                style={{ fontWeight: 'bold' }}
-              >
-                Resend Code
-              </h5>
-              {dataErrors && (
-                <p className="text-center text-danger mb-3">{dataErrors}</p>
-              )}
-              <div className="field mb-3">
-                <TextField
-                  size="small"
-                  id="standard-basic"
-                  label="Phone"
-                  name="phone"
-                  onChange={handleChange}
-                  variant="standard"
-                  className="textfield mb-3"
-                />
-              </div>
-              <div className="mt-3 text-center sign-button">
-                {isLoading ? (
-                  <button className="btn btn-primary btn-md" disabled>
-                    resending
-                  </button>
-                ) : (
-                  <button
-                    className="btn btn-primary btn-md"
-                    onClick={resendCode}
-                  >
-                    Resend
-                  </button>
-                )}
-              </div>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
+    <AuthLayout>
+      
+       
               {dataErrors !== '' && (
                 <Alert
                   variant="standard"
@@ -138,6 +88,7 @@ const SignUpPage = ({ switchmode }: functions) => {
                   {dataErrors}
                 </Alert>
               )}
+              <div className='login flex flex-col justify-center items-center'>
               <h5
                 className="mt-2 mb-5 text-center "
                 style={{ fontWeight: 'bold' }}
@@ -145,38 +96,38 @@ const SignUpPage = ({ switchmode }: functions) => {
                 Create an Account
               </h5>
               <form onSubmit={onSubmit}>
-                <div className="mb-2 field">
+                <div className="mb-2">
                   <TextField
                     size="small"
                     id="standard-basic"
                     label="Name"
                     {...register('name')}
                     variant="standard"
-                    className="textfield mb-3"
+                    className="w-64 mb-3"
                   />
                 </div>
 
-                <div className="mb-2 field">
+                <div className="mb-2">
                   <TextField
                     size="small"
                     id="standard-basic"
                     label="Phone"
                     {...register('phone')}
                     variant="standard"
-                    className="textfield mb-3"
+                    className="w-64 mb-3"
                   />
                 </div>
-                <div className="mb-2 field">
+                <div className="mb-2">
                   <TextField
                     size="small"
                     id="standard-basic"
                     label="email"
                     {...register('email')}
                     variant="standard"
-                    className="textfield mb-3"
+                    className="w-64 mb-3"
                   />
                 </div>
-                <div className="mb-2 field">
+                <div className="mb-2">
                   <TextField
                     size="small"
                     id="standard-basic"
@@ -197,10 +148,10 @@ const SignUpPage = ({ switchmode }: functions) => {
                       ),
                     }}
                     variant="standard"
-                    className="textfield mb-3"
+                    className="w-64 mb-3"
                   />
                 </div>
-                <div className="mb-2 field">
+                <div className="mb-2">
                   <TextField
                     size="small"
                     id="standard-basic"
@@ -221,7 +172,7 @@ const SignUpPage = ({ switchmode }: functions) => {
                         </InputAdornment>
                       ),
                     }}
-                    className="textfield mb-3"
+                    className="w-64 mb-3"
                   />
                 </div>
                 <div className="text-center mt-3 sign-button">
@@ -236,33 +187,30 @@ const SignUpPage = ({ switchmode }: functions) => {
                 <div className="text-center mt-3">
                   <p>
                     Already have an account yet?{' '}
-                    <a href="#" onClick={switchmode}>
+                    <button className='bg-transparent' onClick={(() => navigate('/auth/login'))}>
                       Sign In
-                    </a>
+                    </button>
                   </p>
                 </div>
                 <div className="text-center mt-2">
                   <p>
                     Resend Verification SMS?{' '}
-                    <a href="#" onClick={resendVerificationCode}>
+                    <button className='bg-transparent' onClick={resendVerificationCode}>
                       Resend
-                    </a>
+                    </button>
                   </p>
                 </div>
                 <div className=" text-center mt-2">
                   <p>
                     Verify Phone?{' '}
-                    <a href="#" onClick={verifyPhoneNumber}>
+                    <button className='bg-transparent' onClick={verifyPhoneNumber}>
                       Verify Phone
-                    </a>
+                    </button>
                   </p>
                 </div>
               </form>
-            </React.Fragment>
-          )}
-        </>
-      )}
-    </React.Fragment>
+              </div>
+    </AuthLayout>
   )
 }
 

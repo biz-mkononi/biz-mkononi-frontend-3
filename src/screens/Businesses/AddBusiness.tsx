@@ -13,14 +13,13 @@ import { useNavigate } from 'react-router-dom'
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
 
 const AddBusiness = () => {
-  const data = { label: '' }
   const [displayImage, setDisplayImage] = useState('')
-  const [location, selectLocation] = useState(data)
+  const [value, setValue] = useState(null);
   const initialState = {
     name: '',
     businessEmail: '',
     businessPhone: '',
-    location: location.label,
+    location: '',
     locationDetails: '',
     productType: '',
     description: '',
@@ -51,6 +50,10 @@ const AddBusiness = () => {
       setDisplayImage(URL.createObjectURL(e.target.files[0]))
     }
   }
+  const handleSelect = (place: any) => {
+    // Handle the selected place here
+    console.log('Selected Place: ', place);
+  };
 
   const onClickActive = () => {
     setIsActive(true)
@@ -171,14 +174,13 @@ const AddBusiness = () => {
                     Location
                   </label>
                   <div className="input-group mb-5">
-                    {/* <GooglePlacesAutocomplete
+                    <GooglePlacesAutocomplete
                       selectProps={{
-                        location,
-                        onChange: selectLocation,
                         placeholder: 'business location',
                         className: 'places',
+                        onChange:handleSelect
                       }}
-                    /> */}
+                    />
                   </div>
                 </div>
                 <div className="col-lg-4">
