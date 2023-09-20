@@ -51,43 +51,53 @@ const Overview = () => {
   const [newCustomers, setNewCustomers] = useState<any>({})
   const [sales, setSales] = useState<any[]>([])
 
-  const { open, businessId,endDate,startDate } = useContext(DataContext)
+  const { open, businessId, endDate, startDate } = useContext(DataContext)
   console.log(businessId)
 
   useEffect(() => {
-    const from = new Date(startDate) 
-    const to =new Date(endDate)
-    const groupByMonth ={
-      from:from.toISOString(),
-      to:to.toISOString(),
-      group:"month"
+    const from = new Date(startDate)
+    const to = new Date(endDate)
+    const groupByMonth = {
+      from: from.toISOString(),
+      to: to.toISOString(),
+      group: 'month',
     }
-    const groupByDayData ={
-      from:from.toISOString(),
-      to:to.toISOString(),
-      group:"day"
+    const groupByDayData = {
+      from: from.toISOString(),
+      to: to.toISOString(),
+      group: 'day',
     }
     const data = {
-      from:from.toISOString(),
-      to:to.toISOString()
+      from: from.toISOString(),
+      to: to.toISOString(),
     }
     const mostActiveCustomers = {
-      from:from.toISOString(),
-      to:to.toISOString(),
-      limit:10
+      from: from.toISOString(),
+      to: to.toISOString(),
+      limit: 10,
     }
-    getSalesTrendByMonth(setSalesTrend, setIsLoading, businessId,groupByMonth)
-    getSalesInLastMonthTrend(setMonthSalesTrend, setIsLoading, businessId,groupByDayData)
-    getTotalSales(setTotalSales, setIsLoading, businessId,data)
-    getTotalProfits(setTotalProfits, setIsLoading, businessId,data)
+    getSalesTrendByMonth(setSalesTrend, setIsLoading, businessId, groupByMonth)
+    getSalesInLastMonthTrend(
+      setMonthSalesTrend,
+      setIsLoading,
+      businessId,
+      groupByDayData,
+    )
+    getTotalSales(setTotalSales, setIsLoading, businessId, data)
+    getTotalProfits(setTotalProfits, setIsLoading, businessId, data)
     getTotalCustomers(setTotalCustomers, setIsLoading, businessId)
-    getTotalSupplies(setTotalSupplies, setIsLoading, businessId,data)
-    getRepeatCustomerRate(setRepeatPurchaseRate, setIsLoading, businessId,data)
-    getChurnCustomerRate(setChurnRate, setIsLoading, businessId,data)
-    getMostActiveCustomers(setMostActive, setIsLoading, businessId,mostActiveCustomers)
-    getNewCustomers(setNewCustomers, setIsLoading, businessId,data)
+    getTotalSupplies(setTotalSupplies, setIsLoading, businessId, data)
+    getRepeatCustomerRate(setRepeatPurchaseRate, setIsLoading, businessId, data)
+    getChurnCustomerRate(setChurnRate, setIsLoading, businessId, data)
+    getMostActiveCustomers(
+      setMostActive,
+      setIsLoading,
+      businessId,
+      mostActiveCustomers,
+    )
+    getNewCustomers(setNewCustomers, setIsLoading, businessId, data)
     getSales(setSales, setIsLoading, businessId)
-  }, [startDate,endDate])
+  }, [startDate, endDate])
   const churnData = [
     {
       name: 'new Customers',
@@ -134,7 +144,7 @@ const Overview = () => {
             />
           ) : (
             <div className="container-fluid overview">
-              <DateComponent/>
+              <DateComponent />
               <div className="insights container">
                 <div className="row padding">
                   <div className="col-lg-4 mt-3">
@@ -187,11 +197,10 @@ const Overview = () => {
                 <div className="row padding">
                   <div className="col-lg-6 col-sm-12">
                     <Card className=" new-card">
-                      <h5 className="text-center mb-2">
-                        Sales trend
-                      </h5>
+                      <h5 className="text-center mb-2">Sales trend</h5>
                       <h6 className="text-center mb-3">
-                        {moment(new Date(startDate)).format('MMMM Do YYYY')} - {moment(new Date(endDate)).format('MMMM Do YYYY')}
+                        {moment(new Date(startDate)).format('MMMM Do YYYY')} -{' '}
+                        {moment(new Date(endDate)).format('MMMM Do YYYY')}
                       </h6>
                       <ResponsiveContainer width="95%" height={400}>
                         <BarChart
@@ -219,7 +228,8 @@ const Overview = () => {
                         Most Active Customers
                       </h5>
                       <h6 className="text-center mb-3">
-                        {moment(new Date(startDate)).format('MMMM Do YYYY')} - {moment(new Date(endDate)).format('MMMM Do YYYY')}
+                        {moment(new Date(startDate)).format('MMMM Do YYYY')} -{' '}
+                        {moment(new Date(endDate)).format('MMMM Do YYYY')}
                       </h6>
                       <ResponsiveContainer width="95%" height={400}>
                         <ComposedChart
@@ -246,11 +256,10 @@ const Overview = () => {
                 <div className="row padding">
                   <div className="col-lg-12 col-sm-12">
                     <Card className="Card new-card">
-                      <h5 className="text-center mb-2">
-                        Customer Details
-                      </h5>
+                      <h5 className="text-center mb-2">Customer Details</h5>
                       <h6 className="text-center mb-3">
-                        {moment(new Date(startDate)).format('MMMM Do YYYY')} - {moment(new Date(endDate)).format('MMMM Do YYYY')}
+                        {moment(new Date(startDate)).format('MMMM Do YYYY')} -{' '}
+                        {moment(new Date(endDate)).format('MMMM Do YYYY')}
                       </h6>
                       <ResponsiveContainer width="95%" height={400}>
                         <BarChart
@@ -276,11 +285,10 @@ const Overview = () => {
                 <div className="row padding">
                   <div className="col-lg-12 col-sm-12">
                     <Card className="Card new-card">
-                      <h5 className="text-center mb-2">
-                        Revenue Comparison
-                      </h5>
+                      <h5 className="text-center mb-2">Revenue Comparison</h5>
                       <h6 className="text-center mb-3">
-                        {moment(new Date(startDate)).format('MMMM Do YYYY')} - {moment(new Date(endDate)).format('MMMM Do YYYY')}
+                        {moment(new Date(startDate)).format('MMMM Do YYYY')} -{' '}
+                        {moment(new Date(endDate)).format('MMMM Do YYYY')}
                       </h6>
                       <ResponsiveContainer width="95%" height={400}>
                         <BarChart

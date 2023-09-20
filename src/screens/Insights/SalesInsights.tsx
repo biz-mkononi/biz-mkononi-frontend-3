@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
-import moment from 'moment';
+import moment from 'moment'
 
 import Card from '@mui/material/Card'
 import {
@@ -47,38 +47,48 @@ const SalesInsights = () => {
   const [totalSupplies, setTotalSupplies] = useState<any>()
   const [hourlySales, setHourlySales] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(false)
-  const { businessId,startDate,endDate } = useContext(DataContext)
+  const { businessId, startDate, endDate } = useContext(DataContext)
 
   useEffect(() => {
-    const from = new Date(startDate) 
-    const to =new Date(endDate)
+    const from = new Date(startDate)
+    const to = new Date(endDate)
     const data = {
-      from:from.toISOString(),
-      to:to.toISOString()
+      from: from.toISOString(),
+      to: to.toISOString(),
     }
-    const groupByDayData ={
-      from:from.toISOString(),
-      to:to.toISOString(),
-      group:"day"
+    const groupByDayData = {
+      from: from.toISOString(),
+      to: to.toISOString(),
+      group: 'day',
     }
-    const groupByMonth ={
-      from:from.toISOString(),
-      to:to.toISOString(),
-      group:"month"
+    const groupByMonth = {
+      from: from.toISOString(),
+      to: to.toISOString(),
+      group: 'month',
     }
-    const partByHour ={
-      from:from.toISOString(),
-      to:to.toISOString(),
-      part:"hour"
+    const partByHour = {
+      from: from.toISOString(),
+      to: to.toISOString(),
+      part: 'hour',
     }
-    getSalesTrendByMonth(setSalesTrend, setIsLoading, businessId,groupByMonth)
-    getSalesInLastMonthTrend(setMonthSalesTrend, setIsLoading, businessId,groupByDayData)
-    getTotalSales(setTotalSales, setIsLoading, businessId,data)
-    getTotalProfits(setTotalProfits, setIsLoading, businessId,data)
-    getTotalSupplies(setTotalSupplies, setIsLoading, businessId,data)
+    getSalesTrendByMonth(setSalesTrend, setIsLoading, businessId, groupByMonth)
+    getSalesInLastMonthTrend(
+      setMonthSalesTrend,
+      setIsLoading,
+      businessId,
+      groupByDayData,
+    )
+    getTotalSales(setTotalSales, setIsLoading, businessId, data)
+    getTotalProfits(setTotalProfits, setIsLoading, businessId, data)
+    getTotalSupplies(setTotalSupplies, setIsLoading, businessId, data)
     getSales(setSales, setIsLoading, businessId)
-    getTotalDatePartSalesByHour(setHourlySales, setIsLoading, businessId,partByHour)
-  }, [startDate,endDate])
+    getTotalDatePartSalesByHour(
+      setHourlySales,
+      setIsLoading,
+      businessId,
+      partByHour,
+    )
+  }, [startDate, endDate])
   const createYDomain = (data: any) => {
     const maxValue = Math.max(...data.map((item: any) => parseInt(item.total)))
 
@@ -103,7 +113,7 @@ const SalesInsights = () => {
             />
           ) : (
             <div className="container-fluid overview">
-              <DateComponent/>
+              <DateComponent />
               <div className="insights container">
                 <div className="row padding">
                   <div className="col-lg-4 col-sm-12 mt-3">
@@ -137,11 +147,10 @@ const SalesInsights = () => {
                 <div className="row padding">
                   <div className="col-lg-6 col-sm-12">
                     <Card className=" new-card">
-                      <h5 className="text-center mb-2">
-                        Sales Trend by Date
-                      </h5>
+                      <h5 className="text-center mb-2">Sales Trend by Date</h5>
                       <h6 className="text-center mb-5">
-                        {moment(new Date(startDate)).format('MMMM Do YYYY')} - {moment(new Date(endDate)).format('MMMM Do YYYY')}
+                        {moment(new Date(startDate)).format('MMMM Do YYYY')} -{' '}
+                        {moment(new Date(endDate)).format('MMMM Do YYYY')}
                       </h6>
                       <ResponsiveContainer width="95%" height={400}>
                         <BarChart
@@ -165,11 +174,10 @@ const SalesInsights = () => {
                   </div>
                   <div className="col-lg-6 col-sm-12">
                     <Card className="new-card">
-                      <h5 className="text-center mb-2">
-                        Monthly Sales
-                      </h5>
+                      <h5 className="text-center mb-2">Monthly Sales</h5>
                       <h6 className="text-center mb-5">
-                        {moment(new Date(startDate)).format('MMMM Do YYYY')} - {moment(new Date(endDate)).format('MMMM Do YYYY')}
+                        {moment(new Date(startDate)).format('MMMM Do YYYY')} -{' '}
+                        {moment(new Date(endDate)).format('MMMM Do YYYY')}
                       </h6>
                       <ResponsiveContainer width="95%" height={400}>
                         <BarChart
@@ -192,15 +200,14 @@ const SalesInsights = () => {
                     </Card>
                   </div>
                 </div>
-               
+
                 <div className="row padding">
                   <div className="col-lg-6 col-sm-12">
                     <Card className="new-card">
-                      <h5 className="text-center mb-2">
-                        Most active hours 
-                      </h5>
+                      <h5 className="text-center mb-2">Most active hours</h5>
                       <h6 className="text-center mb-5">
-                        {moment(new Date(startDate)).format('MMMM Do YYYY')} - {moment(new Date(endDate)).format('MMMM Do YYYY')}
+                        {moment(new Date(startDate)).format('MMMM Do YYYY')} -{' '}
+                        {moment(new Date(endDate)).format('MMMM Do YYYY')}
                       </h6>
                       <ResponsiveContainer width="95%" height={400}>
                         <LineChart
@@ -226,7 +233,6 @@ const SalesInsights = () => {
                       </ResponsiveContainer>
                     </Card>
                   </div>
-                  
                 </div>
               </div>
             </div>

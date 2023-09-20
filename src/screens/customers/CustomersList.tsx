@@ -7,9 +7,9 @@ import CircularProgress from '@mui/material/CircularProgress'
 import SmsDialog from './SmsDialog'
 
 type Props = {
-  id:any;
+  id: any
 }
-const CustomersList = ({ id }:Props) => {
+const CustomersList = ({ id }: Props) => {
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'long',

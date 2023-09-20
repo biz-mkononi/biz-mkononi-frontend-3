@@ -16,7 +16,12 @@ const getTotalDateSales = (setData: any, id: any) => {
     .then((data) => setData(data.data.rows))
 }
 
-const getNewCustomers = (setData: any, setIsLoading: any, id: any,data:any) => {
+const getNewCustomers = (
+  setData: any,
+  setIsLoading: any,
+  id: any,
+  data: any,
+) => {
   setIsLoading(true)
   reqInstance
     .get(`${newUrl}/${id}/customer-analytics/new-customers`, { params: data })
@@ -24,26 +29,34 @@ const getNewCustomers = (setData: any, setIsLoading: any, id: any,data:any) => {
     .then(() => setIsLoading(false))
 }
 
-
-
-const getGenderStats = (setData: any, setIsLoading: any, id: any,data:any) => {
+const getGenderStats = (
+  setData: any,
+  setIsLoading: any,
+  id: any,
+  data: any,
+) => {
   setIsLoading(true)
-  
+
   reqInstance
     .get(`${newUrl}/${id}/customer-analytics/gender-stats`, { params: data })
     .then((data) => setData(data.data))
     .then(() => setIsLoading(false))
 }
 
-const getAgeStats = (setData: any, setIsLoading: any, id: any,data:any) => {
+const getAgeStats = (setData: any, setIsLoading: any, id: any, data: any) => {
   setIsLoading(true)
-  
+
   reqInstance
     .get(`${newUrl}/${id}/customer-analytics/age-stats`, { params: data })
     .then((data) => setData(data.data))
     .then(() => setIsLoading(false))
 }
-const getRepeatCustomerRate = (setData: any, setIsLoading: any, id: any,data:any) => {
+const getRepeatCustomerRate = (
+  setData: any,
+  setIsLoading: any,
+  id: any,
+  data: any,
+) => {
   setIsLoading(true)
 
   reqInstance
@@ -53,7 +66,12 @@ const getRepeatCustomerRate = (setData: any, setIsLoading: any, id: any,data:any
     .then((data) => setData(data.data.rate))
     .then(() => setIsLoading(false))
 }
-const getChurnCustomerRate = (setData: any, setIsLoading: any, id: any,data:any) => {
+const getChurnCustomerRate = (
+  setData: any,
+  setIsLoading: any,
+  id: any,
+  data: any,
+) => {
   setIsLoading(true)
   reqInstance
     .get(`${newUrl}/${id}/customer-analytics/churn-customer-rate`, {
@@ -62,7 +80,12 @@ const getChurnCustomerRate = (setData: any, setIsLoading: any, id: any,data:any)
     .then((data) => setData(data.data.rate))
     .then(() => setIsLoading(false))
 }
-const getMostActiveCustomers = (setData: any, setIsLoading: any, id: any,data:any) => {
+const getMostActiveCustomers = (
+  setData: any,
+  setIsLoading: any,
+  id: any,
+  data: any,
+) => {
   setIsLoading(true)
   reqInstance
     .get(`${newUrl}/${id}/customer-analytics/most-active-customers`, {

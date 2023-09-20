@@ -1,14 +1,14 @@
 .overview {
-  padding: 20px;
+  padding: 10px;
   position: absolute;
   z-index: 2 !important;
   position: relative;
 }
 .insights {
-  padding: 20px;
+  padding: 10px;
 }
 .insights .card {
-  padding: 20px;
+  padding: 10px;
   border-color: #3282b8;
 }
 .insights h2 {
@@ -23,7 +23,7 @@
     'Lucida Sans', Arial, sans-serif;
 }
 .charts {
-  padding: 20px;
+  padding: 10px;
 }
 .charts h2 {
   font-weight: 500;
@@ -39,7 +39,7 @@
   font-size: 17px;
 }
 .charts .Card {
-  padding: 20px;
+  padding: 10px;
   background-color: #fff;
   margin-bottom: 30px;
   height: 500px;

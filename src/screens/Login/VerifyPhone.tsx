@@ -17,16 +17,12 @@ const VerifyPhone = () => {
 
   const phoneVerification = () => {
     verifyPhone(formData)
-    navigate("/auth/login")
+    navigate('/auth/login')
   }
   return (
     <AuthLayout>
       <div className="flex flex-col justify-center items-center login">
-
-      
-        <h3 className="mt-2 mb-5 text-center font-bold" >
-          Verify Phone
-        </h3>
+        <h3 className="mt-2 mb-5 text-center font-bold">Verify Phone</h3>
         <div className="mb-2 ">
           <TextField
             id="standard-basic"
@@ -57,7 +53,7 @@ const VerifyPhone = () => {
             Verify Phone
           </button>
         </div>
-        </div>
+      </div>
     </AuthLayout>
   )
 }

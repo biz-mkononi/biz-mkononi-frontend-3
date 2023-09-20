@@ -14,17 +14,17 @@ import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
 
 const AddBusiness = () => {
   const [displayImage, setDisplayImage] = useState('')
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState(null)
   const initialState = {
     name: '',
     businessEmail: '',
     businessPhone: '',
-    location: '',
+    location: 'Kikuyu',
     locationDetails: '',
     productType: '',
     description: '',
-    longitude: '12',
-    latitude: '13',
+    longitude: 12,
+    latitude: 13,
     image: {},
   }
   const navigate = useNavigate()
@@ -52,8 +52,8 @@ const AddBusiness = () => {
   }
   const handleSelect = (place: any) => {
     // Handle the selected place here
-    console.log('Selected Place: ', place);
-  };
+    console.log('Selected Place: ', place)
+  }
 
   const onClickActive = () => {
     setIsActive(true)
@@ -178,7 +178,7 @@ const AddBusiness = () => {
                       selectProps={{
                         placeholder: 'business location',
                         className: 'places',
-                        onChange:handleSelect
+                        onChange: handleSelect,
                       }}
                     />
                   </div>
@@ -260,10 +260,12 @@ const AddBusiness = () => {
                 </div>
               </div>
               <div className="text-center mt-3">
-                  <button className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" disabled ={isLoading?true:false}>
-                    {isLoading?"Adding":"Add Business"}
-                  </button>
-               
+                <button
+                  className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                  disabled={isLoading ? true : false}
+                >
+                  {isLoading ? 'Adding' : 'Add Business'}
+                </button>
               </div>
             </form>
           </Card>

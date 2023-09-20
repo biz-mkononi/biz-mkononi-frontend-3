@@ -20,8 +20,10 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
 import './sidebar.css'
-import AppBar from '../screens/AppBar/AppBar'
+// import AppBar from '../screens/AppBar/AppBar'
 import Box from '@mui/material/Box'
+import Sidebar from '../components/sidebar/Sidebar'
+import AppBar from '../components/AppBar/AppBar'
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
   open?: boolean
@@ -158,43 +160,7 @@ const RoutesFile = () => {
   }
   return (
     <Box sx={{ display: 'flex' }}>
-      {loggedUser && (
-        <>
-          {/* <CssBaseline /> */}
-          <Drawer
-            sx={{
-              width: drawerWidth,
-              flexShrink: 0,
-              '& .MuiDrawer-paper': {
-                width: drawerWidth,
-                boxSizing: 'border-box',
-                backgroundColor: '#e1f3ff',
-                color: '#1B262C',
-                height: '100%',
-              },
-              position: 'relative',
-              whiteSpace: 'nowrap',
-              paddingTop: theme.spacing(4),
-              paddingBottom: theme.spacing(4),
-            }}
-            className={!open ? `not-shadow` : `shadow`}
-            variant="persistent"
-            anchor="left"
-            open={open}
-          >
-            <DrawerHeader>
-              <IconButton onClick={handleDrawerClose}>
-                {theme.direction === 'ltr' ? (
-                  <ChevronLeftIcon />
-                ) : (
-                  <ChevronRightIcon />
-                )}
-              </IconButton>
-            </DrawerHeader>
-            <AppMenu />
-          </Drawer>
-        </>
-      )}
+      {loggedUser && <Sidebar />}
 
       <Suspense
         fallback={
@@ -208,15 +174,10 @@ const RoutesFile = () => {
           </div>
         }
       >
-        <Main
-          sx={{ flexGrow: 1, height: 'auto', overflow: 'auto' }}
-          open={open}
-        >
-          <DrawerHeader />
-          <Container>
-            {/* <AppBarMenu /> */}
-            <AppBar />
+        {/* <AppBar/> */}
 
+        <div className="sm:p-1 lg:w-full  lg:ml-72 sm:w-full">
+          <div className="mt-8 py-6">
             <Routes>
               <Route element={<PrivateRoute />}>
                 <Route path="/insights/overview" element={<OverviewScreen />} />
@@ -309,7 +270,7 @@ const RoutesFile = () => {
                 />
                 <Route
                   path="/customers/list"
-                  element={<CustomersList  id={businessId}/>}
+                  element={<CustomersList id={businessId} />}
                 />
                 <Route
                   path="/customers/:id/details"
@@ -401,8 +362,8 @@ const RoutesFile = () => {
                 />
               </Route>
             </Routes>
-          </Container>
-        </Main>
+          </div>
+        </div>
       </Suspense>
     </Box>
   )

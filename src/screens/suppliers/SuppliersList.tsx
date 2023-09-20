@@ -34,7 +34,6 @@ const SuppliersList = ({ id }: any) => {
         </div>
       ) : (
         <div className="container ">
-          
           <table className="table">
             <thead>
               <tr>

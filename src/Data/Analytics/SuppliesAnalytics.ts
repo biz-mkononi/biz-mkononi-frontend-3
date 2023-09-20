@@ -7,8 +7,12 @@ const getGroupedSupplies = (setData: any, id: any) => {
     .then((data) => setData(data.data.rows))
 }
 
-const getTotalSupplies = (setData: any, setIsLoading: any, id: any,data:any) => {
- 
+const getTotalSupplies = (
+  setData: any,
+  setIsLoading: any,
+  id: any,
+  data: any,
+) => {
   setIsLoading(true)
   reqInstance
     .get(`${newUrl}/${id}/supplies-analytics/total-supplies`, { params: data })
@@ -16,8 +20,12 @@ const getTotalSupplies = (setData: any, setIsLoading: any, id: any,data:any) => 
     .then(() => setIsLoading(false))
 }
 
-const getTodayTotalSupplies = (setData: any, setIsLoading: any, id: any,data:any) => {
-  
+const getTodayTotalSupplies = (
+  setData: any,
+  setIsLoading: any,
+  id: any,
+  data: any,
+) => {
   setIsLoading(true)
   reqInstance
     .get(`${newUrl}/${id}/supplies-analytics/total-supplies`, { params: data })

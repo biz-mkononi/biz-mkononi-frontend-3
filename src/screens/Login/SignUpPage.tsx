@@ -55,8 +55,6 @@ const SignUpPage = () => {
   const initialState = { code: '', password: '', phone: '', password2: '' }
   const [formData, setFormData] = useState(initialState)
 
-
-
   const {
     register,
     handleSubmit,
@@ -77,139 +75,140 @@ const SignUpPage = () => {
   console.log(dataErrors)
   return (
     <AuthLayout>
-      
-       
-              {dataErrors !== '' && (
-                <Alert
-                  variant="standard"
-                  onClose={() => setDataErrors('')}
-                  severity="error"
-                >
-                  {dataErrors}
-                </Alert>
-              )}
-              <div className='login flex flex-col justify-center items-center'>
-              <h5
-                className="mt-2 mb-5 text-center "
-                style={{ fontWeight: 'bold' }}
-              >
-                Create an Account
-              </h5>
-              <form onSubmit={onSubmit}>
-                <div className="mb-2">
-                  <TextField
-                    size="small"
-                    id="standard-basic"
-                    label="Name"
-                    {...register('name')}
-                    variant="standard"
-                    className="w-64 mb-3"
-                  />
-                </div>
+      {dataErrors !== '' && (
+        <Alert
+          variant="standard"
+          onClose={() => setDataErrors('')}
+          severity="error"
+        >
+          {dataErrors}
+        </Alert>
+      )}
+      <div className="login flex flex-col justify-center items-center">
+        <h5 className="mt-2 mb-5 text-center " style={{ fontWeight: 'bold' }}>
+          Create an Account
+        </h5>
+        <form onSubmit={onSubmit}>
+          <div className="mb-2">
+            <TextField
+              size="small"
+              id="standard-basic"
+              label="Name"
+              {...register('name')}
+              variant="standard"
+              className="w-64 mb-3"
+            />
+          </div>
 
-                <div className="mb-2">
-                  <TextField
-                    size="small"
-                    id="standard-basic"
-                    label="Phone"
-                    {...register('phone')}
-                    variant="standard"
-                    className="w-64 mb-3"
-                  />
-                </div>
-                <div className="mb-2">
-                  <TextField
-                    size="small"
-                    id="standard-basic"
-                    label="email"
-                    {...register('email')}
-                    variant="standard"
-                    className="w-64 mb-3"
-                  />
-                </div>
-                <div className="mb-2">
-                  <TextField
-                    size="small"
-                    id="standard-basic"
-                    label="Password"
-                    type={showPassword ? 'text' : 'password'}
-                    {...register('password')}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton>
-                            {showPassword ? (
-                              <VisibilityOff onClick={handleShowPassword} />
-                            ) : (
-                              <Visibility onClick={handleShowPassword} />
-                            )}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                    variant="standard"
-                    className="w-64 mb-3"
-                  />
-                </div>
-                <div className="mb-2">
-                  <TextField
-                    size="small"
-                    id="standard-basic"
-                    label="Confirm Password"
-                    type={showPassword ? 'text' : 'password'}
-                    {...register('password2')}
-                    variant="standard"
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton>
-                            {showPassword ? (
-                              <VisibilityOff onClick={handleShowPassword} />
-                            ) : (
-                              <Visibility onClick={handleShowPassword} />
-                            )}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                    className="w-64 mb-3"
-                  />
-                </div>
-                <div className="text-center mt-3 sign-button">
-                  {isRegistering ? (
-                    <button className="btn btn-primary btn-md" disabled>
-                      Registering
-                    </button>
-                  ) : (
-                    <button className="btn btn-primary btn-md">Register</button>
-                  )}
-                </div>
-                <div className="text-center mt-3">
-                  <p>
-                    Already have an account yet?{' '}
-                    <button className='bg-transparent' onClick={(() => navigate('/auth/login'))}>
-                      Sign In
-                    </button>
-                  </p>
-                </div>
-                <div className="text-center mt-2">
-                  <p>
-                    Resend Verification SMS?{' '}
-                    <button className='bg-transparent' onClick={resendVerificationCode}>
-                      Resend
-                    </button>
-                  </p>
-                </div>
-                <div className=" text-center mt-2">
-                  <p>
-                    Verify Phone?{' '}
-                    <button className='bg-transparent' onClick={verifyPhoneNumber}>
-                      Verify Phone
-                    </button>
-                  </p>
-                </div>
-              </form>
-              </div>
+          <div className="mb-2">
+            <TextField
+              size="small"
+              id="standard-basic"
+              label="Phone"
+              {...register('phone')}
+              variant="standard"
+              className="w-64 mb-3"
+            />
+          </div>
+          <div className="mb-2">
+            <TextField
+              size="small"
+              id="standard-basic"
+              label="email"
+              {...register('email')}
+              variant="standard"
+              className="w-64 mb-3"
+            />
+          </div>
+          <div className="mb-2">
+            <TextField
+              size="small"
+              id="standard-basic"
+              label="Password"
+              type={showPassword ? 'text' : 'password'}
+              {...register('password')}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton>
+                      {showPassword ? (
+                        <VisibilityOff onClick={handleShowPassword} />
+                      ) : (
+                        <Visibility onClick={handleShowPassword} />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              variant="standard"
+              className="w-64 mb-3"
+            />
+          </div>
+          <div className="mb-2">
+            <TextField
+              size="small"
+              id="standard-basic"
+              label="Confirm Password"
+              type={showPassword ? 'text' : 'password'}
+              {...register('password2')}
+              variant="standard"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton>
+                      {showPassword ? (
+                        <VisibilityOff onClick={handleShowPassword} />
+                      ) : (
+                        <Visibility onClick={handleShowPassword} />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              className="w-64 mb-3"
+            />
+          </div>
+          <div className="text-center mt-3 sign-button">
+            {isRegistering ? (
+              <button className="btn btn-primary btn-md" disabled>
+                Registering
+              </button>
+            ) : (
+              <button className="btn btn-primary btn-md">Register</button>
+            )}
+          </div>
+          <div className="text-center mt-3">
+            <p>
+              Already have an account yet?{' '}
+              <button
+                className="bg-transparent"
+                onClick={() => navigate('/auth/login')}
+              >
+                Sign In
+              </button>
+            </p>
+          </div>
+          <div className="text-center mt-2">
+            <p>
+              Resend Verification SMS?{' '}
+              <button
+                className="bg-transparent"
+                onClick={resendVerificationCode}
+              >
+                Resend
+              </button>
+            </p>
+          </div>
+          <div className=" text-center mt-2">
+            <p>
+              Verify Phone?{' '}
+              <button className="bg-transparent" onClick={verifyPhoneNumber}>
+                Verify Phone
+              </button>
+            </p>
+          </div>
+        </form>
+      </div>
     </AuthLayout>
   )
 }

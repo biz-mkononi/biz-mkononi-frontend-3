@@ -39,28 +39,33 @@ const CustomersInsights = () => {
   const [genderStats, setGenderStats] = useState<any[]>([])
   const [ageStats, setAgeStats] = useState<any[]>([])
   const [mostActive, setMostActive] = useState<any[]>([])
-  const { businessId,startDate,endDate } = useContext(DataContext)
+  const { businessId, startDate, endDate } = useContext(DataContext)
   // const [salesTrend, setSalesTrend] = useState<any>({})
   useEffect(() => {
-    const from = new Date(startDate) 
-    const to =new Date(endDate)
+    const from = new Date(startDate)
+    const to = new Date(endDate)
     const data = {
-      from:from.toISOString(),
-      to:to.toISOString()
+      from: from.toISOString(),
+      to: to.toISOString(),
     }
     const mostActiveCustomers = {
-      from:from.toISOString(),
-      to:to.toISOString(),
-      limit:10
+      from: from.toISOString(),
+      to: to.toISOString(),
+      limit: 10,
     }
     getTotalCustomers(setTotalCustomers, setIsLoading, businessId)
-    getNewCustomers(setNewCustomers, setIsLoading, businessId,data)
-    getRepeatCustomerRate(setRepeatPurchaseRate, setIsLoading, businessId,data)
-    getChurnCustomerRate(setChurnRate, setIsLoading, businessId,data)
-    getAgeStats(setAgeStats, setIsLoading, businessId,data)
-    getGenderStats(setGenderStats, setIsLoading, businessId,data)
-    getMostActiveCustomers(setMostActive, setIsLoading, businessId,mostActiveCustomers)
-  }, [startDate,endDate])
+    getNewCustomers(setNewCustomers, setIsLoading, businessId, data)
+    getRepeatCustomerRate(setRepeatPurchaseRate, setIsLoading, businessId, data)
+    getChurnCustomerRate(setChurnRate, setIsLoading, businessId, data)
+    getAgeStats(setAgeStats, setIsLoading, businessId, data)
+    getGenderStats(setGenderStats, setIsLoading, businessId, data)
+    getMostActiveCustomers(
+      setMostActive,
+      setIsLoading,
+      businessId,
+      mostActiveCustomers,
+    )
+  }, [startDate, endDate])
   const total = genderStats.reduce(function (prev: any, cur: any) {
     return prev + cur.total
   }, 0)
@@ -78,7 +83,7 @@ const CustomersInsights = () => {
         </div>
       ) : (
         <div className="container-fluid overview">
-          <DateComponent/>
+          <DateComponent />
           <div className="insights container w-10/12">
             <div className="row padding">
               <div className="col-lg-3 col-sm-12 mt-3">
@@ -106,7 +111,6 @@ const CustomersInsights = () => {
                 </div>
               </div>
             </div>
-            
           </div>
           <div className="container charts">
             <div className="row padding">
@@ -193,7 +197,6 @@ const CustomersInsights = () => {
                   ))}
                 </Card>
               </div>
-              
             </div>
           </div>
         </div>

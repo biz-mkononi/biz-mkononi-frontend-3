@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom'
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean
 }
-const drawerWidth = 240
+const drawerWidth = 288
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop: any) => prop !== 'open',
 })<AppBarProps>(({ theme, open }) => ({
