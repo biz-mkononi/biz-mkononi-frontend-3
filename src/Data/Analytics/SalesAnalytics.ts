@@ -17,7 +17,12 @@ prevDate.setHours(0, 0, 0, 0)
 let fd = new Date()
 var firstDay = new Date(fd.getFullYear(), fd.getMonth(), 1)
 
-const getSalesTrendByMonth = (setData: any, setIsLoading: any, id: any, data:any) => {
+const getSalesTrendByMonth = (
+  setData: any,
+  setIsLoading: any,
+  id: any,
+  data: any,
+) => {
   setIsLoading(true)
   reqInstance
     .get(`${newUrl}/${id}/sales-analytics/sales-trend`, { params: data })
@@ -32,8 +37,12 @@ const getSalesTrendByMonth = (setData: any, setIsLoading: any, id: any, data:any
     })
     .then(() => setIsLoading(false))
 }
-const getSalesInLastMonthTrend = (setData: any, setIsLoading: any, id: any,data:any) => {
-  
+const getSalesInLastMonthTrend = (
+  setData: any,
+  setIsLoading: any,
+  id: any,
+  data: any,
+) => {
   setIsLoading(true)
   reqInstance
     .get(`${newUrl}/${id}/sales-analytics/sales-trend`, { params: data })
@@ -46,9 +55,7 @@ const getSalesInLastMonthTrend = (setData: any, setIsLoading: any, id: any,data:
     .then(() => setIsLoading(false))
 }
 
-
-
-const getTotalSales = (setData: any, setIsLoading: any, id: any,data:any) => {
+const getTotalSales = (setData: any, setIsLoading: any, id: any, data: any) => {
   setIsLoading(true)
   reqInstance
     .get(`${newUrl}/${id}/sales-analytics/total-sales`, { params: data })
@@ -60,7 +67,7 @@ const getTotalDatePartSalesByHour = (
   setData: any,
   setIsLoading: any,
   id: any,
-  data:any
+  data: any,
 ) => {
   setIsLoading(true)
   reqInstance

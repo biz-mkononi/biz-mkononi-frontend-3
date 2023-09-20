@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { TextField, Alert } from '@mui/material'
 import { forgotPassword } from '../../Data/Auth/Data'
 import AuthLayout from '../../Layout/AuthLayout'
-import "./Login.css"
+import './Login.css'
 import { useNavigate } from 'react-router-dom'
 
 const GetForgotPasswordCode = () => {
@@ -21,21 +21,18 @@ const GetForgotPasswordCode = () => {
   }
   return (
     <React.Fragment>
-      
-        <AuthLayout>
-          {dataErrors !== '' && (
-            <Alert
-              variant="filled"
-              onClose={() => setDataErrors('')}
-              severity="error"
-            >
-              {dataErrors}
-            </Alert>
-          )}
-          <div className="flex flex-col justify-center items-center login  ">
-<h5 className="mt-3 mb-3 font-bold " >
-            Forgot Password
-          </h5>
+      <AuthLayout>
+        {dataErrors !== '' && (
+          <Alert
+            variant="filled"
+            onClose={() => setDataErrors('')}
+            severity="error"
+          >
+            {dataErrors}
+          </Alert>
+        )}
+        <div className="flex flex-col justify-center items-center login  ">
+          <h5 className="mt-3 mb-3 font-bold ">Forgot Password</h5>
           <div className=" mb-3">
             <TextField
               id="standard-basic"
@@ -60,9 +57,8 @@ const GetForgotPasswordCode = () => {
               </button>
             )}
           </div>
-          </div>
-          
-        </AuthLayout>
+        </div>
+      </AuthLayout>
     </React.Fragment>
   )
 }

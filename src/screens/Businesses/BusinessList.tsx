@@ -52,66 +52,64 @@ const BusinessList = () => {
             />
           ) : (
             <div className="container p-3">
-             
-
               <div className="table-responsive">
                 <table className="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Admin</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Actions</th>
-                  </tr>
-                </thead>
-                {currentPosts.map((business) => (
-                  <tbody>
+                  <thead>
                     <tr>
-                      <th scope="row" style={{ display: 'flex' }}>
-                        <img
-                          className="business-image"
-                          src={
-                            business.imageUrl === null
-                              ? image2
-                              : business.imageUrl
-                          }
-                        />
-                        {business.name}{' '}
-                      </th>
-                      <td>{business.owner.name}</td>
-                      <td>{business.businessPhone}</td>
-                      <td>
-                        <div className="m-2" style={{ display: 'flex' }}>
-                          <button
-                            className="btn btn-primary btn-sm m-1 active-button "
-                            onClick={() => onManage(business.id)}
-                          >
-                            Manage
-                          </button>
-                          <button
-                            className="btn btn-warning btn-sm m-1"
-                            onClick={() => {
-                              onClick(business.id)
-                            }}
-                          >
-                            View
-                          </button>
-                          <button
-                            className="btn btn-success btn-sm m-1"
-                            onClick={() =>
-                              navigate(
-                                `/business/${business.id}/update-details`,
-                              )
-                            }
-                          >
-                            Edit
-                          </button>
-                        </div>
-                      </td>
+                      <th scope="col">Name</th>
+                      <th scope="col">Admin</th>
+                      <th scope="col">Phone</th>
+                      <th scope="col">Actions</th>
                     </tr>
-                  </tbody>
-                ))}
-              </table>
+                  </thead>
+                  {currentPosts.map((business) => (
+                    <tbody>
+                      <tr>
+                        <th scope="row" style={{ display: 'flex' }}>
+                          <img
+                            className="business-image"
+                            src={
+                              business.imageUrl === null
+                                ? image2
+                                : business.imageUrl
+                            }
+                          />
+                          {business.name}{' '}
+                        </th>
+                        <td>{business.owner.name}</td>
+                        <td>{business.businessPhone}</td>
+                        <td>
+                          <div className="m-2" style={{ display: 'flex' }}>
+                            <button
+                              className="btn btn-primary btn-sm m-1 active-button "
+                              onClick={() => onManage(business.id)}
+                            >
+                              Manage
+                            </button>
+                            <button
+                              className="btn btn-warning btn-sm m-1"
+                              onClick={() => {
+                                onClick(business.id)
+                              }}
+                            >
+                              View
+                            </button>
+                            <button
+                              className="btn btn-success btn-sm m-1"
+                              onClick={() =>
+                                navigate(
+                                  `/business/${business.id}/update-details`,
+                                )
+                              }
+                            >
+                              Edit
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  ))}
+                </table>
               </div>
               <div className="mt-5 text-center">
                 <Pagination

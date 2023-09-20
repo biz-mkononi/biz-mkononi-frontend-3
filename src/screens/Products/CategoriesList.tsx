@@ -40,7 +40,6 @@ const CategoriesList = ({ id }: any) => {
         </div>
       ) : (
         <div className="container p-3">
-          
           <table className="table">
             <thead>
               <tr>

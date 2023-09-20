@@ -1,5 +1,5 @@
 const url = 'https://api-stage.mkononi.biz'
-
+// http://localhost:3000/
 const verifyPhone = (phone: any) => {
   fetch(`${url}/auth/verify`, {
     method: 'POST',
@@ -112,7 +112,6 @@ const forgotPassword = async (
       } else {
         setIsLoading(false)
         navigate('/auth/reset-password')
-
       }
     })
 }

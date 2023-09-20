@@ -15,10 +15,13 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/auth/login" element={<LoginPage />} />
         <Route path="/auth/sign-up" element={<SignUpPage />} />
-        <Route path="/auth/get-forgot-password" element={<GetForgotPasswordCode/>}/>
-        <Route path='/auth/reset-password' element={<ResetPassword/>}/>
-        <Route path ="/auth/verify-phone" element = {<VerifyPhone/>}/>
-        <Route path ='/auth/resend-code' element={<ResendCode/>}/>
+        <Route
+          path="/auth/get-forgot-password"
+          element={<GetForgotPasswordCode />}
+        />
+        <Route path="/auth/reset-password" element={<ResetPassword />} />
+        <Route path="/auth/verify-phone" element={<VerifyPhone />} />
+        <Route path="/auth/resend-code" element={<ResendCode />} />
       </Routes>
       <RoutesFile />
     </React.Fragment>
