@@ -35,5 +35,5 @@ jobs:
             cd biz-mkononi-frontend
             git stash
             git pull origin main
-            npm install
-            npm run build
+            nvm exec 18 npm install
+            nvm exec 18 npm run build
