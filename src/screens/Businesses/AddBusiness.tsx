@@ -19,7 +19,7 @@ const AddBusiness = () => {
     name: '',
     businessEmail: '',
     businessPhone: '',
-    location: 'Kikuyu',
+    location: '',
     locationDetails: '',
     productType: '',
     description: '',
@@ -32,7 +32,7 @@ const AddBusiness = () => {
   const [isActive2, setIsActive2] = useState(true)
   const [formData, setFormData] = useState(initialState)
   const [isLoading, setIsLoading] = useState(false)
-
+const googleApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
@@ -50,9 +50,15 @@ const AddBusiness = () => {
       setDisplayImage(URL.createObjectURL(e.target.files[0]))
     }
   }
+
   const handleSelect = (place: any) => {
-    // Handle the selected place here
-    console.log('Selected Place: ', place)
+    const geocoder = new window.google.maps.Geocoder();
+    geocoder.geocode({ placeId: place.value.place_id }, (results: any, status: any) => {
+      if (status === 'OK' && results[0]) {
+        const { lat, lng } = results[0].geometry.location;
+        setFormData({...formData,latitude:lat (),longitude:lng(),location:place.label})
+      }
+    });
   }
 
   const onClickActive = () => {
@@ -175,7 +181,9 @@ const AddBusiness = () => {
                   </label>
                   <div className="input-group mb-5">
                     <GooglePlacesAutocomplete
+                    apiKey={googleApiKey}
                       selectProps={{
+                        
                         placeholder: 'business location',
                         className: 'places',
                         onChange: handleSelect,
