@@ -35,6 +35,7 @@ jobs:
             cd biz-mkononi-frontend
             git stash
             git pull origin main
+            export NVM_DIR=$HOME/.nvm
             source $NVM_DIR/nvm.sh
             nvm exec 18 npm install
             nvm exec 18 npm run build
