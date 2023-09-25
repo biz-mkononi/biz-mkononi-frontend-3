@@ -32,7 +32,6 @@ const AddBusiness = () => {
   const [isActive2, setIsActive2] = useState(true)
   const [formData, setFormData] = useState(initialState)
   const [isLoading, setIsLoading] = useState(false)
-const googleApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
@@ -73,7 +72,6 @@ const googleApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
     e.preventDefault()
     addBusiness(formData, navigate, setIsLoading)
   }
-  console.log(formData)
 
   return (
     <div className="add-business container p-4 ">
@@ -181,7 +179,7 @@ const googleApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
                   </label>
                   <div className="input-group mb-5">
                     <GooglePlacesAutocomplete
-                    apiKey={googleApiKey}
+                    apiKey='AIzaSyAeiInK3UvyBWonodEd0HswfhQ5WFhCvNQ'
                       selectProps={{
                         
                         placeholder: 'business location',
