@@ -51,13 +51,21 @@ const AddBusiness = () => {
   }
 
   const handleSelect = (place: any) => {
-    const geocoder = new window.google.maps.Geocoder();
-    geocoder.geocode({ placeId: place.value.place_id }, (results: any, status: any) => {
-      if (status === 'OK' && results[0]) {
-        const { lat, lng } = results[0].geometry.location;
-        setFormData({...formData,latitude:lat (),longitude:lng(),location:place.label})
-      }
-    });
+    const geocoder = new window.google.maps.Geocoder()
+    geocoder.geocode(
+      { placeId: place.value.place_id },
+      (results: any, status: any) => {
+        if (status === 'OK' && results[0]) {
+          const { lat, lng } = results[0].geometry.location
+          setFormData({
+            ...formData,
+            latitude: lat(),
+            longitude: lng(),
+            location: place.label,
+          })
+        }
+      },
+    )
   }
 
   const onClickActive = () => {
@@ -179,9 +187,8 @@ const AddBusiness = () => {
                   </label>
                   <div className="input-group mb-5">
                     <GooglePlacesAutocomplete
-                    apiKey='AIzaSyAeiInK3UvyBWonodEd0HswfhQ5WFhCvNQ'
+                      apiKey="AIzaSyAeiInK3UvyBWonodEd0HswfhQ5WFhCvNQ"
                       selectProps={{
-                        
                         placeholder: 'business location',
                         className: 'places',
                         onChange: handleSelect,
