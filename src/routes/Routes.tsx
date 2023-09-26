@@ -4,7 +4,6 @@ import { makeStyles } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import Drawer from '@mui/material/Drawer'
 import Container from '@mui/material/Container'
-import AppMenu from '../screens/sidebar/AppMenu'
 import clsx from 'clsx'
 import PrivateRoute from './PrivateRoute'
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -20,10 +19,8 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
 import './sidebar.css'
-// import AppBar from '../screens/AppBar/AppBar'
 import Box from '@mui/material/Box'
 import Sidebar from '../components/sidebar/Sidebar'
-import AppBar from '../components/AppBar/AppBar'
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
   open?: boolean
