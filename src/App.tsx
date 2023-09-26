@@ -9,9 +9,11 @@ import VerifyPhone from './screens/Login/VerifyPhone'
 import ResendCode from './screens/Login/ResendCode'
 import LoginPage from './screens/Login/LoginPage'
 import SignUpPage from './screens/Login/SignUpPage'
+import Table from './components/Table/Table'
 const App: React.FC = () => {
   return (
     <React.Fragment>
+      {/* <Table/> */}
       <Routes>
         <Route path="/auth/login" element={<LoginPage />} />
         <Route path="/auth/sign-up" element={<SignUpPage />} />

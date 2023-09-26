@@ -13,6 +13,7 @@ module.exports = {
       },
       colors: {
         bizLightBlue: '#bbe1fa',
+        bizBlue: '#3282b8',
       },
     },
   },
