@@ -136,7 +136,7 @@ const changePassword = async (
         setErrors('invalid code')
       } else {
         setIsLoading(false)
-        navigate(0)
+        navigate("/auth/login")
       }
     })
   console.log(post)

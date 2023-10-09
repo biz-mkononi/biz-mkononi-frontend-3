@@ -50,12 +50,12 @@ const Table = ({ columns, onEdit, onView, data, Business }: TableProps) => {
             </tr>
           </thead>
           {currentPosts.map((business: commonProperties, rowIndex) => (
-            <tbody>
-              <tr key={rowIndex}>
+            <tbody key={rowIndex} >
+              <tr >
                 {columns.map((column, colIndex) => (
                   <>
                     {column.dataKey === 'name' ? (
-                      <td className="flex  space-x-2 ">
+                      <td key = {business.id} className="flex  space-x-2 ">
                         <img
                           className="w-6 h-6 mb-3 rounded-full mr-2"
                           src={

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import '../Businesses/AddBusiness.css'
 import { useNavigate } from 'react-router-dom'
 import { getExpenses } from '../../Data/Expenses/Data'
@@ -9,6 +9,9 @@ const Expense = ({ id }: any) => {
   const navigate = useNavigate()
   const [data, setData] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const memoizedExpenses = useMemo(() => {
+    return data;
+  },[data])
   useEffect(() => {
     getExpenses(setData, setIsLoading, id)
   }, [])
@@ -31,7 +34,7 @@ const Expense = ({ id }: any) => {
           <CircularProgress color="success" />
         </div>
       ) : (
-        <Table columns={columns} data={data} onEdit={onEdit} onView={onView} />
+        <Table columns={columns} data={memoizedExpenses} onEdit={onEdit} onView={onView} />
       )}
     </>
   )

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import '../Businesses/AddBusiness.css'
 import { getCustomers } from '../../Data/Customers/Data'
 import { useNavigate } from 'react-router-dom'
@@ -14,7 +14,9 @@ const CustomersList = ({ id }: Props) => {
   const [isLoading, setIsLoading] = useState()
   const [data, setData] = useState<any[]>([])
   const [open, setOpen] = useState(false)
-
+const memoizedCustomers = useMemo(() => {
+    return data;
+  },[data])
   useEffect(() => {
     getCustomers(setData, setIsLoading, id)
   }, [])
@@ -78,7 +80,7 @@ const CustomersList = ({ id }: Props) => {
           </div>
           <Table
             columns={columns}
-            data={data}
+            data={memoizedCustomers}
             onEdit={onEdit}
             onView={onView}
           />
