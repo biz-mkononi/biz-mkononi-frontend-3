@@ -1,5 +1,5 @@
-import { string } from "yup"
-import { formatMoney } from "./FormatMoney"
+import { string } from 'yup'
+import { formatMoney } from './FormatMoney'
 
 interface Column {
   header: string
@@ -21,13 +21,17 @@ export const renderCell = (row: any, column: Column) => {
     value = value[key]
   }
 
-  if (column.dataKey === "gender" ) {
+  if (column.dataKey === 'gender') {
     value = value.toLowerCase()
   }
-  if (column.dataKey === "amount" || column.dataKey === "amountCharged" || column.dataKey === "amountPaid" ) {
+  if (
+    column.dataKey === 'amount' ||
+    column.dataKey === 'amountCharged' ||
+    column.dataKey === 'amountPaid'
+  ) {
     value = formatMoney(value)
   }
-  
+
   if (typeof value === 'string' && isISODate(value)) {
     const formattedDate = new Date(value).toLocaleDateString(undefined, options)
     return formattedDate

@@ -4,13 +4,16 @@ import PhoneIcon from '@mui/icons-material/Phone'
 import { Card } from '@mui/material'
 import { addCustomer } from '../../Data/Customers/Data'
 import { useNavigate } from 'react-router-dom'
-import image from '../../Assets/placeholder.jpg'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import '../Businesses/AddBusiness.css'
 import PersonIcon from '@mui/icons-material/Person'
+import FormsLayout from '../../Layout/FormsLayout'
+import Image from '../../components/FormFields/Image'
+import Input from '../../components/FormFields/Input'
+import TextArea from '../../components/FormFields/TextArea'
 
 const AddCustomer = ({ id }: any) => {
   const initialState = {
@@ -51,51 +54,29 @@ const AddCustomer = ({ id }: any) => {
   console.log(formData)
 
   return (
-    <div className="add-business container p-4 ">
-      <h2 className="mb-3">Add Customer</h2>
-
-      <hr className="light mb-3" />
-      <p className="mb-4">Add a new customer to your business</p>
+    <FormsLayout title="Customer">
       <Card className="p-3">
         <form onSubmit={onSubmit}>
           <div className="row padding mt-3">
             <div className="col-lg-4">
-              <label htmlFor="basic-url" className="form-label ">
-                Name
-              </label>
-              <div className="input-group mb-5">
-                <span className="input-group-text" id="basic-addon1">
-                  <PersonIcon />
-                </span>
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  name="name"
-                  className="form-control"
-                  placeholder="name"
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                />
-              </div>
+              <Input
+                icon={<PersonIcon />}
+                label="Name"
+                handleChange={handleChange}
+                name="name"
+                placeholder="name"
+                type="text"
+              />
             </div>
             <div className="col-lg-4">
-              <label htmlFor="basic-url" className="form-label">
-                Year of Birth
-              </label>
-              <div className="input-group mb-5">
-                <span className="input-group-text" id="basic-addon1">
-                  <PersonIcon />
-                </span>
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  name="yearOfBirth"
-                  className="form-control"
-                  placeholder="year of birth"
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                />
-              </div>
+              <Input
+                icon={<PersonIcon />}
+                label="year of Birth"
+                handleChange={handleChange}
+                name="yearOfBirth"
+                placeholder="year of birth"
+                type="text"
+              />
             </div>
             <div className="col-lg-4">
               <FormControl>
@@ -124,76 +105,36 @@ const AddCustomer = ({ id }: any) => {
           </div>
           <div className="row padding">
             <div className="col-lg-4">
-              <label htmlFor="basic-url" className="form-label ">
-                Email
-              </label>
-              <div className="input-group mb-5">
-                <span className="input-group-text" id="basic-addon1">
-                  <EmailIcon />
-                </span>
-                <input
-                  type="email"
-                  onChange={handleChange}
-                  name="email"
-                  className="form-control"
-                  placeholder="email"
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                />
-              </div>
+              <Input
+                icon={<EmailIcon />}
+                label="Email"
+                handleChange={handleChange}
+                name="email"
+                placeholder="email"
+                type="email"
+              />
             </div>
             <div className="col-lg-4">
-              <label htmlFor="basic-url" className="form-label">
-                Phone
-              </label>
-              <div className="input-group mb-5">
-                <span className="input-group-text" id="basic-addon1">
-                  <PhoneIcon />
-                </span>
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  name="phone"
-                  className="form-control"
-                  placeholder="phone number"
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                />
-              </div>
+              <Input
+                icon={<PhoneIcon />}
+                label="Phone"
+                handleChange={handleChange}
+                name="phone"
+                placeholder="phone number"
+                type="text"
+              />
             </div>
           </div>
           <div className="row padding">
             <div className="col-lg-4">
-              <label htmlFor="basic-url" className="form-label ">
-                Description
-              </label>
-              <div className="input-group mb-3">
-                <textarea
-                  className="form-control"
-                  onChange={handleDescriptionChange}
-                  name="description"
-                  aria-label="With textarea"
-                ></textarea>
-              </div>
+              <TextArea handleDescriptionChange={handleDescriptionChange} />
             </div>
             <div className="col-lg-4">
-              <div className="mb-3 image-upload">
-                <label htmlFor="formFile" className="form-label">
-                  Click to set customer image
-                  <img
-                    src={displayImage === '' ? image : displayImage}
-                    alt=""
-                    className="business-form-image"
-                  />
-                </label>
-                <input
-                  className="form-control file "
-                  onChange={handleFileChange}
-                  name="image"
-                  type="file"
-                  id="formFile"
-                />
-              </div>
+              <Image
+                handleFileChange={handleFileChange}
+                displayImage={displayImage}
+                label="Customer"
+              />
             </div>
           </div>
           <div className="text-center mt-3">
@@ -206,7 +147,7 @@ const AddCustomer = ({ id }: any) => {
           </div>
         </form>
       </Card>
-    </div>
+    </FormsLayout>
   )
 }
 

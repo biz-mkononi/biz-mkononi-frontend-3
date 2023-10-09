@@ -8,6 +8,9 @@ import image from '../../Assets/placeholder.jpg'
 import StarsIcon from '@mui/icons-material/Stars'
 import '../Businesses/AddBusiness.css'
 import { useNavigate } from 'react-router-dom'
+import FormsLayout from '../../Layout/FormsLayout'
+import Image from '../../components/FormFields/Image'
+import Input from '../../components/FormFields/Input'
 
 const NewEmployee = ({ id }: any) => {
   const initialState = {
@@ -38,129 +41,68 @@ const NewEmployee = ({ id }: any) => {
   }
 
   return (
-    <div className="add-business container p-4 ">
-      <h2 className="mb-3">Add Employee</h2>
-
-      <hr className="light mb-3" />
-      <p className="mb-4">Add a new employee to your business</p>
+    <FormsLayout title="Employee">
       <Card className="p-3">
         <form onSubmit={onSubmit}>
           <div className="row padding mt-3">
             <div className="col-lg-4">
-              <label htmlFor="basic-url" className="form-label ">
-                Name
-              </label>
-              <div className="input-group mb-5">
-                <span className="input-group-text" id="basic-addon1">
-                  <BusinessIcon />
-                </span>
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  name="name"
-                  className="form-control"
-                  placeholder="name"
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                />
-              </div>
+              <Input
+                icon={<BusinessIcon />}
+                label="Name"
+                handleChange={handleChange}
+                name="name"
+                placeholder="name"
+                type="text"
+              />
             </div>
             <div className="col-lg-4">
-              <label htmlFor="basic-url" className="form-label ">
-                Email
-              </label>
-              <div className="input-group mb-5">
-                <span className="input-group-text" id="basic-addon1">
-                  <EmailIcon />
-                </span>
-                <input
-                  type="email"
-                  onChange={handleChange}
-                  name="email"
-                  className="form-control"
-                  placeholder="email"
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                />
-              </div>
+              <Input
+                icon={<EmailIcon />}
+                label="Email"
+                handleChange={handleChange}
+                name="email"
+                placeholder="email"
+                type="email"
+              />
             </div>
             <div className="col-lg-4">
-              <label htmlFor="basic-url" className="form-label">
-                Phone
-              </label>
-              <div className="input-group mb-5">
-                <span className="input-group-text" id="basic-addon1">
-                  <PhoneIcon />
-                </span>
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  name="phone"
-                  className="form-control"
-                  placeholder="phone number"
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                />
-              </div>
+              <Input
+                icon={<PhoneIcon />}
+                label="Phone"
+                handleChange={handleChange}
+                name="phone"
+                placeholder="phone number"
+                type="text"
+              />
             </div>
           </div>
           <div className="row padding">
             <div className="col-lg-4">
-              <label htmlFor="basic-url" className="form-label ">
-                ID Number
-              </label>
-              <div className="input-group mb-5">
-                <span className="input-group-text" id="basic-addon1">
-                  <EmailIcon />
-                </span>
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  name="idNumber"
-                  className="form-control"
-                  placeholder="id number"
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                />
-              </div>
+              <Input
+                icon={<EmailIcon />}
+                label="Id Number"
+                handleChange={handleChange}
+                name="idNumber"
+                placeholder="id number"
+                type="text"
+              />
             </div>
             <div className="col-lg-4">
-              <label htmlFor="basic-url" className="form-label">
-                Position
-              </label>
-              <div className="input-group mb-5">
-                <span className="input-group-text" id="basic-addon1">
-                  <StarsIcon />
-                </span>
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  name="position"
-                  className="form-control"
-                  placeholder="position"
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                />
-              </div>
+              <Input
+                icon={<StarsIcon />}
+                label="Position"
+                handleChange={handleChange}
+                name="position"
+                placeholder="position"
+                type="text"
+              />
             </div>
           </div>
-          <div className="mb-3 image-upload">
-            <label htmlFor="formFile" className="form-label">
-              Click to set employee image
-              <img
-                src={displayImage === '' ? image : displayImage}
-                alt=""
-                className="business-form-image"
-              />
-            </label>
-            <input
-              className="form-control file "
-              onChange={handleFileChange}
-              name="image"
-              type="file"
-              id="formFile"
-            />
-          </div>
+          <Image
+            handleFileChange={handleFileChange}
+            displayImage={displayImage}
+            label="Employee"
+          />
           <div className="text-center mt-3">
             <button
               className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
@@ -171,7 +113,7 @@ const NewEmployee = ({ id }: any) => {
           </div>
         </form>
       </Card>
-    </div>
+    </FormsLayout>
   )
 }
 

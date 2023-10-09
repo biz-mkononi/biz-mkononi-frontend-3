@@ -9,6 +9,7 @@ import '../Businesses/AddBusiness.css'
 import { addSale } from '../../Data/Sales/Data'
 import { useNavigate } from 'react-router-dom'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
+import FormsLayout from '../../Layout/FormsLayout'
 
 interface Form {
   product: string
@@ -117,11 +118,7 @@ const AddSale = ({ id }: any) => {
 
   console.log(products)
   return (
-    <div className="add-business container p-4 ">
-      <h2 className="mb-3">Add a Sale</h2>
-
-      <hr className="light mb-3" />
-      <p className="mb-4">Add a new Sale</p>
+    <FormsLayout title="Sale">
       <Card className="p-3">
         {errors !== '' && (
           <Alert
@@ -327,7 +324,7 @@ const AddSale = ({ id }: any) => {
           </div>
         </form>
       </Card>
-    </div>
+    </FormsLayout>
   )
 }
 

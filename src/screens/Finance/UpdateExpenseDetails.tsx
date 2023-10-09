@@ -14,6 +14,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { getSingleExpense, updateSingleExpense } from '../../Data/Expenses/Data'
+import FormsLayout from '../../Layout/FormsLayout'
 
 interface data {
   name: ''
@@ -62,27 +63,7 @@ const UpdateExpenseDetails = ({ id }: any) => {
           <CircularProgress color="success" />
         </div>
       ) : (
-        <div className="add-business container p-4 ">
-          <h2 className="mb-3">Update Expense Details</h2>
-
-          <div className="row padding">
-            <div className="col-lg-6">
-              <div className="details-button" style={{ display: 'flex' }}>
-                <button
-                  className="btn btn-secondary btn-md"
-                  onClick={() => navigate(-1)}
-                >
-                  {' '}
-                  Back
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <hr className="light mb-3 mt-3" />
-
-          <p className="mb-4">Update your Expense</p>
-
+        <FormsLayout title="Expense" update>
           <Card className="p-3">
             <form onSubmit={onSubmit}>
               <label htmlFor="basic-url" className="form-label ">
@@ -157,7 +138,7 @@ const UpdateExpenseDetails = ({ id }: any) => {
               </div>
             </form>
           </Card>
-        </div>
+        </FormsLayout>
       )}
     </>
   )

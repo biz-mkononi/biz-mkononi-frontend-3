@@ -12,10 +12,10 @@ const SuppliersList = ({ id }: any) => {
   useEffect(() => {
     getSuppliers(setData, setIsLoading, id)
   }, [])
-  const onView = (id: string |undefined) => {
+  const onView = (id: string | undefined) => {
     navigate(`/suppliers/${id}/details`)
   }
-  const onEdit = (id: string |undefined) => {
+  const onEdit = (id: string | undefined) => {
     navigate(`/suppliers/${id}/update-details`)
   }
   const columns = [
@@ -31,7 +31,7 @@ const SuppliersList = ({ id }: any) => {
           <CircularProgress color="success" />
         </div>
       ) : (
-        <Table columns={columns} onEdit={onEdit} onView={onView} data={data}/>
+        <Table columns={columns} onEdit={onEdit} onView={onView} data={data} />
       )}
     </>
   )

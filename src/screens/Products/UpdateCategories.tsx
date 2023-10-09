@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import BusinessIcon from '@mui/icons-material/Business'
-import EmailIcon from '@mui/icons-material/Email'
-import PhoneIcon from '@mui/icons-material/Phone'
-import NotificationAddIcon from '@mui/icons-material/NotificationAdd'
 import { Card } from '@mui/material'
 import '../Businesses/AddBusiness.css'
 import image from '../../Assets/placeholder.jpg'
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew'
 import { useNavigate, useParams } from 'react-router-dom'
-import { getSingleProduct } from '../../Data/Products/Data'
 import CircularProgress from '@mui/material/CircularProgress'
 import {
   getSingleCategory,
   updateSingleCategory,
 } from '../../Data/Categories/Data'
+import Image from '../../components/FormFields/Image'
+import FormsLayout from '../../Layout/FormsLayout'
 
 interface data {
   name: ''
@@ -63,21 +60,7 @@ const UpdateCategories = ({ id }: any) => {
           <CircularProgress color="success" />
         </div>
       ) : (
-        <div className="add-business container p-4 ">
-          <h2 className="mb-3">Update Category Details</h2>
-          <div className="row padding">
-            <div className="col-lg-6">
-              <div className="details-button" style={{ display: 'flex' }}>
-                <button
-                  className="btn btn-secondary btn-md"
-                  onClick={() => navigate(-1)}
-                >
-                  {' '}
-                  Back
-                </button>
-              </div>
-            </div>
-          </div>
+        <FormsLayout title="Category" update>
           <Card className="p-3">
             <form onSubmit={onSubmit}>
               <label htmlFor="basic-url" className="form-label ">
@@ -110,29 +93,13 @@ const UpdateCategories = ({ id }: any) => {
                   aria-label="With textarea"
                 ></textarea>
               </div>
-              <div className="mb-3 image-upload">
-                <label htmlFor="formFile" className="form-label">
-                  Click to set category image
-                  <img
-                    src={
-                      displayImage === ''
-                        ? data.imageUrl === null
-                          ? image
-                          : data.imageUrl
-                        : displayImage
-                    }
-                    alt=""
-                    className="business-form-image"
-                  />
-                </label>
-                <input
-                  className="form-control file "
-                  onChange={handleFileChange}
-                  name="image"
-                  type="file"
-                  id="formFile"
-                />
-              </div>
+              <Image
+                handleFileChange={handleFileChange}
+                update
+                displayImage={displayImage}
+                label="Category"
+                data={data}
+              />
               <div className="text-center mt-3">
                 <button
                   className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
@@ -143,7 +110,7 @@ const UpdateCategories = ({ id }: any) => {
               </div>
             </form>
           </Card>
-        </div>
+        </FormsLayout>
       )}
     </>
   )

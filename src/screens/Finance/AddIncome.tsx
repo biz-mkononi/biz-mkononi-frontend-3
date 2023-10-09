@@ -1,16 +1,13 @@
 import React, { useState } from 'react'
 import BusinessIcon from '@mui/icons-material/Business'
-import EmailIcon from '@mui/icons-material/Email'
-import PhoneIcon from '@mui/icons-material/Phone'
-import TextField from '@mui/material/TextField'
-import Stack from '@mui/material/Stack'
 import { Card } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { addIncome } from '../../Data/Incomes/Data'
 import dayjs, { Dayjs } from 'dayjs'
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import FormsLayout from '../../Layout/FormsLayout'
+import Input from '../../components/FormFields/Input'
+import DateField from '../../components/FormFields/DateField'
+import TextArea from '../../components/FormFields/TextArea'
 const AddIncome = ({ id }: any) => {
   const navigate = useNavigate()
   const initialState = { title: '', amount: '', txDate: '', description: '' }
@@ -38,71 +35,32 @@ const AddIncome = ({ id }: any) => {
   }
 
   return (
-    <div className="add-business container p-4 ">
-      <h2 className="mb-3">Add Extra Income</h2>
-
-      <hr className="light mb-3" />
-      <p className="mb-4">Add an extra income</p>
+    <FormsLayout title="Income">
       <Card className="p-3">
         <form onSubmit={onSubmit}>
-          <label htmlFor="basic-url" className="form-label ">
-            Title
-          </label>
-          <div className="input-group mb-5">
-            <span className="input-group-text" id="basic-addon1">
-              <BusinessIcon />
-            </span>
-            <input
-              type="text"
-              onChange={handleChange}
-              name="title"
-              className="form-control"
-              placeholder="name"
-              aria-label="Username"
-              aria-describedby="basic-addon1"
-            />
-          </div>
-          <label htmlFor="basic-url" className="form-label ">
-            Amount (Ksh)
-          </label>
-          <div className="input-group mb-5">
-            <span className="input-group-text" id="basic-addon1">
-              <BusinessIcon />
-            </span>
-            <input
-              type="text"
-              onChange={handleChange}
-              name="amount"
-              className="form-control"
-              placeholder="amount"
-              aria-label="Username"
-              aria-describedby="basic-addon1"
-            />
-          </div>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <Stack className="mb-3" spacing={3}>
-              <label htmlFor="basic-url" className="form-label ">
-                Transaction Date
-              </label>
-
-              <DateTimePicker
-                label="Date&Time picker"
-                value={value}
-                onChange={handleDateChange}
-              />
-            </Stack>
-          </LocalizationProvider>
-          <label htmlFor="basic-url" className="form-label ">
-            Description
-          </label>
-          <div className="input-group mb-3">
-            <textarea
-              className="form-control"
-              onChange={handleDescriptionChange}
-              name="description"
-              aria-label="With textarea"
-            ></textarea>
-          </div>
+          <Input
+            icon={<BusinessIcon />}
+            label="Title"
+            handleChange={handleChange}
+            name="title"
+            placeholder="title"
+            type="text"
+          />
+          <Input
+            icon={<BusinessIcon />}
+            label="Amount (Ksh)"
+            handleChange={handleChange}
+            name="amount"
+            placeholder="amount"
+            type="text"
+          />
+          <DateField
+            label="Transaction Date"
+            handleDateChange={handleDateChange}
+            value={value}
+            type="Date&Time picker"
+          />
+          <TextArea handleDescriptionChange={handleDescriptionChange} />
           <div className="text-center mt-3">
             <button
               className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
@@ -113,7 +71,7 @@ const AddIncome = ({ id }: any) => {
           </div>
         </form>
       </Card>
-    </div>
+    </FormsLayout>
   )
 }
 

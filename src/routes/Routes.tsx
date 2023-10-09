@@ -1,54 +1,11 @@
-import React, { Suspense, lazy, useEffect, useState, useContext } from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import { makeStyles } from '@mui/material/styles'
-import CssBaseline from '@mui/material/CssBaseline'
-import Drawer from '@mui/material/Drawer'
-import Container from '@mui/material/Container'
-import clsx from 'clsx'
+import React, { Suspense, lazy, useContext } from 'react'
+import { Route, Routes } from 'react-router-dom'
+
 import PrivateRoute from './PrivateRoute'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import {
-  createTheme,
-  ThemeProvider,
-  useTheme,
-  styled,
-} from '@mui/material/styles'
+import { useTheme } from '@mui/material/styles'
 import { DataContext } from '../context/ContextProvider'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-import Divider from '@mui/material/Divider'
-import IconButton from '@mui/material/IconButton'
-import './sidebar.css'
 import Box from '@mui/material/Box'
 import Sidebar from '../components/sidebar/Sidebar'
-
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
-  open?: boolean
-}>(({ theme, open }) => ({
-  flexGrow: 1,
-  padding: theme.spacing(3),
-  transition: theme.transitions.create('margin', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  marginLeft: `-${drawerWidth}px`,
-  ...(open && {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
-  }),
-}))
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
-}))
 
 const RoutesFile = () => {
   const ProductDetails = lazy(
@@ -147,14 +104,7 @@ const RoutesFile = () => {
   )
 
   const theme = useTheme()
-  const { open, setOpen, user, loggedUser, businessId } =
-    useContext(DataContext)
-  const handleDrawerOpen = () => {
-    setOpen(true)
-  }
-  const handleDrawerClose = () => {
-    setOpen(false)
-  }
+  const { loggedUser, businessId } = useContext(DataContext)
   return (
     <Box sx={{ display: 'flex' }}>
       {loggedUser && <Sidebar />}

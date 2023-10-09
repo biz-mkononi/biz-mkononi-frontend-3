@@ -64,10 +64,13 @@ const Table = ({ columns, onEdit, onView, data, Business }: TableProps) => {
                               : business.imageUrl
                           }
                         />
-                        <h1 className="font-semibold">{business.name}</h1> 
+                        <h1 className="font-semibold">{business.name}</h1>
                       </td>
                     ) : (
-                      <td className="flex-row items-center justify-center" key={colIndex}>
+                      <td
+                        className="flex-row items-center justify-center"
+                        key={colIndex}
+                      >
                         {renderCell(business, column)}
                       </td>
                     )}
