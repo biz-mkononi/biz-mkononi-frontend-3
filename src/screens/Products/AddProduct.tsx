@@ -252,11 +252,7 @@ const AddProduct = ({ id }: any) => {
               </div>
             </div>
             <div className="col-lg-4">
-              <Image
-                handleFileChange={handleFileChange}
-                displayImage={displayImage}
-                label="Customer"
-              />
+              <Image handleFileChange={handleFileChange} displayImage={displayImage} label='Product'/>Product
             </div>
           </div>
 
