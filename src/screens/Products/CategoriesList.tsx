@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import '../Businesses/AddBusiness.css'
 import { getCategory } from '../../Data/Categories/Data'
 import { useNavigate } from 'react-router-dom'
@@ -9,6 +9,9 @@ const CategoriesList = ({ id }: any) => {
   const navigate = useNavigate()
   const [data, setData] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const memoizedCategories = useMemo(() => {
+    return data;
+  },[data])
   useEffect(() => {
     getCategory(setData, setIsLoading, id)
   }, [])
@@ -26,7 +29,7 @@ const CategoriesList = ({ id }: any) => {
           <CircularProgress color="success" />
         </div>
       ) : (
-        <Table columns={columns} data={data} onEdit={onEdit} onView={onView} />
+        <Table columns={columns} data={memoizedCategories} onEdit={onEdit} onView={onView} />
       )}
     </>
   )

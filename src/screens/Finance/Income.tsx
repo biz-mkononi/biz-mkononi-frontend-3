@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import '../Businesses/AddBusiness.css'
 import { Pagination } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
@@ -10,6 +10,9 @@ const Income = ({ id }: any) => {
   const navigate = useNavigate()
   const [data, setData] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const memoizedIncomes = useMemo(() => {
+    return data;
+  },[data])
   useEffect(() => {
     getIncomes(setData, setIsLoading, id)
   }, [])
@@ -32,7 +35,7 @@ const Income = ({ id }: any) => {
           <CircularProgress color="success" />
         </div>
       ) : (
-        <Table columns={columns} data={data} onEdit={onEdit} onView={onView} />
+        <Table columns={columns} data={memoizedIncomes} onEdit={onEdit} onView={onView} />
       )}
     </>
   )

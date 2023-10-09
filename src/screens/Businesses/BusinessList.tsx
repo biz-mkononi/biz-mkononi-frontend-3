@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import './AddBusiness.css'
 import { getBusiness } from '../../Data/Businesses/Data'
 import { useNavigate } from 'react-router-dom'
 import CircularProgress from '@mui/material/CircularProgress'
-import { DataContext } from '../../context/ContextProvider'
 import NotFound from '../NotFoundPage/NotFound'
 import BusinessIcon from '@mui/icons-material/Business'
 import Table from '../../components/Table/Table'
@@ -12,7 +11,9 @@ const BusinessList = () => {
   const navigate = useNavigate()
   const [data, setData] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(false)
-  const { setBusiness, setBusinessId } = useContext(DataContext)
+  const memoizedBusinesses = useMemo(() => {
+    return data;
+  },[data])
   useEffect(() => {
     getBusiness(setData, setIsLoading)
   }, [])
@@ -51,7 +52,7 @@ const BusinessList = () => {
               onEdit={onEdit}
               onView={onView}
               Business
-              data={data}
+              data={memoizedBusinesses}
             />
           )}
         </>
