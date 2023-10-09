@@ -13,10 +13,10 @@ const EmployeesSalaries = ({ id }: any) => {
     getSalaries(setData, setIsLoading, id)
   }, [])
 
-  const onView = (id:string | undefined) => {
+  const onView = (id: string | undefined) => {
     navigate(`/employees/salaries/${id}/details`)
   }
-  const onEdit = (id:string | undefined) => {
+  const onEdit = (id: string | undefined) => {
     navigate(`/employees/salaries/${id}/update-details`)
   }
   const columns = [

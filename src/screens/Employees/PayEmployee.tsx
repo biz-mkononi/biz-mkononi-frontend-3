@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import BusinessIcon from '@mui/icons-material/Business'
-import EmailIcon from '@mui/icons-material/Email'
 import PhoneIcon from '@mui/icons-material/Phone'
-import TextField from '@mui/material/TextField'
-import Stack from '@mui/material/Stack'
 import { Card } from '@mui/material'
 import { addSalary } from '../../Data/Salaries/Data'
 import { useNavigate } from 'react-router-dom'
 import { getEmployees } from '../../Data/Employees/Data'
 import dayjs, { Dayjs } from 'dayjs'
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import FormsLayout from '../../Layout/FormsLayout'
+import Input from '../../components/FormFields/Input'
+import TextArea from '../../components/FormFields/TextArea'
+import DateField from '../../components/FormFields/DateField'
 const PayEmployee = ({ id }: any) => {
   const navigate = useNavigate()
   const initialState = {
@@ -48,13 +46,8 @@ const PayEmployee = ({ id }: any) => {
     e.preventDefault()
     addSalary(formData, navigate, setIsLoading, id)
   }
-  console.log(formData)
   return (
-    <div className="add-business container p-4 ">
-      <h2 className="mb-3">Add Salary</h2>
-
-      <hr className="light mb-3" />
-      <p className="mb-4">Add a new salary to your business</p>
+    <FormsLayout title="Salary">
       <Card className="p-3">
         <form onSubmit={onSubmit}>
           <label htmlFor="basic-url" className="form-label">
@@ -81,48 +74,21 @@ const PayEmployee = ({ id }: any) => {
               })}
             </select>
           </div>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <Stack className="mb-3" spacing={3}>
-              <label htmlFor="basic-url" className="form-label ">
-                Date
-              </label>
-
-              <DateTimePicker
-                label="Date"
-                value={value}
-                onChange={handleDateChange}
-              />
-            </Stack>
-          </LocalizationProvider>
-
-          <label htmlFor="basic-url" className="form-label ">
-            Amount (Ksh)
-          </label>
-          <div className="input-group mb-5">
-            <span className="input-group-text" id="basic-addon1">
-              <BusinessIcon />
-            </span>
-            <input
-              type="text"
-              onChange={handleChange}
-              name="amount"
-              className="form-control"
-              placeholder="amount"
-              aria-label="Username"
-              aria-describedby="basic-addon1"
-            />
-          </div>
-          <label htmlFor="basic-url" className="form-label ">
-            Description
-          </label>
-          <div className="input-group mb-3">
-            <textarea
-              className="form-control"
-              onChange={handleDescriptionChange}
-              name="description"
-              aria-label="With textarea"
-            ></textarea>
-          </div>
+          <DateField
+            label="Date"
+            handleDateChange={handleDateChange}
+            value={value}
+            type="Date"
+          />
+          <Input
+            icon={<BusinessIcon />}
+            label="Amount (Ksh)"
+            handleChange={handleChange}
+            name="amount"
+            placeholder="amount"
+            type="text"
+          />
+          <TextArea handleDescriptionChange={handleDescriptionChange} />
 
           <div className="text-center mt-3">
             <button
@@ -134,7 +100,7 @@ const PayEmployee = ({ id }: any) => {
           </div>
         </form>
       </Card>
-    </div>
+    </FormsLayout>
   )
 }
 

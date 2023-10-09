@@ -3,14 +3,13 @@ import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantity
 import PersonIcon from '@mui/icons-material/Person'
 import ScaleIcon from '@mui/icons-material/Scale'
 import { Card, Alert } from '@mui/material'
-import { getCustomers } from '../../Data/Customers/Data'
 import { getProducts } from '../../Data/Products/Data'
 import '../Businesses/AddBusiness.css'
-import { addSale } from '../../Data/Sales/Data'
 import { useNavigate } from 'react-router-dom'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import { addSupply } from '../../Data/Supplies/Data'
 import { getSuppliers } from '../../Data/Suppliers/Data'
+import FormsLayout from '../../Layout/FormsLayout'
 
 interface Form {
   product: string
@@ -121,11 +120,7 @@ const AddSupply = ({ id }: any) => {
   console.log(products)
   console.log(supplierId)
   return (
-    <div className="add-business container p-4 ">
-      <h2 className="mb-3">Add a Supply</h2>
-
-      <hr className="light mb-3" />
-      <p className="mb-4">Add a new Supply</p>
+    <FormsLayout title="Supply">
       <Card className="p-3">
         {errors !== '' && (
           <Alert
@@ -331,7 +326,7 @@ const AddSupply = ({ id }: any) => {
           </div>
         </form>
       </Card>
-    </div>
+    </FormsLayout>
   )
 }
 

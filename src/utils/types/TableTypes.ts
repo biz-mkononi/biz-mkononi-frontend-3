@@ -2,14 +2,14 @@ type Owner = {
   name?: string
 }
 type Employee = {
-    name?:string
+  name?: string
 }
 export type commonProperties = {
-  name?: string 
+  name?: string
   phone?: string
   id?: string
   imageUrl?: string
   businessPhone?: string
   owner?: Owner
-  employee?:Employee
+  employee?: Employee
 }

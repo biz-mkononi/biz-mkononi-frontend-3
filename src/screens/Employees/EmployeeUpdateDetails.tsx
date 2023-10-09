@@ -2,24 +2,19 @@ import React, { useEffect, useState } from 'react'
 import BusinessIcon from '@mui/icons-material/Business'
 import EmailIcon from '@mui/icons-material/Email'
 import PhoneIcon from '@mui/icons-material/Phone'
-import NotificationAddIcon from '@mui/icons-material/NotificationAdd'
 import { Card } from '@mui/material'
 import '../Businesses/AddBusiness.css'
 import image from '../../Assets/placeholder.jpg'
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew'
 import { useNavigate, useParams } from 'react-router-dom'
-import { getSingleCustomer } from '../../Data/Customers/Data'
 import CircularProgress from '@mui/material/CircularProgress'
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import FormControl from '@mui/material/FormControl'
-import PersonIcon from '@mui/icons-material/Person'
+
 import {
   getSingleEmployee,
   updateSingleEmployee,
 } from '../../Data/Employees/Data'
 import StarsIcon from '@mui/icons-material/Stars'
+import Image from '../../components/FormFields/Image'
+import FormsLayout from '../../Layout/FormsLayout'
 
 interface data {
   name: ''
@@ -64,26 +59,7 @@ const EmployeeUpdateDetails = ({ id }: any) => {
           <CircularProgress color="success" />
         </div>
       ) : (
-        <div className="add-business container p-4 ">
-          <h2 className="mb-3">Update employee Details</h2>
-
-          <div className="row padding">
-            <div className="col-lg-6">
-              <div className="details-button" style={{ display: 'flex' }}>
-                <button
-                  className="btn btn-secondary btn-md"
-                  onClick={() => navigate(-1)}
-                >
-                  {' '}
-                  Back
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <hr className="light mb-3 mt-3" />
-
-          <p className="mb-4">Update your employee</p>
+        <FormsLayout title="Employee" update>
           <Card className="p-3">
             <form onSubmit={onSubmit}>
               <div className="row padding mt-3">
@@ -190,29 +166,13 @@ const EmployeeUpdateDetails = ({ id }: any) => {
                   </div>
                 </div>
               </div>
-              <div className="mb-3 image-upload">
-                <label htmlFor="formFile" className="form-label">
-                  Click to update employee image
-                  <img
-                    src={
-                      displayImage === ''
-                        ? data.imageUrl === null
-                          ? image
-                          : data.imageUrl
-                        : displayImage
-                    }
-                    alt=""
-                    className="business-form-image"
-                  />
-                </label>
-                <input
-                  className="form-control file "
-                  onChange={handleFileChange}
-                  name="image"
-                  type="file"
-                  id="formFile"
-                />
-              </div>
+              <Image
+                handleFileChange={handleFileChange}
+                update
+                displayImage={displayImage}
+                label="Employee"
+                data={data}
+              />
               <div className="text-center mt-3">
                 <button
                   className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
@@ -223,7 +183,7 @@ const EmployeeUpdateDetails = ({ id }: any) => {
               </div>
             </form>
           </Card>
-        </div>
+        </FormsLayout>
       )}
     </>
   )

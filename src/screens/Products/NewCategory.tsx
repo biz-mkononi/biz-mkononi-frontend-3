@@ -5,6 +5,8 @@ import '../Businesses/AddBusiness.css'
 import image from '../../Assets/placeholder.jpg'
 import { addCategory } from '../../Data/Categories/Data'
 import { useNavigate } from 'react-router-dom'
+import FormsLayout from '../../Layout/FormsLayout'
+import Image from '../../components/FormFields/Image'
 
 const NewCategory = ({ id }: any) => {
   const initialState = { name: '', description: '', image: {} }
@@ -37,11 +39,7 @@ const NewCategory = ({ id }: any) => {
   }
 
   return (
-    <div className="add-business container p-4 ">
-      <h2 className="mb-3">Add Category</h2>
-
-      <hr className="light mb-3" />
-      <p className="mb-4">Add a new category to your business</p>
+    <FormsLayout title="Category">
       <Card className="p-3">
         <form onSubmit={onSubmit}>
           <label htmlFor="basic-url" className="form-label ">
@@ -72,23 +70,11 @@ const NewCategory = ({ id }: any) => {
               aria-label="With textarea"
             ></textarea>
           </div>
-          <div className="mb-3 image-upload">
-            <label htmlFor="formFile" className="form-label">
-              Click to set category image
-              <img
-                src={displayImage === '' ? image : displayImage}
-                alt=""
-                className="business-form-image"
-              />
-            </label>
-            <input
-              className="form-control file "
-              onChange={handleFileChange}
-              name="image"
-              type="file"
-              id="formFile"
-            />
-          </div>
+          <Image
+            handleFileChange={handleFileChange}
+            displayImage={displayImage}
+            label="Category"
+          />
           <div className="text-center mt-3">
             <button
               className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
@@ -99,7 +85,7 @@ const NewCategory = ({ id }: any) => {
           </div>
         </form>
       </Card>
-    </div>
+    </FormsLayout>
   )
 }
 

@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import PersonIcon from '@mui/icons-material/Person'
-import EmailIcon from '@mui/icons-material/Email'
 import image from '../../Assets/placeholder.jpg'
 import { Card } from '@mui/material'
 import { addProduct } from '../../Data/Products/Data'
@@ -13,6 +11,8 @@ import { getCategory } from '../../Data/Categories/Data'
 import CategoryIcon from '@mui/icons-material/Category'
 
 import '../Businesses/AddBusiness.css'
+import FormsLayout from '../../Layout/FormsLayout'
+import Image from '../../components/FormFields/Image'
 
 const AddProduct = ({ id }: any) => {
   const initialState = {
@@ -66,11 +66,7 @@ const AddProduct = ({ id }: any) => {
   }
 
   return (
-    <div className="add-business container p-4 ">
-      <h2 className="mb-3">Add Product</h2>
-
-      <hr className="light mb-3" />
-      <p className="mb-4">Add a new product to your business</p>
+    <FormsLayout title="Product">
       <Card className="p-3">
         <form onSubmit={onSubmit}>
           <div className="row padding mt-3">
@@ -256,23 +252,11 @@ const AddProduct = ({ id }: any) => {
               </div>
             </div>
             <div className="col-lg-4">
-              <div className="mb-3 image-upload">
-                <label htmlFor="formFile" className="form-label">
-                  Click to set product image
-                  <img
-                    src={displayImage === '' ? image : displayImage}
-                    alt=""
-                    className="business-form-image"
-                  />
-                </label>
-                <input
-                  className="form-control file "
-                  onChange={handleFileChange}
-                  name="image"
-                  type="file"
-                  id="formFile"
-                />
-              </div>
+              <Image
+                handleFileChange={handleFileChange}
+                displayImage={displayImage}
+                label="Customer"
+              />
             </div>
           </div>
 
@@ -286,7 +270,7 @@ const AddProduct = ({ id }: any) => {
           </div>
         </form>
       </Card>
-    </div>
+    </FormsLayout>
   )
 }
 

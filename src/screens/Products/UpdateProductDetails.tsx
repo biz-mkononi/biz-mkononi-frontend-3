@@ -1,8 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import BusinessIcon from '@mui/icons-material/Business'
-import EmailIcon from '@mui/icons-material/Email'
-import PhoneIcon from '@mui/icons-material/Phone'
-import NotificationAddIcon from '@mui/icons-material/NotificationAdd'
 import { Card } from '@mui/material'
 import '../Businesses/AddBusiness.css'
 import image from '../../Assets/placeholder.jpg'
@@ -16,6 +12,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import ScaleIcon from '@mui/icons-material/Scale'
 import StyleIcon from '@mui/icons-material/Style'
 import { getCategory } from '../../Data/Categories/Data'
+import Image from '../../components/FormFields/Image'
+import FormsLayout from '../../Layout/FormsLayout'
 
 interface data {
   name: ''
@@ -88,26 +86,7 @@ const UpdateProductDetails = ({ id }: any) => {
           <CircularProgress color="success" />
         </div>
       ) : (
-        <div className="add-business container p-4 ">
-          <h2 className="mb-3">Update Product Details</h2>
-          <div className="row padding">
-            <div className="col-lg-6">
-              <div className="details-button" style={{ display: 'flex' }}>
-                <button
-                  className="btn btn-secondary btn-md"
-                  onClick={() => navigate(-1)}
-                >
-                  {' '}
-                  Back
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <hr className="light mb-3 mt-3" />
-
-          <p className="mb-4">Update your Product</p>
-
+        <FormsLayout title="Product" update>
           <Card className="p-3">
             <form onSubmit={onSubmit}>
               <div className="row padding mt-3">
@@ -300,29 +279,13 @@ const UpdateProductDetails = ({ id }: any) => {
                   </div>
                 </div>
                 <div className="col-lg-4">
-                  <div className="mb-3 image-upload">
-                    <label htmlFor="formFile" className="form-label">
-                      Click to set product image
-                      <img
-                        src={
-                          displayImage === ''
-                            ? data.imageUrl === null
-                              ? image
-                              : data.imageUrl
-                            : displayImage
-                        }
-                        alt=""
-                        className="business-form-image"
-                      />
-                    </label>
-                    <input
-                      className="form-control file "
-                      onChange={handleFileChange}
-                      name="image"
-                      type="file"
-                      id="formFile"
-                    />
-                  </div>
+                  <Image
+                    handleFileChange={handleFileChange}
+                    update
+                    displayImage={displayImage}
+                    label="Product"
+                    data={data}
+                  />
                 </div>
               </div>
 
@@ -336,7 +299,7 @@ const UpdateProductDetails = ({ id }: any) => {
               </div>
             </form>
           </Card>
-        </div>
+        </FormsLayout>
       )}
     </>
   )

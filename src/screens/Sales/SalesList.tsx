@@ -12,10 +12,10 @@ const SalesList = ({ id }: any) => {
   useEffect(() => {
     getSales(setData, setIsLoading, id)
   }, [])
-  const onView = (id: string |undefined) => {
+  const onView = (id: string | undefined) => {
     navigate(`/sales/${id}/details`)
   }
-  const onEdit = (id: string |undefined) => {
+  const onEdit = (id: string | undefined) => {
     navigate(`/sales/${id}/update-details`)
   }
   const columns = [
@@ -32,7 +32,7 @@ const SalesList = ({ id }: any) => {
           <CircularProgress color="success" />
         </div>
       ) : (
-        <Table columns={columns} data={data} onEdit={onEdit} onView={onView}/>
+        <Table columns={columns} data={data} onEdit={onEdit} onView={onView} />
       )}
     </>
   )

@@ -12,15 +12,13 @@ const CategoriesList = ({ id }: any) => {
   useEffect(() => {
     getCategory(setData, setIsLoading, id)
   }, [])
-  const onView = (id: string |undefined) => {
+  const onView = (id: string | undefined) => {
     navigate(`/categories/${id}/details`)
   }
-  const onEdit = (id: string |undefined) => {
+  const onEdit = (id: string | undefined) => {
     navigate(`/categories/${id}/update-details`)
   }
-  const columns = [
-    { header: 'Name', dataKey: 'name' },
-  ]
+  const columns = [{ header: 'Name', dataKey: 'name' }]
   return (
     <>
       {isLoading ? (
@@ -28,7 +26,7 @@ const CategoriesList = ({ id }: any) => {
           <CircularProgress color="success" />
         </div>
       ) : (
-       <Table columns={columns} data={data} onEdit={onEdit} onView={onView} />
+        <Table columns={columns} data={data} onEdit={onEdit} onView={onView} />
       )}
     </>
   )

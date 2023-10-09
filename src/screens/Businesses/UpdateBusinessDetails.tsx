@@ -14,6 +14,8 @@ import image from '../../Assets/placeholder.jpg'
 import { useNavigate, useParams } from 'react-router-dom'
 import CircularProgress from '@mui/material/CircularProgress'
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
+import Image from '../../components/FormFields/Image'
+import FormsLayout from '../../Layout/FormsLayout'
 
 interface data {
   name: ''
@@ -79,26 +81,7 @@ const UpdateBusinessDetails = () => {
           <CircularProgress color="success" />
         </div>
       ) : (
-        <div className="add-business container p-4 ">
-          <h2 className="mb-3">Update Business</h2>
-          <div className="row padding">
-            <div className="col-lg-6">
-              <div className="details-button" style={{ display: 'flex' }}>
-                <button
-                  className="btn btn-secondary btn-md"
-                  onClick={() => navigate(-1)}
-                >
-                  {' '}
-                  Back
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <hr className="light mt-3 mb-3" />
-
-          <p className="mb-4">Update your business</p>
-
+        <FormsLayout title="Business" update>
           <Card className="p-3">
             <form onSubmit={onSubmit}>
               <div className="row padding mt-3">
@@ -238,29 +221,13 @@ const UpdateBusinessDetails = () => {
                   </div>
                 </div>
                 <div className="col-lg-4">
-                  <div className="mb-3 image-upload">
-                    <label htmlFor="formFile" className="form-label">
-                      Click to update business image
-                      <img
-                        src={
-                          displayImage === ''
-                            ? data.imageUrl === null
-                              ? image
-                              : data.imageUrl
-                            : displayImage
-                        }
-                        alt=""
-                        className="business-form-image"
-                      />
-                    </label>
-                    <input
-                      className="form-control file "
-                      name="image"
-                      type="file"
-                      id="formFile"
-                      onChange={handleImageChange}
-                    />
-                  </div>
+                  <Image
+                    handleFileChange={handleImageChange}
+                    update
+                    displayImage={displayImage}
+                    label="Business"
+                    data={data}
+                  />
                 </div>
               </div>
               <div className="text-center mt-3">
@@ -273,7 +240,7 @@ const UpdateBusinessDetails = () => {
               </div>
             </form>
           </Card>
-        </div>
+        </FormsLayout>
       )}
     </>
   )

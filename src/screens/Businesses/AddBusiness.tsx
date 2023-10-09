@@ -3,14 +3,17 @@ import BusinessIcon from '@mui/icons-material/Business'
 import EmailIcon from '@mui/icons-material/Email'
 import PhoneIcon from '@mui/icons-material/Phone'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
-import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits'
 import { Card } from '@mui/material'
 import './AddBusiness.css'
 import BusinessList from './BusinessList'
 import { addBusiness } from '../../Data/Businesses/Data'
-import image from '../../Assets/placeholder.jpg'
 import { useNavigate } from 'react-router-dom'
-import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
+import FormsLayout from '../../Layout/FormsLayout'
+import Image from '../../components/FormFields/Image'
+import Input from '../../components/FormFields/Input'
+import Location from '../../components/FormFields/Location'
+import Select from '../../components/FormFields/Select'
+import TextArea from '../../components/FormFields/TextArea'
 
 const AddBusiness = () => {
   const [displayImage, setDisplayImage] = useState('')
@@ -82,194 +85,80 @@ const AddBusiness = () => {
   }
 
   return (
-    <div className="add-business container p-4 ">
-      <h2 className="mb-3">Add Businesses</h2>
-      <div className="row padding">
-        <div className="col-lg-6">
-          <div>
-            <button
-              className={
-                isActive
-                  ? 'btn btn-primary active-button btn-md m-2 mb-3'
-                  : 'btn btn-outline btn-md m-2 mb-3'
-              }
-              onClick={onClickActive}
-            >
-              My Business List
-            </button>
-            <button
-              className={
-                isActive2
-                  ? 'btn btn-primary active-button btn-md m-2 mb-3'
-                  : 'btn btn-outline btn-md m-2 mb-3'
-              }
-              onClick={onClickActive2}
-            >
-              Add Business
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <hr className="light mb-3" />
-
+    <FormsLayout
+      title="Business"
+      business
+      onClickActive2={onClickActive2}
+      onClickActive={onClickActive}
+      isActive={isActive}
+      isActive2={isActive2}
+    >
       {isActive ? (
         <BusinessList />
       ) : (
         <>
-          <p className="mb-4">Add a new business to start managing it now</p>
-
           <Card className="p-3">
             <form onSubmit={onSubmit}>
               <div className="row padding mt-3">
                 <div className="col-lg-4">
-                  <label htmlFor="basic-url" className="form-label ">
-                    Business Name
-                  </label>
-                  <div className="input-group mb-5">
-                    <span className="input-group-text" id="basic-addon1">
-                      <BusinessIcon />
-                    </span>
-                    <input
-                      type="text"
-                      onChange={handleChange}
-                      name="name"
-                      className="form-control"
-                      placeholder="name"
-                      aria-label="Username"
-                      aria-describedby="basic-addon1"
-                    />
-                  </div>
+                  <Input
+                    icon={<BusinessIcon />}
+                    label="Business Name"
+                    handleChange={handleChange}
+                    name="name"
+                    placeholder="name"
+                    type="text"
+                  />
                 </div>
                 <div className="col-lg-4">
-                  <label htmlFor="basic-url" className="form-label">
-                    Business Email
-                  </label>
-                  <div className="input-group mb-5">
-                    <span className="input-group-text" id="basic-addon1">
-                      <EmailIcon />
-                    </span>
-                    <input
-                      type="text"
-                      onChange={handleChange}
-                      name="businessEmail"
-                      className="form-control"
-                      placeholder="email"
-                      aria-label="Username"
-                      aria-describedby="basic-addon1"
-                    />
-                  </div>
+                  <Input
+                    icon={<EmailIcon />}
+                    label="Business Email"
+                    handleChange={handleChange}
+                    name="businessEmail"
+                    placeholder="email"
+                    type="email"
+                  />
                 </div>
                 <div className="col-lg-4">
-                  <label htmlFor="basic-url" className="form-label">
-                    Business Phone
-                  </label>
-                  <div className="input-group mb-5">
-                    <span className="input-group-text" id="basic-addon1">
-                      <PhoneIcon />
-                    </span>
-                    <input
-                      type="text"
-                      onChange={handleChange}
-                      name="businessPhone"
-                      className="form-control"
-                      placeholder="phone"
-                      aria-label="Username"
-                      aria-describedby="basic-addon1"
-                    />
-                  </div>
+                  <Input
+                    icon={<PhoneIcon />}
+                    label="Business Phone"
+                    handleChange={handleChange}
+                    name="businessPhone"
+                    placeholder="phone"
+                    type="text"
+                  />
                 </div>
               </div>
               <div className="row padding">
                 <div className="col-lg-4">
-                  <label htmlFor="basic-url" className="form-label ">
-                    Location
-                  </label>
-                  <div className="input-group mb-5">
-                    <GooglePlacesAutocomplete
-                      apiKey="AIzaSyAeiInK3UvyBWonodEd0HswfhQ5WFhCvNQ"
-                      selectProps={{
-                        placeholder: 'business location',
-                        className: 'places',
-                        onChange: handleSelect,
-                      }}
-                    />
-                  </div>
+                  <Location handleSelect={handleSelect} />
                 </div>
                 <div className="col-lg-4">
-                  <label htmlFor="basic-url" className="form-label">
-                    Location Details
-                  </label>
-                  <div className="input-group mb-5">
-                    <span className="input-group-text" id="basic-addon1">
-                      <LocationOnIcon />
-                    </span>
-                    <input
-                      type="text"
-                      onChange={handleChange}
-                      name="locationDetails"
-                      className="form-control"
-                      placeholder="details"
-                      aria-label="Username"
-                      aria-describedby="basic-addon1"
-                    />
-                  </div>
+                  <Input
+                    icon={<LocationOnIcon />}
+                    label="Location Details"
+                    handleChange={handleChange}
+                    name="locationDetails"
+                    placeholder="details"
+                    type="text"
+                  />
                 </div>
                 <div className="col-lg-4">
-                  <label htmlFor="basic-url" className="form-label">
-                    Product Type
-                  </label>
-                  <div className="input-group mb-5">
-                    <span className="input-group-text" id="basic-addon1">
-                      <ProductionQuantityLimitsIcon />
-                    </span>
-                    <select
-                      className="form-select"
-                      onChange={handleTypeChange}
-                      name="productType"
-                      aria-label="Default select example"
-                      id="basic-addon1"
-                    >
-                      <option selected>select a product type</option>
-                      <option value="PRODUCT">Product</option>
-                      <option value="SERVICE">Service</option>
-                      <option value="SERVICE_PRODUCT">Service_product</option>
-                    </select>
-                  </div>
+                  <Select handleTypeChange={handleTypeChange} />
                 </div>
               </div>
               <div className="row padding">
                 <div className="col-lg-4">
-                  <label htmlFor="basic-url" className="form-label ">
-                    Description
-                  </label>
-                  <div className="input-group mb-3">
-                    <textarea
-                      className="form-control"
-                      onChange={handleDescriptionChange}
-                      name="description"
-                      aria-label="With textarea"
-                    ></textarea>
-                  </div>
+                  <TextArea handleDescriptionChange={handleDescriptionChange} />
                 </div>
                 <div className="col-lg-4">
-                  <div className="mb-3 image-upload">
-                    <label htmlFor="formFile" className="form-label">
-                      Click to set business image
-                      <img
-                        src={displayImage === '' ? image : displayImage}
-                        alt=""
-                        className="business-form-image"
-                      />
-                    </label>
-                    <input
-                      className="form-control file "
-                      name="image"
-                      type="file"
-                      id="formFile"
-                      onChange={handleFileChange}
-                    />
-                  </div>
+                  <Image
+                    handleFileChange={handleFileChange}
+                    label="Business"
+                    displayImage={displayImage}
+                  />
                 </div>
               </div>
               <div className="text-center mt-3">
@@ -284,7 +173,7 @@ const AddBusiness = () => {
           </Card>
         </>
       )}
-    </div>
+    </FormsLayout>
   )
 }
 

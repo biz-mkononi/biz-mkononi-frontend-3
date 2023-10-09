@@ -23,7 +23,6 @@ const Expense = ({ id }: any) => {
     { header: 'Title', dataKey: 'title' },
     { header: 'Transaction Date', dataKey: 'txDate' },
     { header: 'Amount', dataKey: 'amount' },
- 
   ]
   return (
     <>
@@ -32,7 +31,7 @@ const Expense = ({ id }: any) => {
           <CircularProgress color="success" />
         </div>
       ) : (
-        <Table columns={columns} data={data} onEdit={onEdit} onView={onView}/>
+        <Table columns={columns} data={data} onEdit={onEdit} onView={onView} />
       )}
     </>
   )

@@ -5,11 +5,6 @@ import { Card } from '@mui/material'
 import '../Businesses/AddBusiness.css'
 import { useNavigate, useParams } from 'react-router-dom'
 import CircularProgress from '@mui/material/CircularProgress'
-import {
-  getSingleEmployee,
-  updateSingleEmployee,
-} from '../../Data/Employees/Data'
-import TextField from '@mui/material/TextField'
 import Stack from '@mui/material/Stack'
 import dayjs, { Dayjs } from 'dayjs'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
@@ -17,6 +12,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { getEmployees } from '../../Data/Employees/Data'
 import { getSingleSalary, updateSingleSalary } from '../../Data/Salaries/Data'
+import FormsLayout from '../../Layout/FormsLayout'
 
 interface data {
   name: ''
@@ -78,26 +74,7 @@ const UpdateSalariesDetails = ({ id }: any) => {
           <CircularProgress color="success" />
         </div>
       ) : (
-        <div className="add-business container p-4 ">
-          <h2 className="mb-3">Update Salaries Details</h2>
-
-          <div className="row padding">
-            <div className="col-lg-6">
-              <div className="details-button" style={{ display: 'flex' }}>
-                <button
-                  className="btn btn-secondary btn-md"
-                  onClick={() => navigate(-1)}
-                >
-                  {' '}
-                  Back
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <hr className="light mb-3 mt-3" />
-
-          <p className="mb-4">Update your employee</p>
+        <FormsLayout title="Salary" update>
           <Card className="p-3">
             <form onSubmit={onSubmit}>
               <label htmlFor="basic-url" className="form-label">
@@ -179,7 +156,7 @@ const UpdateSalariesDetails = ({ id }: any) => {
               </div>
             </form>
           </Card>
-        </div>
+        </FormsLayout>
       )}
     </>
   )

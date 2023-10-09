@@ -18,6 +18,8 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import PersonIcon from '@mui/icons-material/Person'
+import Image from '../../components/FormFields/Image'
+import FormsLayout from '../../Layout/FormsLayout'
 
 interface data {
   name: ''
@@ -72,27 +74,7 @@ const UpdateCustomerDetails = ({ id }: any) => {
           <CircularProgress color="success" />
         </div>
       ) : (
-        <div className="add-business container p-4 ">
-          <h2 className="mb-3">Update Customers Details</h2>
-
-          <div className="row padding">
-            <div className="col-lg-6">
-              <div className="details-button" style={{ display: 'flex' }}>
-                <button
-                  className="btn btn-secondary btn-md"
-                  onClick={() => navigate(-1)}
-                >
-                  {' '}
-                  Back
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <hr className="light mb-3 mt-3" />
-
-          <p className="mb-4">Update your customer</p>
-
+        <FormsLayout title="Customer" update>
           <Card className="p-3">
             <form onSubmit={onSubmit}>
               <div className="row padding mt-3">
@@ -219,29 +201,13 @@ const UpdateCustomerDetails = ({ id }: any) => {
                   </div>
                 </div>
                 <div className="col-lg-4">
-                  <div className="mb-3 image-upload">
-                    <label htmlFor="formFile" className="form-label">
-                      Click to set supplier image
-                      <img
-                        src={
-                          displayImage === ''
-                            ? data.imageUrl === null
-                              ? image
-                              : data.imageUrl
-                            : displayImage
-                        }
-                        alt=""
-                        className="business-form-image"
-                      />
-                    </label>
-                    <input
-                      className="form-control file "
-                      onChange={handlFileeChange}
-                      name="image"
-                      type="file"
-                      id="formFile"
-                    />
-                  </div>
+                  <Image
+                    handleFileChange={handlFileeChange}
+                    update
+                    displayImage={displayImage}
+                    label="Customer"
+                    data={data}
+                  />
                 </div>
               </div>
               <div className="text-center mt-3">
@@ -254,7 +220,7 @@ const UpdateCustomerDetails = ({ id }: any) => {
               </div>
             </form>
           </Card>
-        </div>
+        </FormsLayout>
       )}
     </>
   )
