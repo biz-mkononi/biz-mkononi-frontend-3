@@ -1,24 +1,24 @@
-import React, { useState } from 'react'
-import { TextField } from '@mui/material'
-import { verifyPhone } from '../../Data/Auth/Data'
-import { useNavigate } from 'react-router-dom'
-import './Login.css'
-import AuthLayout from '../../Layout/AuthLayout'
+import React, {useState} from 'react';
+import {TextField} from '@mui/material';
+import {verifyPhone} from '../../Data/Auth/Data';
+import {useNavigate} from 'react-router-dom';
+import './Login.css';
+import AuthLayout from '../../Layout/AuthLayout';
 
 const VerifyPhone = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const initialState = { code: '', password: '', phone: '', password2: '' }
-  const [formData, setFormData] = useState(initialState)
+  const initialState = {code: '', password: '', phone: '', password2: ''};
+  const [formData, setFormData] = useState(initialState);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({...formData, [e.target.name]: e.target.value});
+  };
 
   const phoneVerification = () => {
-    verifyPhone(formData)
-    navigate('/auth/login')
-  }
+    verifyPhone(formData);
+    navigate('/auth/login');
+  };
   return (
     <AuthLayout>
       <div className="flex flex-col justify-center items-center login">
@@ -48,14 +48,13 @@ const VerifyPhone = () => {
         <div className="mt-3 text-center sign-button">
           <button
             className="btn btn-primary btn-md"
-            onClick={phoneVerification}
-          >
+            onClick={phoneVerification}>
             Verify Phone
           </button>
         </div>
       </div>
     </AuthLayout>
-  )
-}
+  );
+};
 
-export default VerifyPhone
+export default VerifyPhone;

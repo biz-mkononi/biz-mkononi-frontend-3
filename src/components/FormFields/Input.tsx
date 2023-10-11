@@ -1,12 +1,12 @@
-import React from 'react'
+import React from 'react';
 
 interface InputProps {
-  icon: React.ReactElement
-  label: string
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  name: string
-  placeholder: string
-  type: string
+  icon: React.ReactElement;
+  label: string;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  name: string;
+  placeholder: string;
+  type: string;
 }
 const Input: React.FC<InputProps> = ({
   icon,
@@ -36,7 +36,7 @@ const Input: React.FC<InputProps> = ({
         />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Input
+export default Input;

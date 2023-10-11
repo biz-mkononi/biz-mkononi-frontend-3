@@ -1,45 +1,45 @@
-import React, { useState, useEffect } from 'react'
-import image2 from '../../Assets/placeholder.jpg'
-import '../Businesses/AddBusiness.css'
-import { useNavigate, useParams } from 'react-router-dom'
-import AlertDialog from '../Dialog/Dialog'
-import CircularProgress from '@mui/material/CircularProgress'
-import { deleteCategory, getSingleCategory } from '../../Data/Categories/Data'
+import React, {useState, useEffect} from 'react';
+import image2 from '../../Assets/placeholder.jpg';
+import '../Businesses/AddBusiness.css';
+import {useNavigate, useParams} from 'react-router-dom';
+import AlertDialog from '../Dialog/Dialog';
+import CircularProgress from '@mui/material/CircularProgress';
+import {deleteCategory, getSingleCategory} from '../../Data/Categories/Data';
 
 interface data {
-  name: ''
-  description: ''
-  date: ''
+  name: '';
+  description: '';
+  date: '';
 }
-const CategoryDetails = ({ id }: any) => {
+const CategoryDetails = ({id}: any) => {
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
     hour: '2-digit',
     minute: '2-digit',
-  }
-  const [open, setOpen] = useState(false)
+  };
+  const [open, setOpen] = useState(false);
 
-  const navigate = useNavigate()
-  const [data, setData] = useState<data | any>({})
-  const [isLoading, setIsloading] = useState(false)
-  const [formData, setFormData] = useState(false)
+  const navigate = useNavigate();
+  const [data, setData] = useState<data | any>({});
+  const [isLoading, setIsloading] = useState(false);
+  const [formData, setFormData] = useState(false);
 
-  const params = useParams()
+  const params = useParams();
   useEffect(() => {
-    getSingleCategory(setData, params.id, setIsloading, setFormData, id)
-  }, [location])
+    getSingleCategory(setData, params.id, setIsloading, setFormData, id);
+  }, [location]);
   const onDelete = () => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
   const handleClose = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
   const handleDelete = () => {
-    deleteCategory(navigate, params.id, setIsloading, id)
-    setOpen(false)
-  }
+    deleteCategory(navigate, params.id, setIsloading, id);
+    setOpen(false);
+  };
   return (
     <>
       {isLoading ? (
@@ -66,11 +66,10 @@ const CategoryDetails = ({ id }: any) => {
           </div>
           <div className="row padding">
             <div className="col-lg-6">
-              <div className="details-button" style={{ display: 'flex' }}>
+              <div className="details-button" style={{display: 'flex'}}>
                 <button
                   className="btn btn-secondary btn-md"
-                  onClick={() => navigate(-1)}
-                >
+                  onClick={() => navigate(-1)}>
                   {' '}
                   Back
                 </button>
@@ -78,8 +77,7 @@ const CategoryDetails = ({ id }: any) => {
                   className="btn btn-warning btn-md"
                   onClick={() =>
                     navigate(`/categories/${params.id}/update-details`)
-                  }
-                >
+                  }>
                   {' '}
                   Update
                 </button>
@@ -117,7 +115,7 @@ const CategoryDetails = ({ id }: any) => {
                       <td>
                         {new Date(data.createdAt).toLocaleDateString(
                           undefined,
-                          options,
+                          options
                         )}
                       </td>
                     </tr>
@@ -129,7 +127,7 @@ const CategoryDetails = ({ id }: any) => {
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default CategoryDetails
+export default CategoryDetails;

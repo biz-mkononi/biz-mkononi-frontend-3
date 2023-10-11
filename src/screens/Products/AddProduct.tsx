@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react'
-import image from '../../Assets/placeholder.jpg'
-import { Card } from '@mui/material'
-import { addProduct } from '../../Data/Products/Data'
-import { useNavigate } from 'react-router-dom'
-import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import ScaleIcon from '@mui/icons-material/Scale'
-import StyleIcon from '@mui/icons-material/Style'
-import { getCategory } from '../../Data/Categories/Data'
-import CategoryIcon from '@mui/icons-material/Category'
+import React, {useState, useEffect} from 'react';
+import image from '../../Assets/placeholder.jpg';
+import {Card} from '@mui/material';
+import {addProduct} from '../../Data/Products/Data';
+import {useNavigate} from 'react-router-dom';
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ScaleIcon from '@mui/icons-material/Scale';
+import StyleIcon from '@mui/icons-material/Style';
+import {getCategory} from '../../Data/Categories/Data';
+import CategoryIcon from '@mui/icons-material/Category';
 
-import '../Businesses/AddBusiness.css'
-import FormsLayout from '../../Layout/FormsLayout'
-import Image from '../../components/FormFields/Image'
+import '../Businesses/AddBusiness.css';
+import FormsLayout from '../../Layout/FormsLayout';
+import Image from '../../components/FormFields/Image';
 
-const AddProduct = ({ id }: any) => {
+const AddProduct = ({id}: any) => {
   const initialState = {
     name: '',
     categoryId: '',
@@ -26,44 +26,44 @@ const AddProduct = ({ id }: any) => {
     description: '',
     tags: '',
     image: {},
-  }
-  const navigate = useNavigate()
+  };
+  const navigate = useNavigate();
 
-  const [formData, setFormData] = useState(initialState)
-  const [isLoading, setIsLoading] = useState(false)
-  const [categories, setCategories] = useState<any[]>([])
-  const [displayImage, setDisplayImage] = useState('')
+  const [formData, setFormData] = useState(initialState);
+  const [isLoading, setIsLoading] = useState(false);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [displayImage, setDisplayImage] = useState('');
   useEffect(() => {
-    getCategory(setCategories, setIsLoading, id)
-  }, [])
+    getCategory(setCategories, setIsLoading, id);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({...formData, [e.target.name]: e.target.value});
+  };
   const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({...formData, [e.target.name]: e.target.value});
+  };
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFormData({ ...formData, ['categoryId']: e.target.value })
-  }
+    setFormData({...formData, ['categoryId']: e.target.value});
+  };
 
   const handleDescriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({...formData, [e.target.name]: e.target.value});
+  };
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setFormData({ ...formData, [e.target.name]: e.target.files[0] })
-      setDisplayImage(URL.createObjectURL(e.target.files[0]))
+      setFormData({...formData, [e.target.name]: e.target.files[0]});
+      setDisplayImage(URL.createObjectURL(e.target.files[0]));
     }
-  }
+  };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    addProduct(formData, navigate, setIsLoading, id)
-    console.log(formData)
-  }
+    e.preventDefault();
+    addProduct(formData, navigate, setIsLoading, id);
+    console.log(formData);
+  };
 
   return (
     <FormsLayout title="Product">
@@ -102,15 +102,14 @@ const AddProduct = ({ id }: any) => {
                   onChange={handleCategoryChange}
                   name="category"
                   aria-label="Default select example"
-                  id="basic-addon1"
-                >
+                  id="basic-addon1">
                   <option selected>Select category</option>
                   {categories.map((category) => {
                     return (
                       <option value={category.id} key={category.id}>
                         {category.name}
                       </option>
-                    )
+                    );
                   })}
                 </select>
               </div>
@@ -128,8 +127,7 @@ const AddProduct = ({ id }: any) => {
                   onChange={handleTypeChange}
                   name="productType"
                   aria-label="Default select example"
-                  id="basic-addon1"
-                >
+                  id="basic-addon1">
                   <option selected>select a product type</option>
                   <option value="PRODUCT">Product</option>
                   <option value="SERVICE">Service</option>
@@ -247,27 +245,30 @@ const AddProduct = ({ id }: any) => {
                   className="form-control"
                   onChange={handleDescriptionChange}
                   name="description"
-                  aria-label="With textarea"
-                ></textarea>
+                  aria-label="With textarea"></textarea>
               </div>
             </div>
             <div className="col-lg-4">
-              <Image handleFileChange={handleFileChange} displayImage={displayImage} label='Product'/>Product
+              <Image
+                handleFileChange={handleFileChange}
+                displayImage={displayImage}
+                label="Product"
+              />
+              Product
             </div>
           </div>
 
           <div className="text-center mt-3">
             <button
               className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-              disabled={isLoading ? true : false}
-            >
+              disabled={isLoading ? true : false}>
               {isLoading ? 'Adding' : 'Add Product'}
             </button>
           </div>
         </form>
       </Card>
     </FormsLayout>
-  )
-}
+  );
+};
 
-export default AddProduct
+export default AddProduct;

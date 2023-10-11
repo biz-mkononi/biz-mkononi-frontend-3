@@ -1,22 +1,21 @@
-import { useState, useEffect, useContext } from 'react'
-import moment from 'moment'
-import { Chart as ChartJS, registerables } from 'chart.js'
-import './Overview.css'
+import {useContext} from 'react';
+import moment from 'moment';
+import {Chart as ChartJS, registerables} from 'chart.js';
+import './Overview.css';
 import {
-  getSalesTrendByMonth,
   getTotalSales,
   getSalesInLastMonthTrend,
-} from '../../Data/Analytics/SalesAnalytics'
-import { getTotalProfits } from '../../Data/Analytics/ProfitsAnalytics'
-import { getTotalSupplies } from '../../Data/Analytics/SuppliesAnalytics'
+} from '../../Data/Analytics/SalesAnalytics';
+import {getTotalProfits} from '../../Data/Analytics/ProfitsAnalytics';
+import {getTotalSupplies} from '../../Data/Analytics/SuppliesAnalytics';
 import {
   getChurnCustomerRate,
   getMostActiveCustomers,
   getNewCustomers,
   getRepeatCustomerRate,
   getTotalCustomers,
-} from '../../Data/Analytics/CustomerAnalytics'
-import Card from '@mui/material/Card'
+} from '../../Data/Analytics/CustomerAnalytics';
+import Card from '@mui/material/Card';
 import {
   BarChart,
   Bar,
@@ -27,81 +26,99 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from 'recharts'
-import CircularProgress from '@mui/material/CircularProgress'
-import { DataContext } from '../../context/ContextProvider'
-import NotFound from '../NotFoundPage/NotFound'
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
-import { getSales } from '../../Data/Sales/Data'
-import DateComponent from '../../components/DateComponent/DateComponent'
+} from 'recharts';
+import CircularProgress from '@mui/material/CircularProgress';
+import {DataContext} from '../../context/ContextProvider';
+import NotFound from '../NotFoundPage/NotFound';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import {getSales} from '../../Data/Sales/Data';
+import DateComponent from '../../components/DateComponent/DateComponent';
+import {useQuery} from '@tanstack/react-query';
 
-ChartJS.register(...registerables)
+ChartJS.register(...registerables);
 const Overview = () => {
-  const [isLoading, setIsLoading] = useState(false)
-  const [totalSales, setTotalSales] = useState<any>({})
-  const [totalProfits, setTotalProfits] = useState<any>()
-  const [totalCustomers, setTotalCustomers] = useState<any>({})
-  const [totalSupplies, setTotalSupplies] = useState<any>()
-  const [repeatPurchaseRate, setRepeatPurchaseRate] = useState<any>()
-  const [churnRate, setChurnRate] = useState<any[]>([])
-  const [salesTrend, setSalesTrend] = useState<any[]>([])
-  const [monthSalesTrend, setMonthSalesTrend] = useState<any[]>([])
+  const {businessId, endDate, startDate} = useContext(DataContext);
+  const from = new Date(startDate);
+  const to = new Date(endDate);
+  const groupByMonth = {
+    from: from.toISOString(),
+    to: to.toISOString(),
+    group: 'month',
+  };
+  const groupByDayData = {
+    from: from.toISOString(),
+    to: to.toISOString(),
+    group: 'day',
+  };
+  const data = {
+    from: from.toISOString(),
+    to: to.toISOString(),
+  };
+  const mostActiveCustomers = {
+    from: from.toISOString(),
+    to: to.toISOString(),
+    limit: 10,
+  };
+  const {data: newCustomers, isLoading: customersLoading} = useQuery({
+    queryKey: ['newcustomers', data, businessId],
+    queryFn: () => getNewCustomers(businessId, data),
+  });
+  const {data: repeatPurchaseRate, isLoading: purchaseRateLoading} = useQuery({
+    queryKey: ['repeatpurchaserate', data, businessId],
+    queryFn: () => getRepeatCustomerRate(businessId, data),
+  });
+  const {data: churnRate, isLoading: churnRateLoading} = useQuery<any, Error>({
+    queryKey: ['churnrate', data, businessId],
+    queryFn: () => getChurnCustomerRate(businessId, data),
+  });
+  const {data: totalCustomers, isLoading: totalCustomersLoading} = useQuery<
+    any,
+    Error
+  >({
+    queryKey: ['totalcustomers', businessId],
+    queryFn: () => getTotalCustomers(businessId),
+  });
+  const {data: mostActive, isLoading: mostActiveLoading} = useQuery<any, Error>(
+    {
+      queryKey: ['mostactive', mostActiveCustomers, businessId],
+      queryFn: () => getMostActiveCustomers(businessId, mostActiveCustomers),
+    }
+  );
+  const {data: totalSales, isLoading: totalSalesLoading} = useQuery<any, Error>(
+    {
+      queryKey: ['totalsales', businessId, data],
+      queryFn: () => getTotalSales(businessId, data),
+    }
+  );
+  const {data: salesTrend, isLoading: salesTrendLoading} = useQuery<any, Error>(
+    {
+      queryKey: ['salestrend', businessId, groupByDayData],
+      queryFn: () => getSalesInLastMonthTrend(businessId, groupByDayData),
+    }
+  );
+  const {data: totalSupplies, isLoading: totalSuppliesLoading} = useQuery<
+    any,
+    Error
+  >({
+    queryKey: ['totalsupplies', businessId],
+    queryFn: () => getTotalSupplies(businessId, data),
+  });
+  const {data: sales, isLoading: salesLoading} = useQuery<any, Error>({
+    queryKey: ['sales', businessId],
+    queryFn: () => getSales(businessId),
+  });
+  const {data: totalProfits, isLoading: totalProfitsLoading} = useQuery<
+    any,
+    Error
+  >({
+    queryKey: ['totalprofits', businessId, data],
+    queryFn: () => getTotalProfits(businessId, data),
+  });
 
-  const [mostActive, setMostActive] = useState<any[]>([])
-  const [newCustomers, setNewCustomers] = useState<any>({})
-  const [sales, setSales] = useState<any[]>([])
-
-  const { open, businessId, endDate, startDate } = useContext(DataContext)
-  console.log(businessId)
-
-  useEffect(() => {
-    const from = new Date(startDate)
-    const to = new Date(endDate)
-    const groupByMonth = {
-      from: from.toISOString(),
-      to: to.toISOString(),
-      group: 'month',
-    }
-    const groupByDayData = {
-      from: from.toISOString(),
-      to: to.toISOString(),
-      group: 'day',
-    }
-    const data = {
-      from: from.toISOString(),
-      to: to.toISOString(),
-    }
-    const mostActiveCustomers = {
-      from: from.toISOString(),
-      to: to.toISOString(),
-      limit: 10,
-    }
-    getSalesTrendByMonth(setSalesTrend, setIsLoading, businessId, groupByMonth)
-    getSalesInLastMonthTrend(
-      setMonthSalesTrend,
-      setIsLoading,
-      businessId,
-      groupByDayData,
-    )
-    getTotalSales(setTotalSales, setIsLoading, businessId, data)
-    getTotalProfits(setTotalProfits, setIsLoading, businessId, data)
-    getTotalCustomers(setTotalCustomers, setIsLoading, businessId)
-    getTotalSupplies(setTotalSupplies, setIsLoading, businessId, data)
-    getRepeatCustomerRate(setRepeatPurchaseRate, setIsLoading, businessId, data)
-    getChurnCustomerRate(setChurnRate, setIsLoading, businessId, data)
-    getMostActiveCustomers(
-      setMostActive,
-      setIsLoading,
-      businessId,
-      mostActiveCustomers,
-    )
-    getNewCustomers(setNewCustomers, setIsLoading, businessId, data)
-    getSales(setSales, setIsLoading, businessId)
-  }, [startDate, endDate])
   const churnData = [
     {
       name: 'new Customers',
-      total: newCustomers.total,
+      total: newCustomers,
     },
     {
       name: 'repeat purchase rate %',
@@ -111,7 +128,7 @@ const Overview = () => {
       name: 'churn rate %',
       total: churnRate,
     },
-  ]
+  ];
   const revenueData = [
     {
       name: 'Total Supplies',
@@ -119,18 +136,26 @@ const Overview = () => {
     },
     {
       name: 'Total Sales',
-      total: totalSales.total,
+      total: totalSales,
     },
     {
       name: 'Total Profits',
       total: totalProfits,
     },
-  ]
-  let date = new Date()
-  const month = date.getMonth()
+  ];
+
   return (
     <div>
-      {isLoading ? (
+      {customersLoading ||
+      purchaseRateLoading ||
+      churnRateLoading ||
+      totalCustomersLoading ||
+      mostActiveLoading ||
+      totalSalesLoading ||
+      salesTrendLoading ||
+      totalSuppliesLoading ||
+      salesLoading ||
+      totalProfitsLoading ? (
         <div className="text-center">
           <CircularProgress color="success" />
         </div>
@@ -150,7 +175,7 @@ const Overview = () => {
                   <div className="col-lg-4 mt-3">
                     <div className="card text-center">
                       <h5 className="mb-2 top-cards">
-                        <span className="money">Ksh</span> {totalSales.total}
+                        <span className="money">Ksh</span> {totalSales}
                       </h5>
                       <h3>Total Sales</h3>
                     </div>
@@ -165,7 +190,7 @@ const Overview = () => {
                   </div>
                   <div className="col-lg-4 mt-3">
                     <div className="card text-center">
-                      <h5 className="mb-2 top-cards">{totalCustomers.total}</h5>
+                      <h5 className="mb-2 top-cards">{totalCustomers}</h5>
                       <h3>Total Customers</h3>
                     </div>
                   </div>
@@ -204,14 +229,13 @@ const Overview = () => {
                       </h6>
                       <ResponsiveContainer width="95%" height={400}>
                         <BarChart
-                          data={monthSalesTrend}
+                          data={salesTrend}
                           margin={{
                             top: 10,
                             right: 30,
                             left: 5,
                             bottom: 5,
-                          }}
-                        >
+                          }}>
                           <CartesianGrid strokeDasharray="1 6" />
                           <XAxis dataKey={`group`} />
                           <YAxis />
@@ -240,8 +264,7 @@ const Overview = () => {
                             right: 20,
                             bottom: 20,
                             left: 20,
-                          }}
-                        >
+                          }}>
                           <CartesianGrid stroke="#f5f5f5" />
                           <XAxis type="number" />
                           <YAxis dataKey="name" type="category" scale="band" />
@@ -269,8 +292,7 @@ const Overview = () => {
                             right: 30,
                             left: 20,
                             bottom: 5,
-                          }}
-                        >
+                          }}>
                           <CartesianGrid strokeDasharray="3 3" />
                           <XAxis dataKey="name" />
                           <YAxis />
@@ -298,8 +320,7 @@ const Overview = () => {
                             right: 30,
                             left: 20,
                             bottom: 5,
-                          }}
-                        >
+                          }}>
                           <CartesianGrid strokeDasharray="3 3" />
                           <XAxis dataKey="name" />
                           <YAxis />
@@ -317,7 +338,7 @@ const Overview = () => {
         </>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Overview
+export default Overview;

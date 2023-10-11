@@ -1,44 +1,49 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import '../Businesses/AddBusiness.css'
-import { getCustomers } from '../../Data/Customers/Data'
-import { useNavigate } from 'react-router-dom'
-import CircularProgress from '@mui/material/CircularProgress'
-import SmsDialog from './SmsDialog'
-import Table from '../../components/Table/Table'
+import React, {useMemo, useState} from 'react';
+import '../Businesses/AddBusiness.css';
+import {getCustomers} from '../../Data/Customers/Data';
+import {useNavigate} from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
+import SmsDialog from './SmsDialog';
+import Table from '../../components/Table/Table';
+import {useQuery} from '@tanstack/react-query';
 
 type Props = {
-  id: any
-}
-const CustomersList = ({ id }: Props) => {
-  const navigate = useNavigate()
-  const [isLoading, setIsLoading] = useState()
-  const [data, setData] = useState<any[]>([])
-  const [open, setOpen] = useState(false)
-const memoizedCustomers = useMemo(() => {
-    return data;
-  },[data])
-  useEffect(() => {
-    getCustomers(setData, setIsLoading, id)
-  }, [])
-
+  id: any;
+};
+type Customers = {
+  name: string;
+  gender: string;
+  phone: string;
+  email: string;
+};
+const CustomersList = ({id}: Props) => {
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const {data: customers, isLoading} = useQuery<Customers[] | any, Error>({
+    queryKey: ['customers', id],
+    queryFn: () => getCustomers(id),
+  });
+  const memoizedCustomers = useMemo(() => {
+    return customers;
+  }, [customers]);
   const onView = (id: string | undefined) => {
-    navigate(`/customers/${id}/details`)
-  }
+    navigate(`/customers/${id}/details`);
+  };
   const onEdit = (id: string | undefined) => {
-    navigate(`/customers/${id}/update-details`)
-  }
+    navigate(`/customers/${id}/update-details`);
+  };
   const handleClose = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
   const handleOpen = () => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
   const columns = [
-    { header: 'Name', dataKey: 'name' },
-    { header: 'Gender', dataKey: 'gender' },
-    { header: 'Phone', dataKey: 'phone' },
-    { header: 'Email', dataKey: 'email' },
-  ]
+    {header: 'Name', dataKey: 'name'},
+    {header: 'Gender', dataKey: 'gender'},
+    {header: 'Phone', dataKey: 'phone'},
+    {header: 'Email', dataKey: 'email'},
+  ];
   return (
     <>
       {isLoading ? (
@@ -59,19 +64,16 @@ const memoizedCustomers = useMemo(() => {
             <div className="col-lg-6 col-sm-12 text-right mb-3 mt-3">
               <div
                 className="details-button float-right"
-                style={{ display: 'flex' }}
-              >
+                style={{display: 'flex'}}>
                 <button
                   className="btn btn-secondary btn-md"
-                  onClick={handleOpen}
-                >
+                  onClick={handleOpen}>
                   {' '}
                   Sms
                 </button>
                 <button
                   className="btn btn-info btn-md"
-                  onClick={() => navigate(`/customers/new`)}
-                >
+                  onClick={() => navigate(`/customers/new`)}>
                   {' '}
                   Add New
                 </button>
@@ -87,7 +89,7 @@ const memoizedCustomers = useMemo(() => {
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default CustomersList
+export default CustomersList;

@@ -1,13 +1,13 @@
-import React from 'react'
+import React from 'react';
 
 interface formProps {
-  labelName: string
-  icon: any
-  onChange: any
-  name: string
+  labelName: string;
+  icon: any;
+  onChange: any;
+  name: string;
 }
 
-const FormField = ({ labelName, icon, onChange, name }: formProps) => {
+const FormField = ({labelName, icon, onChange, name}: formProps) => {
   return (
     <div>
       <label htmlFor="basic-url" className="form-label ">
@@ -38,7 +38,7 @@ const FormField = ({ labelName, icon, onChange, name }: formProps) => {
                 </select>
             </div> */}
     </div>
-  )
-}
+  );
+};
 
-export default FormField
+export default FormField;

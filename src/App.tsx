@@ -1,19 +1,16 @@
-import RoutesFile from './routes/Routes'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import { Route, Routes } from 'react-router-dom'
-import React from 'react'
-import 'animate.css'
-import GetForgotPasswordCode from './screens/Login/GetForgotPasswordCode'
-import ResetPassword from './screens/Login/ResetPassword'
-import VerifyPhone from './screens/Login/VerifyPhone'
-import ResendCode from './screens/Login/ResendCode'
-import LoginPage from './screens/Login/LoginPage'
-import SignUpPage from './screens/Login/SignUpPage'
-import Table from './components/Table/Table'
+import RoutesFile from './routes/Routes';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Route, Routes} from 'react-router-dom';
+import React from 'react';
+import GetForgotPasswordCode from './screens/Login/GetForgotPasswordCode';
+import ResetPassword from './screens/Login/ResetPassword';
+import VerifyPhone from './screens/Login/VerifyPhone';
+import ResendCode from './screens/Login/ResendCode';
+import LoginPage from './screens/Login/LoginPage';
+import SignUpPage from './screens/Login/SignUpPage';
 const App: React.FC = () => {
   return (
     <React.Fragment>
-      {/* <Table/> */}
       <Routes>
         <Route path="/auth/login" element={<LoginPage />} />
         <Route path="/auth/sign-up" element={<SignUpPage />} />
@@ -27,7 +24,7 @@ const App: React.FC = () => {
       </Routes>
       <RoutesFile />
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default App
+export default App;

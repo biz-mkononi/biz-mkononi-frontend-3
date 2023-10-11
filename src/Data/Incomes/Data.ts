@@ -1,27 +1,24 @@
-import { reqInstance } from '../Auth/authHelper'
-import { newUrl } from '../Sales/Data'
+import {reqInstance} from '../Auth/authHelper';
+import {newUrl} from '../Sales/Data';
 const addIncome = (post: any, setIsLoading: any, navigate: any, id: any) => {
-  setIsLoading(true)
+  setIsLoading(true);
   reqInstance
     .post(`${newUrl}/${id}/incomes`, post)
     .then((data) => console.log(data))
-    .then(() => navigate('/income/list'))
-}
-const getIncomes = (setData: any, setIsLoading: any, id: any) => {
-  setIsLoading(true)
-  reqInstance
-    .get(`${newUrl}/${id}/incomes`)
-    .then((data) => setData(data.data.rows))
-    .then(() => setIsLoading(false))
-}
+    .then(() => navigate('/income/list'));
+};
+const getIncomes = async (id: any) => {
+  const response = reqInstance.get(`${newUrl}/${id}/incomes`);
+  return (await response).data.rows;
+};
 const getSingleIncome = (
   setData: any,
   id: any,
   setIsLoading: any,
   setFormData: any,
-  businessid: any,
+  businessid: any
 ) => {
-  setIsLoading(true)
+  setIsLoading(true);
   reqInstance
     .get(`${newUrl}/${businessid}/incomes/${id}`)
     .then((data) => {
@@ -30,35 +27,35 @@ const getSingleIncome = (
         amount: data.data.amount,
         description: data.data.description,
         txDate: data.data.txDate,
-      })
-      setData(data.data)
+      });
+      setData(data.data);
     })
-    .then(() => setIsLoading(false))
-}
+    .then(() => setIsLoading(false));
+};
 const updateSingleIncome = async (
   post: any,
   navigate: any,
   id: any,
   setIsLoading: any,
-  businessid: any,
+  businessid: any
 ) => {
-  setIsLoading(true)
+  setIsLoading(true);
   await reqInstance
     .put(`${newUrl}/${businessid}/incomes/${id}`, post)
-    .then(() => navigate('/income/list'))
-}
+    .then(() => navigate('/income/list'));
+};
 const deleteIncome = async (
   navigate: any,
   id: any,
   setIsLoading: any,
-  businessid: any,
+  businessid: any
 ) => {
-  setIsLoading(true)
+  setIsLoading(true);
   await reqInstance
     .delete(`${newUrl}/${businessid}/incomes/${id}`)
     .then(() => navigate('/income/list'))
-    .then(() => setIsLoading(false))
-}
+    .then(() => setIsLoading(false));
+};
 
 export {
   addIncome,
@@ -66,4 +63,4 @@ export {
   getSingleIncome,
   deleteIncome,
   updateSingleIncome,
-}
+};

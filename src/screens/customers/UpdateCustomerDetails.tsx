@@ -1,71 +1,71 @@
-import React, { useEffect, useState } from 'react'
-import BusinessIcon from '@mui/icons-material/Business'
-import EmailIcon from '@mui/icons-material/Email'
-import PhoneIcon from '@mui/icons-material/Phone'
-import NotificationAddIcon from '@mui/icons-material/NotificationAdd'
-import { Card } from '@mui/material'
-import '../Businesses/AddBusiness.css'
-import image from '../../Assets/placeholder.jpg'
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew'
-import { useNavigate, useParams } from 'react-router-dom'
+import React, {useEffect, useState} from 'react';
+import BusinessIcon from '@mui/icons-material/Business';
+import EmailIcon from '@mui/icons-material/Email';
+import PhoneIcon from '@mui/icons-material/Phone';
+import NotificationAddIcon from '@mui/icons-material/NotificationAdd';
+import {Card} from '@mui/material';
+import '../Businesses/AddBusiness.css';
+import image from '../../Assets/placeholder.jpg';
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+import {useNavigate, useParams} from 'react-router-dom';
 import {
   getSingleCustomer,
   updateSingleCustomer,
-} from '../../Data/Customers/Data'
-import CircularProgress from '@mui/material/CircularProgress'
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import FormControl from '@mui/material/FormControl'
-import PersonIcon from '@mui/icons-material/Person'
-import Image from '../../components/FormFields/Image'
-import FormsLayout from '../../Layout/FormsLayout'
+} from '../../Data/Customers/Data';
+import CircularProgress from '@mui/material/CircularProgress';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import PersonIcon from '@mui/icons-material/Person';
+import Image from '../../components/FormFields/Image';
+import FormsLayout from '../../Layout/FormsLayout';
 
 interface data {
-  name: ''
-  email: ''
-  phone: ''
-  description: ''
-  yearOfBirth: ''
-  gender: ''
+  name: '';
+  email: '';
+  phone: '';
+  description: '';
+  yearOfBirth: '';
+  gender: '';
 }
 
-const UpdateCustomerDetails = ({ id }: any) => {
-  const [data, setData] = useState<data | any>({})
-  const [isLoading, setIsloading] = useState(false)
-  const [isUpdating, setIsUpdating] = useState(false)
-  const [displayImage, setDisplayImage] = useState('')
-  const navigate = useNavigate()
+const UpdateCustomerDetails = ({id}: any) => {
+  const [data, setData] = useState<data | any>({});
+  const [isLoading, setIsloading] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [displayImage, setDisplayImage] = useState('');
+  const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({})
+  const [formData, setFormData] = useState({});
 
-  const params = useParams()
+  const params = useParams();
 
   useEffect(() => {
-    getSingleCustomer(setData, params.id, setIsloading, setFormData, id)
-  }, [location])
+    getSingleCustomer(setData, params.id, setIsloading, setFormData, id);
+  }, [location]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({...formData, [e.target.name]: e.target.value});
+  };
 
   const handleDescriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({...formData, [e.target.name]: e.target.value});
+  };
   const handlFileeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setFormData({ ...formData, [e.target.name]: e.target.files[0] })
-      setDisplayImage(URL.createObjectURL(e.target.files[0]))
+      setFormData({...formData, [e.target.name]: e.target.files[0]});
+      setDisplayImage(URL.createObjectURL(e.target.files[0]));
     }
-  }
+  };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    updateSingleCustomer(formData, params.id, navigate, setIsUpdating, id)
-  }
-  console.log(formData)
+    e.preventDefault();
+    updateSingleCustomer(formData, params.id, navigate, setIsUpdating, id);
+  };
+  console.log(formData);
 
   return (
     <>
@@ -127,8 +127,7 @@ const UpdateCustomerDetails = ({ id }: any) => {
                       aria-labelledby="demo-radio-buttons-group-label"
                       defaultValue={data.gender}
                       name="gender"
-                      onChange={handleChange}
-                    >
+                      onChange={handleChange}>
                       <FormControlLabel
                         value="FEMALE"
                         control={<Radio />}
@@ -196,8 +195,7 @@ const UpdateCustomerDetails = ({ id }: any) => {
                       className="form-control"
                       onChange={handleDescriptionChange}
                       name="description"
-                      aria-label="With textarea"
-                    ></textarea>
+                      aria-label="With textarea"></textarea>
                   </div>
                 </div>
                 <div className="col-lg-4">
@@ -213,8 +211,7 @@ const UpdateCustomerDetails = ({ id }: any) => {
               <div className="text-center mt-3">
                 <button
                   className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-                  disabled={isUpdating ? true : false}
-                >
+                  disabled={isUpdating ? true : false}>
                   {isUpdating ? 'updating' : 'Update Customer'}
                 </button>
               </div>
@@ -223,7 +220,7 @@ const UpdateCustomerDetails = ({ id }: any) => {
         </FormsLayout>
       )}
     </>
-  )
-}
+  );
+};
 
-export default UpdateCustomerDetails
+export default UpdateCustomerDetails;

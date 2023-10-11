@@ -1,57 +1,57 @@
-import React, { useEffect, useState } from 'react'
-import BusinessIcon from '@mui/icons-material/Business'
-import EmailIcon from '@mui/icons-material/Email'
-import PhoneIcon from '@mui/icons-material/Phone'
-import { Card } from '@mui/material'
-import '../Businesses/AddBusiness.css'
-import image from '../../Assets/placeholder.jpg'
-import { useNavigate, useParams } from 'react-router-dom'
-import CircularProgress from '@mui/material/CircularProgress'
+import React, {useEffect, useState} from 'react';
+import BusinessIcon from '@mui/icons-material/Business';
+import EmailIcon from '@mui/icons-material/Email';
+import PhoneIcon from '@mui/icons-material/Phone';
+import {Card} from '@mui/material';
+import '../Businesses/AddBusiness.css';
+import image from '../../Assets/placeholder.jpg';
+import {useNavigate, useParams} from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import {
   getSingleEmployee,
   updateSingleEmployee,
-} from '../../Data/Employees/Data'
-import StarsIcon from '@mui/icons-material/Stars'
-import Image from '../../components/FormFields/Image'
-import FormsLayout from '../../Layout/FormsLayout'
+} from '../../Data/Employees/Data';
+import StarsIcon from '@mui/icons-material/Stars';
+import Image from '../../components/FormFields/Image';
+import FormsLayout from '../../Layout/FormsLayout';
 
 interface data {
-  name: ''
-  email: ''
-  phone: ''
-  description: ''
+  name: '';
+  email: '';
+  phone: '';
+  description: '';
 }
 
-const EmployeeUpdateDetails = ({ id }: any) => {
-  const [data, setData] = useState<data | any>({})
-  const [isLoading, setIsloading] = useState(false)
-  const [isUpdating, setIsUpdating] = useState(false)
-  const [displayImage, setDisplayImage] = useState('')
-  const navigate = useNavigate()
+const EmployeeUpdateDetails = ({id}: any) => {
+  const [data, setData] = useState<data | any>({});
+  const [isLoading, setIsloading] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [displayImage, setDisplayImage] = useState('');
+  const navigate = useNavigate();
 
-  const params = useParams()
+  const params = useParams();
 
   useEffect(() => {
-    getSingleEmployee(setData, params.id, setIsloading, setFormData, id)
-  }, [])
-  const [formData, setFormData] = useState({})
+    getSingleEmployee(setData, params.id, setIsloading, setFormData, id);
+  }, []);
+  const [formData, setFormData] = useState({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({...formData, [e.target.name]: e.target.value});
+  };
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setFormData({ ...formData, [e.target.name]: e.target.files[0] })
-      setDisplayImage(URL.createObjectURL(e.target.files[0]))
+      setFormData({...formData, [e.target.name]: e.target.files[0]});
+      setDisplayImage(URL.createObjectURL(e.target.files[0]));
     }
-  }
+  };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    updateSingleEmployee(formData, params.id, navigate, setIsUpdating, id)
-    console.log(formData)
-  }
+    e.preventDefault();
+    updateSingleEmployee(formData, params.id, navigate, setIsUpdating, id);
+    console.log(formData);
+  };
   return (
     <>
       {isLoading ? (
@@ -176,8 +176,7 @@ const EmployeeUpdateDetails = ({ id }: any) => {
               <div className="text-center mt-3">
                 <button
                   className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-                  disabled={isUpdating ? true : false}
-                >
+                  disabled={isUpdating ? true : false}>
                   {isUpdating ? 'updating' : 'Update Employee'}
                 </button>
               </div>
@@ -186,7 +185,7 @@ const EmployeeUpdateDetails = ({ id }: any) => {
         </FormsLayout>
       )}
     </>
-  )
-}
+  );
+};
 
-export default EmployeeUpdateDetails
+export default EmployeeUpdateDetails;

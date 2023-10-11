@@ -1,33 +1,36 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import '../Businesses/AddBusiness.css'
-import { Pagination } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
-import { getIncomes } from '../../Data/Incomes/Data'
-import CircularProgress from '@mui/material/CircularProgress'
-import Table from '../../components/Table/Table'
-
-const Income = ({ id }: any) => {
-  const navigate = useNavigate()
-  const [data, setData] = useState<any[]>([])
-  const [isLoading, setIsLoading] = useState(false)
+import React, {useMemo} from 'react';
+import '../Businesses/AddBusiness.css';
+import {useNavigate} from 'react-router-dom';
+import {getIncomes} from '../../Data/Incomes/Data';
+import CircularProgress from '@mui/material/CircularProgress';
+import Table from '../../components/Table/Table';
+import {useQuery} from '@tanstack/react-query';
+type Incomes = {
+  title: string;
+  txDate: Date;
+  amount: string;
+};
+const Income = ({id}: any) => {
+  const navigate = useNavigate();
+  const {data: incomes, isLoading} = useQuery<Incomes[] | any, Error>({
+    queryKey: ['incomes', id],
+    queryFn: () => getIncomes(id),
+  });
   const memoizedIncomes = useMemo(() => {
-    return data;
-  },[data])
-  useEffect(() => {
-    getIncomes(setData, setIsLoading, id)
-  }, [])
+    return incomes;
+  }, [incomes]);
 
   const onView = (id: string | undefined) => {
-    navigate(`/income/${id}/details`)
-  }
+    navigate(`/income/${id}/details`);
+  };
   const onEdit = (id: string | undefined) => {
-    navigate(`/income/${id}/update-details`)
-  }
+    navigate(`/income/${id}/update-details`);
+  };
   const columns = [
-    { header: 'Title', dataKey: 'title' },
-    { header: 'Transaction Date', dataKey: 'txDate' },
-    { header: 'Amount', dataKey: 'amount' },
-  ]
+    {header: 'Title', dataKey: 'title'},
+    {header: 'Transaction Date', dataKey: 'txDate'},
+    {header: 'Amount', dataKey: 'amount'},
+  ];
   return (
     <>
       {isLoading ? (
@@ -35,10 +38,15 @@ const Income = ({ id }: any) => {
           <CircularProgress color="success" />
         </div>
       ) : (
-        <Table columns={columns} data={memoizedIncomes} onEdit={onEdit} onView={onView} />
+        <Table
+          columns={columns}
+          data={memoizedIncomes}
+          onEdit={onEdit}
+          onView={onView}
+        />
       )}
     </>
-  )
-}
+  );
+};
 
-export default Income
+export default Income;

@@ -1,105 +1,122 @@
-import React, { useEffect, useState, useContext } from 'react'
-import moment from 'moment'
+import React, {useContext} from 'react';
+import moment from 'moment';
 
-import Card from '@mui/material/Card'
+import Card from '@mui/material/Card';
 import {
   BarChart,
   Bar,
-  LabelList,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   Legend,
-  FunnelChart,
-  Funnel,
-  Pie,
   ResponsiveContainer,
   LineChart,
   Line,
-} from 'recharts'
-import { Doughnut } from 'react-chartjs-2'
-import { Chart as ChartJS, registerables } from 'chart.js'
-import './Overview.css'
+} from 'recharts';
+import {Chart as ChartJS, registerables} from 'chart.js';
+import './Overview.css';
 import {
   getSalesInLastMonthTrend,
   getTotalDatePartSalesByHour,
   getSalesTrendByMonth,
   getTotalSales,
-} from '../../Data/Analytics/SalesAnalytics'
-import { getTotalSupplies } from '../../Data/Analytics/SuppliesAnalytics'
-import { getTotalProfits } from '../../Data/Analytics/ProfitsAnalytics'
-import CircularProgress from '@mui/material/CircularProgress'
-import { DataContext } from '../../context/ContextProvider'
-import { getSales } from '../../Data/Sales/Data'
-import NotFound from '../NotFoundPage/NotFound'
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
-import DateComponent from '../../components/DateComponent/DateComponent'
+} from '../../Data/Analytics/SalesAnalytics';
+import {getTotalSupplies} from '../../Data/Analytics/SuppliesAnalytics';
+import {getTotalProfits} from '../../Data/Analytics/ProfitsAnalytics';
+import CircularProgress from '@mui/material/CircularProgress';
+import {DataContext} from '../../context/ContextProvider';
+import {getSales} from '../../Data/Sales/Data';
+import NotFound from '../NotFoundPage/NotFound';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import DateComponent from '../../components/DateComponent/DateComponent';
+import {useQuery} from '@tanstack/react-query';
 
-ChartJS.register(...registerables)
+ChartJS.register(...registerables);
 
 const SalesInsights = () => {
-  const [sales, setSales] = useState<any[]>([])
-  const [salesTrend, setSalesTrend] = useState<any[]>([])
-  const [monthSalesTrend, setMonthSalesTrend] = useState<any[]>([])
-  const [totalSales, setTotalSales] = useState<any>({})
-  const [totalProfits, setTotalProfits] = useState<any>()
-  const [totalSupplies, setTotalSupplies] = useState<any>()
-  const [hourlySales, setHourlySales] = useState<string[]>([])
-  const [isLoading, setIsLoading] = useState(false)
-  const { businessId, startDate, endDate } = useContext(DataContext)
-
-  useEffect(() => {
-    const from = new Date(startDate)
-    const to = new Date(endDate)
-    const data = {
-      from: from.toISOString(),
-      to: to.toISOString(),
+  const {businessId, startDate, endDate} = useContext(DataContext);
+  const from = new Date(startDate);
+  const to = new Date(endDate);
+  const data = {
+    from: from.toISOString(),
+    to: to.toISOString(),
+  };
+  const groupByDayData = {
+    from: from.toISOString(),
+    to: to.toISOString(),
+    group: 'day',
+  };
+  const groupByMonth = {
+    from: from.toISOString(),
+    to: to.toISOString(),
+    group: 'month',
+  };
+  const partByHour = {
+    from: from.toISOString(),
+    to: to.toISOString(),
+    part: 'hour',
+  };
+  const {data: totalSales, isLoading: totalSalesLoading} = useQuery<any, Error>(
+    {
+      queryKey: ['totalsales', businessId, data],
+      queryFn: () => getTotalSales(businessId, data),
     }
-    const groupByDayData = {
-      from: from.toISOString(),
-      to: to.toISOString(),
-      group: 'day',
+  );
+  const {data: salesTrend, isLoading: salesTrendLoading} = useQuery<any, Error>(
+    {
+      queryKey: ['salestrend', businessId, groupByDayData],
+      queryFn: () => getSalesInLastMonthTrend(businessId, groupByDayData),
     }
-    const groupByMonth = {
-      from: from.toISOString(),
-      to: to.toISOString(),
-      group: 'month',
-    }
-    const partByHour = {
-      from: from.toISOString(),
-      to: to.toISOString(),
-      part: 'hour',
-    }
-    getSalesTrendByMonth(setSalesTrend, setIsLoading, businessId, groupByMonth)
-    getSalesInLastMonthTrend(
-      setMonthSalesTrend,
-      setIsLoading,
-      businessId,
-      groupByDayData,
-    )
-    getTotalSales(setTotalSales, setIsLoading, businessId, data)
-    getTotalProfits(setTotalProfits, setIsLoading, businessId, data)
-    getTotalSupplies(setTotalSupplies, setIsLoading, businessId, data)
-    getSales(setSales, setIsLoading, businessId)
-    getTotalDatePartSalesByHour(
-      setHourlySales,
-      setIsLoading,
-      businessId,
-      partByHour,
-    )
-  }, [startDate, endDate])
+  );
+  const {data: totalSupplies, isLoading: totalSuppliesLoading} = useQuery<
+    any,
+    Error
+  >({
+    queryKey: ['totalsupplies', businessId],
+    queryFn: () => getTotalSupplies(businessId, data),
+  });
+  const {data: sales, isLoading: salesLoading} = useQuery<any, Error>({
+    queryKey: ['sales', businessId],
+    queryFn: () => getSales(businessId),
+  });
+  const {data: totalProfits, isLoading: totalProfitsLoading} = useQuery<
+    any,
+    Error
+  >({
+    queryKey: ['totalprofits', businessId, data],
+    queryFn: () => getTotalProfits(businessId, data),
+  });
+  const {data: monthSalesTrend, isLoading: monthSalesTrendLoading} = useQuery<
+    any,
+    Error
+  >({
+    queryKey: ['monthsalestrend', businessId, groupByMonth],
+    queryFn: () => getSalesTrendByMonth(businessId, groupByMonth),
+  });
+  const {data: hourlySales, isLoading: hourlySalesLoading} = useQuery<
+    any,
+    Error
+  >({
+    queryKey: ['hourlysales', businessId, partByHour],
+    queryFn: () => getTotalDatePartSalesByHour(businessId, partByHour),
+  });
   const createYDomain = (data: any) => {
-    const maxValue = Math.max(...data.map((item: any) => parseInt(item.total)))
+    const maxValue = Math.max(...data.map((item: any) => parseInt(item.total)));
 
-    const yDomain = [0, maxValue]
-    console.log(yDomain)
+    const yDomain = [0, maxValue];
 
-    return yDomain
-  }
+    return yDomain;
+  };
   return (
     <div>
-      {isLoading ? (
+      {totalSalesLoading ||
+      salesTrendLoading ||
+      totalSuppliesLoading ||
+      salesLoading ||
+      totalProfitsLoading ||
+      monthSalesTrendLoading ||
+      hourlySalesLoading ? (
         <div className="text-center">
           <CircularProgress color="success" />
         </div>
@@ -160,8 +177,7 @@ const SalesInsights = () => {
                             right: 30,
                             left: 5,
                             bottom: 5,
-                          }}
-                        >
+                          }}>
                           <CartesianGrid strokeDasharray="1 6" />
                           <XAxis dataKey={`group`} />
                           <YAxis domain={createYDomain(monthSalesTrend)} />
@@ -187,8 +203,7 @@ const SalesInsights = () => {
                             right: 30,
                             left: 20,
                             bottom: 5,
-                          }}
-                        >
+                          }}>
                           <CartesianGrid strokeDasharray="3 3" />
                           <XAxis dataKey="group" />
                           <YAxis domain={createYDomain(salesTrend)} />
@@ -217,8 +232,7 @@ const SalesInsights = () => {
                             right: 30,
                             left: 20,
                             bottom: 5,
-                          }}
-                        >
+                          }}>
                           <CartesianGrid strokeDasharray="3 3" />
                           <XAxis dataKey="part" />
                           <YAxis domain={createYDomain(hourlySales)} />
@@ -240,7 +254,7 @@ const SalesInsights = () => {
         </>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default SalesInsights
+export default SalesInsights;

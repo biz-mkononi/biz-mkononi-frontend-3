@@ -1,33 +1,41 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import '../Businesses/AddBusiness.css'
-import { getProducts } from '../../Data/Products/Data'
-import { useNavigate } from 'react-router-dom'
-import CircularProgress from '@mui/material/CircularProgress'
-import Table from '../../components/Table/Table'
+import React, {useMemo} from 'react';
+import '../Businesses/AddBusiness.css';
+import {getProducts} from '../../Data/Products/Data';
+import {useNavigate} from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
+import Table from '../../components/Table/Table';
+import {useQuery} from '@tanstack/react-query';
 
-const ProductsList = ({ id }: any) => {
-  const navigate = useNavigate()
-  const [data, setData] = useState<any[]>([])
-  const [isLoading, setIsLoading] = useState(false)
+type Category = {
+  name: string;
+};
+type Products = {
+  name: string;
+  category: Category;
+  size: string;
+  stock: string;
+};
+const ProductsList = ({id}: any) => {
+  const navigate = useNavigate();
+  const {data: products, isLoading} = useQuery<Products[] | any, Error>({
+    queryKey: ['products', id],
+    queryFn: () => getProducts(id),
+  });
   const memoizedProducts = useMemo(() => {
-    return data;
-  },[data])
-  useEffect(() => {
-    getProducts(setData, setIsLoading, id)
-  }, [])
-
+    return products;
+  }, [products]);
   const onView = (id: string | undefined) => {
-    navigate(`/products/${id}/details`)
-  }
+    navigate(`/products/${id}/details`);
+  };
   const onEdit = (id: string | undefined) => {
-    navigate(`/products/${id}/update-details`)
-  }
+    navigate(`/products/${id}/update-details`);
+  };
   const columns = [
-    { header: 'Name', dataKey: 'name' },
-    { header: 'Category', dataKey: 'category.name' },
-    { header: 'Size', dataKey: 'size' },
-    { header: 'Stock', dataKey: 'stock' },
-  ]
+    {header: 'Name', dataKey: 'name'},
+    {header: 'Category', dataKey: 'category.name'},
+    {header: 'Size', dataKey: 'size'},
+    {header: 'Stock', dataKey: 'stock'},
+  ];
   return (
     <>
       {isLoading ? (
@@ -35,10 +43,15 @@ const ProductsList = ({ id }: any) => {
           <CircularProgress color="success" />
         </div>
       ) : (
-        <Table columns={columns} data={memoizedProducts} onEdit={onEdit} onView={onView} />
+        <Table
+          columns={columns}
+          data={memoizedProducts}
+          onEdit={onEdit}
+          onView={onView}
+        />
       )}
     </>
-  )
-}
+  );
+};
 
-export default ProductsList
+export default ProductsList;

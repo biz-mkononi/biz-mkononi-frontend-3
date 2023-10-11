@@ -1,4 +1,4 @@
-const url = 'https://api-stage.mkononi.biz'
+const url = 'https://api-stage.mkononi.biz';
 // http://localhost:3000/
 const verifyPhone = (phone: any) => {
   fetch(`${url}/auth/verify`, {
@@ -10,16 +10,16 @@ const verifyPhone = (phone: any) => {
   })
     .then((res) => res.json())
     .then((json) => {
-      console.log(json)
-    })
-  console.log(phone)
-}
+      console.log(json);
+    });
+  console.log(phone);
+};
 
 const resendVerification = (
   phone: any,
   setIsLoading: any,
   setErrors: any,
-  navigate: any,
+  navigate: any
 ) => {
   fetch(`${url}/auth/verify/resend`, {
     method: 'POST',
@@ -31,22 +31,22 @@ const resendVerification = (
     .then((res) => res.json())
     .then((json) => {
       if (json.statusCode === 403) {
-        setIsLoading(false)
-        setErrors(json.message)
+        setIsLoading(false);
+        setErrors(json.message);
       } else {
-        setIsLoading(false)
-        navigate(0)
+        setIsLoading(false);
+        navigate(0);
       }
-    })
-}
+    });
+};
 const login = (
   setErrors: any,
   post: any,
   navigate: any,
   setIsSignIn: any,
-  setLoggedUser: any,
+  setLoggedUser: any
 ) => {
-  setIsSignIn(true)
+  setIsSignIn(true);
   fetch(`${url}/auth/login`, {
     method: 'POST',
     headers: {
@@ -57,20 +57,20 @@ const login = (
     .then((res) => res.json())
     .then((data) => {
       if (data.statusCode === 401) {
-        setIsSignIn(false)
-        setErrors('You are unauthorized, verify your details')
+        setIsSignIn(false);
+        setErrors('You are unauthorized, verify your details');
       } else {
-        setLoggedUser(true)
-        localStorage.setItem('user', JSON.stringify({ data }))
-        navigate('/')
+        setLoggedUser(true);
+        localStorage.setItem('user', JSON.stringify({data}));
+        navigate('/');
       }
-    })
-}
+    });
+};
 
 const registerUser = async (
   setErrors: any,
   post: any,
-  setIsRegistering: any,
+  setIsRegistering: any
 ) => {
   fetch(`${url}/auth/register`, {
     method: 'POST',
@@ -82,19 +82,19 @@ const registerUser = async (
     .then((res) => res.json())
     .then((json) => {
       if (json.statusCode === 403) {
-        setIsRegistering(false)
-        setErrors(json.message)
+        setIsRegistering(false);
+        setErrors(json.message);
       } else {
-        setIsRegistering(false)
+        setIsRegistering(false);
       }
-    })
-}
+    });
+};
 
 const forgotPassword = async (
   setErrors: any,
   post: any,
   setIsLoading: any,
-  navigate: any,
+  navigate: any
 ) => {
   fetch(`${url}/auth/forgot-password`, {
     method: 'POST',
@@ -106,20 +106,20 @@ const forgotPassword = async (
     .then((res) => res.json())
     .then((json) => {
       if (json.statusCode === 403) {
-        setIsLoading(false)
-        console.log(json.message)
-        setErrors(json.message)
+        setIsLoading(false);
+        console.log(json.message);
+        setErrors(json.message);
       } else {
-        setIsLoading(false)
-        navigate('/auth/reset-password')
+        setIsLoading(false);
+        navigate('/auth/reset-password');
       }
-    })
-}
+    });
+};
 const changePassword = async (
   setErrors: any,
   post: any,
   setIsLoading: any,
-  navigate: any,
+  navigate: any
 ) => {
   fetch(`${url}/auth/reset-password`, {
     method: 'POST',
@@ -131,16 +131,16 @@ const changePassword = async (
     .then((res) => res.json())
     .then((json) => {
       if (json.statusCode === 403) {
-        setIsLoading(false)
-        console.log(json.message)
-        setErrors('invalid code')
+        setIsLoading(false);
+        console.log(json.message);
+        setErrors('invalid code');
       } else {
-        setIsLoading(false)
-        navigate("/auth/login")
+        setIsLoading(false);
+        navigate('/auth/login');
       }
-    })
-  console.log(post)
-}
+    });
+  console.log(post);
+};
 
 export {
   url,
@@ -150,4 +150,4 @@ export {
   forgotPassword,
   changePassword,
   resendVerification,
-}
+};

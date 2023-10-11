@@ -1,23 +1,23 @@
-import React, { useState } from 'react'
-import BusinessIcon from '@mui/icons-material/Business'
-import EmailIcon from '@mui/icons-material/Email'
-import PhoneIcon from '@mui/icons-material/Phone'
-import LocationOnIcon from '@mui/icons-material/LocationOn'
-import { Card } from '@mui/material'
-import './AddBusiness.css'
-import BusinessList from './BusinessList'
-import { addBusiness } from '../../Data/Businesses/Data'
-import { useNavigate } from 'react-router-dom'
-import FormsLayout from '../../Layout/FormsLayout'
-import Image from '../../components/FormFields/Image'
-import Input from '../../components/FormFields/Input'
-import Location from '../../components/FormFields/Location'
-import Select from '../../components/FormFields/Select'
-import TextArea from '../../components/FormFields/TextArea'
+import React, {useState} from 'react';
+import BusinessIcon from '@mui/icons-material/Business';
+import EmailIcon from '@mui/icons-material/Email';
+import PhoneIcon from '@mui/icons-material/Phone';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import {Card} from '@mui/material';
+import './AddBusiness.css';
+import BusinessList from './BusinessList';
+import {addBusiness} from '../../Data/Businesses/Data';
+import {useNavigate} from 'react-router-dom';
+import FormsLayout from '../../Layout/FormsLayout';
+import Image from '../../components/FormFields/Image';
+import Input from '../../components/FormFields/Input';
+import Location from '../../components/FormFields/Location';
+import Select from '../../components/FormFields/Select';
+import TextArea from '../../components/FormFields/TextArea';
 
 const AddBusiness = () => {
-  const [displayImage, setDisplayImage] = useState('')
-  const [value, setValue] = useState(null)
+  const [displayImage, setDisplayImage] = useState('');
+  const [value, setValue] = useState(null);
   const initialState = {
     name: '',
     businessEmail: '',
@@ -29,60 +29,60 @@ const AddBusiness = () => {
     longitude: 12,
     latitude: 13,
     image: {},
-  }
-  const navigate = useNavigate()
-  const [isActive, setIsActive] = useState(false)
-  const [isActive2, setIsActive2] = useState(true)
-  const [formData, setFormData] = useState(initialState)
-  const [isLoading, setIsLoading] = useState(false)
+  };
+  const navigate = useNavigate();
+  const [isActive, setIsActive] = useState(false);
+  const [isActive2, setIsActive2] = useState(true);
+  const [formData, setFormData] = useState(initialState);
+  const [isLoading, setIsLoading] = useState(false);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({...formData, [e.target.name]: e.target.value});
+  };
   const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({...formData, [e.target.name]: e.target.value});
+  };
   const handleDescriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({...formData, [e.target.name]: e.target.value});
+  };
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setFormData({ ...formData, [e.target.name]: e.target.files[0] })
-      setDisplayImage(URL.createObjectURL(e.target.files[0]))
+      setFormData({...formData, [e.target.name]: e.target.files[0]});
+      setDisplayImage(URL.createObjectURL(e.target.files[0]));
     }
-  }
+  };
 
   const handleSelect = (place: any) => {
-    const geocoder = new window.google.maps.Geocoder()
+    const geocoder = new window.google.maps.Geocoder();
     geocoder.geocode(
-      { placeId: place.value.place_id },
+      {placeId: place.value.place_id},
       (results: any, status: any) => {
         if (status === 'OK' && results[0]) {
-          const { lat, lng } = results[0].geometry.location
+          const {lat, lng} = results[0].geometry.location;
           setFormData({
             ...formData,
             latitude: lat(),
             longitude: lng(),
             location: place.label,
-          })
+          });
         }
-      },
-    )
-  }
+      }
+    );
+  };
 
   const onClickActive = () => {
-    setIsActive(true)
-    setIsActive2(false)
-  }
+    setIsActive(true);
+    setIsActive2(false);
+  };
   const onClickActive2 = () => {
-    setIsActive(false)
-    setIsActive2(true)
-  }
+    setIsActive(false);
+    setIsActive2(true);
+  };
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    addBusiness(formData, navigate, setIsLoading)
-  }
+    e.preventDefault();
+    addBusiness(formData, navigate, setIsLoading);
+  };
 
   return (
     <FormsLayout
@@ -91,8 +91,7 @@ const AddBusiness = () => {
       onClickActive2={onClickActive2}
       onClickActive={onClickActive}
       isActive={isActive}
-      isActive2={isActive2}
-    >
+      isActive2={isActive2}>
       {isActive ? (
         <BusinessList />
       ) : (
@@ -164,8 +163,7 @@ const AddBusiness = () => {
               <div className="text-center mt-3">
                 <button
                   className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-                  disabled={isLoading ? true : false}
-                >
+                  disabled={isLoading ? true : false}>
                   {isLoading ? 'Adding' : 'Add Business'}
                 </button>
               </div>
@@ -174,7 +172,7 @@ const AddBusiness = () => {
         </>
       )}
     </FormsLayout>
-  )
-}
+  );
+};
 
-export default AddBusiness
+export default AddBusiness;

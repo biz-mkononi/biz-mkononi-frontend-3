@@ -1,63 +1,60 @@
-import { reqInstance } from '../Auth/authHelper'
-import { newUrl } from '../Sales/Data'
+import {reqInstance} from '../Auth/authHelper';
+import {newUrl} from '../Sales/Data';
 
-const getCategory = (setData: any, setIsLoading: any, id: any) => {
-  setIsLoading(true)
-  reqInstance
-    .get(`${newUrl}/${id}/categories`)
-    .then((data) => setData(data.data.rows))
-    .then(() => setIsLoading(false))
-}
+const getCategory = async (id: any) => {
+  const response = reqInstance.get(`${newUrl}/${id}/categories`);
+  return (await response).data.rows;
+};
 const addCategory = (post: any, navigate: any, setLoading: any, id: any) => {
-  setLoading(true)
+  setLoading(true);
   reqInstance
     .post(`${newUrl}/${id}/categories`, post)
-    .then(() => navigate('/categories/list'))
-}
+    .then(() => navigate('/categories/list'));
+};
 
 const getSingleCategory = async (
   setData: any,
   id: any,
   setIsLoading: any,
   setFormData: any,
-  businessid: any,
+  businessid: any
 ) => {
-  setIsLoading(true)
+  setIsLoading(true);
   await reqInstance
     .get(`${newUrl}/${businessid}/categories/${id}`)
     .then((data) => {
       setFormData({
         name: data.data.name,
         description: data.data.description,
-      })
-      setData(data.data)
+      });
+      setData(data.data);
     })
-    .then(() => setIsLoading(false))
-}
+    .then(() => setIsLoading(false));
+};
 const updateSingleCategory = async (
   post: any,
   navigate: any,
   id: any,
   setIsLoading: any,
-  businessid: any,
+  businessid: any
 ) => {
-  setIsLoading(true)
+  setIsLoading(true);
   await reqInstance
     .put(`${newUrl}/${businessid}/categories/${id}`, post)
-    .then(() => navigate('/categories/list'))
-}
+    .then(() => navigate('/categories/list'));
+};
 const deleteCategory = async (
   navigate: any,
   id: any,
   setIsLoading: any,
-  businessid: any,
+  businessid: any
 ) => {
-  setIsLoading(true)
+  setIsLoading(true);
   await reqInstance
     .delete(`${newUrl}/${businessid}/categories/${id}`)
     .then(() => navigate('/categories/list'))
-    .then(() => setIsLoading(false))
-}
+    .then(() => setIsLoading(false));
+};
 
 export {
   addCategory,
@@ -65,4 +62,4 @@ export {
   getSingleCategory,
   deleteCategory,
   updateSingleCategory,
-}
+};

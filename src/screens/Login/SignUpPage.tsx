@@ -1,25 +1,25 @@
-import React, { useState } from 'react'
-import { TextField, Alert, InputAdornment, IconButton } from '@mui/material'
-import { registerUser, resendVerification } from '../../Data/Auth/Data'
-import Visibility from '@mui/icons-material/Visibility'
-import VisibilityOff from '@mui/icons-material/VisibilityOff'
-import './Login.css'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
-import { useNavigate } from 'react-router-dom'
-import AuthLayout from '../../Layout/AuthLayout'
+import React, {useState} from 'react';
+import {TextField, Alert, InputAdornment, IconButton} from '@mui/material';
+import {registerUser, resendVerification} from '../../Data/Auth/Data';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import './Login.css';
+import {useForm} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import {useNavigate} from 'react-router-dom';
+import AuthLayout from '../../Layout/AuthLayout';
 
 interface IFormInputs {
-  name: string
-  email: string
-  code: string
-  phone: string
-  password: string
-  password2: string
+  name: string;
+  email: string;
+  code: string;
+  phone: string;
+  password: string;
+  password2: string;
 }
 interface functions {
-  switchmode: any
+  switchmode: any;
 }
 
 const schema = yup.object().shape({
@@ -44,48 +44,47 @@ const schema = yup.object().shape({
     .string()
     .required('Confirm Password is required')
     .oneOf([yup.ref('password')], 'Passwords must and should match'),
-})
+});
 
 const SignUpPage = () => {
-  const navigate = useNavigate()
-  const [isRegistering, setIsRegistering] = useState(false)
-  const [dataErrors, setDataErrors] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
+  const navigate = useNavigate();
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [dataErrors, setDataErrors] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
-  const initialState = { code: '', password: '', phone: '', password2: '' }
-  const [formData, setFormData] = useState(initialState)
+  const initialState = {code: '', password: '', phone: '', password2: ''};
+  const [formData, setFormData] = useState(initialState);
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: {errors},
   } = useForm<any>({
     resolver: yupResolver(schema),
-  })
+  });
 
-  const handleShowPassword = () => setShowPassword(!showPassword)
-  const verifyPhoneNumber = () => navigate('/auth/verify-phone')
-  const resendVerificationCode = () => navigate('/auth/resend-code')
+  const handleShowPassword = () => setShowPassword(!showPassword);
+  const verifyPhoneNumber = () => navigate('/auth/verify-phone');
+  const resendVerificationCode = () => navigate('/auth/resend-code');
 
   const onSubmit = () => {
-    setIsRegistering(true)
-    registerUser(setDataErrors, formData, setIsRegistering)
-  }
+    setIsRegistering(true);
+    registerUser(setDataErrors, formData, setIsRegistering);
+  };
 
-  console.log(dataErrors)
+  console.log(dataErrors);
   return (
     <AuthLayout>
       {dataErrors !== '' && (
         <Alert
           variant="standard"
           onClose={() => setDataErrors('')}
-          severity="error"
-        >
+          severity="error">
           {dataErrors}
         </Alert>
       )}
       <div className="login flex flex-col justify-center items-center">
-        <h5 className="mt-2 mb-5 text-center " style={{ fontWeight: 'bold' }}>
+        <h5 className="mt-2 mb-5 text-center " style={{fontWeight: 'bold'}}>
           Create an Account
         </h5>
         <form onSubmit={onSubmit}>
@@ -182,8 +181,7 @@ const SignUpPage = () => {
               Already have an account yet?{' '}
               <button
                 className="bg-transparent"
-                onClick={() => navigate('/auth/login')}
-              >
+                onClick={() => navigate('/auth/login')}>
                 Sign In
               </button>
             </p>
@@ -193,8 +191,7 @@ const SignUpPage = () => {
               Resend Verification SMS?{' '}
               <button
                 className="bg-transparent"
-                onClick={resendVerificationCode}
-              >
+                onClick={resendVerificationCode}>
                 Resend
               </button>
             </p>
@@ -210,7 +207,7 @@ const SignUpPage = () => {
         </form>
       </div>
     </AuthLayout>
-  )
-}
+  );
+};
 
-export default SignUpPage
+export default SignUpPage;

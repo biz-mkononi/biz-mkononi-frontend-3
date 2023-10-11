@@ -1,14 +1,14 @@
-import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import Stack from '@mui/material/Stack'
-import React from 'react'
-import dayjs, { Dayjs } from 'dayjs'
+import {DateTimePicker, LocalizationProvider} from '@mui/x-date-pickers';
+import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
+import Stack from '@mui/material/Stack';
+import React from 'react';
+import dayjs, {Dayjs} from 'dayjs';
 
 interface InputProps {
-  label: string
-  handleDateChange: any
-  value: Dayjs | any
-  type: string
+  label: string;
+  handleDateChange: any;
+  value: Dayjs | any;
+  type: string;
 }
 const DateField: React.FC<InputProps> = ({
   handleDateChange,
@@ -30,7 +30,7 @@ const DateField: React.FC<InputProps> = ({
         />
       </Stack>
     </LocalizationProvider>
-  )
-}
+  );
+};
 
-export default DateField
+export default DateField;
