@@ -1,3 +1,4 @@
+import React from 'react'
 import Card from '@mui/material/Card';
 import {
   ComposedChart,
@@ -26,7 +27,6 @@ import {
 } from '../../Data/Analytics/CustomerAnalytics';
 import CircularProgress from '@mui/material/CircularProgress';
 import {DataContext} from '../../context/ContextProvider';
-import {months} from '../../Constants/Constants';
 import DateComponent from '../../components/DateComponent/DateComponent';
 import {useQuery} from '@tanstack/react-query';
 
@@ -52,34 +52,41 @@ const CustomersInsights = () => {
     queryKey: ['repeatpurchaserate', data, businessId],
     queryFn: () => getRepeatCustomerRate(businessId, data),
   });
+  // eslint-disable-next-line
   const {data: churnRate, isLoading: churnRateLoading} = useQuery<any, Error>({
     queryKey: ['churnrate', data, businessId],
     queryFn: () => getChurnCustomerRate(businessId, data),
   });
   const {data: totalCustomers, isLoading: totalCustomersLoading} = useQuery<
+  // eslint-disable-next-line
     any,
     Error
   >({
     queryKey: ['totalcustomers', businessId],
     queryFn: () => getTotalCustomers(businessId),
   });
+  // eslint-disable-next-line
   const {data: ageStats, isLoading: ageStatsLoading} = useQuery<any, Error>({
     queryKey: ['agestats', data, businessId],
     queryFn: () => getAgeStats(businessId, data),
   });
+
   const {data: genderStats, isLoading: genderStatsLoading} = useQuery<
+  // eslint-disable-next-line
     any,
     Error
   >({
     queryKey: ['genderstats', data, businessId],
     queryFn: () => getGenderStats(businessId, data),
   });
+  // eslint-disable-next-line
   const {data: mostActive, isLoading: mostActiveLoading} = useQuery<any, Error>(
     {
       queryKey: ['mostactive', mostActiveCustomers, businessId],
       queryFn: () => getMostActiveCustomers(businessId, mostActiveCustomers),
     }
   );
+  // eslint-disable-next-line
   const total = genderStats?.reduce(function (prev: any, cur: any) {
     return prev + cur.total;
   }, 0);
@@ -196,8 +203,10 @@ const CustomersInsights = () => {
                     </PieChart>
                   </ResponsiveContainer>
 
-                  {genderStats?.map((gender: any) => (
-                    <div className="row">
+                  {
+                    // eslint-disable-next-line
+                  genderStats?.map((gender: any) => (
+                    <div className="row" key={gender.group}>
                       <h5 className="p-2">
                         {gender.group} :{' '}
                         <span>

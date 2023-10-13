@@ -10,7 +10,7 @@ import FormsLayout from '../../Layout/FormsLayout';
 import Image from '../../components/FormFields/Image';
 import Input from '../../components/FormFields/Input';
 import TextArea from '../../components/FormFields/TextArea';
-
+// eslint-disable-next-line
 const AddSupplier = ({id}: any) => {
   const initialState = {
     name: '',

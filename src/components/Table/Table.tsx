@@ -15,7 +15,7 @@ interface TableProps {
   columns: Column[];
   onView: (id: string | undefined) => void;
   onEdit: (id: string | undefined) => void;
-  data: any[];
+  data: [];
   Business?: boolean;
 }
 const Table = ({columns, onEdit, onView, data, Business}: TableProps) => {

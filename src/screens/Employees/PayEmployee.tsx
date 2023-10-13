@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import BusinessIcon from '@mui/icons-material/Business';
 import PhoneIcon from '@mui/icons-material/Phone';
 import {Card} from '@mui/material';
@@ -10,6 +10,15 @@ import FormsLayout from '../../Layout/FormsLayout';
 import Input from '../../components/FormFields/Input';
 import TextArea from '../../components/FormFields/TextArea';
 import DateField from '../../components/FormFields/DateField';
+import { useQuery } from '@tanstack/react-query';
+type Employees = {
+  name: string;
+  position: string;
+  phone: string;
+  email: string;
+  idNumber: string;
+}
+// eslint-disable-next-line
 const PayEmployee = ({id}: any) => {
   const navigate = useNavigate();
   const initialState = {
@@ -19,13 +28,15 @@ const PayEmployee = ({id}: any) => {
     description: '',
   };
   const [formData, setFormData] = useState(initialState);
-  const [isLoading, setIsLoading] = useState(false);
-  const [employees, setEmployees] = useState<any[]>([]);
+  // eslint-disable-next-line
   const [value, setValue] = React.useState<Dayjs | any>(dayjs(Date.now()));
-
-  useEffect(() => {
-    getEmployees(setEmployees, setIsLoading, id);
-  }, []);
+  const [isLoading,setIsLoading] = useState(false);
+  // eslint-disable-next-line
+const {data: employees} = useQuery<Employees[] | any, Error>({
+    queryKey: ['employees', id],
+    queryFn: () => getEmployees(id),
+  });
+  // eslint-disable-next-line
   const handleDateChange = (newValue: Dayjs | any) => {
     setValue(newValue);
     setFormData({...formData, ['txDate']: newValue});
@@ -64,7 +75,9 @@ const PayEmployee = ({id}: any) => {
               aria-label="Default select example"
               id="basic-addon1">
               <option selected>Select employee</option>
-              {employees.map((employee) => {
+              {
+                // eslint-disable-next-line
+              employees.map((employee:any) => {
                 return (
                   <option value={employee.id} key={employee.id}>
                     {employee.name}
@@ -75,6 +88,7 @@ const PayEmployee = ({id}: any) => {
           </div>
           <DateField
             label="Date"
+            // eslint-disable-next-line
             handleDateChange={handleDateChange}
             value={value}
             type="Date"

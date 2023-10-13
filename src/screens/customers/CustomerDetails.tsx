@@ -1,6 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
-import NotificationAddIcon from '@mui/icons-material/NotificationAdd';
 import image2 from '../../Assets/placeholder.jpg';
 import '../Businesses/AddBusiness.css';
 import {useNavigate, useParams} from 'react-router-dom';
@@ -13,12 +11,15 @@ interface data {
   description: '';
   date: '';
 }
+// eslint-disable-next-line
 const CustomerDetails = ({id}: any) => {
   const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
+  // eslint-disable-next-line
   const [data, setData] = useState<data | any>({});
   const [isLoading, setIsloading] = useState(false);
+  // eslint-disable-next-line
   const [formData, setFormData] = useState({});
 
   const params = useParams();
@@ -28,19 +29,16 @@ const CustomerDetails = ({id}: any) => {
   };
   useEffect(() => {
     getSingleCustomer(setData, params.id, setIsloading, setFormData, id);
-  }, [location]);
+  }, []);
   const onDelete = () => {
     setOpen(true);
   };
 
-  const goBack = () => {
-    navigate('/');
-  };
   const handleClose = () => {
     setOpen(false);
   };
   const d = new Date();
-  let year = d.getFullYear();
+  const year = d.getFullYear();
   return (
     <>
       {isLoading ? (

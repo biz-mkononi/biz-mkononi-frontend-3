@@ -274,19 +274,19 @@ const Sidebar = () => {
           <hr className=" border-2 border-gray-600 mt-3 mb-3 " />
           {business
             ? appMenuItems.map((item, index) => (
-                <div className="mb-2">
+                <div className="mb-2" key={index}>
                   <SideBarMenuItem {...item} key={index} />
                 </div>
               ))
             : filteredListItems.map((item, index) => (
-                <div className="mb-2">
+                <div className="mb-2" key={index}>
                   <SideBarMenuItem {...item} key={index} />
                 </div>
               ))}
           <Divider />
           {business &&
             otherItems.map((item, index) => (
-              <div className="mb-2">
+              <div className="mb-2" key={index}>
                 <SideBarMenuItem {...item} key={index} />
               </div>
             ))}

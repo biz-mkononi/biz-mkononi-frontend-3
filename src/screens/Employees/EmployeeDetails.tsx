@@ -13,17 +13,20 @@ interface data {
   description: '';
   date: '';
 }
+// eslint-disable-next-line
 const EmployeeDetails = ({id}: any) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  // eslint-disable-next-line
   const [data, setData] = useState<data | any>({});
   const [isLoading, setIsloading] = useState(false);
+  // eslint-disable-next-line
   const [formData, setFormData] = useState({});
 
   const params = useParams();
   useEffect(() => {
     getSingleEmployee(setData, params.id, setIsloading, setFormData, id);
-  }, [location]);
+  }, []);
   const onDelete = () => {
     setOpen(true);
   };

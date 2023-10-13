@@ -19,6 +19,7 @@ type Business = {
 };
 const BusinessList = () => {
   const navigate = useNavigate();
+  // eslint-disable-next-line
   const {data: businesses, isLoading} = useQuery<Business[] | any, Error>({
     queryKey: ['businesses'],
     queryFn: () => getBusiness(),

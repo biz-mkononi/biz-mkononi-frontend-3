@@ -1,3 +1,4 @@
+import React from 'react'
 import image from '../../Assets/placeholder.jpg';
 
 type Data = {

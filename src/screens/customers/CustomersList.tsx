@@ -8,6 +8,7 @@ import Table from '../../components/Table/Table';
 import {useQuery} from '@tanstack/react-query';
 
 type Props = {
+  // eslint-disable-next-line
   id: any;
 };
 type Customers = {
@@ -19,6 +20,7 @@ type Customers = {
 const CustomersList = ({id}: Props) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  // eslint-disable-next-line
   const {data: customers, isLoading} = useQuery<Customers[] | any, Error>({
     queryKey: ['customers', id],
     queryFn: () => getCustomers(id),

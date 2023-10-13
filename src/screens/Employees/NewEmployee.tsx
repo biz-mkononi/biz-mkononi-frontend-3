@@ -4,14 +4,13 @@ import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import {Card} from '@mui/material';
 import {addEmployee} from '../../Data/Employees/Data';
-import image from '../../Assets/placeholder.jpg';
 import StarsIcon from '@mui/icons-material/Stars';
 import '../Businesses/AddBusiness.css';
 import {useNavigate} from 'react-router-dom';
 import FormsLayout from '../../Layout/FormsLayout';
 import Image from '../../components/FormFields/Image';
 import Input from '../../components/FormFields/Input';
-
+// eslint-disable-next-line
 const NewEmployee = ({id}: any) => {
   const initialState = {
     name: '',

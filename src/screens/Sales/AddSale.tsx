@@ -10,6 +10,7 @@ import {addSale} from '../../Data/Sales/Data';
 import {useNavigate} from 'react-router-dom';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import FormsLayout from '../../Layout/FormsLayout';
+import { useQuery } from '@tanstack/react-query';
 
 interface Form {
   product: string;
@@ -17,25 +18,44 @@ interface Form {
   quantity: number;
   productId: string;
 }
-interface Product {
-  name: string;
-  sellingPrice: number;
-  id: string;
-}
 
+type Customers = {
+  name: string;
+  gender: string;
+  phone: string;
+  email: string;
+};
+type Category = {
+  name: string;
+};
+type Products = {
+  name: string;
+  category: Category;
+  size: string;
+  stock: string;
+};
+// eslint-disable-next-line
 const AddSale = ({id}: any) => {
   const [forms, setForms] = useState<Form[]>([
     {product: '', salePrice: 0, quantity: 0, productId: ''},
   ]);
   const [totalAmount, setTotalAmount] = useState(0);
   const navigate = useNavigate();
-  const [customers, setCustomers] = useState<any[]>([]);
-  const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [amountCharged, setAmountCharged] = useState(0);
   const [amountPaid, setAmountPaid] = useState(0);
   const [customerId, setCustomer] = useState('');
   const [errors, setErrors] = useState('');
+  // eslint-disable-next-line
+  const {data: customers} = useQuery<Customers[] | any, Error>({
+    queryKey: ['customers', id],
+    queryFn: () => getCustomers(id),
+  });
+   // eslint-disable-next-line
+  const {data: products} = useQuery<Products[] | any, Error>({
+    queryKey: ['products', id],
+    queryFn: () => getProducts(id),
+  });
   useEffect(() => {
     //calculate the total
     let formTotal = 0;
@@ -66,7 +86,8 @@ const AddSale = ({id}: any) => {
     const newForms = [...forms];
     newForms[index].product = e.target.value;
     const selectedProduct = products.find(
-      (product) => product.name === e.target.value
+      // eslint-disable-next-line
+      (product:any) => product.name === e.target.value
     );
     if (selectedProduct) {
       newForms[index].salePrice = selectedProduct.sellingPrice;
@@ -83,11 +104,6 @@ const AddSale = ({id}: any) => {
     newForms[index].quantity = Number(e.target.value);
     setForms(newForms);
   };
-
-  useEffect(() => {
-    getCustomers(setCustomers, setIsLoading, id);
-    getProducts(setProducts, setIsLoading, id);
-  }, []);
 
   const handleCustomerChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCustomer(e.target.value);
@@ -145,7 +161,9 @@ const AddSale = ({id}: any) => {
                   aria-label="Default select example"
                   id="basic-addon1">
                   <option selected>Select customer</option>
-                  {customers.map((customer) => {
+                  {
+                    // eslint-disable-next-line
+                  customers.map((customer:any) => {
                     return (
                       <option value={customer.id} key={customer.id}>
                         {customer.name}
@@ -183,7 +201,9 @@ const AddSale = ({id}: any) => {
                         aria-label="Default select example"
                         id="basic-addon1">
                         <option selected>Select product</option>
-                        {products.map((product, index) => {
+                        {
+                          // eslint-disable-next-line
+                        products.map((product:any) => {
                           return (
                             <option key={product.name} value={product.name}>
                               {product.name}

@@ -15,8 +15,10 @@ type Supplies = {
   amountCharged: string;
   supplier: Supplier;
 };
+// eslint-disable-next-line
 const SuppliesList = ({id}: any) => {
   const navigate = useNavigate();
+  // eslint-disable-next-line
   const {data: supplies, isLoading} = useQuery<Supplies[] | any, Error>({
     queryKey: ['supplies', id],
     queryFn: () => getSupplies(id),

@@ -10,8 +10,10 @@ type Incomes = {
   txDate: Date;
   amount: string;
 };
+// eslint-disable-next-line
 const Income = ({id}: any) => {
   const navigate = useNavigate();
+  // eslint-disable-next-line
   const {data: incomes, isLoading} = useQuery<Incomes[] | any, Error>({
     queryKey: ['incomes', id],
     queryFn: () => getIncomes(id),

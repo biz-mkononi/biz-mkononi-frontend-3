@@ -11,6 +11,7 @@ interface data {
   description: '';
   date: '';
 }
+// eslint-disable-next-line
 const CategoryDetails = ({id}: any) => {
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
@@ -22,14 +23,16 @@ const CategoryDetails = ({id}: any) => {
   const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
+  // eslint-disable-next-line
   const [data, setData] = useState<data | any>({});
   const [isLoading, setIsloading] = useState(false);
+  // eslint-disable-next-line
   const [formData, setFormData] = useState(false);
 
   const params = useParams();
   useEffect(() => {
     getSingleCategory(setData, params.id, setIsloading, setFormData, id);
-  }, [location]);
+  }, []);
   const onDelete = () => {
     setOpen(true);
   };

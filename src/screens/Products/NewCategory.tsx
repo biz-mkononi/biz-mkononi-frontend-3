@@ -2,12 +2,11 @@ import React, {useState} from 'react';
 import CategoryIcon from '@mui/icons-material/Category';
 import {Card} from '@mui/material';
 import '../Businesses/AddBusiness.css';
-import image from '../../Assets/placeholder.jpg';
 import {addCategory} from '../../Data/Categories/Data';
 import {useNavigate} from 'react-router-dom';
 import FormsLayout from '../../Layout/FormsLayout';
 import Image from '../../components/FormFields/Image';
-
+// eslint-disable-next-line
 const NewCategory = ({id}: any) => {
   const initialState = {name: '', description: '', image: {}};
 

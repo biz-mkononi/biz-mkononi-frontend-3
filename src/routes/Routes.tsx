@@ -106,11 +106,10 @@ const RoutesFile = () => {
     () => import('../screens/Supplies/SuppliesDetails')
   );
   const AddSupply = lazy(() => import('../screens/Supplies/AddSupply'));
-  const UpdateSale = lazy(() => import('../screens/Sales/UpdateSaleDetails'));
   const RevenueInsights = lazy(
     () => import('../screens/Insights/RevenueInsights')
   );
-
+// eslint-disable-next-line
   const theme = useTheme();
   const {loggedUser, businessId} = useContext(DataContext);
   return (
@@ -168,10 +167,6 @@ const RoutesFile = () => {
                 <Route
                   path="/sales/:id/details"
                   element={<SalesDetails id={businessId} />}
-                />
-                <Route
-                  path="/sales/:id/update-details"
-                  element={<UpdateSale id={businessId} />}
                 />
                 <Route
                   path="/supplies/add"
@@ -321,6 +316,5 @@ const RoutesFile = () => {
     </Box>
   );
 };
-const drawerWidth = 300;
 
 export default RoutesFile;

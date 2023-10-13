@@ -8,8 +8,10 @@ import {useQuery} from '@tanstack/react-query';
 type Categories = {
   name: string;
 };
+// eslint-disable-next-line
 const CategoriesList = ({id}: any) => {
   const navigate = useNavigate();
+  // eslint-disable-next-line
   const {data: categories, isLoading} = useQuery<Categories[] | any, Error>({
     queryKey: ['categories', id],
     queryFn: () => getCategory(id),

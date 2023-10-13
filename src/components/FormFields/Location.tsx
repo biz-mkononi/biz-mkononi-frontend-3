@@ -2,6 +2,7 @@ import LocationOn from '@mui/icons-material/LocationOn';
 import React from 'react';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 type Props = {
+  // eslint-disable-next-line
   handleSelect: (place: any) => void;
 };
 const Location = ({handleSelect}: Props) => {

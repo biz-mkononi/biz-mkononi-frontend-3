@@ -1,6 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
-import NotificationAddIcon from '@mui/icons-material/NotificationAdd';
 import '../Businesses/AddBusiness.css';
 import {useNavigate, useParams} from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -12,6 +10,7 @@ interface data {
   description: '';
   date: '';
 }
+// eslint-disable-next-line
 const IncomeDetails = ({id}: any) => {
   const [open, setOpen] = useState(false);
   const options: Intl.DateTimeFormatOptions = {
@@ -21,8 +20,10 @@ const IncomeDetails = ({id}: any) => {
   };
 
   const navigate = useNavigate();
+  // eslint-disable-next-line
   const [data, setData] = useState<data | any>({});
   const [isLoading, setIsloading] = useState(false);
+  // eslint-disable-next-line
   const [formData, setFormData] = useState({});
 
   const params = useParams();

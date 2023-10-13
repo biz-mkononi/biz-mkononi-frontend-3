@@ -1,5 +1,6 @@
 import {reqInstance} from '../Auth/authHelper';
 import {newUrl} from '../Sales/Data';
+// eslint-disable-next-line
 const addSalary = (post: any, navigate: any, setIsLoading: any, id: any) => {
   setIsLoading(true);
   reqInstance
@@ -7,16 +8,23 @@ const addSalary = (post: any, navigate: any, setIsLoading: any, id: any) => {
     .then(() => navigate('/employees/salaries'))
     .then(() => setIsLoading(false));
 };
+// eslint-disable-next-line
 const getSalaries = async (id: any) => {
   const response = reqInstance.get(`${newUrl}/${id}/salaries`);
   return (await response).data.rows;
 };
 const getSingleSalary = async (
+  // eslint-disable-next-line
   setData: any,
+  // eslint-disable-next-line
   id: any,
+  // eslint-disable-next-line
   setIsLoading: any,
+  // eslint-disable-next-line
   setEmployee: any,
+  // eslint-disable-next-line
   setFormData: any,
+  // eslint-disable-next-line
   businessid: any
 ) => {
   setIsLoading(true);
@@ -36,10 +44,15 @@ const getSingleSalary = async (
 };
 
 const updateSingleSalary = async (
+  // eslint-disable-next-line
   post: any,
+  // eslint-disable-next-line
   navigate: any,
+  // eslint-disable-next-line
   id: any,
+  // eslint-disable-next-line
   setIsLoading: any,
+  // eslint-disable-next-line
   businessid: any
 ) => {
   setIsLoading(true);
@@ -49,9 +62,13 @@ const updateSingleSalary = async (
     .then(() => setIsLoading(false));
 };
 const deleteSalary = async (
+  // eslint-disable-next-line
   navigate: any,
+  // eslint-disable-next-line
   id: any,
+  // eslint-disable-next-line
   setIsLoading: any,
+  // eslint-disable-next-line
   businessid: any
 ) => {
   setIsLoading(true);

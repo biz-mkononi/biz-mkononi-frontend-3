@@ -10,6 +10,7 @@ interface data {
   description: '';
   date: '';
 }
+// eslint-disable-next-line
 const ExpenseDetails = ({id}: any) => {
   const [open, setOpen] = useState(false);
   const options: Intl.DateTimeFormatOptions = {
@@ -19,8 +20,10 @@ const ExpenseDetails = ({id}: any) => {
   };
 
   const navigate = useNavigate();
+  // eslint-disable-next-line
   const [data, setData] = useState<data | any>({});
   const [isLoading, setIsloading] = useState(false);
+  // eslint-disable-next-line
   const [formData, setFormData] = useState({});
 
   const params = useParams();

@@ -10,6 +10,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import {addSupply} from '../../Data/Supplies/Data';
 import {getSuppliers} from '../../Data/Suppliers/Data';
 import FormsLayout from '../../Layout/FormsLayout';
+import { useQuery } from '@tanstack/react-query';
 
 interface Form {
   product: string;
@@ -17,25 +18,42 @@ interface Form {
   quantity: number;
   productId: string;
 }
-interface Product {
+type Category = {
   name: string;
-  buyingPrice: number;
-  id: string;
-}
-
+};
+type Products = {
+  name: string;
+  category: Category;
+  size: string;
+  stock: string;
+};
+type Suppliers = {
+  name: string;
+  email: string;
+  phone: string;
+};
+// eslint-disable-next-line
 const AddSupply = ({id}: any) => {
   const [forms, setForms] = useState<Form[]>([
     {product: '', supplyPrice: 0, quantity: 0, productId: ''},
   ]);
   const [totalAmount, setTotalAmount] = useState(0);
   const navigate = useNavigate();
-  const [suppliers, setSuppliers] = useState<any[]>([]);
-  const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [amountCharged, setAmountCharged] = useState(0);
   const [amountPaid, setAmountPaid] = useState(0);
   const [supplierId, setSupplierId] = useState('');
   const [errors, setErrors] = useState('');
+  // eslint-disable-next-line
+  const {data: suppliers} = useQuery<Suppliers[] | any, Error>({
+    queryKey: ['suppliers', id],
+    queryFn: () => getSuppliers(id),
+  });
+  // eslint-disable-next-line
+  const {data: products} = useQuery<Products[] | any, Error>({
+    queryKey: ['products', id],
+    queryFn: () => getProducts(id),
+  });
   useEffect(() => {
     //calculate the total
     let formTotal = 0;
@@ -66,7 +84,8 @@ const AddSupply = ({id}: any) => {
     const newForms = [...forms];
     newForms[index].product = e.target.value;
     const selectedProduct = products.find(
-      (product) => product.name === e.target.value
+      // eslint-disable-next-line
+      (product:any) => product.name === e.target.value
     );
     if (selectedProduct) {
       newForms[index].supplyPrice = selectedProduct.buyingPrice;
@@ -83,11 +102,6 @@ const AddSupply = ({id}: any) => {
     newForms[index].quantity = Number(e.target.value);
     setForms(newForms);
   };
-
-  useEffect(() => {
-    getSuppliers(setSuppliers, setIsLoading, id);
-    getProducts(setProducts, setIsLoading, id);
-  }, []);
 
   const handleSupplierChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSupplierId(e.target.value);
@@ -147,7 +161,9 @@ const AddSupply = ({id}: any) => {
                   aria-label="Default select example"
                   id="basic-addon1">
                   <option selected>Select Supplier</option>
-                  {suppliers.map((supplier) => {
+                  {
+                    // eslint-disable-next-line
+                  suppliers.map((supplier:any) => {
                     return (
                       <option value={supplier.id} key={supplier.id}>
                         {supplier.name}
@@ -185,7 +201,9 @@ const AddSupply = ({id}: any) => {
                         aria-label="Default select example"
                         id="basic-addon1">
                         <option selected>Select product</option>
-                        {products.map((product, index) => {
+                        {
+                          // eslint-disable-next-line
+                        products.map((product:any) => {
                           return (
                             <option key={product.name} value={product.name}>
                               {product.name}

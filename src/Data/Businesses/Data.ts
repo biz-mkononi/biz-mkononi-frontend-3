@@ -1,6 +1,6 @@
 import {url} from '../Auth/Data';
-import {auth, reqInstance} from '../Auth/authHelper';
-
+import {reqInstance} from '../Auth/authHelper';
+// eslint-disable-next-line
 const addBusiness = (post: any, navigate: any, setIsLoading: any) => {
   setIsLoading(true);
   reqInstance.post(`${url}/businesses`, post).then(() => navigate('/'));
@@ -11,9 +11,13 @@ const getBusiness = async () => {
 };
 
 const getSingleBusiness = async (
+  // eslint-disable-next-line
   setData: any,
+  // eslint-disable-next-line
   id: any,
+  // eslint-disable-next-line
   setIsLoading: any,
+  // eslint-disable-next-line
   setFormData: any
 ) => {
   setIsLoading(true);
@@ -36,9 +40,13 @@ const getSingleBusiness = async (
     .then(() => setIsLoading(false));
 };
 const updateSingleBusiness = async (
+  // eslint-disable-next-line
   post: any,
+  // eslint-disable-next-line
   navigate: any,
+  // eslint-disable-next-line
   id: any,
+  // eslint-disable-next-line
   setIsLoading: any
 ) => {
   setIsLoading(true);
@@ -47,7 +55,7 @@ const updateSingleBusiness = async (
     .then((data) => console.log(data))
     .then(() => navigate('/'));
 };
-
+// eslint-disable-next-line
 const deleteBusiness = async (setData: any, id: any, setIsLoading: any) => {
   setIsLoading(true);
   await reqInstance

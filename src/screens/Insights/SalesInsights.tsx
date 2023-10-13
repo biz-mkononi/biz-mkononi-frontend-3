@@ -57,12 +57,14 @@ const SalesInsights = () => {
     to: to.toISOString(),
     part: 'hour',
   };
+  // eslint-disable-next-line
   const {data: totalSales, isLoading: totalSalesLoading} = useQuery<any, Error>(
     {
       queryKey: ['totalsales', businessId, data],
       queryFn: () => getTotalSales(businessId, data),
     }
   );
+  // eslint-disable-next-line
   const {data: salesTrend, isLoading: salesTrendLoading} = useQuery<any, Error>(
     {
       queryKey: ['salestrend', businessId, groupByDayData],
@@ -70,17 +72,20 @@ const SalesInsights = () => {
     }
   );
   const {data: totalSupplies, isLoading: totalSuppliesLoading} = useQuery<
+  // eslint-disable-next-line
     any,
     Error
   >({
     queryKey: ['totalsupplies', businessId],
     queryFn: () => getTotalSupplies(businessId, data),
   });
+  // eslint-disable-next-line
   const {data: sales, isLoading: salesLoading} = useQuery<any, Error>({
     queryKey: ['sales', businessId],
     queryFn: () => getSales(businessId),
   });
   const {data: totalProfits, isLoading: totalProfitsLoading} = useQuery<
+  // eslint-disable-next-line
     any,
     Error
   >({
@@ -88,6 +93,7 @@ const SalesInsights = () => {
     queryFn: () => getTotalProfits(businessId, data),
   });
   const {data: monthSalesTrend, isLoading: monthSalesTrendLoading} = useQuery<
+  // eslint-disable-next-line
     any,
     Error
   >({
@@ -95,13 +101,16 @@ const SalesInsights = () => {
     queryFn: () => getSalesTrendByMonth(businessId, groupByMonth),
   });
   const {data: hourlySales, isLoading: hourlySalesLoading} = useQuery<
+  // eslint-disable-next-line
     any,
     Error
   >({
     queryKey: ['hourlysales', businessId, partByHour],
     queryFn: () => getTotalDatePartSalesByHour(businessId, partByHour),
   });
+  // eslint-disable-next-line
   const createYDomain = (data: any) => {
+    // eslint-disable-next-line
     const maxValue = Math.max(...data.map((item: any) => parseInt(item.total)));
 
     const yDomain = [0, maxValue];

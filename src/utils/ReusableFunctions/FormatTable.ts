@@ -1,4 +1,3 @@
-import {string} from 'yup';
 import {formatMoney} from './FormatMoney';
 
 interface Column {
@@ -13,7 +12,7 @@ const options: Intl.DateTimeFormatOptions = {
   month: 'long',
   day: 'numeric',
 };
-
+// eslint-disable-next-line
 export const renderCell = (row: any, column: Column) => {
   const keys = column.dataKey.split('.');
   let value = row;

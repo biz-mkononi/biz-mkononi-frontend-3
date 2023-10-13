@@ -1,12 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import BusinessIcon from '@mui/icons-material/Business';
-import NotificationAddIcon from '@mui/icons-material/NotificationAdd';
 import '../Businesses/AddBusiness.css';
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import {useNavigate, useParams} from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import {Card} from '@mui/material';
 import dayjs, {Dayjs} from 'dayjs';
@@ -22,16 +19,17 @@ interface data {
   phone: '';
   description: '';
 }
-
+// eslint-disable-next-line
 const UpdateIncomeDetails = ({id}: any) => {
+  // eslint-disable-next-line
   const [data, setData] = useState<data | any>({});
   const [isLoading, setIsloading] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
-
+// eslint-disable-next-line
   const [value, setValue] = React.useState<Dayjs | any>(dayjs(data.txDate));
-
+// eslint-disable-next-line
   const handleDateChange = (newValue: Dayjs | any) => {
     setValue(newValue);
     setFormData({...formData, ['txDate']: newValue});

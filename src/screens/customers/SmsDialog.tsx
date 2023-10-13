@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -9,7 +8,7 @@ import {TextField} from '@mui/material';
 import './sms.css';
 import {sendCustomersSms} from '../../Data/Customers/Data';
 import {useNavigate} from 'react-router-dom';
-
+// eslint-disable-next-line
 export default function SmsDialog({handleClose, open, id}: any) {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = React.useState(false);
@@ -67,7 +66,7 @@ export default function SmsDialog({handleClose, open, id}: any) {
                 <>
                   <p className="mb-3">
                     Use <b>:name</b> wherever you want it replaced with the
-                    contact's name
+                    contacts name
                   </p>
                   <p className="mb-3">
                     Use <b>\n</b> wherever you want to move to a new line

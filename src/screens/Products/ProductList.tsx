@@ -15,8 +15,10 @@ type Products = {
   size: string;
   stock: string;
 };
+// eslint-disable-next-line
 const ProductsList = ({id}: any) => {
   const navigate = useNavigate();
+  // eslint-disable-next-line
   const {data: products, isLoading} = useQuery<Products[] | any, Error>({
     queryKey: ['products', id],
     queryFn: () => getProducts(id),

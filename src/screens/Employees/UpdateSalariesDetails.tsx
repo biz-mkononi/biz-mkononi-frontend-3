@@ -13,6 +13,7 @@ import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import {getEmployees} from '../../Data/Employees/Data';
 import {getSingleSalary, updateSingleSalary} from '../../Data/Salaries/Data';
 import FormsLayout from '../../Layout/FormsLayout';
+import { useQuery } from '@tanstack/react-query';
 
 interface data {
   name: '';
@@ -20,17 +21,29 @@ interface data {
   phone: '';
   description: '';
 }
-
+type Employees = {
+  name: string;
+  position: string;
+  phone: string;
+  email: string;
+  idNumber: string;
+}
+// eslint-disable-next-line
 const UpdateSalariesDetails = ({id}: any) => {
+  // eslint-disable-next-line
   const [data, setData] = useState<data | any>({});
   const [isLoading, setIsloading] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
-  const [employees, setEmployees] = useState<any[]>([]);
+  // eslint-disable-next-line
   const [currentEmployee, setCurrentEmployee] = useState<data | any>({});
+  // eslint-disable-next-line
   const [value, setValue] = React.useState<Dayjs | any>(dayjs(data.txDate));
-
+ // eslint-disable-next-line
+const {data: employees} = useQuery<Employees[] | any, Error>({
+    queryKey: ['employees', id],
+    queryFn: () => getEmployees(id),
+  });
   useEffect(() => {
-    getEmployees(setEmployees, setIsloading, id);
     getSingleSalary(
       setData,
       params.id,
@@ -40,6 +53,7 @@ const UpdateSalariesDetails = ({id}: any) => {
       id
     );
   }, []);
+  // eslint-disable-next-line
   const handleDateChange = (newValue: Dayjs | any) => {
     setValue(newValue);
     setFormData({...formData, ['txDate']: newValue});
@@ -91,7 +105,9 @@ const UpdateSalariesDetails = ({id}: any) => {
                   aria-label="Default select example"
                   id="basic-addon1">
                   <option selected>{currentEmployee.name}</option>
-                  {employees.map((employee) => {
+                  {
+                    // eslint-disable-next-line
+                  employees.map((employee:any) => {
                     return (
                       <option value={employee.id} key={employee.id}>
                         {employee.name}

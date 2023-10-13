@@ -12,8 +12,10 @@ type Employees = {
   email: string;
   idNumber: string;
 };
+// eslint-disable-next-line
 const EmployeesList = ({id}: any) => {
   const navigate = useNavigate();
+  // eslint-disable-next-line
   const {data: employees, isLoading} = useQuery<Employees[] | any, Error>({
     queryKey: ['employees', id],
     queryFn: () => getEmployees(id),

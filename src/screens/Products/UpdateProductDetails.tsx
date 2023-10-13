@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Card} from '@mui/material';
 import '../Businesses/AddBusiness.css';
-import image from '../../Assets/placeholder.jpg';
 import {useNavigate, useParams} from 'react-router-dom';
 import {getSingleProduct, updateSingleProduct} from '../../Data/Products/Data';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -14,6 +13,7 @@ import StyleIcon from '@mui/icons-material/Style';
 import {getCategory} from '../../Data/Categories/Data';
 import Image from '../../components/FormFields/Image';
 import FormsLayout from '../../Layout/FormsLayout';
+import { useQuery } from '@tanstack/react-query';
 
 interface data {
   name: '';
@@ -24,8 +24,12 @@ interface data {
   sellingPrice: '';
   stock: '';
 }
-
+type Categories = {
+  name: string;
+};
+// eslint-disable-next-line
 const UpdateProductDetails = ({id}: any) => {
+  // eslint-disable-next-line
   const [data, setData] = useState<data | any>({});
   const [isLoading, setIsloading] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -33,10 +37,14 @@ const UpdateProductDetails = ({id}: any) => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({});
-  const [categories, setCategories] = useState<any[]>([]);
+  // eslint-disable-next-line
   const [category, setCategory] = useState<data | any>({});
   const [displayImage, setDisplayImage] = useState('');
-
+ // eslint-disable-next-line
+  const {data: categories} = useQuery<Categories[] | any, Error>({
+    queryKey: ['categories', id],
+    queryFn: () => getCategory(id),
+  });
   const params = useParams();
 
   useEffect(() => {
@@ -48,8 +56,7 @@ const UpdateProductDetails = ({id}: any) => {
       setFormData,
       id
     );
-    getCategory(setCategories, setIsloading, id);
-  }, [location]);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, [e.target.name]: e.target.value});
@@ -125,7 +132,9 @@ const UpdateProductDetails = ({id}: any) => {
                       aria-label="Default select example"
                       id="basic-addon1">
                       <option selected>{category.name}</option>
-                      {categories.map((category) => {
+                      {
+                        // eslint-disable-next-line
+                      categories.map((category:any) => {
                         return (
                           <option value={category.id} key={category.id}>
                             {category.name}

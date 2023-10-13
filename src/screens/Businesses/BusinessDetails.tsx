@@ -1,6 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
-import NotificationAddIcon from '@mui/icons-material/NotificationAdd';
 import image2 from '../../Assets/placeholder.jpg';
 import './AddBusiness.css';
 import {getSingleBusiness} from '../../Data/Businesses/Data';
@@ -21,8 +19,10 @@ interface data {
 
 const BusinessDetails = () => {
   const navigate = useNavigate();
+  // eslint-disable-next-line
   const [data, setData] = useState<data | any>({});
   const [isLoading, setIsloading] = useState(false);
+  // eslint-disable-next-line
   const [formData, setFormData] = useState(false);
   const params = useParams();
 
@@ -30,10 +30,6 @@ const BusinessDetails = () => {
     getSingleBusiness(setData, params.id, setIsloading, setFormData);
   }, [location]);
 
-  const goBack = () => {
-    navigate(-1);
-    console.log('clicked');
-  };
 
   return (
     <>

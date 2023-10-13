@@ -4,10 +4,10 @@ import '../Insights/Overview.css';
 import Card from '@mui/material/Card';
 import {DataContext} from '../../context/ContextProvider';
 import {useNavigate} from 'react-router-dom';
-
+// eslint-disable-next-line
 const NotFound = ({icon, title, link}: any) => {
   const navigate = useNavigate();
-  const {user, loggedUser, userName} = useContext(DataContext);
+  const {user,  userName} = useContext(DataContext);
   return (
     <div className="container notfound">
       <div className="row padding">

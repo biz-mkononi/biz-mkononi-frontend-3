@@ -1,11 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
-import NotificationAddIcon from '@mui/icons-material/NotificationAdd';
 import '../Businesses/AddBusiness.css';
 import {useNavigate, useParams} from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import AlertDialog from '../Dialog/Dialog';
-import {deleteExpense, getSingleExpense} from '../../Data/Expenses/Data';
 import {deleteSalary, getSingleSalary} from '../../Data/Salaries/Data';
 
 interface data {
@@ -13,6 +10,7 @@ interface data {
   description: '';
   date: '';
 }
+// eslint-disable-next-line
 const SalariesDetails = ({id}: any) => {
   const [open, setOpen] = useState(false);
   const options: Intl.DateTimeFormatOptions = {
@@ -21,10 +19,13 @@ const SalariesDetails = ({id}: any) => {
     day: 'numeric',
   };
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  // eslint-disable-next-line
   const [data, setData] = useState<data | any>({});
   const [isLoading, setIsloading] = useState(false);
+  // eslint-disable-next-line
   const [employee, setEmployee] = useState<data | any>({});
+  // eslint-disable-next-line
   const [formData, setFormData] = useState(false);
   const params = useParams();
   const handleDelete = () => {
@@ -40,7 +41,7 @@ const SalariesDetails = ({id}: any) => {
       setFormData,
       id
     );
-  }, [location]);
+  }, []);
   const onDelete = () => {
     setOpen(true);
   };

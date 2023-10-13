@@ -15,8 +15,10 @@ type Sales = {
   amountCharged: string;
   customer: Customer;
 };
+// eslint-disable-next-line
 const SalesList = ({id}: any) => {
   const navigate = useNavigate();
+  // eslint-disable-next-line
   const {data: sales, isLoading} = useQuery<Sales[] | any, Error>({
     queryKey: ['sales', id],
     queryFn: () => getSales(id),

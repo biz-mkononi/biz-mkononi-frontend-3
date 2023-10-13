@@ -10,10 +10,8 @@ import {
   getSingleBusiness,
   updateSingleBusiness,
 } from '../../Data/Businesses/Data';
-import image from '../../Assets/placeholder.jpg';
 import {useNavigate, useParams} from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
-import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import Image from '../../components/FormFields/Image';
 import FormsLayout from '../../Layout/FormsLayout';
 
@@ -31,9 +29,7 @@ interface data {
 }
 
 const UpdateBusinessDetails = () => {
-  const locationLabel = {label: ''};
-
-  const [location, selectLocation] = useState(locationLabel);
+// eslint-disable-next-line
   const [data, setData] = useState<data | any>({});
   const [isLoading, setIsloading] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -46,7 +42,7 @@ const UpdateBusinessDetails = () => {
 
   useEffect(() => {
     getSingleBusiness(setData, params.id, setIsloading, setFormData);
-  }, [location]);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, [e.target.name]: e.target.value});
@@ -68,9 +64,6 @@ const UpdateBusinessDetails = () => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const newData = new FormData();
-
     updateSingleBusiness(formData, navigate, params.id, setIsUpdating);
   };
   console.log(formData);

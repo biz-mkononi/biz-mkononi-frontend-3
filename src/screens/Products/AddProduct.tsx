@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from 'react';
-import image from '../../Assets/placeholder.jpg';
+import React, {useState} from 'react';
 import {Card} from '@mui/material';
 import {addProduct} from '../../Data/Products/Data';
 import {useNavigate} from 'react-router-dom';
@@ -13,7 +12,11 @@ import CategoryIcon from '@mui/icons-material/Category';
 import '../Businesses/AddBusiness.css';
 import FormsLayout from '../../Layout/FormsLayout';
 import Image from '../../components/FormFields/Image';
-
+import { useQuery } from '@tanstack/react-query';
+type Categories = {
+  name: string;
+};
+// eslint-disable-next-line
 const AddProduct = ({id}: any) => {
   const initialState = {
     name: '',
@@ -31,11 +34,13 @@ const AddProduct = ({id}: any) => {
 
   const [formData, setFormData] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
-  const [categories, setCategories] = useState<any[]>([]);
+  // eslint-disable-next-line
   const [displayImage, setDisplayImage] = useState('');
-  useEffect(() => {
-    getCategory(setCategories, setIsLoading, id);
-  }, []);
+  // eslint-disable-next-line
+  const {data: categories} = useQuery<Categories[] | any, Error>({
+    queryKey: ['categories', id],
+    queryFn: () => getCategory(id),
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, [e.target.name]: e.target.value});
@@ -104,7 +109,9 @@ const AddProduct = ({id}: any) => {
                   aria-label="Default select example"
                   id="basic-addon1">
                   <option selected>Select category</option>
-                  {categories.map((category) => {
+                  {
+                    // eslint-disable-next-line
+                  categories.map((category:any) => {
                     return (
                       <option value={category.id} key={category.id}>
                         {category.name}

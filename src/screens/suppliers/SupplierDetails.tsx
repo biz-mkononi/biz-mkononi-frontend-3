@@ -11,12 +11,15 @@ interface data {
   description: '';
   date: '';
 }
+// eslint-disable-next-line
 const SupplierDetails = ({id}: any) => {
   const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
+  // eslint-disable-next-line
   const [data, setData] = useState<data | any>({});
   const [isLoading, setIsloading] = useState(false);
+  // eslint-disable-next-line
   const [formData, setFormData] = useState(false);
 
   const params = useParams();

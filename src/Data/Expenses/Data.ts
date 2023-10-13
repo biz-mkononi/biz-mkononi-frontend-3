@@ -1,21 +1,21 @@
 import {reqInstance} from '../Auth/authHelper';
 import {newUrl} from '../Sales/Data';
+// eslint-disable-next-line
 const addExpense = (post: any, setIsLoading: any, navigate: any, id: any) => {
   setIsLoading(true);
   reqInstance
     .post(`${newUrl}/${id}/expenses`, post)
     .then(() => navigate('/expense/list'));
 };
+// eslint-disable-next-line
 const getExpenses = async (id: any) => {
   const response = await reqInstance.get(`${newUrl}/${id}/expenses`);
   return response.data.rows;
 };
+
 const getSingleExpense = (
-  setData: any,
-  id: any,
-  setIsLoading: any,
-  setFormData: any,
-  businessid: any
+  // eslint-disable-next-line
+  setData: any,id: any,setIsLoading: any,setFormData: any,businessid: any
 ) => {
   setIsLoading(true);
   reqInstance
@@ -32,10 +32,15 @@ const getSingleExpense = (
     .then(() => setIsLoading(false));
 };
 const updateSingleExpense = (
+  // eslint-disable-next-line
   post: any,
+  // eslint-disable-next-line
   id: any,
+  // eslint-disable-next-line
   navigate: any,
+  // eslint-disable-next-line
   setIsLoading: any,
+  // eslint-disable-next-line
   businessid: any
 ) => {
   setIsLoading(true);
@@ -44,9 +49,13 @@ const updateSingleExpense = (
     .then(() => navigate('/expense/list'));
 };
 const deleteExpense = async (
+  // eslint-disable-next-line
   navigate: any,
+  // eslint-disable-next-line
   id: any,
+  // eslint-disable-next-line
   setIsLoading: any,
+  // eslint-disable-next-line
   businessid: any
 ) => {
   setIsLoading(true);

@@ -24,6 +24,7 @@ const SidebarMenuItemComponent: React.FC<AppMenuItemComponentProps> = (
           },
         }}
         className={className}
+        // eslint-disable-next-line
         children={children}
         onClick={onClick}
       />
@@ -40,7 +41,9 @@ const SidebarMenuItemComponent: React.FC<AppMenuItemComponentProps> = (
         },
       }}
       className={className}
+      // eslint-disable-next-line
       children={children}
+      // eslint-disable-next-line
       component={forwardRef((props: NavLinkProps, ref: any) => (
         <NavLink {...props} ref={ref} />
       ))}

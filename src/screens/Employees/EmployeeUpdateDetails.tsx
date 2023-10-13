@@ -4,7 +4,6 @@ import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import {Card} from '@mui/material';
 import '../Businesses/AddBusiness.css';
-import image from '../../Assets/placeholder.jpg';
 import {useNavigate, useParams} from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -22,8 +21,9 @@ interface data {
   phone: '';
   description: '';
 }
-
+// eslint-disable-next-line
 const EmployeeUpdateDetails = ({id}: any) => {
+  // eslint-disable-next-line
   const [data, setData] = useState<data | any>({});
   const [isLoading, setIsloading] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);

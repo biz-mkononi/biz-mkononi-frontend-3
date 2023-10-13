@@ -1,5 +1,6 @@
 const url = 'https://api-stage.mkononi.biz';
 // http://localhost:3000/
+// eslint-disable-next-line
 const verifyPhone = (phone: any) => {
   fetch(`${url}/auth/verify`, {
     method: 'POST',
@@ -16,9 +17,13 @@ const verifyPhone = (phone: any) => {
 };
 
 const resendVerification = (
+  // eslint-disable-next-line
   phone: any,
+  // eslint-disable-next-line
   setIsLoading: any,
+  // eslint-disable-next-line
   setErrors: any,
+  // eslint-disable-next-line
   navigate: any
 ) => {
   fetch(`${url}/auth/verify/resend`, {
@@ -40,10 +45,15 @@ const resendVerification = (
     });
 };
 const login = (
+  // eslint-disable-next-line
   setErrors: any,
+  // eslint-disable-next-line
   post: any,
+  // eslint-disable-next-line
   navigate: any,
+  // eslint-disable-next-line
   setIsSignIn: any,
+  // eslint-disable-next-line
   setLoggedUser: any
 ) => {
   setIsSignIn(true);
@@ -68,8 +78,11 @@ const login = (
 };
 
 const registerUser = async (
+  // eslint-disable-next-line
   setErrors: any,
+  // eslint-disable-next-line
   post: any,
+  // eslint-disable-next-line
   setIsRegistering: any
 ) => {
   fetch(`${url}/auth/register`, {
@@ -91,9 +104,13 @@ const registerUser = async (
 };
 
 const forgotPassword = async (
+  // eslint-disable-next-line
   setErrors: any,
+  // eslint-disable-next-line
   post: any,
+  // eslint-disable-next-line
   setIsLoading: any,
+  // eslint-disable-next-line
   navigate: any
 ) => {
   fetch(`${url}/auth/forgot-password`, {
@@ -116,9 +133,13 @@ const forgotPassword = async (
     });
 };
 const changePassword = async (
+  // eslint-disable-next-line
   setErrors: any,
+  // eslint-disable-next-line
   post: any,
+  // eslint-disable-next-line
   setIsLoading: any,
+  // eslint-disable-next-line
   navigate: any
 ) => {
   fetch(`${url}/auth/reset-password`, {

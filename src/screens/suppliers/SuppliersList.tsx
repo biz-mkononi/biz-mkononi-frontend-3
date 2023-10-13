@@ -10,8 +10,10 @@ type Suppliers = {
   email: string;
   phone: string;
 };
+// eslint-disable-next-line
 const SuppliersList = ({id}: any) => {
   const navigate = useNavigate();
+  // eslint-disable-next-line
   const {data: suppliers, isLoading} = useQuery<Suppliers[] | any, Error>({
     queryKey: ['suppliers', id],
     queryFn: () => getSuppliers(id),

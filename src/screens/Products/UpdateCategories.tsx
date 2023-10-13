@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import BusinessIcon from '@mui/icons-material/Business';
 import {Card} from '@mui/material';
 import '../Businesses/AddBusiness.css';
-import image from '../../Assets/placeholder.jpg';
 import {useNavigate, useParams} from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import {
@@ -16,8 +15,9 @@ interface data {
   name: '';
   description: '';
 }
-
+// eslint-disable-next-line
 const UpdateCategories = ({id}: any) => {
+  // eslint-disable-next-line
   const [data, setData] = useState<data | any>({});
   const [isLoading, setIsloading] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -31,7 +31,7 @@ const UpdateCategories = ({id}: any) => {
 
   useEffect(() => {
     getSingleCategory(setData, params.id, setIsloading, setFormData, id);
-  }, [location]);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, [e.target.name]: e.target.value});

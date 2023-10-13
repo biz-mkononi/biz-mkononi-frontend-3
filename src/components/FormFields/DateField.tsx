@@ -2,11 +2,13 @@ import {DateTimePicker, LocalizationProvider} from '@mui/x-date-pickers';
 import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import Stack from '@mui/material/Stack';
 import React from 'react';
-import dayjs, {Dayjs} from 'dayjs';
+import {Dayjs} from 'dayjs';
 
 interface InputProps {
   label: string;
+  // eslint-disable-next-line
   handleDateChange: any;
+  // eslint-disable-next-line
   value: Dayjs | any;
   type: string;
 }

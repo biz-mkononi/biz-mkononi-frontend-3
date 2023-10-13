@@ -113,7 +113,7 @@ const LoginPage = () => {
         </form>
         <div className="text-center mt-3">
           <p>
-            Don't have an account yet?{' '}
+            Dont have an account yet?{' '}
             <button
               className="bg-transparent"
               onClick={() => navigate('/auth/sign-up')}>

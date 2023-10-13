@@ -8,14 +8,15 @@ import FormsLayout from '../../Layout/FormsLayout';
 import Input from '../../components/FormFields/Input';
 import DateField from '../../components/FormFields/DateField';
 import TextArea from '../../components/FormFields/TextArea';
+// eslint-disable-next-line
 const AddIncome = ({id}: any) => {
   const navigate = useNavigate();
   const initialState = {title: '', amount: '', txDate: '', description: ''};
   const [formData, setFormData] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
-
+// eslint-disable-next-line
   const [value, setValue] = React.useState<Dayjs | any>(dayjs(Date.now()));
-
+// eslint-disable-next-line
   const handleDateChange = (newValue: Dayjs | any) => {
     setValue(newValue);
     setFormData({...formData, ['txDate']: newValue});

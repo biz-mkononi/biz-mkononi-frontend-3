@@ -17,7 +17,6 @@ import TextArea from '../../components/FormFields/TextArea';
 
 const AddBusiness = () => {
   const [displayImage, setDisplayImage] = useState('');
-  const [value, setValue] = useState(null);
   const initialState = {
     name: '',
     businessEmail: '',
@@ -52,11 +51,12 @@ const AddBusiness = () => {
       setDisplayImage(URL.createObjectURL(e.target.files[0]));
     }
   };
-
+ // eslint-disable-next-line
   const handleSelect = (place: any) => {
     const geocoder = new window.google.maps.Geocoder();
     geocoder.geocode(
       {placeId: place.value.place_id},
+      // eslint-disable-next-line
       (results: any, status: any) => {
         if (status === 'OK' && results[0]) {
           const {lat, lng} = results[0].geometry.location;

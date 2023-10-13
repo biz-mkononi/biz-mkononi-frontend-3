@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {TextField, Alert, InputAdornment, IconButton} from '@mui/material';
-import {registerUser, resendVerification} from '../../Data/Auth/Data';
+import {registerUser} from '../../Data/Auth/Data';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import './Login.css';
@@ -9,18 +9,6 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {useNavigate} from 'react-router-dom';
 import AuthLayout from '../../Layout/AuthLayout';
-
-interface IFormInputs {
-  name: string;
-  email: string;
-  code: string;
-  phone: string;
-  password: string;
-  password2: string;
-}
-interface functions {
-  switchmode: any;
-}
 
 const schema = yup.object().shape({
   name: yup
@@ -53,12 +41,16 @@ const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const initialState = {code: '', password: '', phone: '', password2: ''};
+  // eslint-disable-next-line
   const [formData, setFormData] = useState(initialState);
 
   const {
     register,
+    // eslint-disable-next-line
     handleSubmit,
+    // eslint-disable-next-line
     formState: {errors},
+    // eslint-disable-next-line
   } = useForm<any>({
     resolver: yupResolver(schema),
   });

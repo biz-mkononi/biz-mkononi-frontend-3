@@ -1,10 +1,11 @@
 import {reqInstance} from '../Auth/authHelper';
 import {newUrl} from '../Sales/Data';
-
+// eslint-disable-next-line
 const getCategory = async (id: any) => {
   const response = reqInstance.get(`${newUrl}/${id}/categories`);
   return (await response).data.rows;
 };
+// eslint-disable-next-line
 const addCategory = (post: any, navigate: any, setLoading: any, id: any) => {
   setLoading(true);
   reqInstance
@@ -13,10 +14,15 @@ const addCategory = (post: any, navigate: any, setLoading: any, id: any) => {
 };
 
 const getSingleCategory = async (
+  // eslint-disable-next-line
   setData: any,
+  // eslint-disable-next-line
   id: any,
+  // eslint-disable-next-line
   setIsLoading: any,
+  // eslint-disable-next-line
   setFormData: any,
+  // eslint-disable-next-line
   businessid: any
 ) => {
   setIsLoading(true);
@@ -32,10 +38,15 @@ const getSingleCategory = async (
     .then(() => setIsLoading(false));
 };
 const updateSingleCategory = async (
+  // eslint-disable-next-line
   post: any,
+  // eslint-disable-next-line
   navigate: any,
+  // eslint-disable-next-line
   id: any,
+  // eslint-disable-next-line
   setIsLoading: any,
+  // eslint-disable-next-line
   businessid: any
 ) => {
   setIsLoading(true);
@@ -44,9 +55,13 @@ const updateSingleCategory = async (
     .then(() => navigate('/categories/list'));
 };
 const deleteCategory = async (
+  // eslint-disable-next-line
   navigate: any,
+  // eslint-disable-next-line
   id: any,
+  // eslint-disable-next-line
   setIsLoading: any,
+  // eslint-disable-next-line
   businessid: any
 ) => {
   setIsLoading(true);

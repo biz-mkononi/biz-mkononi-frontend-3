@@ -11,6 +11,7 @@ interface data {
   description: '';
   date: '';
 }
+// eslint-disable-next-line
 const SuppliesDetails = ({id}: any) => {
   const [open, setOpen] = useState(false);
   const options: Intl.DateTimeFormatOptions = {
@@ -20,8 +21,11 @@ const SuppliesDetails = ({id}: any) => {
   };
 
   const navigate = useNavigate();
+  // eslint-disable-next-line
   const [data, setData] = useState<data | any>({});
+  // eslint-disable-next-line
   const [supplier, setSupplier] = useState<data | any>({});
+  // eslint-disable-next-line
   const [product, setProduct] = useState<data | any>([]);
   const [isLoading, setIsloading] = useState(false);
 
@@ -137,7 +141,9 @@ const SuppliesDetails = ({id}: any) => {
           </div>
           <h2 className="mt-3">Product</h2>
 
-          {product.map((product: any) => (
+          {
+            // eslint-disable-next-line
+          product.map((product: any) => (
             <>
               <div className="row padding">
                 <div className="col-lg-6">

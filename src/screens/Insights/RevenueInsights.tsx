@@ -32,12 +32,14 @@ const RevenueInsights = () => {
     to: to.toISOString(),
   };
   const {data: totalProfits, isLoading: totalProfitsLoading} = useQuery<
+  // eslint-disable-next-line
     any,
     Error
   >({
     queryKey: ['totalprofits', businessId, data],
     queryFn: () => getTotalProfits(businessId, data),
   });
+  // eslint-disable-next-line
   const {data: totalSales, isLoading: totalSalesLoading} = useQuery<any, Error>(
     {
       queryKey: ['totalsales', businessId, data],
@@ -45,6 +47,7 @@ const RevenueInsights = () => {
     }
   );
   const {data: totalSupplies, isLoading: totalSuppliesLoading} = useQuery<
+  // eslint-disable-next-line
     any,
     Error
   >({

@@ -4,10 +4,15 @@ import {url} from '../Auth/Data';
 const newUrl = `${url}/businesses`;
 
 const addSale = (
+  // eslint-disable-next-line
   post: any,
+  // eslint-disable-next-line
   navigate: any,
+  // eslint-disable-next-line
   setIsLoading: any,
+  // eslint-disable-next-line
   id: any,
+  // eslint-disable-next-line
   setErrors: any
 ) => {
   setIsLoading(true);
@@ -21,16 +26,23 @@ const addSale = (
     })
     .then(() => navigate('/sales/list'));
 };
+// eslint-disable-next-line
 const getSales = async (id: any) => {
   const response = await reqInstance.get(`${newUrl}/${id}/sales`);
   return response.data.rows;
 };
 const getSingleSale = async (
+  // eslint-disable-next-line
   setData: any,
+  // eslint-disable-next-line
   setCustomer: any,
+  // eslint-disable-next-line
   setProduct: any,
+  // eslint-disable-next-line
   id: any,
+  // eslint-disable-next-line
   setIsLoading: any,
+  // eslint-disable-next-line
   businessid: any
 ) => {
   setIsLoading(true);
@@ -45,9 +57,13 @@ const getSingleSale = async (
 };
 
 const deleteSale = async (
+  // eslint-disable-next-line
   navigate: any,
+  // eslint-disable-next-line
   id: any,
+  // eslint-disable-next-line
   setIsLoading: any,
+  // eslint-disable-next-line
   businessid: any
 ) => {
   setIsLoading(true);

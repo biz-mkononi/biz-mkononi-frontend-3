@@ -1,6 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
-import NotificationAddIcon from '@mui/icons-material/NotificationAdd';
 import image2 from '../../Assets/placeholder.jpg';
 import '../Businesses/AddBusiness.css';
 import {deleteProduct, getSingleProduct} from '../../Data/Products/Data';
@@ -10,6 +8,7 @@ import AlertDialog from '../Dialog/Dialog';
 
 interface data {
   name: '';
+  // eslint-disable-next-line
   category: {};
   productType: '';
   size: '';
@@ -18,12 +17,16 @@ interface data {
   sellingPrice: '';
   stock: '';
 }
+// eslint-disable-next-line
 const ProductDetails = ({id}: any) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  // eslint-disable-next-line
   const [data, setData] = useState<data | any>({});
   const [isLoading, setIsloading] = useState(false);
+  // eslint-disable-next-line
   const [category, setCategory] = useState<data | any>({});
+  // eslint-disable-next-line
   const [formData, setFormData] = useState(false);
 
   const params = useParams();

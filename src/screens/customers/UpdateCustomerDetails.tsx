@@ -1,12 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import BusinessIcon from '@mui/icons-material/Business';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
-import NotificationAddIcon from '@mui/icons-material/NotificationAdd';
 import {Card} from '@mui/material';
 import '../Businesses/AddBusiness.css';
-import image from '../../Assets/placeholder.jpg';
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import {useNavigate, useParams} from 'react-router-dom';
 import {
   getSingleCustomer,
@@ -29,8 +25,9 @@ interface data {
   yearOfBirth: '';
   gender: '';
 }
-
+// eslint-disable-next-line
 const UpdateCustomerDetails = ({id}: any) => {
+  // eslint-disable-next-line
   const [data, setData] = useState<data | any>({});
   const [isLoading, setIsloading] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -43,7 +40,7 @@ const UpdateCustomerDetails = ({id}: any) => {
 
   useEffect(() => {
     getSingleCustomer(setData, params.id, setIsloading, setFormData, id);
-  }, [location]);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, [e.target.name]: e.target.value});

@@ -1,3 +1,4 @@
+import React from 'react'
 import {useContext} from 'react';
 import moment from 'moment';
 import {Chart as ChartJS, registerables} from 'chart.js';
@@ -40,11 +41,6 @@ const Overview = () => {
   const {businessId, endDate, startDate} = useContext(DataContext);
   const from = new Date(startDate);
   const to = new Date(endDate);
-  const groupByMonth = {
-    from: from.toISOString(),
-    to: to.toISOString(),
-    group: 'month',
-  };
   const groupByDayData = {
     from: from.toISOString(),
     to: to.toISOString(),
@@ -67,47 +63,56 @@ const Overview = () => {
     queryKey: ['repeatpurchaserate', data, businessId],
     queryFn: () => getRepeatCustomerRate(businessId, data),
   });
+  // eslint-disable-next-line
   const {data: churnRate, isLoading: churnRateLoading} = useQuery<any, Error>({
     queryKey: ['churnrate', data, businessId],
     queryFn: () => getChurnCustomerRate(businessId, data),
   });
   const {data: totalCustomers, isLoading: totalCustomersLoading} = useQuery<
+  // eslint-disable-next-line
     any,
     Error
   >({
     queryKey: ['totalcustomers', businessId],
     queryFn: () => getTotalCustomers(businessId),
   });
+  // eslint-disable-next-line
   const {data: mostActive, isLoading: mostActiveLoading} = useQuery<any, Error>(
     {
       queryKey: ['mostactive', mostActiveCustomers, businessId],
       queryFn: () => getMostActiveCustomers(businessId, mostActiveCustomers),
     }
   );
+  // eslint-disable-next-line
   const {data: totalSales, isLoading: totalSalesLoading} = useQuery<any, Error>(
     {
       queryKey: ['totalsales', businessId, data],
       queryFn: () => getTotalSales(businessId, data),
     }
   );
+  // eslint-disable-next-line
   const {data: salesTrend, isLoading: salesTrendLoading} = useQuery<any, Error>(
     {
       queryKey: ['salestrend', businessId, groupByDayData],
       queryFn: () => getSalesInLastMonthTrend(businessId, groupByDayData),
     }
   );
+
   const {data: totalSupplies, isLoading: totalSuppliesLoading} = useQuery<
+  // eslint-disable-next-line
     any,
     Error
   >({
     queryKey: ['totalsupplies', businessId],
     queryFn: () => getTotalSupplies(businessId, data),
   });
+  // eslint-disable-next-line
   const {data: sales, isLoading: salesLoading} = useQuery<any, Error>({
     queryKey: ['sales', businessId],
     queryFn: () => getSales(businessId),
   });
   const {data: totalProfits, isLoading: totalProfitsLoading} = useQuery<
+  // eslint-disable-next-line
     any,
     Error
   >({

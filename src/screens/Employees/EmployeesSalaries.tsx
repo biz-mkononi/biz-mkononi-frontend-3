@@ -14,8 +14,10 @@ type Salaries = {
   txDate: Date;
   amount: string;
 };
+// eslint-disable-next-line
 const EmployeesSalaries = ({id}: any) => {
   const navigate = useNavigate();
+  // eslint-disable-next-line
   const {data: salaries, isLoading} = useQuery<Salaries[] | any, Error>({
     queryKey: ['salaries', id],
     queryFn: () => getSalaries(id),
