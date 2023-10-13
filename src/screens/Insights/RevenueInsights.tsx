@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react'
-import Card from '@mui/material/Card'
+import React, {useContext} from 'react';
+import Card from '@mui/material/Card';
 import {
   Bar,
   XAxis,
@@ -9,44 +9,51 @@ import {
   Legend,
   BarChart,
   ResponsiveContainer,
-} from 'recharts'
-import { Doughnut } from 'react-chartjs-2'
+} from 'recharts';
 
-import { Chart as ChartJS, registerables } from 'chart.js'
-import moment from 'moment'
-import './Overview.css'
-import CircularProgress from '@mui/material/CircularProgress'
-import { getTotalProfits } from '../../Data/Analytics/ProfitsAnalytics'
-import { getTotalSupplies } from '../../Data/Analytics/SuppliesAnalytics'
-import { getTotalSales } from '../../Data/Analytics/SalesAnalytics'
-import { DataContext } from '../../context/ContextProvider'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import dayjs, { Dayjs } from 'dayjs'
-import { Container, TextField } from '@mui/material'
-import DateComponent from '../../components/DateComponent/DateComponent'
-ChartJS.register(...registerables)
+import {Chart as ChartJS, registerables} from 'chart.js';
+import moment from 'moment';
+import './Overview.css';
+import CircularProgress from '@mui/material/CircularProgress';
+import {getTotalProfits} from '../../Data/Analytics/ProfitsAnalytics';
+import {getTotalSupplies} from '../../Data/Analytics/SuppliesAnalytics';
+import {getTotalSales} from '../../Data/Analytics/SalesAnalytics';
+import {DataContext} from '../../context/ContextProvider';
+import DateComponent from '../../components/DateComponent/DateComponent';
+import {useQuery} from '@tanstack/react-query';
+ChartJS.register(...registerables);
 
 const RevenueInsights = () => {
-  const [totalSupplies, setTotalSupplies] = useState<any>()
-  const [totalSales, setTotalSales] = useState<any>({})
-  const [totalProfits, setTotalProfits] = useState<any>()
-
-  const [isLoading, setIsLoading] = useState(false)
-  const { businessId, startDate, endDate } = useContext(DataContext)
-  useEffect(() => {
-    const from = new Date(startDate)
-    const to = new Date(endDate)
-    const data = {
-      from: from.toISOString(),
-      to: to.toISOString(),
+  const {businessId, startDate, endDate} = useContext(DataContext);
+  const from = new Date(startDate);
+  const to = new Date(endDate);
+  const data = {
+    from: from.toISOString(),
+    to: to.toISOString(),
+  };
+  const {data: totalProfits, isLoading: totalProfitsLoading} = useQuery<
+  // eslint-disable-next-line
+    any,
+    Error
+  >({
+    queryKey: ['totalprofits', businessId, data],
+    queryFn: () => getTotalProfits(businessId, data),
+  });
+  // eslint-disable-next-line
+  const {data: totalSales, isLoading: totalSalesLoading} = useQuery<any, Error>(
+    {
+      queryKey: ['totalsales', businessId, data],
+      queryFn: () => getTotalSales(businessId, data),
     }
-    console.log(data)
-    getTotalSupplies(setTotalSupplies, setIsLoading, businessId, data)
-    getTotalSales(setTotalSales, setIsLoading, businessId, data)
-    getTotalProfits(setTotalProfits, setIsLoading, businessId, data)
-  }, [startDate, endDate])
+  );
+  const {data: totalSupplies, isLoading: totalSuppliesLoading} = useQuery<
+  // eslint-disable-next-line
+    any,
+    Error
+  >({
+    queryKey: ['totalsupplies', businessId],
+    queryFn: () => getTotalSupplies(businessId, data),
+  });
 
   const revenueData = [
     {
@@ -55,17 +62,17 @@ const RevenueInsights = () => {
     },
     {
       name: 'Total Sales',
-      total: totalSales.total,
+      total: totalSales,
     },
     {
       name: 'Total Profits',
       total: totalProfits,
     },
-  ]
+  ];
 
   return (
     <div>
-      {isLoading ? (
+      {totalProfitsLoading || totalSalesLoading || totalSuppliesLoading ? (
         <div className="text-center">
           <CircularProgress color="success" />
         </div>
@@ -86,7 +93,7 @@ const RevenueInsights = () => {
               <div className="col-lg-4 mt-3">
                 <div className="card text-center">
                   <h5 className="mb-2 top-cards">
-                    <span className="money">Ksh</span> {totalSales.total}
+                    <span className="money">Ksh</span> {totalSales}
                   </h5>
                   <h3>Total Sales</h3>
                 </div>
@@ -118,8 +125,7 @@ const RevenueInsights = () => {
                         right: 30,
                         left: 20,
                         bottom: 5,
-                      }}
-                    >
+                      }}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="name" />
                       <YAxis />
@@ -135,7 +141,7 @@ const RevenueInsights = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default RevenueInsights
+export default RevenueInsights;

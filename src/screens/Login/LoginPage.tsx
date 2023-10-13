@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react'
-import './Login.css'
+import React, {useContext, useState} from 'react';
+import './Login.css';
 import {
   TextField,
   FormControlLabel,
@@ -7,35 +7,35 @@ import {
   InputAdornment,
   IconButton,
   Alert,
-} from '@mui/material'
-import { login } from '../../Data/Auth/Data'
-import Visibility from '@mui/icons-material/Visibility'
-import VisibilityOff from '@mui/icons-material/VisibilityOff'
-import { useNavigate } from 'react-router-dom'
-import { DataContext } from '../../context/ContextProvider'
-import AuthLayout from '../../Layout/AuthLayout'
+} from '@mui/material';
+import {login} from '../../Data/Auth/Data';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import {useNavigate} from 'react-router-dom';
+import {DataContext} from '../../context/ContextProvider';
+import AuthLayout from '../../Layout/AuthLayout';
 
 const LoginPage = () => {
-  const navigate = useNavigate()
-  const initialState = { code: '', password: '', phone: '', password2: '' }
-  const [showPassword, setShowPassword] = useState(false)
-  const [isSigningIn, setIsSigningIn] = useState(false)
+  const navigate = useNavigate();
+  const initialState = {code: '', password: '', phone: '', password2: ''};
+  const [showPassword, setShowPassword] = useState(false);
+  const [isSigningIn, setIsSigningIn] = useState(false);
 
-  const { setLoggedUser } = useContext(DataContext)
-  const [formData, setFormData] = useState(initialState)
-  const [dataErrors, setDataErrors] = useState('')
+  const {setLoggedUser} = useContext(DataContext);
+  const [formData, setFormData] = useState(initialState);
+  const [dataErrors, setDataErrors] = useState('');
 
-  const handleShowPassword = () => setShowPassword(!showPassword)
+  const handleShowPassword = () => setShowPassword(!showPassword);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({...formData, [e.target.name]: e.target.value});
+  };
 
   const onSubmitLoginData = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    login(setDataErrors, formData, navigate, setIsSigningIn, setLoggedUser)
-  }
+    e.preventDefault();
+    login(setDataErrors, formData, navigate, setIsSigningIn, setLoggedUser);
+  };
 
-  const forgotPassword = () => navigate('/auth/get-forgot-password')
+  const forgotPassword = () => navigate('/auth/get-forgot-password');
   return (
     <AuthLayout>
       <div className="login flex flex-col justify-center items-center">
@@ -43,8 +43,7 @@ const LoginPage = () => {
           <Alert
             variant="filled"
             onClose={() => setDataErrors('')}
-            severity="error"
-          >
+            severity="error">
             {dataErrors}
           </Alert>
         )}
@@ -114,18 +113,17 @@ const LoginPage = () => {
         </form>
         <div className="text-center mt-3">
           <p>
-            Don't have an account yet?{' '}
+            Dont have an account yet?{' '}
             <button
               className="bg-transparent"
-              onClick={() => navigate('/auth/sign-up')}
-            >
+              onClick={() => navigate('/auth/sign-up')}>
               Sign Up
             </button>
           </p>
         </div>
       </div>
     </AuthLayout>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;

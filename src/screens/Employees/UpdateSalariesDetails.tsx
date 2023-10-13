@@ -1,72 +1,86 @@
-import React, { useEffect, useState } from 'react'
-import BusinessIcon from '@mui/icons-material/Business'
-import PhoneIcon from '@mui/icons-material/Phone'
-import { Card } from '@mui/material'
-import '../Businesses/AddBusiness.css'
-import { useNavigate, useParams } from 'react-router-dom'
-import CircularProgress from '@mui/material/CircularProgress'
-import Stack from '@mui/material/Stack'
-import dayjs, { Dayjs } from 'dayjs'
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { getEmployees } from '../../Data/Employees/Data'
-import { getSingleSalary, updateSingleSalary } from '../../Data/Salaries/Data'
-import FormsLayout from '../../Layout/FormsLayout'
+import React, {useEffect, useState} from 'react';
+import BusinessIcon from '@mui/icons-material/Business';
+import PhoneIcon from '@mui/icons-material/Phone';
+import {Card} from '@mui/material';
+import '../Businesses/AddBusiness.css';
+import {useNavigate, useParams} from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
+import Stack from '@mui/material/Stack';
+import dayjs, {Dayjs} from 'dayjs';
+import {DateTimePicker} from '@mui/x-date-pickers/DateTimePicker';
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
+import {getEmployees} from '../../Data/Employees/Data';
+import {getSingleSalary, updateSingleSalary} from '../../Data/Salaries/Data';
+import FormsLayout from '../../Layout/FormsLayout';
+import { useQuery } from '@tanstack/react-query';
 
 interface data {
-  name: ''
-  email: ''
-  phone: ''
-  description: ''
+  name: '';
+  email: '';
+  phone: '';
+  description: '';
 }
-
-const UpdateSalariesDetails = ({ id }: any) => {
-  const [data, setData] = useState<data | any>({})
-  const [isLoading, setIsloading] = useState(false)
-  const [isUpdating, setIsUpdating] = useState(false)
-  const [employees, setEmployees] = useState<any[]>([])
-  const [currentEmployee, setCurrentEmployee] = useState<data | any>({})
-  const [value, setValue] = React.useState<Dayjs | any>(dayjs(data.txDate))
-
+type Employees = {
+  name: string;
+  position: string;
+  phone: string;
+  email: string;
+  idNumber: string;
+}
+// eslint-disable-next-line
+const UpdateSalariesDetails = ({id}: any) => {
+  // eslint-disable-next-line
+  const [data, setData] = useState<data | any>({});
+  const [isLoading, setIsloading] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+  // eslint-disable-next-line
+  const [currentEmployee, setCurrentEmployee] = useState<data | any>({});
+  // eslint-disable-next-line
+  const [value, setValue] = React.useState<Dayjs | any>(dayjs(data.txDate));
+ // eslint-disable-next-line
+const {data: employees} = useQuery<Employees[] | any, Error>({
+    queryKey: ['employees', id],
+    queryFn: () => getEmployees(id),
+  });
   useEffect(() => {
-    getEmployees(setEmployees, setIsloading, id)
     getSingleSalary(
       setData,
       params.id,
       setIsloading,
       setCurrentEmployee,
       setFormData,
-      id,
-    )
-  }, [])
+      id
+    );
+  }, []);
+  // eslint-disable-next-line
   const handleDateChange = (newValue: Dayjs | any) => {
-    setValue(newValue)
-    setFormData({ ...formData, ['txDate']: newValue })
-  }
-  const navigate = useNavigate()
+    setValue(newValue);
+    setFormData({...formData, ['txDate']: newValue});
+  };
+  const navigate = useNavigate();
 
-  const params = useParams()
-  const [formData, setFormData] = useState({})
+  const params = useParams();
+  const [formData, setFormData] = useState({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({...formData, [e.target.name]: e.target.value});
+  };
 
   const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-    console.log(e.target.value)
-  }
+    setFormData({...formData, [e.target.name]: e.target.value});
+    console.log(e.target.value);
+  };
   const handleDescriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({...formData, [e.target.name]: e.target.value});
+  };
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    updateSingleSalary(formData, navigate, params.id, setIsUpdating, id)
-  }
-  console.log(formData)
+    e.preventDefault();
+    updateSingleSalary(formData, navigate, params.id, setIsUpdating, id);
+  };
+  console.log(formData);
   return (
     <>
       {isLoading ? (
@@ -89,15 +103,16 @@ const UpdateSalariesDetails = ({ id }: any) => {
                   onChange={handleTypeChange}
                   name="employeeId"
                   aria-label="Default select example"
-                  id="basic-addon1"
-                >
+                  id="basic-addon1">
                   <option selected>{currentEmployee.name}</option>
-                  {employees.map((employee) => {
+                  {
+                    // eslint-disable-next-line
+                  employees.map((employee:any) => {
                     return (
                       <option value={employee.id} key={employee.id}>
                         {employee.name}
                       </option>
-                    )
+                    );
                   })}
                 </select>
               </div>
@@ -142,15 +157,13 @@ const UpdateSalariesDetails = ({ id }: any) => {
                   onChange={handleDescriptionChange}
                   defaultValue={data.description}
                   name="description"
-                  aria-label="With textarea"
-                ></textarea>
+                  aria-label="With textarea"></textarea>
               </div>
 
               <div className="text-center mt-3">
                 <button
                   className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-                  disabled={isUpdating ? true : false}
-                >
+                  disabled={isUpdating ? true : false}>
                   {isUpdating ? 'Updating' : 'Update Salary'}
                 </button>
               </div>
@@ -159,7 +172,7 @@ const UpdateSalariesDetails = ({ id }: any) => {
         </FormsLayout>
       )}
     </>
-  )
-}
+  );
+};
 
-export default UpdateSalariesDetails
+export default UpdateSalariesDetails;

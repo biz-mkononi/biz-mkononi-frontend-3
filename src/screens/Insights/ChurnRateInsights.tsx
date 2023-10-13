@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react'
-import Card from '@mui/material/Card'
+import React, {useContext} from 'react';
+import Card from '@mui/material/Card';
 import {
   Bar,
   XAxis,
@@ -9,39 +9,45 @@ import {
   Legend,
   BarChart,
   ResponsiveContainer,
-} from 'recharts'
-import { Chart as ChartJS, registerables } from 'chart.js'
-import './Overview.css'
+} from 'recharts';
+import {Chart as ChartJS, registerables} from 'chart.js';
+import './Overview.css';
 import {
   getChurnCustomerRate,
   getNewCustomers,
   getRepeatCustomerRate,
-} from '../../Data/Analytics/CustomerAnalytics'
-import CircularProgress from '@mui/material/CircularProgress'
-import { DataContext } from '../../context/ContextProvider'
+} from '../../Data/Analytics/CustomerAnalytics';
+import CircularProgress from '@mui/material/CircularProgress';
+import {DataContext} from '../../context/ContextProvider';
+import {useQuery} from '@tanstack/react-query';
+import DateComponent from '../../components/DateComponent/DateComponent';
 
-ChartJS.register(...registerables)
+ChartJS.register(...registerables);
 const ChurnRateInsights = () => {
-  const [newCustomers, setNewCustomers] = useState<any>({})
-  const [repeatPurchaseRate, setRepeatPurchaseRate] = useState<any>()
-  const [churnRate, setChurnRate] = useState<any[]>([])
-  const [isLoading, setIsLoading] = useState(false)
-  const { businessId, startDate, endDate } = useContext(DataContext)
-  useEffect(() => {
-    const from = new Date(startDate)
-    const to = new Date(endDate)
-    const data = {
-      from: from.toISOString(),
-      to: to.toISOString(),
-    }
-    getNewCustomers(setNewCustomers, setIsLoading, businessId, data)
-    getRepeatCustomerRate(setRepeatPurchaseRate, setIsLoading, businessId, data)
-    getChurnCustomerRate(setChurnRate, setIsLoading, businessId, data)
-  }, [])
+  const {businessId, startDate, endDate} = useContext(DataContext);
+  const from = new Date(startDate);
+  const to = new Date(endDate);
+  const data = {
+    from: from.toISOString(),
+    to: to.toISOString(),
+  };
+  const {data: newCustomers, isLoading: customersLoading} = useQuery({
+    queryKey: ['newcustomers', data, businessId],
+    queryFn: () => getNewCustomers(businessId, data),
+  });
+  const {data: repeatPurchaseRate, isLoading: purchaseRateLoading} = useQuery({
+    queryKey: ['repeatpurchaserate', data, businessId],
+    queryFn: () => getRepeatCustomerRate(businessId, data),
+  });
+  // eslint-disable-next-line
+  const {data: churnRate, isLoading: churnRateLoading} = useQuery<any, Error>({
+    queryKey: ['churnrate', data, businessId],
+    queryFn: () => getChurnCustomerRate(businessId, data),
+  });
   const churnData = [
     {
       name: 'new Customers',
-      total: newCustomers.total,
+      total: newCustomers,
     },
     {
       name: 'repeat purchase rate %',
@@ -51,22 +57,21 @@ const ChurnRateInsights = () => {
       name: 'churn rate %',
       total: churnRate,
     },
-  ]
-  let date = new Date()
-  const month = date.getMonth()
+  ];
   return (
     <div>
-      {isLoading ? (
+      {customersLoading || purchaseRateLoading || churnRateLoading ? (
         <div className="text-center">
           <CircularProgress color="success" />
         </div>
       ) : (
         <div className="container-fluid overview">
+          <DateComponent />
           <div className="insights container">
             <div className="row padding">
               <div className="col-lg-4 mt-3">
                 <div className="card text-center">
-                  <h2 className="mb-2">{newCustomers.total}</h2>
+                  <h2 className="mb-2">{newCustomers}</h2>
                   <h3>New Customers Acquired</h3>
                 </div>
               </div>
@@ -88,9 +93,7 @@ const ChurnRateInsights = () => {
             <div className="row padding">
               <div className="col-lg-12 col-sm-12">
                 <Card className="Card new-card">
-                  <h5 className="text-center mb-5">
-                    Customer Details in the last 30 days
-                  </h5>
+                  <h5 className="text-center mb-5">Customer Details</h5>
                   <ResponsiveContainer width="95%" height={400}>
                     <BarChart
                       data={churnData}
@@ -99,8 +102,7 @@ const ChurnRateInsights = () => {
                         right: 30,
                         left: 20,
                         bottom: 5,
-                      }}
-                    >
+                      }}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="name" />
                       <YAxis />
@@ -117,7 +119,7 @@ const ChurnRateInsights = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default ChurnRateInsights
+export default ChurnRateInsights;

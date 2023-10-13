@@ -1,25 +1,24 @@
-import React, { ReactNode } from 'react'
-import '../screens/Login/Login.css'
-import image2 from '../Assets/logo.png'
-import image3 from '../Assets/ai-1.svg'
-import image4 from '../Assets/customer 1.svg'
-import image5 from '../Assets/insight 1.svg'
-import image6 from '../Assets/business-and-finance 1.svg'
+import React, {ReactNode} from 'react';
+import '../screens/Login/Login.css';
+import image2 from '../Assets/logo.png';
+import image3 from '../Assets/ai-1.svg';
+import image4 from '../Assets/customer 1.svg';
+import image5 from '../Assets/insight 1.svg';
+import image6 from '../Assets/business-and-finance 1.svg';
 interface AuthLayoutProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
-const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
+const AuthLayout: React.FC<AuthLayoutProps> = ({children}) => {
   return (
     <div className="flex ">
       <div className="w-1/2 p-4">
         <div className="container-fluid login-banner">
-          <div style={{ display: 'flex' }}>
+          <div style={{display: 'flex'}}>
             <img src={image2} className="img-fluid banner-logo" alt="..." />
             <h5
               className=" banner-heading font-medium leading-tight text-xl mt-0 mb-2 "
-              style={{ padding: '20px' }}
-            >
+              style={{padding: '20px'}}>
               BizMkononi
             </h5>
           </div>
@@ -31,24 +30,23 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
           </p>
           <div
             className="text-center mt-3 login-icons"
-            style={{ marginLeft: '100px' }}
-          >
-            <div className="mb-4" style={{ display: 'flex' }}>
+            style={{marginLeft: '100px'}}>
+            <div className="mb-4" style={{display: 'flex'}}>
               <img src={image3} className="img-fluid" alt="..." />
               <p>AI Powered Business Intelligence</p>
             </div>
 
-            <div className="mb-4" style={{ display: 'flex' }}>
+            <div className="mb-4" style={{display: 'flex'}}>
               <img src={image4} className="img-fluid" alt="..." />
               <p>360° Customer view</p>
             </div>
 
-            <div className="mb-4" style={{ display: 'flex' }}>
+            <div className="mb-4" style={{display: 'flex'}}>
               <img src={image5} className="img-fluid" alt="..." />
               <p>100% Business Insights</p>
             </div>
 
-            <div className="mb-4" style={{ display: 'flex' }}>
+            <div className="mb-4" style={{display: 'flex'}}>
               <img src={image6} className="img-fluid" alt="..." />
               <p>Revenue Projection Charts</p>
             </div>
@@ -57,7 +55,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
       </div>
       <div className="w-1/2 h-screen">{children}</div>
     </div>
-  )
-}
+  );
+};
 
-export default AuthLayout
+export default AuthLayout;

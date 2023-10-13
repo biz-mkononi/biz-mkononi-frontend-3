@@ -1,35 +1,42 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import '../Businesses/AddBusiness.css'
-import { getEmployees } from '../../Data/Employees/Data'
-import { useNavigate } from 'react-router-dom'
-import CircularProgress from '@mui/material/CircularProgress'
-import Table from '../../components/Table/Table'
+import React, {useMemo} from 'react';
+import '../Businesses/AddBusiness.css';
+import {getEmployees} from '../../Data/Employees/Data';
+import {useNavigate} from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
+import Table from '../../components/Table/Table';
+import {useQuery} from '@tanstack/react-query';
+type Employees = {
+  name: string;
+  position: string;
+  phone: string;
+  email: string;
+  idNumber: string;
+};
+// eslint-disable-next-line
+const EmployeesList = ({id}: any) => {
+  const navigate = useNavigate();
+  // eslint-disable-next-line
+  const {data: employees, isLoading} = useQuery<Employees[] | any, Error>({
+    queryKey: ['employees', id],
+    queryFn: () => getEmployees(id),
+  });
 
-const EmployeesList = ({ id }: any) => {
-  const navigate = useNavigate()
-  const [data, setData] = useState<any[]>([])
-  const [isLoading, setIsLoading] = useState(false)
   const memoizedEmployees = useMemo(() => {
-    return data;
-  },[data])
-  useEffect(() => {
-    getEmployees(setData, setIsLoading, id)
-  }, [])
-
+    return employees;
+  }, [employees]);
   const columns = [
-    { header: 'Name', dataKey: 'name' },
-    { header: 'Position', dataKey: 'position' },
-    { header: 'Email', dataKey: 'email' },
-    { header: 'Phone', dataKey: 'phone' },
-    { header: 'ID number', dataKey: 'idNumber' },
-  ]
+    {header: 'Name', dataKey: 'name'},
+    {header: 'Position', dataKey: 'position'},
+    {header: 'Email', dataKey: 'email'},
+    {header: 'Phone', dataKey: 'phone'},
+    {header: 'ID number', dataKey: 'idNumber'},
+  ];
   const onView = (id: string | undefined) => {
-    navigate(`/employee/${id}/details`)
-  }
+    navigate(`/employee/${id}/details`);
+  };
   const onEdit = (id: string | undefined) => {
-    navigate(`/employee/${id}/update-details`)
-  }
-  console.log(data)
+    navigate(`/employee/${id}/update-details`);
+  };
   return (
     <>
       {isLoading ? (
@@ -37,10 +44,15 @@ const EmployeesList = ({ id }: any) => {
           <CircularProgress color="success" />
         </div>
       ) : (
-        <Table columns={columns} onEdit={onEdit} onView={onView} data={memoizedEmployees} />
+        <Table
+          columns={columns}
+          onEdit={onEdit}
+          onView={onView}
+          data={memoizedEmployees}
+        />
       )}
     </>
-  )
-}
+  );
+};
 
-export default EmployeesList
+export default EmployeesList;

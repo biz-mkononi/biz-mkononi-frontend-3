@@ -1,13 +1,13 @@
-import React, { ReactNode } from 'react'
+import React, {ReactNode} from 'react';
 interface AuthLayoutProps {
-  children: ReactNode
-  business?: boolean
-  title: string
-  isActive?: boolean
-  isActive2?: boolean
-  onClickActive?: () => void
-  onClickActive2?: () => void
-  update?: boolean
+  children: ReactNode;
+  business?: boolean;
+  title: string;
+  isActive?: boolean;
+  isActive2?: boolean;
+  onClickActive?: () => void;
+  onClickActive2?: () => void;
+  update?: boolean;
 }
 
 const FormsLayout: React.FC<AuthLayoutProps> = ({
@@ -38,8 +38,7 @@ const FormsLayout: React.FC<AuthLayoutProps> = ({
                     ? 'btn btn-primary active-button btn-md m-2 mb-3'
                     : 'btn btn-outline btn-md m-2 mb-3'
                 }
-                onClick={onClickActive}
-              >
+                onClick={onClickActive}>
                 My Business List
               </button>
               <button
@@ -48,8 +47,7 @@ const FormsLayout: React.FC<AuthLayoutProps> = ({
                     ? 'btn btn-primary active-button btn-md m-2 mb-3'
                     : 'btn btn-outline btn-md m-2 mb-3'
                 }
-                onClick={onClickActive2}
-              >
+                onClick={onClickActive2}>
                 Add Business
               </button>
             </div>
@@ -65,7 +63,7 @@ const FormsLayout: React.FC<AuthLayoutProps> = ({
       )}
       {children}
     </div>
-  )
-}
+  );
+};
 
-export default FormsLayout
+export default FormsLayout;

@@ -1,62 +1,60 @@
-import React, { useEffect, useState } from 'react'
-import BusinessIcon from '@mui/icons-material/Business'
-import NotificationAddIcon from '@mui/icons-material/NotificationAdd'
-import '../Businesses/AddBusiness.css'
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew'
-import { useNavigate, useParams } from 'react-router-dom'
-import CircularProgress from '@mui/material/CircularProgress'
+import React, {useEffect, useState} from 'react';
+import BusinessIcon from '@mui/icons-material/Business';
+import '../Businesses/AddBusiness.css';
+import {useNavigate, useParams} from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
 
-import TextField from '@mui/material/TextField'
-import Stack from '@mui/material/Stack'
-import { Card } from '@mui/material'
-import dayjs, { Dayjs } from 'dayjs'
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { getSingleIncome, updateSingleIncome } from '../../Data/Incomes/Data'
-import FormsLayout from '../../Layout/FormsLayout'
+import Stack from '@mui/material/Stack';
+import {Card} from '@mui/material';
+import dayjs, {Dayjs} from 'dayjs';
+import {DateTimePicker} from '@mui/x-date-pickers/DateTimePicker';
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
+import {getSingleIncome, updateSingleIncome} from '../../Data/Incomes/Data';
+import FormsLayout from '../../Layout/FormsLayout';
 
 interface data {
-  name: ''
-  email: ''
-  phone: ''
-  description: ''
+  name: '';
+  email: '';
+  phone: '';
+  description: '';
 }
-
-const UpdateIncomeDetails = ({ id }: any) => {
-  const [data, setData] = useState<data | any>({})
-  const [isLoading, setIsloading] = useState(false)
-  const [isUpdating, setIsUpdating] = useState(false)
-  const navigate = useNavigate()
-  const [formData, setFormData] = useState({})
-
-  const [value, setValue] = React.useState<Dayjs | any>(dayjs(data.txDate))
-
+// eslint-disable-next-line
+const UpdateIncomeDetails = ({id}: any) => {
+  // eslint-disable-next-line
+  const [data, setData] = useState<data | any>({});
+  const [isLoading, setIsloading] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({});
+// eslint-disable-next-line
+  const [value, setValue] = React.useState<Dayjs | any>(dayjs(data.txDate));
+// eslint-disable-next-line
   const handleDateChange = (newValue: Dayjs | any) => {
-    setValue(newValue)
-    setFormData({ ...formData, ['txDate']: newValue })
-  }
+    setValue(newValue);
+    setFormData({...formData, ['txDate']: newValue});
+  };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({...formData, [e.target.name]: e.target.value});
+  };
   const handleDescriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({...formData, [e.target.name]: e.target.value});
+  };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    updateSingleIncome(formData, navigate, params.id, setIsUpdating, id)
-  }
+    e.preventDefault();
+    updateSingleIncome(formData, navigate, params.id, setIsUpdating, id);
+  };
 
-  const params = useParams()
+  const params = useParams();
 
   useEffect(() => {
-    getSingleIncome(setData, params.id, setIsloading, setFormData, id)
-  }, [location])
+    getSingleIncome(setData, params.id, setIsloading, setFormData, id);
+  }, [location]);
 
-  console.log(formData)
+  console.log(formData);
 
   return (
     <>
@@ -126,15 +124,13 @@ const UpdateIncomeDetails = ({ id }: any) => {
                   onChange={handleDescriptionChange}
                   defaultValue={data.description}
                   name="description"
-                  aria-label="With textarea"
-                ></textarea>
+                  aria-label="With textarea"></textarea>
               </div>
 
               <div className="text-center mt-3">
                 <button
                   className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-                  disabled={isUpdating ? true : false}
-                >
+                  disabled={isUpdating ? true : false}>
                   {isUpdating ? 'updating' : 'Update Income'}
                 </button>
               </div>
@@ -143,7 +139,7 @@ const UpdateIncomeDetails = ({ id }: any) => {
         </FormsLayout>
       )}
     </>
-  )
-}
+  );
+};
 
-export default UpdateIncomeDetails
+export default UpdateIncomeDetails;

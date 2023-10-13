@@ -1,24 +1,24 @@
-import React, { useState } from 'react'
-import { TextField, Alert } from '@mui/material'
-import { forgotPassword } from '../../Data/Auth/Data'
-import AuthLayout from '../../Layout/AuthLayout'
-import './Login.css'
-import { useNavigate } from 'react-router-dom'
+import React, {useState} from 'react';
+import {TextField, Alert} from '@mui/material';
+import {forgotPassword} from '../../Data/Auth/Data';
+import AuthLayout from '../../Layout/AuthLayout';
+import './Login.css';
+import {useNavigate} from 'react-router-dom';
 
 const GetForgotPasswordCode = () => {
-  const initialState = { code: '', password: '', phone: '', password2: '' }
-  const navigate = useNavigate()
-  const [dataErrors, setDataErrors] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const [formData, setFormData] = useState(initialState)
+  const initialState = {code: '', password: '', phone: '', password2: ''};
+  const navigate = useNavigate();
+  const [dataErrors, setDataErrors] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState(initialState);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({...formData, [e.target.name]: e.target.value});
+  };
 
   const onForgotPassword = () => {
-    setIsLoading(true)
-    forgotPassword(setDataErrors, formData, setIsLoading, navigate)
-  }
+    setIsLoading(true);
+    forgotPassword(setDataErrors, formData, setIsLoading, navigate);
+  };
   return (
     <React.Fragment>
       <AuthLayout>
@@ -26,8 +26,7 @@ const GetForgotPasswordCode = () => {
           <Alert
             variant="filled"
             onClose={() => setDataErrors('')}
-            severity="error"
-          >
+            severity="error">
             {dataErrors}
           </Alert>
         )}
@@ -51,8 +50,7 @@ const GetForgotPasswordCode = () => {
             ) : (
               <button
                 className="btn btn-primary btn-md"
-                onClick={onForgotPassword}
-              >
+                onClick={onForgotPassword}>
                 Submit
               </button>
             )}
@@ -60,7 +58,7 @@ const GetForgotPasswordCode = () => {
         </div>
       </AuthLayout>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default GetForgotPasswordCode
+export default GetForgotPasswordCode;

@@ -1,5 +1,6 @@
-const url = 'https://api-stage.mkononi.biz'
+const url = 'https://api-stage.mkononi.biz';
 // http://localhost:3000/
+// eslint-disable-next-line
 const verifyPhone = (phone: any) => {
   fetch(`${url}/auth/verify`, {
     method: 'POST',
@@ -10,16 +11,20 @@ const verifyPhone = (phone: any) => {
   })
     .then((res) => res.json())
     .then((json) => {
-      console.log(json)
-    })
-  console.log(phone)
-}
+      console.log(json);
+    });
+  console.log(phone);
+};
 
 const resendVerification = (
+  // eslint-disable-next-line
   phone: any,
+  // eslint-disable-next-line
   setIsLoading: any,
+  // eslint-disable-next-line
   setErrors: any,
-  navigate: any,
+  // eslint-disable-next-line
+  navigate: any
 ) => {
   fetch(`${url}/auth/verify/resend`, {
     method: 'POST',
@@ -31,22 +36,27 @@ const resendVerification = (
     .then((res) => res.json())
     .then((json) => {
       if (json.statusCode === 403) {
-        setIsLoading(false)
-        setErrors(json.message)
+        setIsLoading(false);
+        setErrors(json.message);
       } else {
-        setIsLoading(false)
-        navigate(0)
+        setIsLoading(false);
+        navigate(0);
       }
-    })
-}
+    });
+};
 const login = (
+  // eslint-disable-next-line
   setErrors: any,
+  // eslint-disable-next-line
   post: any,
+  // eslint-disable-next-line
   navigate: any,
+  // eslint-disable-next-line
   setIsSignIn: any,
-  setLoggedUser: any,
+  // eslint-disable-next-line
+  setLoggedUser: any
 ) => {
-  setIsSignIn(true)
+  setIsSignIn(true);
   fetch(`${url}/auth/login`, {
     method: 'POST',
     headers: {
@@ -57,20 +67,23 @@ const login = (
     .then((res) => res.json())
     .then((data) => {
       if (data.statusCode === 401) {
-        setIsSignIn(false)
-        setErrors('You are unauthorized, verify your details')
+        setIsSignIn(false);
+        setErrors('You are unauthorized, verify your details');
       } else {
-        setLoggedUser(true)
-        localStorage.setItem('user', JSON.stringify({ data }))
-        navigate('/')
+        setLoggedUser(true);
+        localStorage.setItem('user', JSON.stringify({data}));
+        navigate('/');
       }
-    })
-}
+    });
+};
 
 const registerUser = async (
+  // eslint-disable-next-line
   setErrors: any,
+  // eslint-disable-next-line
   post: any,
-  setIsRegistering: any,
+  // eslint-disable-next-line
+  setIsRegistering: any
 ) => {
   fetch(`${url}/auth/register`, {
     method: 'POST',
@@ -82,19 +95,23 @@ const registerUser = async (
     .then((res) => res.json())
     .then((json) => {
       if (json.statusCode === 403) {
-        setIsRegistering(false)
-        setErrors(json.message)
+        setIsRegistering(false);
+        setErrors(json.message);
       } else {
-        setIsRegistering(false)
+        setIsRegistering(false);
       }
-    })
-}
+    });
+};
 
 const forgotPassword = async (
+  // eslint-disable-next-line
   setErrors: any,
+  // eslint-disable-next-line
   post: any,
+  // eslint-disable-next-line
   setIsLoading: any,
-  navigate: any,
+  // eslint-disable-next-line
+  navigate: any
 ) => {
   fetch(`${url}/auth/forgot-password`, {
     method: 'POST',
@@ -106,20 +123,24 @@ const forgotPassword = async (
     .then((res) => res.json())
     .then((json) => {
       if (json.statusCode === 403) {
-        setIsLoading(false)
-        console.log(json.message)
-        setErrors(json.message)
+        setIsLoading(false);
+        console.log(json.message);
+        setErrors(json.message);
       } else {
-        setIsLoading(false)
-        navigate('/auth/reset-password')
+        setIsLoading(false);
+        navigate('/auth/reset-password');
       }
-    })
-}
+    });
+};
 const changePassword = async (
+  // eslint-disable-next-line
   setErrors: any,
+  // eslint-disable-next-line
   post: any,
+  // eslint-disable-next-line
   setIsLoading: any,
-  navigate: any,
+  // eslint-disable-next-line
+  navigate: any
 ) => {
   fetch(`${url}/auth/reset-password`, {
     method: 'POST',
@@ -131,16 +152,16 @@ const changePassword = async (
     .then((res) => res.json())
     .then((json) => {
       if (json.statusCode === 403) {
-        setIsLoading(false)
-        console.log(json.message)
-        setErrors('invalid code')
+        setIsLoading(false);
+        console.log(json.message);
+        setErrors('invalid code');
       } else {
-        setIsLoading(false)
-        navigate("/auth/login")
+        setIsLoading(false);
+        navigate('/auth/login');
       }
-    })
-  console.log(post)
-}
+    });
+  console.log(post);
+};
 
 export {
   url,
@@ -150,4 +171,4 @@ export {
   forgotPassword,
   changePassword,
   resendVerification,
-}
+};

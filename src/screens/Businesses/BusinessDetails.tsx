@@ -1,39 +1,35 @@
-import React, { useState, useEffect } from 'react'
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew'
-import NotificationAddIcon from '@mui/icons-material/NotificationAdd'
-import image2 from '../../Assets/placeholder.jpg'
-import './AddBusiness.css'
-import { getSingleBusiness } from '../../Data/Businesses/Data'
-import { useNavigate, useParams } from 'react-router-dom'
-import CircularProgress from '@mui/material/CircularProgress'
+import React, {useState, useEffect} from 'react';
+import image2 from '../../Assets/placeholder.jpg';
+import './AddBusiness.css';
+import {getSingleBusiness} from '../../Data/Businesses/Data';
+import {useNavigate, useParams} from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
 
 interface data {
-  name: ''
-  location: ''
+  name: '';
+  location: '';
   owner: {
-    name: ''
-  }
-  productType: ''
-  businessEmail: ''
-  businessPhone: ''
-  description: ''
+    name: '';
+  };
+  productType: '';
+  businessEmail: '';
+  businessPhone: '';
+  description: '';
 }
 
 const BusinessDetails = () => {
-  const navigate = useNavigate()
-  const [data, setData] = useState<data | any>({})
-  const [isLoading, setIsloading] = useState(false)
-  const [formData, setFormData] = useState(false)
-  const params = useParams()
+  const navigate = useNavigate();
+  // eslint-disable-next-line
+  const [data, setData] = useState<data | any>({});
+  const [isLoading, setIsloading] = useState(false);
+  // eslint-disable-next-line
+  const [formData, setFormData] = useState(false);
+  const params = useParams();
 
   useEffect(() => {
-    getSingleBusiness(setData, params.id, setIsloading, setFormData)
-  }, [location])
+    getSingleBusiness(setData, params.id, setIsloading, setFormData);
+  }, [location]);
 
-  const goBack = () => {
-    navigate(-1)
-    console.log('clicked')
-  }
 
   return (
     <>
@@ -51,12 +47,11 @@ const BusinessDetails = () => {
           </div>
           <div className="row padding">
             <div className="col-lg-6">
-              <div className="details-button" style={{ display: 'flex' }}>
+              <div className="details-button" style={{display: 'flex'}}>
                 <div className="text-center">
                   <button
                     className="btn btn-secondary btn-md"
-                    onClick={() => navigate(-1)}
-                  >
+                    onClick={() => navigate(-1)}>
                     {' '}
                     Back
                   </button>
@@ -65,8 +60,7 @@ const BusinessDetails = () => {
                   className="btn btn-warning btn-md"
                   onClick={() =>
                     navigate(`/business/${params.id}/update-details`)
-                  }
-                >
+                  }>
                   {' '}
                   Update
                 </button>
@@ -121,7 +115,7 @@ const BusinessDetails = () => {
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default BusinessDetails
+export default BusinessDetails;

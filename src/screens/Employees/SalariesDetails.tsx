@@ -1,36 +1,37 @@
-import React, { useState, useEffect } from 'react'
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew'
-import NotificationAddIcon from '@mui/icons-material/NotificationAdd'
-import '../Businesses/AddBusiness.css'
-import { useNavigate, useParams } from 'react-router-dom'
-import CircularProgress from '@mui/material/CircularProgress'
-import AlertDialog from '../Dialog/Dialog'
-import { deleteExpense, getSingleExpense } from '../../Data/Expenses/Data'
-import { deleteSalary, getSingleSalary } from '../../Data/Salaries/Data'
+import React, {useState, useEffect} from 'react';
+import '../Businesses/AddBusiness.css';
+import {useNavigate, useParams} from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
+import AlertDialog from '../Dialog/Dialog';
+import {deleteSalary, getSingleSalary} from '../../Data/Salaries/Data';
 
 interface data {
-  name: ''
-  description: ''
-  date: ''
+  name: '';
+  description: '';
+  date: '';
 }
-const SalariesDetails = ({ id }: any) => {
-  const [open, setOpen] = useState(false)
+// eslint-disable-next-line
+const SalariesDetails = ({id}: any) => {
+  const [open, setOpen] = useState(false);
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
-  }
+  };
 
   const navigate = useNavigate()
-  const [data, setData] = useState<data | any>({})
-  const [isLoading, setIsloading] = useState(false)
-  const [employee, setEmployee] = useState<data | any>({})
-  const [formData, setFormData] = useState(false)
-  const params = useParams()
+  // eslint-disable-next-line
+  const [data, setData] = useState<data | any>({});
+  const [isLoading, setIsloading] = useState(false);
+  // eslint-disable-next-line
+  const [employee, setEmployee] = useState<data | any>({});
+  // eslint-disable-next-line
+  const [formData, setFormData] = useState(false);
+  const params = useParams();
   const handleDelete = () => {
-    deleteSalary(navigate, params.id, setIsloading, id)
-    setOpen(false)
-  }
+    deleteSalary(navigate, params.id, setIsloading, id);
+    setOpen(false);
+  };
   useEffect(() => {
     getSingleSalary(
       setData,
@@ -38,15 +39,15 @@ const SalariesDetails = ({ id }: any) => {
       setIsloading,
       setEmployee,
       setFormData,
-      id,
-    )
-  }, [location])
+      id
+    );
+  }, []);
   const onDelete = () => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
   const handleClose = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
   return (
     <>
       {isLoading ? (
@@ -72,11 +73,10 @@ const SalariesDetails = ({ id }: any) => {
           </div>
           <div className="row padding mb-4">
             <div className="col-lg-6">
-              <div className="details-button" style={{ display: 'flex' }}>
+              <div className="details-button" style={{display: 'flex'}}>
                 <button
                   className="btn btn-secondary btn-md"
-                  onClick={() => navigate(-1)}
-                >
+                  onClick={() => navigate(-1)}>
                   {' '}
                   Back
                 </button>
@@ -84,8 +84,7 @@ const SalariesDetails = ({ id }: any) => {
                   className="btn btn-warning btn-md"
                   onClick={() =>
                     navigate(`/employees/salaries/${params.id}/update-details`)
-                  }
-                >
+                  }>
                   {' '}
                   Update
                 </button>
@@ -126,7 +125,7 @@ const SalariesDetails = ({ id }: any) => {
                   <td>
                     {new Date(data.txDate).toLocaleDateString(
                       undefined,
-                      options,
+                      options
                     )}
                   </td>
                 </tr>
@@ -140,7 +139,7 @@ const SalariesDetails = ({ id }: any) => {
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default SalariesDetails
+export default SalariesDetails;

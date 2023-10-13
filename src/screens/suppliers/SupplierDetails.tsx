@@ -1,38 +1,41 @@
-import React, { useState, useEffect } from 'react'
-import image2 from '../../Assets/placeholder.jpg'
-import '../Businesses/AddBusiness.css'
-import { deleteSupplier, getSingleSupplier } from '../../Data/Suppliers/Data'
-import { useNavigate, useParams } from 'react-router-dom'
-import AlertDialog from '../Dialog/Dialog'
-import CircularProgress from '@mui/material/CircularProgress'
+import React, {useState, useEffect} from 'react';
+import image2 from '../../Assets/placeholder.jpg';
+import '../Businesses/AddBusiness.css';
+import {deleteSupplier, getSingleSupplier} from '../../Data/Suppliers/Data';
+import {useNavigate, useParams} from 'react-router-dom';
+import AlertDialog from '../Dialog/Dialog';
+import CircularProgress from '@mui/material/CircularProgress';
 
 interface data {
-  name: ''
-  description: ''
-  date: ''
+  name: '';
+  description: '';
+  date: '';
 }
-const SupplierDetails = ({ id }: any) => {
-  const [open, setOpen] = useState(false)
+// eslint-disable-next-line
+const SupplierDetails = ({id}: any) => {
+  const [open, setOpen] = useState(false);
 
-  const navigate = useNavigate()
-  const [data, setData] = useState<data | any>({})
-  const [isLoading, setIsloading] = useState(false)
-  const [formData, setFormData] = useState(false)
+  const navigate = useNavigate();
+  // eslint-disable-next-line
+  const [data, setData] = useState<data | any>({});
+  const [isLoading, setIsloading] = useState(false);
+  // eslint-disable-next-line
+  const [formData, setFormData] = useState(false);
 
-  const params = useParams()
+  const params = useParams();
   useEffect(() => {
-    getSingleSupplier(setData, params.id, setIsloading, setFormData, id)
-  }, [location])
+    getSingleSupplier(setData, params.id, setIsloading, setFormData, id);
+  }, [location]);
   const onDelete = () => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
   const handleClose = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
   const handleDelete = () => {
-    deleteSupplier(navigate, params.id, setIsloading, id)
-    setOpen(false)
-  }
+    deleteSupplier(navigate, params.id, setIsloading, id);
+    setOpen(false);
+  };
   return (
     <>
       {isLoading ? (
@@ -59,11 +62,10 @@ const SupplierDetails = ({ id }: any) => {
           </div>
           <div className="row padding">
             <div className="col-lg-6">
-              <div className="details-button" style={{ display: 'flex' }}>
+              <div className="details-button" style={{display: 'flex'}}>
                 <button
                   className="btn btn-secondary btn-md"
-                  onClick={() => navigate(-1)}
-                >
+                  onClick={() => navigate(-1)}>
                   {' '}
                   Back
                 </button>
@@ -71,8 +73,7 @@ const SupplierDetails = ({ id }: any) => {
                   className="btn btn-warning btn-md"
                   onClick={() =>
                     navigate(`/suppliers/${params.id}/update-details`)
-                  }
-                >
+                  }>
                   {' '}
                   Update
                 </button>
@@ -121,7 +122,7 @@ const SupplierDetails = ({ id }: any) => {
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default SupplierDetails
+export default SupplierDetails;

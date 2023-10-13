@@ -1,45 +1,56 @@
-import React, { useState, useEffect } from 'react'
-import image2 from '../../Assets/placeholder.jpg'
-import '../Businesses/AddBusiness.css'
-import { useNavigate, useParams } from 'react-router-dom'
-import CircularProgress from '@mui/material/CircularProgress'
-import AlertDialog from '../Dialog/Dialog'
-import { deleteSale, getSingleSale } from '../../Data/Sales/Data'
+import React, {useState, useEffect} from 'react';
+import image2 from '../../Assets/placeholder.jpg';
+import '../Businesses/AddBusiness.css';
+import {useNavigate, useParams} from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
+import AlertDialog from '../Dialog/Dialog';
+import {deleteSale, getSingleSale} from '../../Data/Sales/Data';
 
 interface data {
-  name: ''
-  description: ''
-  date: ''
+  name: '';
+  description: '';
+  date: '';
 }
-const SalesDetails = ({ id }: any) => {
-  const [open, setOpen] = useState(false)
+// eslint-disable-next-line
+const SalesDetails = ({id}: any) => {
+  const [open, setOpen] = useState(false);
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
-  }
+  };
 
-  const navigate = useNavigate()
-  const [data, setData] = useState<data | any>({})
-  const [customer, setCustomer] = useState<data | any>({})
-  const [product, setProduct] = useState<data | any>([])
-  const [isLoading, setIsloading] = useState(false)
+  const navigate = useNavigate();
+  // eslint-disable-next-line
+  const [data, setData] = useState<data | any>({});
+  // eslint-disable-next-line
+  const [customer, setCustomer] = useState<data | any>({});
+  // eslint-disable-next-line
+  const [product, setProduct] = useState<data | any>([]);
+  const [isLoading, setIsloading] = useState(false);
 
-  const params = useParams()
+  const params = useParams();
   const handleDelete = () => {
-    deleteSale(navigate, params.id, setIsloading, id)
-    setOpen(false)
-  }
+    deleteSale(navigate, params.id, setIsloading, id);
+    setOpen(false);
+  };
   useEffect(() => {
-    getSingleSale(setData, setCustomer, setProduct, params.id, setIsloading, id)
-  }, [location])
+    getSingleSale(
+      setData,
+      setCustomer,
+      setProduct,
+      params.id,
+      setIsloading,
+      id
+    );
+  }, [location]);
   const onDelete = () => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
   const handleClose = () => {
-    setOpen(false)
-  }
-  console.log(product)
+    setOpen(false);
+  };
+  console.log(product);
   return (
     <>
       {isLoading ? (
@@ -65,18 +76,18 @@ const SalesDetails = ({ id }: any) => {
           </div>
           <div className="row padding mb-4">
             <div className="col-lg-6">
-              <div className="details-button" style={{ display: 'flex' }}>
+              <div className="details-button" style={{display: 'flex'}}>
                 <button
                   className="btn btn-secondary btn-md"
-                  onClick={() => navigate(-1)}
-                >
+                  onClick={() => navigate(-1)}>
                   {' '}
                   Back
                 </button>
                 <button
                   className="btn btn-warning btn-md"
-                  onClick={() => navigate(`/sales/${params.id}/update-details`)}
-                >
+                  onClick={() =>
+                    navigate(`/sales/${params.id}/update-details`)
+                  }>
                   {' '}
                   Update
                 </button>
@@ -123,7 +134,7 @@ const SalesDetails = ({ id }: any) => {
                       <td>
                         {new Date(data.createdAt).toLocaleDateString(
                           undefined,
-                          options,
+                          options
                         )}
                       </td>
                     </tr>
@@ -134,7 +145,9 @@ const SalesDetails = ({ id }: any) => {
           </div>
 
           <h2 className="mt-3">Product</h2>
-          {product.map((product: any) => (
+          {
+            // eslint-disable-next-line
+          product.map((product: any) => (
             <>
               <div className="row padding">
                 <div className="col-lg-6">
@@ -221,7 +234,7 @@ const SalesDetails = ({ id }: any) => {
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default SalesDetails
+export default SalesDetails;

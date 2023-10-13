@@ -1,28 +1,28 @@
-import React, { useState } from 'react'
-import { TextField, InputAdornment, IconButton, Alert } from '@mui/material'
-import { changePassword } from '../../Data/Auth/Data'
-import Visibility from '@mui/icons-material/Visibility'
-import VisibilityOff from '@mui/icons-material/VisibilityOff'
-import { useNavigate } from 'react-router-dom'
-import AuthLayout from '../../Layout/AuthLayout'
-import './Login.css'
+import React, {useState} from 'react';
+import {TextField, InputAdornment, IconButton, Alert} from '@mui/material';
+import {changePassword} from '../../Data/Auth/Data';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import {useNavigate} from 'react-router-dom';
+import AuthLayout from '../../Layout/AuthLayout';
+import './Login.css';
 
 const ResetPassword = () => {
-  const navigate = useNavigate()
-  const initialState = { code: '', password: '', phone: '', password2: '' }
-  const [formData, setFormData] = useState(initialState)
-  const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [dataErrors, setDataErrors] = useState('')
+  const navigate = useNavigate();
+  const initialState = {code: '', password: '', phone: '', password2: ''};
+  const [formData, setFormData] = useState(initialState);
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [dataErrors, setDataErrors] = useState('');
 
-  const handleShowPassword = () => setShowPassword(!showPassword)
+  const handleShowPassword = () => setShowPassword(!showPassword);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({...formData, [e.target.name]: e.target.value});
+  };
   const changingPassword = () => {
-    setIsLoading(true)
-    changePassword(setDataErrors, formData, setIsLoading, navigate)
-  }
+    setIsLoading(true);
+    changePassword(setDataErrors, formData, setIsLoading, navigate);
+  };
 
   return (
     <AuthLayout>
@@ -30,8 +30,7 @@ const ResetPassword = () => {
         <Alert
           variant="standard"
           onClose={() => setDataErrors('')}
-          severity="error"
-        >
+          severity="error">
           {dataErrors}
         </Alert>
       )}
@@ -117,15 +116,14 @@ const ResetPassword = () => {
           ) : (
             <button
               className="btn btn-primary btn-md"
-              onClick={changingPassword}
-            >
+              onClick={changingPassword}>
               Reset Password
             </button>
           )}
         </div>
       </div>
     </AuthLayout>
-  )
-}
+  );
+};
 
-export default ResetPassword
+export default ResetPassword;

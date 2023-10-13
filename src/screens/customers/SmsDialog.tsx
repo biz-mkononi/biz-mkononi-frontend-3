@@ -1,40 +1,39 @@
-import * as React from 'react'
-import Button from '@mui/material/Button'
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
-import DialogTitle from '@mui/material/DialogTitle'
-import { TextField } from '@mui/material'
-import './sms.css'
-import { sendCustomersSms } from '../../Data/Customers/Data'
-import { useNavigate } from 'react-router-dom'
-
-export default function SmsDialog({ handleClose, open, id }: any) {
-  const navigate = useNavigate()
-  const [isLoading, setIsLoading] = React.useState(false)
-  const [showTips, setShowTips] = React.useState(false)
-  const [diasbled, setDisabled] = React.useState(true)
-  const initialState = { message: '' }
-  const [formData, setFormData] = React.useState(initialState)
+import * as React from 'react';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import {TextField} from '@mui/material';
+import './sms.css';
+import {sendCustomersSms} from '../../Data/Customers/Data';
+import {useNavigate} from 'react-router-dom';
+// eslint-disable-next-line
+export default function SmsDialog({handleClose, open, id}: any) {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [showTips, setShowTips] = React.useState(false);
+  const [diasbled, setDisabled] = React.useState(true);
+  const initialState = {message: ''};
+  const [formData, setFormData] = React.useState(initialState);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value !== '') {
-      setDisabled(false)
+      setDisabled(false);
     }
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({...formData, [e.target.name]: e.target.value});
+  };
   const clickShowTips = () => {
-    setShowTips(true)
-  }
+    setShowTips(true);
+  };
   const hideTips = () => {
-    setShowTips(false)
-  }
+    setShowTips(false);
+  };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    sendCustomersSms(formData, setIsLoading, navigate, id, handleClose)
-  }
-  console.log(formData)
+    e.preventDefault();
+    sendCustomersSms(formData, setIsLoading, navigate, id, handleClose);
+  };
+  console.log(formData);
   return (
     <div>
       <Dialog
@@ -42,8 +41,7 @@ export default function SmsDialog({ handleClose, open, id }: any) {
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        fullWidth
-      >
+        fullWidth>
         <DialogTitle id="alert-dialog-title">
           <h3>Send Bulk Sms</h3>
         </DialogTitle>
@@ -53,15 +51,13 @@ export default function SmsDialog({ handleClose, open, id }: any) {
               {showTips ? (
                 <button
                   className="btn btn-md btn-danger mt-3 mb-3"
-                  onClick={hideTips}
-                >
+                  onClick={hideTips}>
                   Hide Tips
                 </button>
               ) : (
                 <button
                   className="btn btn-md btn-info mt-3 mb-3"
-                  onClick={clickShowTips}
-                >
+                  onClick={clickShowTips}>
                   Show Tips
                 </button>
               )}
@@ -70,7 +66,7 @@ export default function SmsDialog({ handleClose, open, id }: any) {
                 <>
                   <p className="mb-3">
                     Use <b>:name</b> wherever you want it replaced with the
-                    contact's name
+                    contacts name
                   </p>
                   <p className="mb-3">
                     Use <b>\n</b> wherever you want to move to a new line
@@ -129,10 +125,10 @@ export default function SmsDialog({ handleClose, open, id }: any) {
             </form>
           </DialogContentText>
         </DialogContent>
-        <div className="text-center" style={{ marginRight: '150px' }}>
+        <div className="text-center" style={{marginRight: '150px'}}>
           <DialogActions></DialogActions>
         </div>
       </Dialog>
     </div>
-  )
+  );
 }

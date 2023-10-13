@@ -1,33 +1,38 @@
-import { reqInstance } from '../Auth/authHelper'
-import { newUrl } from '../Sales/Data'
+import {reqInstance} from '../Auth/authHelper';
+import {newUrl} from '../Sales/Data';
+// eslint-disable-next-line
 const addProduct = (post: any, navigate: any, setIsLoading: any, id: any) => {
-  setIsLoading(true)
+  setIsLoading(true);
   reqInstance
     .post(`${newUrl}/${id}/products`, post)
     .then(() => navigate('/products/list'))
-    .then(() => setIsLoading(false))
-}
-const getProducts = (setData: any, setIsLoading: any, id: any) => {
-  setIsLoading(true)
-  reqInstance
-    .get(`${newUrl}/${id}/products`)
-    .then((data) => setData(data.data.rows))
-    .then(() => setIsLoading(false))
-}
+    .then(() => setIsLoading(false));
+};
+// eslint-disable-next-line
+const getProducts = async (id: any) => {
+  const response = await reqInstance.get(`${newUrl}/${id}/products`);
+  return response.data.rows;
+};
 const getSingleProduct = async (
+  // eslint-disable-next-line
   setData: any,
+  // eslint-disable-next-line
   id: any,
+  // eslint-disable-next-line
   setIsLoading: any,
+  // eslint-disable-next-line
   setCategory: any,
+  // eslint-disable-next-line
   setFormData: any,
-  businessid: any,
+  // eslint-disable-next-line
+  businessid: any
 ) => {
-  setIsLoading(true)
+  setIsLoading(true);
   await reqInstance
     .get(`${newUrl}/${businessid}/products/${id}`)
     .then((data) => {
-      setData(data.data)
-      setCategory(data.data.category)
+      setData(data.data);
+      setCategory(data.data.category);
       setFormData({
         name: data.data.name,
         categoryId: data.data.category.id,
@@ -38,35 +43,44 @@ const getSingleProduct = async (
         sellingPrice: data.data.sellingPrice,
         description: data.data.description,
         tags: data.data.tags,
-      })
+      });
     })
-    .then(() => setIsLoading(false))
-}
+    .then(() => setIsLoading(false));
+};
 const updateSingleProduct = async (
+  // eslint-disable-next-line
   post: any,
+  // eslint-disable-next-line
   navigate: any,
+  // eslint-disable-next-line
   id: any,
+  // eslint-disable-next-line
   setIsLoading: any,
-  businessid: any,
+  // eslint-disable-next-line
+  businessid: any
 ) => {
-  setIsLoading(true)
+  setIsLoading(true);
   await reqInstance
     .put(`${newUrl}/${businessid}/products/${id}`, post)
     .then(() => navigate('/products/list'))
-    .then(() => setIsLoading(false))
-}
+    .then(() => setIsLoading(false));
+};
 const deleteProduct = async (
+  // eslint-disable-next-line
   navigate: any,
+  // eslint-disable-next-line
   id: any,
+  // eslint-disable-next-line
   setIsLoading: any,
-  businessid: any,
+  // eslint-disable-next-line
+  businessid: any
 ) => {
-  setIsLoading(true)
+  setIsLoading(true);
   await reqInstance
     .delete(`${newUrl}/${businessid}/products/${id}`)
     .then(() => navigate('/products/list'))
-    .then(() => setIsLoading(false))
-}
+    .then(() => setIsLoading(false));
+};
 
 export {
   addProduct,
@@ -74,4 +88,4 @@ export {
   getSingleProduct,
   deleteProduct,
   updateSingleProduct,
-}
+};

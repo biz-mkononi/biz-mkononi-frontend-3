@@ -1,46 +1,44 @@
-import React, { useState, useEffect } from 'react'
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew'
-import NotificationAddIcon from '@mui/icons-material/NotificationAdd'
-import image2 from '../../Assets/placeholder.jpg'
-import '../Businesses/AddBusiness.css'
-import { useNavigate, useParams } from 'react-router-dom'
-import { deleteCustomer, getSingleCustomer } from '../../Data/Customers/Data'
-import CircularProgress from '@mui/material/CircularProgress'
-import AlertDialog from '../Dialog/Dialog'
+import React, {useState, useEffect} from 'react';
+import image2 from '../../Assets/placeholder.jpg';
+import '../Businesses/AddBusiness.css';
+import {useNavigate, useParams} from 'react-router-dom';
+import {deleteCustomer, getSingleCustomer} from '../../Data/Customers/Data';
+import CircularProgress from '@mui/material/CircularProgress';
+import AlertDialog from '../Dialog/Dialog';
 
 interface data {
-  name: ''
-  description: ''
-  date: ''
+  name: '';
+  description: '';
+  date: '';
 }
-const CustomerDetails = ({ id }: any) => {
-  const [open, setOpen] = useState(false)
+// eslint-disable-next-line
+const CustomerDetails = ({id}: any) => {
+  const [open, setOpen] = useState(false);
 
-  const navigate = useNavigate()
-  const [data, setData] = useState<data | any>({})
-  const [isLoading, setIsloading] = useState(false)
-  const [formData, setFormData] = useState({})
+  const navigate = useNavigate();
+  // eslint-disable-next-line
+  const [data, setData] = useState<data | any>({});
+  const [isLoading, setIsloading] = useState(false);
+  // eslint-disable-next-line
+  const [formData, setFormData] = useState({});
 
-  const params = useParams()
+  const params = useParams();
   const handleDelete = () => {
-    deleteCustomer(navigate, params.id, setIsloading, id)
-    setOpen(false)
-  }
+    deleteCustomer(navigate, params.id, setIsloading, id);
+    setOpen(false);
+  };
   useEffect(() => {
-    getSingleCustomer(setData, params.id, setIsloading, setFormData, id)
-  }, [location])
+    getSingleCustomer(setData, params.id, setIsloading, setFormData, id);
+  }, []);
   const onDelete = () => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
 
-  const goBack = () => {
-    navigate('/')
-  }
   const handleClose = () => {
-    setOpen(false)
-  }
-  const d = new Date()
-  let year = d.getFullYear()
+    setOpen(false);
+  };
+  const d = new Date();
+  const year = d.getFullYear();
   return (
     <>
       {isLoading ? (
@@ -67,11 +65,10 @@ const CustomerDetails = ({ id }: any) => {
           </div>
           <div className="row padding">
             <div className="col-lg-6">
-              <div className="details-button" style={{ display: 'flex' }}>
+              <div className="details-button" style={{display: 'flex'}}>
                 <button
                   className="btn btn-secondary btn-md"
-                  onClick={() => navigate(-1)}
-                >
+                  onClick={() => navigate(-1)}>
                   {' '}
                   Back
                 </button>
@@ -79,8 +76,7 @@ const CustomerDetails = ({ id }: any) => {
                   className="btn btn-warning btn-md"
                   onClick={() =>
                     navigate(`/customers/${params.id}/update-details`)
-                  }
-                >
+                  }>
                   {' '}
                   Update
                 </button>
@@ -136,7 +132,7 @@ const CustomerDetails = ({ id }: any) => {
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default CustomerDetails
+export default CustomerDetails;

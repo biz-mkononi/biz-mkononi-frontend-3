@@ -1,36 +1,35 @@
-import { reqInstance } from '../Auth/authHelper'
-import { newUrl } from '../Sales/Data'
-import { now, d, prevDate } from './SalesAnalytics'
+import {reqInstance} from '../Auth/authHelper';
+import {newUrl} from '../Sales/Data';
+// eslint-disable-next-line
 const getGroupedSupplies = (setData: any, id: any) => {
   reqInstance
     .get(`${newUrl}/${id}/supplies-analytics/grouped-supplies`)
-    .then((data) => setData(data.data.rows))
-}
-
-const getTotalSupplies = (
-  setData: any,
-  setIsLoading: any,
-  id: any,
-  data: any,
-) => {
-  setIsLoading(true)
-  reqInstance
-    .get(`${newUrl}/${id}/supplies-analytics/total-supplies`, { params: data })
-    .then((data) => setData(data.data.total))
-    .then(() => setIsLoading(false))
-}
+    .then((data) => setData(data.data.rows));
+};
+// eslint-disable-next-line
+const getTotalSupplies = async (id: any, data: any) => {
+  const response = await reqInstance.get(
+    `${newUrl}/${id}/supplies-analytics/total-supplies`,
+    {params: data}
+  );
+  return response.data.total;
+};
 
 const getTodayTotalSupplies = (
+  // eslint-disable-next-line
   setData: any,
+  // eslint-disable-next-line
   setIsLoading: any,
+  // eslint-disable-next-line
   id: any,
-  data: any,
+  // eslint-disable-next-line
+  data: any
 ) => {
-  setIsLoading(true)
+  setIsLoading(true);
   reqInstance
-    .get(`${newUrl}/${id}/supplies-analytics/total-supplies`, { params: data })
+    .get(`${newUrl}/${id}/supplies-analytics/total-supplies`, {params: data})
     .then((data) => setData(data.data.total))
-    .then(() => setIsLoading(false))
-}
+    .then(() => setIsLoading(false));
+};
 
-export { getGroupedSupplies, getTotalSupplies, getTodayTotalSupplies }
+export {getGroupedSupplies, getTotalSupplies, getTodayTotalSupplies};

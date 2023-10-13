@@ -1,31 +1,39 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import '../Businesses/AddBusiness.css'
-import { getSuppliers } from '../../Data/Suppliers/Data'
-import { useNavigate } from 'react-router-dom'
-import CircularProgress from '@mui/material/CircularProgress'
-import Table from '../../components/Table/Table'
+import React, {useMemo} from 'react';
+import '../Businesses/AddBusiness.css';
+import {getSuppliers} from '../../Data/Suppliers/Data';
+import {useNavigate} from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
+import Table from '../../components/Table/Table';
+import {useQuery} from '@tanstack/react-query';
+type Suppliers = {
+  name: string;
+  email: string;
+  phone: string;
+};
+// eslint-disable-next-line
+const SuppliersList = ({id}: any) => {
+  const navigate = useNavigate();
+  // eslint-disable-next-line
+  const {data: suppliers, isLoading} = useQuery<Suppliers[] | any, Error>({
+    queryKey: ['suppliers', id],
+    queryFn: () => getSuppliers(id),
+  });
 
-const SuppliersList = ({ id }: any) => {
-  const navigate = useNavigate()
-  const [data, setData] = useState<any[]>([])
-  const [isLoading, setIsLoading] = useState(false)
   const memoizedSuppliers = useMemo(() => {
-    return data;
-  },[data])
-  useEffect(() => {
-    getSuppliers(setData, setIsLoading, id)
-  }, [])
+    return suppliers;
+  }, [suppliers]);
+
   const onView = (id: string | undefined) => {
-    navigate(`/suppliers/${id}/details`)
-  }
+    navigate(`/suppliers/${id}/details`);
+  };
   const onEdit = (id: string | undefined) => {
-    navigate(`/suppliers/${id}/update-details`)
-  }
+    navigate(`/suppliers/${id}/update-details`);
+  };
   const columns = [
-    { header: 'Name', dataKey: 'name' },
-    { header: 'Email', dataKey: 'email' },
-    { header: 'Phone', dataKey: 'phone' },
-  ]
+    {header: 'Name', dataKey: 'name'},
+    {header: 'Email', dataKey: 'email'},
+    {header: 'Phone', dataKey: 'phone'},
+  ];
 
   return (
     <>
@@ -34,10 +42,15 @@ const SuppliersList = ({ id }: any) => {
           <CircularProgress color="success" />
         </div>
       ) : (
-        <Table columns={columns} onEdit={onEdit} onView={onView} data={memoizedSuppliers} />
+        <Table
+          columns={columns}
+          onEdit={onEdit}
+          onView={onView}
+          data={memoizedSuppliers}
+        />
       )}
     </>
-  )
-}
+  );
+};
 
-export default SuppliersList
+export default SuppliersList;

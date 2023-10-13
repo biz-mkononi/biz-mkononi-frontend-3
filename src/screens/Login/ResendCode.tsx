@@ -1,24 +1,24 @@
-import React, { useState } from 'react'
-import AuthLayout from '../../Layout/AuthLayout'
-import { useNavigate } from 'react-router-dom'
-import { resendVerification } from '../../Data/Auth/Data'
-import { TextField } from '@mui/material'
-import './Login.css'
+import React, {useState} from 'react';
+import AuthLayout from '../../Layout/AuthLayout';
+import {useNavigate} from 'react-router-dom';
+import {resendVerification} from '../../Data/Auth/Data';
+import {TextField} from '@mui/material';
+import './Login.css';
 
 const ResendCode = () => {
-  const navigate = useNavigate()
-  const [dataErrors, setDataErrors] = useState('')
+  const navigate = useNavigate();
+  const [dataErrors, setDataErrors] = useState('');
 
-  const initialState = { code: '', password: '', phone: '', password2: '' }
-  const [formData, setFormData] = useState(initialState)
-  const [isLoading, setIsLoading] = useState(false)
+  const initialState = {code: '', password: '', phone: '', password2: ''};
+  const [formData, setFormData] = useState(initialState);
+  const [isLoading, setIsLoading] = useState(false);
   const resendCode = () => {
-    setIsLoading(true)
-    resendVerification(formData, setIsLoading, setDataErrors, navigate)
-  }
+    setIsLoading(true);
+    resendVerification(formData, setIsLoading, setDataErrors, navigate);
+  };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({...formData, [e.target.name]: e.target.value});
+  };
   return (
     <AuthLayout>
       <div className="login flex flex-col justify-center items-center">
@@ -50,7 +50,7 @@ const ResendCode = () => {
         </div>
       </div>
     </AuthLayout>
-  )
-}
+  );
+};
 
-export default ResendCode
+export default ResendCode;

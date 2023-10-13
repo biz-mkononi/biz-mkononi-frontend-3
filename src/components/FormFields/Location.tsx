@@ -1,10 +1,11 @@
-import LocationOn from '@mui/icons-material/LocationOn'
-import React from 'react'
-import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
+import LocationOn from '@mui/icons-material/LocationOn';
+import React from 'react';
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 type Props = {
-  handleSelect: (place: any) => void
-}
-const Location = ({ handleSelect }: Props) => {
+  // eslint-disable-next-line
+  handleSelect: (place: any) => void;
+};
+const Location = ({handleSelect}: Props) => {
   return (
     <>
       <label htmlFor="basic-url" className="form-label ">
@@ -25,7 +26,7 @@ const Location = ({ handleSelect }: Props) => {
         />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Location
+export default Location;

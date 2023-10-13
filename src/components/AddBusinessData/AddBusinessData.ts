@@ -1,8 +1,8 @@
-import BusinessIcon from '@mui/icons-material/Business'
-import EmailIcon from '@mui/icons-material/Email'
-import PhoneIcon from '@mui/icons-material/Phone'
-import LocationOnIcon from '@mui/icons-material/LocationOn'
-import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits'
+import BusinessIcon from '@mui/icons-material/Business';
+import EmailIcon from '@mui/icons-material/Email';
+import PhoneIcon from '@mui/icons-material/Phone';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 export const addBusinessItems = [
   {
     items: [
@@ -48,4 +48,4 @@ export const addBusinessItems = [
       },
     ],
   },
-]
+];

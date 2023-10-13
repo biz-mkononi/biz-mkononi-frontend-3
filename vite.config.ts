@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import { VitePWA, VitePWAOptions } from 'vite-plugin-pwa'
+import {defineConfig} from 'vite';
+import react from '@vitejs/plugin-react';
+import {VitePWA, VitePWAOptions} from 'vite-plugin-pwa';
 // https://vitejs.dev/config/
 
 const manifestForPlugin: Partial<VitePWAOptions> = {
@@ -41,8 +41,8 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
     start_url: '/',
     orientation: 'portrait',
   },
-}
+};
 export default defineConfig({
   base: './',
   plugins: [react(), VitePWA(manifestForPlugin)],
-})
+});

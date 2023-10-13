@@ -1,15 +1,16 @@
-import image from '../../Assets/placeholder.jpg'
+import React from 'react'
+import image from '../../Assets/placeholder.jpg';
 
 type Data = {
-  imageUrl: string
-}
+  imageUrl: string;
+};
 type Props = {
-  handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  displayImage: string
-  label: string
-  update?: boolean
-  data?: Data
-}
+  handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  displayImage: string;
+  label: string;
+  update?: boolean;
+  data?: Data;
+};
 
 const Image = ({
   handleFileChange,
@@ -50,7 +51,7 @@ const Image = ({
         onChange={handleFileChange}
       />
     </div>
-  )
-}
+  );
+};
 
-export default Image
+export default Image;

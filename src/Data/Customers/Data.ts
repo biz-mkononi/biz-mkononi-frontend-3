@@ -1,41 +1,50 @@
-import { reqInstance, reqInstance2 } from '../Auth/authHelper'
-import { newUrl } from '../Sales/Data'
+import {reqInstance, reqInstance2} from '../Auth/authHelper';
+import {newUrl} from '../Sales/Data';
+// eslint-disable-next-line
 const addCustomer = (post: any, navigate: any, setIsLoading: any, id: any) => {
-  setIsLoading(true)
+  setIsLoading(true);
   reqInstance
     .post(`${newUrl}/${id}/customers`, post)
-    .then(() => navigate('/customers/list'))
-}
-const getCustomers = (setData: any, setIsLoading: any, id: any) => {
-  setIsLoading(true)
-  reqInstance
-    .get(`${newUrl}/${id}/customers`)
-    .then((data) => setData(data.data.rows))
-    .then(() => setIsLoading(false))
-}
+    .then(() => navigate('/customers/list'));
+};
+// eslint-disable-next-line
+const getCustomers = async (id: any) => {
+  const response = await reqInstance.get(`${newUrl}/${id}/customers`);
+  return response.data.rows;
+};
 
 const sendCustomersSms = (
+  // eslint-disable-next-line
   post: any,
+  // eslint-disable-next-line
   setIsLoading: any,
+  // eslint-disable-next-line
   navigate: any,
+  // eslint-disable-next-line
   id: any,
-  handleClose: any,
+  // eslint-disable-next-line
+  handleClose: any
 ) => {
-  setIsLoading(true)
+  setIsLoading(true);
   reqInstance2
     .post(`${newUrl}/${id}/customers/sms`, post)
     .then(() => handleClose())
-    .then(() => setIsLoading(false))
-}
+    .then(() => setIsLoading(false));
+};
 
 const getSingleCustomer = async (
+  // eslint-disable-next-line
   setData: any,
+  // eslint-disable-next-line
   id: any,
+  // eslint-disable-next-line
   setIsLoading: any,
+  // eslint-disable-next-line
   setFormData: any,
-  businessid: any,
+  // eslint-disable-next-line
+  businessid: any
 ) => {
-  setIsLoading(true)
+  setIsLoading(true);
   await reqInstance
     .get(`${newUrl}/${businessid}/customers/${id}`)
     .then((data) => {
@@ -46,36 +55,45 @@ const getSingleCustomer = async (
         description: data.data.description,
         yearOfBirth: data.data.yearOfBirth,
         gender: data.data.gender,
-      })
-      setData(data.data)
+      });
+      setData(data.data);
     })
-    .then(() => setIsLoading(false))
-}
+    .then(() => setIsLoading(false));
+};
 const updateSingleCustomer = async (
+  // eslint-disable-next-line
   post: any,
+  // eslint-disable-next-line
   id: any,
+  // eslint-disable-next-line
   navigate: any,
+  // eslint-disable-next-line
   setIsLoading: any,
-  businessid: any,
+  // eslint-disable-next-line
+  businessid: any
 ) => {
-  setIsLoading(true)
+  setIsLoading(true);
   await reqInstance
     .put(`${newUrl}/${businessid}/customers/${id}`, post)
-    .then(() => navigate('/customers/list'))
-}
+    .then(() => navigate('/customers/list'));
+};
 
 const deleteCustomer = async (
+  // eslint-disable-next-line
   navigate: any,
+  // eslint-disable-next-line
   id: any,
+  // eslint-disable-next-line
   setIsLoading: any,
-  businessid: any,
+  // eslint-disable-next-line
+  businessid: any
 ) => {
-  setIsLoading(true)
+  setIsLoading(true);
   await reqInstance
     .delete(`${newUrl}/${businessid}/customers/${id}`)
     .then(() => navigate('/customers/list'))
-    .then(() => setIsLoading(false))
-}
+    .then(() => setIsLoading(false));
+};
 
 export {
   addCustomer,
@@ -84,4 +102,4 @@ export {
   deleteCustomer,
   updateSingleCustomer,
   sendCustomersSms,
-}
+};

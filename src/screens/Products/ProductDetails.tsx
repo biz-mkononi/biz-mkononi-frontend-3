@@ -1,32 +1,35 @@
-import React, { useState, useEffect } from 'react'
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew'
-import NotificationAddIcon from '@mui/icons-material/NotificationAdd'
-import image2 from '../../Assets/placeholder.jpg'
-import '../Businesses/AddBusiness.css'
-import { deleteProduct, getSingleProduct } from '../../Data/Products/Data'
-import { useNavigate, useParams } from 'react-router-dom'
-import CircularProgress from '@mui/material/CircularProgress'
-import AlertDialog from '../Dialog/Dialog'
+import React, {useState, useEffect} from 'react';
+import image2 from '../../Assets/placeholder.jpg';
+import '../Businesses/AddBusiness.css';
+import {deleteProduct, getSingleProduct} from '../../Data/Products/Data';
+import {useNavigate, useParams} from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
+import AlertDialog from '../Dialog/Dialog';
 
 interface data {
-  name: ''
-  category: {}
-  productType: ''
-  size: ''
-  unit: ''
-  buyingPrice: ''
-  sellingPrice: ''
-  stock: ''
+  name: '';
+  // eslint-disable-next-line
+  category: {};
+  productType: '';
+  size: '';
+  unit: '';
+  buyingPrice: '';
+  sellingPrice: '';
+  stock: '';
 }
-const ProductDetails = ({ id }: any) => {
-  const [open, setOpen] = useState(false)
-  const navigate = useNavigate()
-  const [data, setData] = useState<data | any>({})
-  const [isLoading, setIsloading] = useState(false)
-  const [category, setCategory] = useState<data | any>({})
-  const [formData, setFormData] = useState(false)
+// eslint-disable-next-line
+const ProductDetails = ({id}: any) => {
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  // eslint-disable-next-line
+  const [data, setData] = useState<data | any>({});
+  const [isLoading, setIsloading] = useState(false);
+  // eslint-disable-next-line
+  const [category, setCategory] = useState<data | any>({});
+  // eslint-disable-next-line
+  const [formData, setFormData] = useState(false);
 
-  const params = useParams()
+  const params = useParams();
   useEffect(() => {
     getSingleProduct(
       setData,
@@ -34,19 +37,19 @@ const ProductDetails = ({ id }: any) => {
       setIsloading,
       setCategory,
       setFormData,
-      id,
-    )
-  }, [location])
+      id
+    );
+  }, [location]);
   const onDelete = () => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
   const handleClose = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
   const handleDelete = () => {
-    deleteProduct(navigate, params.id, setIsloading, id)
-    setOpen(false)
-  }
+    deleteProduct(navigate, params.id, setIsloading, id);
+    setOpen(false);
+  };
   return (
     <>
       {isLoading ? (
@@ -72,11 +75,10 @@ const ProductDetails = ({ id }: any) => {
           </div>
           <div className="row padding">
             <div className="col-lg-6">
-              <div className="details-button" style={{ display: 'flex' }}>
+              <div className="details-button" style={{display: 'flex'}}>
                 <button
                   className="btn btn-secondary btn-md"
-                  onClick={() => navigate(-1)}
-                >
+                  onClick={() => navigate(-1)}>
                   {' '}
                   Back
                 </button>
@@ -84,8 +86,7 @@ const ProductDetails = ({ id }: any) => {
                   className="btn btn-warning btn-md"
                   onClick={() =>
                     navigate(`/products/${params.id}/update-details`)
-                  }
-                >
+                  }>
                   {' '}
                   Update
                 </button>
@@ -145,7 +146,7 @@ const ProductDetails = ({ id }: any) => {
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default ProductDetails
+export default ProductDetails;
