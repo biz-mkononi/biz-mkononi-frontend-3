@@ -1,7 +1,16 @@
 const url = 'https://api-stage.mkononi.biz';
-// http://localhost:3000/
+// const url = "http://localhost:3000"
 // eslint-disable-next-line
-const verifyPhone = (phone: any) => {
+const verifyPhone = (
+  // eslint-disable-next-line
+  phone: any,
+  // eslint-disable-next-line
+  setIsLoading: any,
+  // eslint-disable-next-line
+  setErrors: any,
+  // eslint-disable-next-line
+  navigate: any
+  ) => {
   fetch(`${url}/auth/verify`, {
     method: 'POST',
     headers: {
@@ -11,9 +20,14 @@ const verifyPhone = (phone: any) => {
   })
     .then((res) => res.json())
     .then((json) => {
-      console.log(json);
+      if (json.statusCode === 403) {
+        setIsLoading(false);
+        setErrors(json.message);
+      } else {
+        setIsLoading(false);
+        navigate('/auth/login');
+      }
     });
-  console.log(phone);
 };
 
 const resendVerification = (
@@ -40,7 +54,7 @@ const resendVerification = (
         setErrors(json.message);
       } else {
         setIsLoading(false);
-        navigate(0);
+        navigate('/auth/verify-phone');
       }
     });
 };
@@ -71,7 +85,7 @@ const login = (
         setErrors('You are unauthorized, verify your details');
       } else {
         setLoggedUser(true);
-        localStorage.setItem('user', JSON.stringify({data}));
+        localStorage.setItem('user', JSON.stringify({ data }));
         navigate('/');
       }
     });

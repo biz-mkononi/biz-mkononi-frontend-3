@@ -1,172 +1,162 @@
 import React, {useState} from 'react';
-import {TextField, Alert, InputAdornment, IconButton} from '@mui/material';
+import {Alert} from '@mui/material';
 import {registerUser} from '../../Data/Auth/Data';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import './Login.css';
-import {useForm} from 'react-hook-form';
-import {yupResolver} from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import {useNavigate} from 'react-router-dom';
 import AuthLayout from '../../Layout/AuthLayout';
 
-const schema = yup.object().shape({
-  name: yup
-    .string()
-    .required('First Name is required')
-    .min(3, 'First Name must be at least 3 characters')
-    .max(112, 'First Name should not exceed 12 characters'),
-
-  email: yup
-    .string()
-    .required('Email is required')
-    .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, 'Email is invalid'),
-  phone: yup.string().required('Phone Number is required'),
-
-  password: yup
-    .string()
-    .required('Password is required')
-    .min(6, 'Password must be at least 6 characters')
-    .max(16, 'password should not exceed 16 characters'),
-  password2: yup
-    .string()
-    .required('Confirm Password is required')
-    .oneOf([yup.ref('password')], 'Passwords must and should match'),
-});
 
 const SignUpPage = () => {
   const navigate = useNavigate();
   const [isRegistering, setIsRegistering] = useState(false);
   const [dataErrors, setDataErrors] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false)
 
-  const initialState = {code: '', password: '', phone: '', password2: ''};
+  const initialState = {name: '',email:'', password: '', phone: '', password2: ''};
   // eslint-disable-next-line
   const [formData, setFormData] = useState(initialState);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({...formData, [e.target.name]: e.target.value});
+  }
+ const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // setPasswordsMatch(e.target.value === confirmPassword);
+    setFormData({...formData, ['password']: e.target.value});
+  };
 
-  const {
-    register,
-    // eslint-disable-next-line
-    handleSubmit,
-    // eslint-disable-next-line
-    formState: {errors},
-    // eslint-disable-next-line
-  } = useForm<any>({
-    resolver: yupResolver(schema),
-  });
+  const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({...formData, ['password2']: e.target.value});
+    setIsDisabled(e.target.value === formData.password && e.target.value.length >= 6 && formData.name.length > 0)
+  };
+
 
   const handleShowPassword = () => setShowPassword(!showPassword);
   const verifyPhoneNumber = () => navigate('/auth/verify-phone');
   const resendVerificationCode = () => navigate('/auth/resend-code');
 
-  const onSubmit = () => {
-    setIsRegistering(true);
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+  setIsRegistering(true);
     registerUser(setDataErrors, formData, setIsRegistering);
   };
 
-  console.log(dataErrors);
   return (
     <AuthLayout>
       {dataErrors !== '' && (
         <Alert
-          variant="standard"
-          onClose={() => setDataErrors('')}
-          severity="error">
-          {dataErrors}
-        </Alert>
+            variant="filled"
+            onClose={() => setDataErrors('')}
+            severity="error">
+            {dataErrors}
+          </Alert>
       )}
       <div className="login flex flex-col justify-center items-center">
-        <h5 className="mt-2 mb-5 text-center " style={{fontWeight: 'bold'}}>
+        <h5 className="mt-2 mb-3 text-center " style={{fontWeight: 'bold'}}>
           Create an Account
         </h5>
         <form onSubmit={onSubmit}>
-          <div className="mb-2">
-            <TextField
-              size="small"
-              id="standard-basic"
-              label="Name"
-              {...register('name')}
-              variant="standard"
-              className="w-64 mb-3"
-            />
-          </div>
-
-          <div className="mb-2">
-            <TextField
-              size="small"
-              id="standard-basic"
-              label="Phone"
-              {...register('phone')}
-              variant="standard"
-              className="w-64 mb-3"
-            />
-          </div>
-          <div className="mb-2">
-            <TextField
-              size="small"
-              id="standard-basic"
-              label="email"
-              {...register('email')}
-              variant="standard"
-              className="w-64 mb-3"
-            />
-          </div>
-          <div className="mb-2">
-            <TextField
-              size="small"
-              id="standard-basic"
-              label="Password"
-              type={showPassword ? 'text' : 'password'}
-              {...register('password')}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton>
-                      {showPassword ? (
-                        <VisibilityOff onClick={handleShowPassword} />
-                      ) : (
-                        <Visibility onClick={handleShowPassword} />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-              variant="standard"
-              className="w-64 mb-3"
-            />
-          </div>
-          <div className="mb-2">
-            <TextField
-              size="small"
-              id="standard-basic"
-              label="Confirm Password"
-              type={showPassword ? 'text' : 'password'}
-              {...register('password2')}
-              variant="standard"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton>
-                      {showPassword ? (
-                        <VisibilityOff onClick={handleShowPassword} />
-                      ) : (
-                        <Visibility onClick={handleShowPassword} />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-              className="w-64 mb-3"
-            />
-          </div>
+          <div className="mb-3">
+      <label className="block text-gray-700 text-sm font-bold mb-2 " htmlFor="name">
+        Name
+      </label>
+      <input
+        className="shadow appearance-none border rounded w-full py-2 px-3 bg-transparent  text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="name"
+        type="text"
+        placeholder="name"
+        required
+        name='name'
+        onChange={handleChange}
+      />
+    </div>
+     <div className="mb-3">
+      <label className="block text-gray-700 text-sm font-bold mb-2 " htmlFor="phone">
+        Phone
+      </label>
+      <input
+        className="shadow appearance-none border rounded w-full py-2 px-3 bg-transparent  text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="phone"
+        type="text"
+        placeholder="phone"
+        required
+        name='phone'
+        onChange={handleChange}
+      />
+    </div>
+ <div className="mb-3">
+      <label className="block text-gray-700 text-sm font-bold mb-2 " htmlFor="email">
+        Email
+      </label>
+      <input
+        className="shadow appearance-none border rounded w-full py-2 px-3 bg-transparent  text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="email"
+        type="email"
+        placeholder="email"
+        required
+        name='email'
+        onChange={handleChange}
+      />
+    </div>
+          <div className="mb-3">
+      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+        Password
+      </label>
+        <div className="relative">
+        <input
+          className="shadow bg-transparent appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="password"
+          type={showPassword ? 'text' : 'password'}
+          placeholder="password"
+          name='password'
+          required
+          onChange={handlePasswordChange}
+        />
+        <button
+        type='button'
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-4"
+          onClick={handleShowPassword}
+        >
+          {showPassword ? (
+            <VisibilityOff  />
+          ) : (
+            <Visibility  />
+          )}
+        </button>
+      </div>
+      </div>
+       <div className="mb-3">
+      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password2">
+        Confirm Password
+      </label>
+        <div className="relative">
+        <input
+          className="shadow appearance-none border bg-transparent rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="password2"
+          type={showPassword ? 'text' : 'password'}
+          placeholder="password"
+          name='password2'
+          required
+          onChange={handleConfirmPasswordChange}
+        />
+        <button
+        type='button'
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-4"
+          onClick={handleShowPassword}
+        >
+          {showPassword ? (
+            <VisibilityOff  />
+          ) : (
+            <Visibility  />
+          )}
+        </button>
+      </div>
+      </div>
           <div className="text-center mt-3 sign-button">
-            {isRegistering ? (
-              <button className="btn btn-primary btn-md" disabled>
-                Registering
-              </button>
-            ) : (
-              <button className="btn btn-primary btn-md">Register</button>
-            )}
+            <button className="btn btn-primary btn-md" disabled={!isDisabled} >
+              {isRegistering?'Registering':'Register'}
+            </button>
           </div>
           <div className="text-center mt-3">
             <p>

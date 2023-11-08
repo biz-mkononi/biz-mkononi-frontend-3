@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {TextField, Alert} from '@mui/material';
+import {Alert} from '@mui/material';
 import {forgotPassword} from '../../Data/Auth/Data';
 import AuthLayout from '../../Layout/AuthLayout';
 import './Login.css';
@@ -32,16 +32,20 @@ const GetForgotPasswordCode = () => {
         )}
         <div className="flex flex-col justify-center items-center login  ">
           <h5 className="mt-3 mb-3 font-bold ">Forgot Password</h5>
-          <div className=" mb-3">
-            <TextField
-              id="standard-basic"
-              label="Phone"
-              name="phone"
-              onChange={handleChange}
-              variant="standard"
-              className=" mb-3"
-            />
-          </div>
+          <div className="mb-4">
+      <label className="block text-gray-700 text-sm font-bold mb-3 mt-3" htmlFor="phone">
+        Phone
+      </label>
+      <input
+        className="shadow appearance-none border rounded w-full py-2 px-3 bg-transparent  text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="phone"
+        type="text"
+        placeholder="phone"
+        required
+        name='phone'
+        onChange={handleChange}
+      />
+    </div>
           <div className="mt-3 sign-button">
             {isLoading ? (
               <button className="btn btn-primary btn-md" disabled>

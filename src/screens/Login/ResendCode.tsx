@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import AuthLayout from '../../Layout/AuthLayout';
 import {useNavigate} from 'react-router-dom';
 import {resendVerification} from '../../Data/Auth/Data';
-import {TextField} from '@mui/material';
+import Alert from '@mui/material/Alert';
 import './Login.css';
 
 const ResendCode = () => {
@@ -12,7 +12,8 @@ const ResendCode = () => {
   const initialState = {code: '', password: '', phone: '', password2: ''};
   const [formData, setFormData] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
-  const resendCode = () => {
+  const resendCode = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     setIsLoading(true);
     resendVerification(formData, setIsLoading, setDataErrors, navigate);
   };
@@ -23,31 +24,37 @@ const ResendCode = () => {
     <AuthLayout>
       <div className="login flex flex-col justify-center items-center">
         <h5 className="mt-3 mb-5 text-center font-bold">Resend Code</h5>
-        {dataErrors && (
-          <p className="text-center text-danger mb-3">{dataErrors}</p>
+        {dataErrors !== '' && (
+          <Alert
+            variant="filled"
+            onClose={() => setDataErrors('')}
+            severity="error">
+            {dataErrors}
+          </Alert>
         )}
-        <div className=" mb-3">
-          <TextField
-            size="small"
-            id="standard-basic"
-            label="Phone"
-            name="phone"
-            onChange={handleChange}
-            variant="standard"
-            className="w-64 mb-3 focus:border-none focus:outline-none focus:ring-none"
-          />
-        </div>
+        <form onSubmit={resendCode}>
+        <div className="mb-3">
+      <label className="block text-gray-700 text-sm font-bold mb-2 " htmlFor="phone">
+        Phone
+      </label>
+      <input
+        className="shadow appearance-none border rounded w-full py-2 px-3 bg-transparent  text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="phone"
+        type="text"
+        placeholder="phone"
+        required
+        name='phone'
+        onChange={handleChange}
+      />
+    </div>
         <div className="mt-3 text-center sign-button">
-          {isLoading ? (
-            <button className="btn btn-primary btn-md" disabled>
-              resending
+
+            <button className="btn btn-primary btn-md" disabled = {isLoading?true:false}>
+              {isLoading?"Resending":"Resend"}
             </button>
-          ) : (
-            <button className="btn btn-primary btn-md" onClick={resendCode}>
-              Resend
-            </button>
-          )}
         </div>
+            </form>
+
       </div>
     </AuthLayout>
   );

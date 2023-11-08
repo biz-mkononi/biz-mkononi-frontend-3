@@ -12,7 +12,7 @@ interface AuthLayoutProps {
 const AuthLayout: React.FC<AuthLayoutProps> = ({children}) => {
   return (
     <div className="flex ">
-      <div className="w-1/2 p-4">
+      <div className="w-1/2 hidden sm:block md:block p-4">
         <div className="container-fluid login-banner">
           <div style={{display: 'flex'}}>
             <img src={image2} className="img-fluid banner-logo" alt="..." />
@@ -53,9 +53,10 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({children}) => {
           </div>
         </div>
       </div>
-      <div className="w-1/2 h-screen">{children}</div>
+      <div className="w-full h-screen sm:w-1/2 md:w-1/2">{children}</div>
     </div>
   );
 };
 
 export default AuthLayout;
+

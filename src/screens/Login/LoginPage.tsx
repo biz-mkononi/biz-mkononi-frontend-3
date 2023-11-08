@@ -1,11 +1,8 @@
 import React, {useContext, useState} from 'react';
 import './Login.css';
 import {
-  TextField,
   FormControlLabel,
   Checkbox,
-  InputAdornment,
-  IconButton,
   Alert,
 } from '@mui/material';
 import {login} from '../../Data/Auth/Data';
@@ -50,45 +47,48 @@ const LoginPage = () => {
         <h5 className="mt-5 mb-3  font-bold">Sign In</h5>
 
         <form onSubmit={onSubmitLoginData}>
-          <div className=" mb-3">
-            <TextField
-              size="small"
-              id="standard-basic"
-              label="Phone"
-              name="phone"
-              onChange={handleChange}
-              variant="standard"
-              className="w-64 mb-3"
-              required
-            />
-          </div>
+          <div className="mb-4">
+      <label className="block text-gray-700 text-sm font-bold mb-3 mt-3" htmlFor="phone">
+        Phone
+      </label>
+      <input
+        className="shadow appearance-none border rounded w-full py-2 px-3 bg-transparent  text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="phone"
+        type="text"
+        placeholder="phone"
+        required
+        name='phone'
+        onChange={handleChange}
+      />
+    </div>
+    <div className="mb-4">
+      <label className="block text-gray-700 text-sm font-bold mb-3" htmlFor="password">
+        Password
+      </label>
+      <div className="relative">
+        <input
+          className="shadow bg-transparent appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="password"
+          type={showPassword ? 'text' : 'password'}
+          placeholder="password"
+          name='password'
+          required
+          onChange={handleChange}
+        />
+        <button
+        type='button'
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-4"
+          onClick={handleShowPassword}
+        >
+          {showPassword ? (
+            <VisibilityOff  />
+          ) : (
+            <Visibility  />
+          )}
+        </button>
+      </div>
+    </div>
 
-          <div className="mb-3 ">
-            <TextField
-              size="small"
-              id="standard-basic"
-              label="Password"
-              onChange={handleChange}
-              type={showPassword ? 'text' : 'password'}
-              name="password"
-              required
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton>
-                      {showPassword ? (
-                        <VisibilityOff onClick={handleShowPassword} />
-                      ) : (
-                        <Visibility onClick={handleShowPassword} />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-              variant="standard"
-              className="w-64 mb-3"
-            />
-          </div>
           <div className="text-center mb-2">
             <FormControlLabel
               control={<Checkbox defaultChecked />}

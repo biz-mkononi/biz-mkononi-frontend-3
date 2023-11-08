@@ -3,7 +3,9 @@ import {reqInstance} from '../Auth/authHelper';
 // eslint-disable-next-line
 const addBusiness = (post: any, navigate: any, setIsLoading: any) => {
   setIsLoading(true);
-  reqInstance.post(`${url}/businesses`, post).then(() => navigate('/'));
+  reqInstance.post(`${url}/businesses`, post)
+  .then(() => navigate('/'))
+  .catch((err) => console.log(err))
 };
 const getBusiness = async () => {
   const response = await reqInstance.get(`${url}/businesses`);

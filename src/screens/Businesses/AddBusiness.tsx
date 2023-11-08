@@ -11,9 +11,10 @@ import {useNavigate} from 'react-router-dom';
 import FormsLayout from '../../Layout/FormsLayout';
 import Image from '../../components/FormFields/Image';
 import Input from '../../components/FormFields/Input';
-import Location from '../../components/FormFields/Location';
+// import Location from '../../components/FormFields/Location';
 import Select from '../../components/FormFields/Select';
 import TextArea from '../../components/FormFields/TextArea';
+import Location from '../../components/FormFields/Location';
 
 const AddBusiness = () => {
   const [displayImage, setDisplayImage] = useState('');
@@ -25,8 +26,8 @@ const AddBusiness = () => {
     locationDetails: '',
     productType: '',
     description: '',
-    longitude: 12,
-    latitude: 13,
+    longitude: 0.00,
+    latitude: 0.00,
     image: {},
   };
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ const AddBusiness = () => {
       setDisplayImage(URL.createObjectURL(e.target.files[0]));
     }
   };
- // eslint-disable-next-line
+ //eslint-disable-next-line
   const handleSelect = (place: any) => {
     const geocoder = new window.google.maps.Geocoder();
     geocoder.geocode(
@@ -62,8 +63,8 @@ const AddBusiness = () => {
           const {lat, lng} = results[0].geometry.location;
           setFormData({
             ...formData,
-            latitude: lat(),
-            longitude: lng(),
+            latitude: parseFloat (lat()),
+            longitude: parseFloat (lng()),
             location: place.label,
           });
         }
@@ -80,8 +81,10 @@ const AddBusiness = () => {
     setIsActive2(true);
   };
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+
     e.preventDefault();
     addBusiness(formData, navigate, setIsLoading);
+
   };
 
   return (

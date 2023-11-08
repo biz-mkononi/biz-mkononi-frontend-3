@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {TextField, InputAdornment, IconButton, Alert} from '@mui/material';
+import {Alert} from '@mui/material';
 import {changePassword} from '../../Data/Auth/Data';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -17,9 +17,11 @@ const ResetPassword = () => {
 
   const handleShowPassword = () => setShowPassword(!showPassword);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
     setFormData({...formData, [e.target.name]: e.target.value});
   };
-  const changingPassword = () => {
+  const changingPassword = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     setIsLoading(true);
     changePassword(setDataErrors, formData, setIsLoading, navigate);
   };
@@ -28,99 +30,103 @@ const ResetPassword = () => {
     <AuthLayout>
       {dataErrors !== '' && (
         <Alert
-          variant="standard"
-          onClose={() => setDataErrors('')}
-          severity="error">
-          {dataErrors}
-        </Alert>
+            variant="filled"
+            onClose={() => setDataErrors('')}
+            severity="error">
+            {dataErrors}
+          </Alert>
       )}
       <div className="flex flex-col justify-center items-center login  ">
         <h5 className="mt-3 mb-5 font-bold">Reset Password</h5>
-        <div className="mb-3">
-          <TextField
-            id="standard-basic"
-            label="Phone"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            variant="standard"
-            className="w-64 mb-3"
-          />
-        </div>
-        <div className="mb-3">
-          <TextField
-            id="standard-basic"
-            label="Code"
-            name="code"
-            onChange={handleChange}
-            variant="standard"
-            className="w-64 mb-3"
-            required
-          />
-        </div>
-        <div className="mb-2 ">
-          <TextField
-            id="standard-basic"
-            label="new password"
-            onChange={handleChange}
-            type={showPassword ? 'text' : 'password'}
-            name="password"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton>
-                    {showPassword ? (
-                      <VisibilityOff onClick={handleShowPassword} />
-                    ) : (
-                      <Visibility onClick={handleShowPassword} />
-                    )}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-            variant="standard"
-            className="w-64 mb-3"
-            required
-          />
-        </div>
-        <div className="mb-2 ">
-          <TextField
-            id="standard-basic"
-            label="Confirm Password"
-            onChange={handleChange}
-            type={showPassword ? 'text' : 'password'}
-            name="password2"
-            variant="standard"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton>
-                    {showPassword ? (
-                      <VisibilityOff onClick={handleShowPassword} />
-                    ) : (
-                      <Visibility onClick={handleShowPassword} />
-                    )}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-            className="w-64 mb-3"
-            required
-          />
-        </div>
-        <div className="mt-3 text-center sign-button">
-          {isLoading ? (
-            <button className="btn btn-primary btn-md" disabled>
-              Resetting Password
-            </button>
+        <form onSubmit={changingPassword}>
+        <div className="mb-2">
+      <label className="block text-gray-700 text-sm font-bold mb-3" htmlFor="phone">
+        Phone
+      </label>
+      <input
+        className="shadow appearance-none border rounded w-full py-2 px-3 bg-transparent  text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="phone"
+        type="text"
+        placeholder="phone"
+        required
+        name='phone'
+        onChange={handleChange}
+      />
+    </div>
+        <div className="mb-2">
+      <label className="block text-gray-700 text-sm font-bold mb-3" htmlFor="code">
+        Code
+      </label>
+      <input
+        className="shadow appearance-none border rounded w-full py-2 px-3 bg-transparent  text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="code"
+        type="text"
+        placeholder="code"
+        required
+        name='code'
+        onChange={handleChange}
+      />
+    </div>
+     <div className="mb-4">
+      <label className="block text-gray-700 text-sm font-bold mb-3" htmlFor="password">
+        Password
+      </label>
+        <div className="relative">
+        <input
+          className="shadow bg-transparent appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="password"
+          type={showPassword ? 'text' : 'password'}
+          placeholder="password"
+          name='password'
+          required
+          onChange={handleChange}
+        />
+        <button
+        type='button'
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-4"
+          onClick={handleShowPassword}
+        >
+          {showPassword ? (
+            <VisibilityOff  />
           ) : (
-            <button
-              className="btn btn-primary btn-md"
-              onClick={changingPassword}>
-              Reset Password
-            </button>
+            <Visibility  />
           )}
+        </button>
+      </div>
+      </div>
+       <div className="mb-4">
+      <label className="block text-gray-700 text-sm font-bold mb-3" htmlFor="password2">
+        Confirm Password
+      </label>
+        <div className="relative">
+        <input
+          className="shadow appearance-none border bg-transparent rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="password2"
+          type={showPassword ? 'text' : 'password'}
+          placeholder="password"
+          name='password2'
+          required
+          onChange={handleChange}
+        />
+        <button
+        type='button'
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-4"
+          onClick={handleShowPassword}
+        >
+          {showPassword ? (
+            <VisibilityOff  />
+          ) : (
+            <Visibility  />
+          )}
+        </button>
+      </div>
+      </div>
+        <div className="mt-3 text-center sign-button">
+            <button className="btn btn-primary btn-md" disabled ={isLoading ? true:false}>
+              {isLoading?"Resetting password":"Reset password"}
+            </button>
         </div>
+        </form>
       </div>
     </AuthLayout>
   );
