@@ -111,7 +111,7 @@ const AddProduct = ({id}: any) => {
                   <option selected>Select category</option>
                   {
                     // eslint-disable-next-line
-                  categories.map((category:any) => {
+                  categories?.map((category:any) => {
                     return (
                       <option value={category.id} key={category.id}>
                         {category.name}

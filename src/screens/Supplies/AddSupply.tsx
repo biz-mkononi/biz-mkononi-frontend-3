@@ -163,7 +163,7 @@ const AddSupply = ({id}: any) => {
                   <option selected>Select Supplier</option>
                   {
                     // eslint-disable-next-line
-                  suppliers.map((supplier:any) => {
+                  suppliers?.map((supplier:any) => {
                     return (
                       <option value={supplier.id} key={supplier.id}>
                         {supplier.name}
@@ -203,7 +203,7 @@ const AddSupply = ({id}: any) => {
                         <option selected>Select product</option>
                         {
                           // eslint-disable-next-line
-                        products.map((product:any) => {
+                        products?.map((product:any) => {
                           return (
                             <option key={product.name} value={product.name}>
                               {product.name}

@@ -163,7 +163,7 @@ const AddSale = ({id}: any) => {
                   <option selected>Select customer</option>
                   {
                     // eslint-disable-next-line
-                  customers.map((customer:any) => {
+                  customers?.map((customer:any) => {
                     return (
                       <option value={customer.id} key={customer.id}>
                         {customer.name}

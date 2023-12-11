@@ -77,7 +77,7 @@ const {data: employees} = useQuery<Employees[] | any, Error>({
               <option selected>Select employee</option>
               {
                 // eslint-disable-next-line
-              employees.map((employee:any) => {
+              employees?.map((employee:any) => {
                 return (
                   <option value={employee.id} key={employee.id}>
                     {employee.name}
