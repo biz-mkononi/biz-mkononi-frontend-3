@@ -1,5 +1,5 @@
-// const url = 'https://api-stage.mkononi.biz';
-const url = "http://localhost:3000"
+const url = 'https://api-stage.mkononi.biz';
+// const url = "http://localhost:3000"
 // eslint-disable-next-line
 const verifyPhone = (
   // eslint-disable-next-line
