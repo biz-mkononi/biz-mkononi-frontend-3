@@ -1,5 +1,5 @@
-const url = 'https://api-stage.mkononi.biz';
-// const url = "http://localhost:3000"
+// const url = 'https://api-stage.mkononi.biz';
+const url = "http://localhost:3000"
 // eslint-disable-next-line
 const verifyPhone = (
   // eslint-disable-next-line
@@ -68,7 +68,9 @@ const login = (
   // eslint-disable-next-line
   setIsSignIn: any,
   // eslint-disable-next-line
-  setLoggedUser: any
+  setLoggedUser: any,
+  // eslint-disable-next-line
+  setUser: any
 ) => {
   setIsSignIn(true);
   fetch(`${url}/auth/login`, {
@@ -85,7 +87,7 @@ const login = (
         setErrors('You are unauthorized, verify your details');
       } else {
         setLoggedUser(true);
-        localStorage.setItem('user', JSON.stringify({ data }));
+        setUser(data)
         navigate('/');
       }
     });
@@ -97,7 +99,9 @@ const registerUser = async (
   // eslint-disable-next-line
   post: any,
   // eslint-disable-next-line
-  setIsRegistering: any
+  setIsRegistering: any,
+  // eslint-disable-next-line
+  navigate: any
 ) => {
   fetch(`${url}/auth/register`, {
     method: 'POST',
@@ -113,6 +117,7 @@ const registerUser = async (
         setErrors(json.message);
       } else {
         setIsRegistering(false);
+        navigate('/auth/verify-phone')
       }
     });
 };

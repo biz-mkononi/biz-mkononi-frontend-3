@@ -8,8 +8,8 @@ const auth = {
     else return false;
   },
   authHeader() {
-    if (user && user.data.jwt) {
-      return {Authorization: 'Bearer ' + user.data.jwt};
+    if (user && user.jwt) {
+      return {Authorization: 'Bearer ' + user.jwt};
     } else {
       return {};
     }
@@ -17,7 +17,7 @@ const auth = {
 };
 const instance = () => {
   if (user) {
-    return user.data.jwt;
+    return user.jwt;
   }
 };
 

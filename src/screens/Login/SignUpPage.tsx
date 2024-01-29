@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Alert} from '@mui/material';
 import {registerUser} from '../../Data/Auth/Data';
 import Visibility from '@mui/icons-material/Visibility';
@@ -6,6 +6,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import './Login.css';
 import {useNavigate} from 'react-router-dom';
 import AuthLayout from '../../Layout/AuthLayout';
+import { DataContext } from '../../context/ContextProvider';
 
 
 const SignUpPage = () => {
@@ -13,11 +14,9 @@ const SignUpPage = () => {
   const [isRegistering, setIsRegistering] = useState(false);
   const [dataErrors, setDataErrors] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false)
 
-  const initialState = {name: '',email:'', password: '', phone: '', password2: ''};
-  // eslint-disable-next-line
-  const [formData, setFormData] = useState(initialState);
+
+const {formData,setFormData} = useContext(DataContext)
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, [e.target.name]: e.target.value});
   }
@@ -28,7 +27,6 @@ const SignUpPage = () => {
 
   const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, ['password2']: e.target.value});
-    setIsDisabled(e.target.value === formData.password && e.target.value.length >= 6 && formData.name.length > 0)
   };
 
 
@@ -39,9 +37,10 @@ const SignUpPage = () => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
   setIsRegistering(true);
-    registerUser(setDataErrors, formData, setIsRegistering);
+    registerUser(setDataErrors, formData, setIsRegistering,navigate);
   };
 
+console.log(formData)
   return (
     <AuthLayout>
       {dataErrors !== '' && (
@@ -154,7 +153,7 @@ const SignUpPage = () => {
       </div>
       </div>
           <div className="text-center mt-3 sign-button">
-            <button className="btn btn-primary btn-md" disabled={!isDisabled} >
+            <button className="btn btn-primary btn-md"  >
               {isRegistering?'Registering':'Register'}
             </button>
           </div>

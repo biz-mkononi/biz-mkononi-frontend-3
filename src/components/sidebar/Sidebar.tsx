@@ -182,7 +182,7 @@ const otherItems = [
 ];
 
 const Sidebar = () => {
-  const {currentUser, business, setLoggedUser} = useContext(DataContext);
+  const {business, setLoggedUser,user} = useContext(DataContext);
   const filteredListItems = appMenuItems.filter((item) => {
     return item.name.includes('Businesses');
   });
@@ -192,6 +192,7 @@ const Sidebar = () => {
     setLoggedUser(false);
     navigate('/auth/login');
   };
+  console.log(user)
   return (
     <div>
       <button
@@ -216,82 +217,87 @@ const Sidebar = () => {
       </button>
 
       <aside
-        id="sidebar-multi-level-sidebar"
-        className="fixed top-0 left-0 z-40 w-72 h-screen transition-transform -translate-x-full sm:translate-x-0"
-        aria-label="Sidebar">
-        <div className="h-full py-4  pb-4 overflow-y-auto bg-bizLightBlue dark:bg-gray-800">
-          <div className=" py-3 lg:px-5 lg:pl-3">
-            <div className="flex items-start justify-between">
-              <div className="flex items-start justify-start">
-                <a href="https://flowbite.com" className="flex ml-2 md:mr-12">
-                  <img src={logo} className="h-8 mr-3" alt="FlowBite Logo" />
-                  <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
-                    BizMkononi
-                  </span>
-                </a>
-              </div>
-              <div className="flex items-center">
-                <div className="flex items-center ml-3">
-                  <div>
-                    <button
-                      type="button"
-                      className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-                      aria-expanded="false"
-                      data-dropdown-toggle="dropdown-user">
-                      <span className="sr-only">Open user menu</span>
-                      <img
-                        className="w-8 h-8 rounded-full"
-                        src={person}
-                        alt="user photo"
-                      />
-                    </button>
+      id="sidebar-multi-level-sidebar"
+      className="fixed top-0 left-0 z-40 w-72 h-screen transition-transform -translate-x-full sm:translate-x-0"
+      aria-label="Sidebar"
+    >
+      <div className="h-full py-4  pb-4 overflow-y-auto bg-bizLightBlue dark:bg-gray-800">
+        <div className=" py-3 lg:px-5 lg:pl-3">
+          <div className="flex items-start justify-between">
+            <div className="flex items-start justify-start">
+              <a href="https://flowbite.com" className="flex ml-2 md:mr-12">
+                <img src={logo} className="h-8 mr-3" alt="FlowBite Logo" />
+                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
+                  BizMkononi
+                </span>
+              </a>
+            </div>
+            <div className="flex items-center">
+              <div className="flex items-center ml-3">
+                <div>
+                  <button
+                    type="button"
+                    className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                    aria-expanded="false"
+                    data-dropdown-toggle="dropdown-user"
+                  >
+                    <span className="sr-only">Open user menu</span>
+                    <img
+                      className="w-8 h-8 rounded-full"
+                      src={person}
+                      alt="user photo"
+                    />
+                  </button>
+                </div>
+                <div
+                  className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
+                  id="dropdown-user"
+                >
+                  <div className="px-4 py-3" role="none">
+                    <p
+                      className="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
+                      role="none"
+                    >
+                      {user.user.phone}
+                    </p>
                   </div>
-                  <div
-                    className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
-                    id="dropdown-user">
-                    <div className="px-4 py-3" role="none">
-                      <p
-                        className="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
-                        role="none">
-                        {currentUser.phone}
-                      </p>
-                    </div>
-                    <ul className="py-1" role="none">
-                      <li>
-                        <button
-                          onClick={logout}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                          role="menuitem">
-                          Sign out
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
+                  <ul className="py-1" role="none">
+                    <li>
+                      <button
+                        onClick={logout}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                        role="menuitem"
+                      >
+                        Sign out
+                      </button>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
-          <hr className=" border-2 border-gray-600 mt-3 mb-3 " />
-          {business
-            ? appMenuItems.map((item, index) => (
-                <div className="mb-2" key={index}>
-                  <SideBarMenuItem {...item} key={index} />
-                </div>
-              ))
-            : filteredListItems.map((item, index) => (
-                <div className="mb-2" key={index}>
-                  <SideBarMenuItem {...item} key={index} />
-                </div>
-              ))}
-          <Divider />
-          {business &&
-            otherItems.map((item, index) => (
+        </div>
+        <hr className=" border-2 border-gray-600 mt-3 mb-3 " />
+        {business
+          ? appMenuItems.map((item, index) => (
+              <div className="mb-2" key={index}>
+                <SideBarMenuItem {...item} key={index} />
+              </div>
+            ))
+          : filteredListItems.map((item, index) => (
               <div className="mb-2" key={index}>
                 <SideBarMenuItem {...item} key={index} />
               </div>
             ))}
-        </div>
-      </aside>
+        <Divider />
+        {business &&
+          otherItems.map((item, index) => (
+            <div className="mb-2" key={index}>
+              <SideBarMenuItem {...item} key={index} />
+            </div>
+          ))}
+      </div>
+    </aside>
     </div>
   );
 };

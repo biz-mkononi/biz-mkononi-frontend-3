@@ -18,7 +18,7 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSigningIn, setIsSigningIn] = useState(false);
 
-  const {setLoggedUser} = useContext(DataContext);
+  const {setLoggedUser,setUser} = useContext(DataContext);
   const [formData, setFormData] = useState(initialState);
   const [dataErrors, setDataErrors] = useState('');
 
@@ -29,7 +29,7 @@ const LoginPage = () => {
 
   const onSubmitLoginData = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    login(setDataErrors, formData, navigate, setIsSigningIn, setLoggedUser);
+    login(setDataErrors, formData, navigate, setIsSigningIn, setLoggedUser,setUser);
   };
 
   const forgotPassword = () => navigate('/auth/get-forgot-password');
@@ -116,7 +116,7 @@ const LoginPage = () => {
             Dont have an account yet?{' '}
             <button
               className="bg-transparent"
-              onClick={() => navigate('/auth/sign-up')}>
+              onClick={() => navigate('/payment/plans')}>
               Sign Up
             </button>
           </p>
