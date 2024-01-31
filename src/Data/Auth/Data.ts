@@ -64,8 +64,6 @@ const login = (
   // eslint-disable-next-line
   post: any,
   // eslint-disable-next-line
-  navigate: any,
-  // eslint-disable-next-line
   setIsSignIn: any,
   // eslint-disable-next-line
   setLoggedUser: any,
@@ -88,7 +86,7 @@ const login = (
       } else {
         setLoggedUser(true);
         setUser(data)
-        navigate('/');
+        window.location.assign('/')
       }
     });
 };

@@ -29,7 +29,7 @@ const LoginPage = () => {
 
   const onSubmitLoginData = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    login(setDataErrors, formData, navigate, setIsSigningIn, setLoggedUser,setUser);
+    login(setDataErrors, formData, setIsSigningIn, setLoggedUser,setUser);
   };
 
   const forgotPassword = () => navigate('/auth/get-forgot-password');

@@ -11,7 +11,6 @@ import {Divider} from '@mui/material';
 import person from '../../Assets/person.png';
 import logo from '../../Assets/logo.png';
 import {DataContext} from '../../context/ContextProvider';
-import {useNavigate} from 'react-router-dom';
 
 const appMenuItems = [
   {
@@ -186,11 +185,10 @@ const Sidebar = () => {
   const filteredListItems = appMenuItems.filter((item) => {
     return item.name.includes('Businesses');
   });
-  const navigate = useNavigate();
   const logout = () => {
     localStorage.clear();
     setLoggedUser(false);
-    navigate('/auth/login');
+    window.location.assign('/auth/login')
   };
   console.log(user)
   return (
