@@ -190,7 +190,6 @@ const Sidebar = () => {
     setLoggedUser(false);
     window.location.assign('/auth/login')
   };
-  console.log(user)
   return (
     <div>
       <button
