@@ -6,8 +6,6 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import {Card} from '@mui/material';
 import './AddBusiness.css';
 import BusinessList from './BusinessList';
-import {addBusiness} from '../../Data/Businesses/Data';
-import {useNavigate} from 'react-router-dom';
 import FormsLayout from '../../Layout/FormsLayout';
 import Image from '../../components/FormFields/Image';
 import Input from '../../components/FormFields/Input';
@@ -15,6 +13,7 @@ import Input from '../../components/FormFields/Input';
 import Select from '../../components/FormFields/Select';
 import TextArea from '../../components/FormFields/TextArea';
 import Location from '../../components/FormFields/Location';
+import useAddBusiness from '../../hooks/Businesses/useAddBusiness';
 
 const AddBusiness = () => {
   const [displayImage, setDisplayImage] = useState('');
@@ -28,13 +27,12 @@ const AddBusiness = () => {
     description: '',
     longitude: 0.00,
     latitude: 0.00,
-    image: {},
+    image: null,
   };
-  const navigate = useNavigate();
+  const {mutate,isLoading} = useAddBusiness();
   const [isActive, setIsActive] = useState(false);
   const [isActive2, setIsActive2] = useState(true);
   const [formData, setFormData] = useState(initialState);
-  const [isLoading, setIsLoading] = useState(false);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, [e.target.name]: e.target.value});
   };
@@ -83,7 +81,7 @@ const AddBusiness = () => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 
     e.preventDefault();
-    addBusiness(formData, navigate, setIsLoading);
+    mutate(formData)
 
   };
 
@@ -166,8 +164,8 @@ const AddBusiness = () => {
               <div className="text-center mt-3">
                 <button
                   className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-                  disabled={isLoading ? true : false}>
-                  {isLoading ? 'Adding' : 'Add Business'}
+                  disabled={isLoading}>
+                  {isLoading ? 'Adding..' : 'Add Business'}
                 </button>
               </div>
             </form>

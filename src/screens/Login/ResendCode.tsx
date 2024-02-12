@@ -1,24 +1,20 @@
 import React, {useState} from 'react';
 import AuthLayout from '../../Layout/AuthLayout';
-import {useNavigate} from 'react-router-dom';
-import {resendVerification} from '../../Data/Auth/Data';
 import Alert from '@mui/material/Alert';
 import './Login.css';
+import useResendVerification from '../../hooks/Auth/useResendVerification';
 
 const ResendCode = () => {
-  const navigate = useNavigate();
+  const {mutate,isLoading} = useResendVerification();
   const [dataErrors, setDataErrors] = useState('');
 
-  const initialState = {code: '', password: '', phone: '', password2: ''};
-  const [formData, setFormData] = useState(initialState);
-  const [isLoading, setIsLoading] = useState(false);
-  const resendCode = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setIsLoading(true);
-    resendVerification(formData, setIsLoading, setDataErrors, navigate);
-  };
+  const [formData, setFormData] = useState({phone:''});
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, [e.target.name]: e.target.value});
+  };
+  const resendCode = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    mutate(formData)
   };
   return (
     <AuthLayout>

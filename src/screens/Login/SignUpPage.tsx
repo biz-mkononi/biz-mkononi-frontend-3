@@ -1,17 +1,17 @@
 import React, {useContext, useState} from 'react';
 import {Alert} from '@mui/material';
-import {registerUser} from '../../Data/Auth/Data';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import './Login.css';
 import {useNavigate} from 'react-router-dom';
 import AuthLayout from '../../Layout/AuthLayout';
 import { DataContext } from '../../context/ContextProvider';
+import useCreateUser from '../../hooks/Auth/useRegisterUser';
 
 
 const SignUpPage = () => {
   const navigate = useNavigate();
-  const [isRegistering, setIsRegistering] = useState(false);
+  const {mutate,isLoading} = useCreateUser ();
   const [dataErrors, setDataErrors] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
@@ -21,7 +21,6 @@ const {formData,setFormData} = useContext(DataContext)
     setFormData({...formData, [e.target.name]: e.target.value});
   }
  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // setPasswordsMatch(e.target.value === confirmPassword);
     setFormData({...formData, ['password']: e.target.value});
   };
 
@@ -36,11 +35,9 @@ const {formData,setFormData} = useContext(DataContext)
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-  setIsRegistering(true);
-    registerUser(setDataErrors, formData, setIsRegistering,navigate);
+    mutate(formData)
   };
 
-console.log(formData)
   return (
     <AuthLayout>
       {dataErrors !== '' && (
@@ -153,8 +150,8 @@ console.log(formData)
       </div>
       </div>
           <div className="text-center mt-3 sign-button">
-            <button className="btn btn-primary btn-md"  >
-              {isRegistering?'Registering':'Register'}
+            <button className="btn btn-primary btn-md" disabled={isLoading}  >
+              {isLoading?'Registering':'Register'}
             </button>
           </div>
           <div className="text-center mt-3">

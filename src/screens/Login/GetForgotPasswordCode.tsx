@@ -1,23 +1,19 @@
 import React, {useState} from 'react';
 import {Alert} from '@mui/material';
-import {forgotPassword} from '../../Data/Auth/Data';
 import AuthLayout from '../../Layout/AuthLayout';
 import './Login.css';
-import {useNavigate} from 'react-router-dom';
+import useForgotPassword from '../../hooks/Auth/useForgotPassword';
 
 const GetForgotPasswordCode = () => {
-  const initialState = {code: '', password: '', phone: '', password2: ''};
-  const navigate = useNavigate();
+  const {mutate,isLoading} = useForgotPassword()
   const [dataErrors, setDataErrors] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState(initialState);
+  const [formData, setFormData] = useState({phone:''});
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, [e.target.name]: e.target.value});
   };
 
   const onForgotPassword = () => {
-    setIsLoading(true);
-    forgotPassword(setDataErrors, formData, setIsLoading, navigate);
+    mutate(formData)
   };
   return (
     <React.Fragment>
@@ -47,17 +43,12 @@ const GetForgotPasswordCode = () => {
       />
     </div>
           <div className="mt-3 sign-button">
-            {isLoading ? (
-              <button className="btn btn-primary btn-md" disabled>
-                Submitting
-              </button>
-            ) : (
-              <button
+            <button
                 className="btn btn-primary btn-md"
+                disabled={isLoading}
                 onClick={onForgotPassword}>
-                Submit
+                {isLoading?'Submitting..':'Submit'}
               </button>
-            )}
           </div>
         </div>
       </AuthLayout>

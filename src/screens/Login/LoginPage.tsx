@@ -1,24 +1,22 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import './Login.css';
 import {
   FormControlLabel,
   Checkbox,
   Alert,
 } from '@mui/material';
-import {login} from '../../Data/Auth/Data';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import {useNavigate} from 'react-router-dom';
-import {DataContext} from '../../context/ContextProvider';
 import AuthLayout from '../../Layout/AuthLayout';
+import useLoginUser from '../../hooks/Auth/useLogin';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const initialState = {code: '', password: '', phone: '', password2: ''};
+  const initialState = {password: '', phone: ''};
   const [showPassword, setShowPassword] = useState(false);
-  const [isSigningIn, setIsSigningIn] = useState(false);
+  const {mutate,isLoading} = useLoginUser()
 
-  const {setLoggedUser,setUser} = useContext(DataContext);
   const [formData, setFormData] = useState(initialState);
   const [dataErrors, setDataErrors] = useState('');
 
@@ -29,7 +27,9 @@ const LoginPage = () => {
 
   const onSubmitLoginData = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    login(setDataErrors, formData, setIsSigningIn, setLoggedUser,setUser);
+    // login(setDataErrors, formData, setIsSigningIn, setLoggedUser,setUser);
+    mutate(formData)
+
   };
 
   const forgotPassword = () => navigate('/auth/get-forgot-password');
@@ -102,13 +102,7 @@ const LoginPage = () => {
             </p>
           </div>
           <div className="mt-3 text-center sign-button">
-            {isSigningIn ? (
-              <button className="btn btn-primary btn-md" disabled>
-                Signing In
-              </button>
-            ) : (
-              <button className="btn btn-primary btn-md">Sign In</button>
-            )}
+            <button className="btn btn-primary btn-md" disabled={isLoading}>{isLoading?'signing..':'sign in'}</button>
           </div>
         </form>
         <div className="text-center mt-3">

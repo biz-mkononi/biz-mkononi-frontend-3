@@ -1,18 +1,16 @@
 import React, {useState} from 'react';
 import {Alert} from '@mui/material';
-import {changePassword} from '../../Data/Auth/Data';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import {useNavigate} from 'react-router-dom';
 import AuthLayout from '../../Layout/AuthLayout';
 import './Login.css';
+import useResetPassword from '../../hooks/Auth/useResetPassword';
 
 const ResetPassword = () => {
-  const navigate = useNavigate();
+  const {mutate,isLoading} = useResetPassword();
   const initialState = {code: '', password: '', phone: '', password2: ''};
   const [formData, setFormData] = useState(initialState);
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [dataErrors, setDataErrors] = useState('');
 
   const handleShowPassword = () => setShowPassword(!showPassword);
@@ -22,8 +20,7 @@ const ResetPassword = () => {
   };
   const changingPassword = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setIsLoading(true);
-    changePassword(setDataErrors, formData, setIsLoading, navigate);
+   mutate(formData)
   };
 
   return (
@@ -122,8 +119,8 @@ const ResetPassword = () => {
       </div>
       </div>
         <div className="mt-3 text-center sign-button">
-            <button className="btn btn-primary btn-md" disabled ={isLoading ? true:false}>
-              {isLoading?"Resetting password":"Reset password"}
+            <button className="btn btn-primary btn-md" disabled ={isLoading}>
+              {isLoading?"Resetting...":"Reset password"}
             </button>
         </div>
         </form>

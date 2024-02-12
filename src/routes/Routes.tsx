@@ -6,6 +6,9 @@ import {useTheme} from '@mui/material/styles';
 import {DataContext} from '../context/ContextProvider';
 import Box from '@mui/material/Box';
 import Sidebar from '../components/sidebar/Sidebar';
+import useAuthToken from '../hooks/common/useAuthToken';
+import {CssBaseline, Toolbar} from '@mui/material';
+import AppMenuBar from '../components/sidebar/AppBar';
 
 const RoutesFile = () => {
   const ProductDetails = lazy(
@@ -109,12 +112,40 @@ const RoutesFile = () => {
   const RevenueInsights = lazy(
     () => import('../screens/Insights/RevenueInsights')
   );
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [isClosing, setIsClosing] = React.useState(false);
+
+  const handleDrawerClose = () => {
+    setIsClosing(true);
+    setMobileOpen(false);
+  };
+
+  const handleDrawerTransitionEnd = () => {
+    setIsClosing(false);
+  };
+
+  const handleDrawerToggle = () => {
+    if (!isClosing) {
+      setMobileOpen(!mobileOpen);
+    }
+  };
 // eslint-disable-next-line
   const theme = useTheme();
-  const {loggedUser, businessId} = useContext(DataContext);
+  const {businessId} = useContext(DataContext);
+  const {token} = useAuthToken();
+  const drawerWidth = 270;
   return (
     <Box sx={{display: 'flex'}}>
-      {loggedUser && <Sidebar />}
+            <CssBaseline />
+
+
+
+      {token !== null &&
+      <>
+<AppMenuBar handleDrawerToggle={handleDrawerToggle} drawerWidth={drawerWidth}/>
+       <Sidebar drawerWidth={drawerWidth} mobileOpen={mobileOpen} handleDrawerClose={handleDrawerClose} handleDrawerTransitionEnd={handleDrawerTransitionEnd} />
+       </>
+       }
 
       <Suspense
         fallback={
@@ -128,9 +159,12 @@ const RoutesFile = () => {
         }>
         {/* <AppBar/> */}
 
-        <div className="sm:p-1 lg:w-full  lg:ml-72 sm:w-full">
-          <div className="mt-8 py-6">
-            <Routes>
+        <Box
+        component="main"
+        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+      >
+        <Toolbar />
+         <Routes>
               <Route element={<PrivateRoute />}>
                 <Route path="/insights/overview" element={<OverviewScreen />} />
                 <Route
@@ -310,8 +344,9 @@ const RoutesFile = () => {
                 />
               </Route>
             </Routes>
-          </div>
-        </div>
+      </Box>
+
+
       </Suspense>
     </Box>
   );

@@ -1,17 +1,14 @@
 import React, {useState} from 'react';
 import {Alert} from '@mui/material';
-import {verifyPhone} from '../../Data/Auth/Data';
-import {useNavigate} from 'react-router-dom';
 import './Login.css';
 import AuthLayout from '../../Layout/AuthLayout';
+import useVerifyPhone from '../../hooks/Auth/useVerifyPhone';
 
 const VerifyPhone = () => {
-  const navigate = useNavigate();
-
-  const initialState = {code: '', password: '', phone: '', password2: ''};
+  const {mutate,isLoading} = useVerifyPhone();
+  const initialState = {code: '', phone: ''};
   const [formData, setFormData] = useState(initialState);
   const [dataErrors,setDataErrors] = useState('')
-  const [isLoading,setIsLoading] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, [e.target.name]: e.target.value});
@@ -19,7 +16,8 @@ const VerifyPhone = () => {
 
   const phoneVerification = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    verifyPhone(formData,setIsLoading,setDataErrors,navigate);
+    mutate(formData)
+
   };
   return (
     <AuthLayout>
@@ -64,8 +62,8 @@ const VerifyPhone = () => {
     </div>
         <div className="mt-3 text-center sign-button">
           <button
-            className="btn btn-primary btn-md" disabled={isLoading?true:false} >
-           {isLoading?"Verifying":" Verify Phone"}
+            className="btn btn-primary btn-md" disabled={isLoading} >
+           {isLoading?"Verifying..":" Verify Phone"}
           </button>
         </div>
         </form>

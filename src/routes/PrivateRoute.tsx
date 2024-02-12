@@ -1,12 +1,11 @@
 import React from 'react'
-import {useContext} from 'react';
 import {Navigate, Outlet} from 'react-router-dom';
-import {DataContext} from '../context/ContextProvider';
+import useAuthToken from '../hooks/common/useAuthToken';
 
 const PrivateRoute: React.FC = () => {
-  const {loggedUser} = useContext(DataContext);
+  const {token} = useAuthToken()
 
-  if (!loggedUser) {
+  if (token === null) {
     return <Navigate to="/auth/login" replace />;
   }
   return <Outlet />;
