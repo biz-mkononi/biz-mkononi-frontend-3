@@ -6,11 +6,10 @@ import {Card, Alert} from '@mui/material';
 import {getCustomers} from '../../Data/Customers/Data';
 import {getProducts} from '../../Data/Products/Data';
 import '../Businesses/AddBusiness.css';
-import {addSale} from '../../Data/Sales/Data';
-import {useNavigate} from 'react-router-dom';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import FormsLayout from '../../Layout/FormsLayout';
 import { useQuery } from '@tanstack/react-query';
+import useAddSale from '../../hooks/sales/useAddSale';
 
 interface Form {
   product: string;
@@ -40,12 +39,9 @@ const AddSale = ({id}: any) => {
     {product: '', salePrice: 0, quantity: 0, productId: ''},
   ]);
   const [totalAmount, setTotalAmount] = useState(0);
-  const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
   const [amountCharged, setAmountCharged] = useState(0);
   const [amountPaid, setAmountPaid] = useState(0);
   const [customerId, setCustomer] = useState('');
-  const [errors, setErrors] = useState('');
   // eslint-disable-next-line
   const {data: customers} = useQuery<Customers[] | any, Error>({
     queryKey: ['customers', id],
@@ -56,6 +52,7 @@ const AddSale = ({id}: any) => {
     queryKey: ['products', id],
     queryFn: () => getProducts(id),
   });
+  const {mutate,isLoading,isError} = useAddSale();
   useEffect(() => {
     //calculate the total
     let formTotal = 0;
@@ -125,25 +122,21 @@ const AddSale = ({id}: any) => {
       amountCharged: totalAmount,
       customerId: customerId,
       amountPaid: amountPaid,
+      businessId:id
     };
 
-    console.log(post);
-    addSale(post, navigate, setIsLoading, id, setErrors);
+    mutate(post)
   };
   const balance = amountPaid - amountCharged;
 
-  console.log(products);
+  if (isError) {
+    // eslint-disable-next-line
+    console.log()
+  }
   return (
     <FormsLayout title="Sale">
       <Card className="p-3">
-        {errors !== '' && (
-          <Alert
-            variant="filled"
-            onClose={() => setErrors('')}
-            severity="error">
-            {errors}
-          </Alert>
-        )}
+
         <form onSubmit={onSubmit}>
           <div className="row padding mt-3">
             <div className="col-lg-6">
@@ -327,10 +320,17 @@ const AddSale = ({id}: any) => {
             </div>
           </div>
           <div className="text-center mt-3">
+             {isError && (
+          <Alert
+            variant="filled"
+            severity="error">
+            The current stock of the product you are trying to sell is lower, please add more stock and try again
+          </Alert>
+        )}
             <button
               type="submit"
-              className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-              disabled={isLoading ? true : false}>
+              className="focus:outline-none mt-4 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+              disabled={isLoading}>
               {' '}
               {isLoading ? 'Adding' : 'Add Sale'}{' '}
             </button>
