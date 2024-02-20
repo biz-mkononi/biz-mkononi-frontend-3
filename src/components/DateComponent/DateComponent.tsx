@@ -24,11 +24,14 @@ const DateComponent = () => {
           value={startDate}
           onChange={(newValue) => setStartDate(newValue)}
           label="From Date "
+          disableFuture
+
         />
         <DatePicker
           value={endDate}
           onChange={(newValue) => setEndDate(newValue)}
           label="To Date "
+          disableFuture
         />
       </LocalizationProvider>
     </Container>

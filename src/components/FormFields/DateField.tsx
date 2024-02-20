@@ -29,6 +29,7 @@ const DateField: React.FC<InputProps> = ({
           label={type}
           value={value}
           onChange={handleDateChange}
+          disableFuture
         />
       </Stack>
     </LocalizationProvider>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Card} from '@mui/material';
 import '../Businesses/AddBusiness.css';
 import {useNavigate, useParams} from 'react-router-dom';
@@ -29,13 +29,45 @@ type Categories = {
 };
 // eslint-disable-next-line
 const UpdateProductDetails = ({id}: any) => {
+  const initialState = {
+    name: '',
+    categoryId: '',
+    productType: '',
+    size: '',
+    unit: '',
+    buyingPrice: '',
+    sellingPrice: '',
+    description: '',
+    tags: '',
+    image: {},
+  };
   // eslint-disable-next-line
-  const [data, setData] = useState<data | any>({});
   const [isUpdating, setIsUpdating] = useState(false);
 
   const navigate = useNavigate();
-
-  const [formData, setFormData] = useState({});
+const params = useParams();
+  // eslint-disable-next-line
+  const {data: products,isLoading:productsLoading} = useQuery<Categories[] | any, Error>({
+    queryKey: ['single',params.id,id],
+    queryFn: () => getSingleProduct(params.id,id),
+  });
+  const [formData, setFormData] = useState(initialState);
+  useEffect (() => {
+     if (products !== undefined) {
+    setFormData({
+      ...formData,
+      name:products.name,
+      categoryId:products.category.id,
+      productType:products.productType,
+      size:products.size,
+      unit:products.unit,
+      buyingPrice:products.buyingPrice,
+      sellingPrice: products.sellingPrice,
+      description: products.description,
+      image:products.imageUrl,
+      tags:products.tags
+    })}
+  },[])
   // eslint-disable-next-line
   const [category, setCategory] = useState<data | any>({});
   const [displayImage, setDisplayImage] = useState('');
@@ -45,12 +77,7 @@ const UpdateProductDetails = ({id}: any) => {
     queryFn: () => getCategory(id),
   });
 
-  const params = useParams();
-  // eslint-disable-next-line
-  const {data: products,isLoading:productsLoading} = useQuery<Categories[] | any, Error>({
-    queryKey: ['single',params.id,id],
-    queryFn: () => getSingleProduct(params.id,id),
-  });
+
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,7 +111,6 @@ const UpdateProductDetails = ({id}: any) => {
           <CircularProgress color="success" />
         </div>
   }
-  console.log(products);
 
   return (
 
@@ -103,7 +129,7 @@ const UpdateProductDetails = ({id}: any) => {
                     <input
                       type="text"
                       onChange={handleChange}
-                      defaultValue={products.name}
+                      value={formData.name}
                       name="name"
                       className="form-control"
                       placeholder="name"
@@ -124,7 +150,7 @@ const UpdateProductDetails = ({id}: any) => {
                       className="form-select"
                       onChange={handleCategoryChange}
                       name="category"
-                      value={products.category.id}
+                      value={formData.categoryId}
                       aria-label="Default select example"
                       id="basic-addon1">
 
@@ -152,7 +178,7 @@ const UpdateProductDetails = ({id}: any) => {
                     <select
                       className="form-select"
                       onChange={handleTypeChange}
-                      value={products.productType}
+                      value={formData.productType}
                       name="productType"
                       aria-label="Default select example"
                       id="basic-addon1">
@@ -176,7 +202,7 @@ const UpdateProductDetails = ({id}: any) => {
                     <input
                       type="text"
                       onChange={handleChange}
-                      defaultValue={products.size}
+                      defaultValue={formData.size}
                       name="size"
                       className="form-control"
                       placeholder="Size e.g 500"
@@ -196,7 +222,7 @@ const UpdateProductDetails = ({id}: any) => {
                     <input
                       type="text"
                       onChange={handleChange}
-                      defaultValue={products.unit}
+                      defaultValue={formData.unit}
                       name="unit"
                       className="form-control"
                       placeholder="Unit e.g. ml for millilitres"
@@ -216,7 +242,7 @@ const UpdateProductDetails = ({id}: any) => {
                     <input
                       type="text"
                       onChange={handleChange}
-                      defaultValue={products.buyingPrice}
+                      defaultValue={formData.buyingPrice}
                       name="buyingPrice"
                       className="form-control"
                       placeholder="Buying Price e.g 1000"
@@ -238,7 +264,7 @@ const UpdateProductDetails = ({id}: any) => {
                     <input
                       type="text"
                       onChange={handleChange}
-                      defaultValue={products.sellingPrice}
+                      defaultValue={formData.sellingPrice}
                       name="sellingPrice"
                       className="form-control"
                       placeholder="Selling Price e.g 1000"
@@ -258,7 +284,7 @@ const UpdateProductDetails = ({id}: any) => {
                     <input
                       type="text"
                       onChange={handleChange}
-                      defaultValue={products.tags}
+                      defaultValue={formData.tags}
                       name="tags"
                       className="form-control"
                       placeholder="tags"
@@ -276,7 +302,7 @@ const UpdateProductDetails = ({id}: any) => {
                   <div className="input-group mb-3">
                     <textarea
                       className="form-control"
-                      defaultValue={products.description}
+                      defaultValue={formData.description}
                       onChange={handleDescriptionChange}
                       name="description"
                       aria-label="With textarea"></textarea>
