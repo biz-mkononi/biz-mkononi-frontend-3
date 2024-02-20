@@ -1,45 +1,28 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import image2 from '../../Assets/placeholder.jpg';
 import '../Businesses/AddBusiness.css';
 import {deleteProduct, getSingleProduct} from '../../Data/Products/Data';
 import {useNavigate, useParams} from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import AlertDialog from '../Dialog/Dialog';
+import { useQuery } from '@tanstack/react-query';
 
-interface data {
-  name: '';
-  // eslint-disable-next-line
-  category: {};
-  productType: '';
-  size: '';
-  unit: '';
-  buyingPrice: '';
-  sellingPrice: '';
-  stock: '';
-}
+type Categories = {
+  name: string;
+};
 // eslint-disable-next-line
 const ProductDetails = ({id}: any) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   // eslint-disable-next-line
-  const [data, setData] = useState<data | any>({});
-  const [isLoading, setIsloading] = useState(false);
-  // eslint-disable-next-line
-  const [category, setCategory] = useState<data | any>({});
-  // eslint-disable-next-line
-  const [formData, setFormData] = useState(false);
+  const [setIsloading] = useState(false);
 
   const params = useParams();
-  useEffect(() => {
-    getSingleProduct(
-      setData,
-      params.id,
-      setIsloading,
-      setCategory,
-      setFormData,
-      id
-    );
-  }, [location]);
+  // eslint-disable-next-line
+  const {data: products,isLoading:productsLoading} = useQuery<Categories[] | any, Error>({
+    queryKey: ['single',params.id,id],
+    queryFn: () => getSingleProduct(params.id,id),
+  });
   const onDelete = () => {
     setOpen(true);
   };
@@ -50,19 +33,19 @@ const ProductDetails = ({id}: any) => {
     deleteProduct(navigate, params.id, setIsloading, id);
     setOpen(false);
   };
-  return (
-    <>
-      {isLoading ? (
-        <div className="text-center">
+  if (productsLoading) {
+   return <div className="text-center">
           <CircularProgress color="success" />
         </div>
-      ) : (
+  }
+  return (
+
         <div className="container p-3">
           {open ? (
             <AlertDialog
               open={open}
               handleClose={handleClose}
-              title={data.name}
+              title={products.name}
               handleDelete={handleDelete}
             />
           ) : (
@@ -70,7 +53,7 @@ const ProductDetails = ({id}: any) => {
           )}
           <div className="row padding">
             <div className="col-lg-6">
-              <h2 className="mb-4">{data.name}</h2>
+              <h2 className="mb-4">{products.name}</h2>
             </div>
           </div>
           <div className="row padding">
@@ -101,7 +84,7 @@ const ProductDetails = ({id}: any) => {
             <div className="col-lg-6">
               <img
                 className="business-details-image "
-                src={data.imageUrl === null ? image2 : data.imageUrl}
+                src={products.imageUrl === null ? image2 : products.imageUrl}
               />
             </div>
 
@@ -111,32 +94,32 @@ const ProductDetails = ({id}: any) => {
                   <tbody>
                     <tr>
                       <th>Name</th>
-                      <td>{data.name}</td>
+                      <td>{products.name}</td>
                     </tr>
                     <tr>
                       <th>Category</th>
-                      <td>{category.name}</td>
+                      <td>{products.category.name}</td>
                     </tr>
 
                     <tr>
                       <th>Size</th>
-                      <td>{data.size}</td>
+                      <td>{products.size}</td>
                     </tr>
                     <tr>
                       <th>Unit</th>
-                      <td>{data.unit}</td>
+                      <td>{products.unit}</td>
                     </tr>
                     <tr>
                       <th>Buying Price</th>
-                      <td>{data.buyingPrice}</td>
+                      <td>{products.buyingPrice}</td>
                     </tr>
                     <tr>
                       <th>Selling Price</th>
-                      <td>{data.sellingPrice}</td>
+                      <td>{products.sellingPrice}</td>
                     </tr>
                     <tr>
                       <th>Stock</th>
-                      <td>{data.stock}</td>
+                      <td>{products.stock}</td>
                     </tr>
                   </tbody>
                 </>
@@ -144,8 +127,7 @@ const ProductDetails = ({id}: any) => {
             </div>
           </div>
         </div>
-      )}
-    </>
+
   );
 };
 
