@@ -15,37 +15,13 @@ const getProducts = async (id: any) => {
 };
 const getSingleProduct = async (
   // eslint-disable-next-line
-  setData: any,
-  // eslint-disable-next-line
   id: any,
-  // eslint-disable-next-line
-  setIsLoading: any,
-  // eslint-disable-next-line
-  setCategory: any,
-  // eslint-disable-next-line
-  setFormData: any,
   // eslint-disable-next-line
   businessid: any
 ) => {
-  setIsLoading(true);
-  await reqInstance
+  const response = await reqInstance
     .get(`${newUrl}/${businessid}/products/${id}`)
-    .then((data) => {
-      setData(data.data);
-      setCategory(data.data.category);
-      setFormData({
-        name: data.data.name,
-        categoryId: data.data.category.id,
-        productType: data.data.productType,
-        size: data.data.size,
-        unit: data.data.unit,
-        buyingPrice: data.data.buyingPrice,
-        sellingPrice: data.data.sellingPrice,
-        description: data.data.description,
-        tags: data.data.tags,
-      });
-    })
-    .then(() => setIsLoading(false));
+    return (await response).data
 };
 const updateSingleProduct = async (
   // eslint-disable-next-line

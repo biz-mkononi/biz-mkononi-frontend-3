@@ -2,15 +2,14 @@ import React, {useState, useEffect} from 'react';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import PersonIcon from '@mui/icons-material/Person';
 import ScaleIcon from '@mui/icons-material/Scale';
-import {Card, Alert} from '@mui/material';
+import {Card} from '@mui/material';
 import {getProducts} from '../../Data/Products/Data';
 import '../Businesses/AddBusiness.css';
-import {useNavigate} from 'react-router-dom';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import {addSupply} from '../../Data/Supplies/Data';
 import {getSuppliers} from '../../Data/Suppliers/Data';
 import FormsLayout from '../../Layout/FormsLayout';
 import { useQuery } from '@tanstack/react-query';
+import useAddSupply from '../../hooks/supplies/useAddSupply';
 
 interface Form {
   product: string;
@@ -38,12 +37,10 @@ const AddSupply = ({id}: any) => {
     {product: '', supplyPrice: 0, quantity: 0, productId: ''},
   ]);
   const [totalAmount, setTotalAmount] = useState(0);
-  const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
   const [amountCharged, setAmountCharged] = useState(0);
   const [amountPaid, setAmountPaid] = useState(0);
   const [supplierId, setSupplierId] = useState('');
-  const [errors, setErrors] = useState('');
+  const {mutate,isLoading} = useAddSupply();
   // eslint-disable-next-line
   const {data: suppliers} = useQuery<Suppliers[] | any, Error>({
     queryKey: ['suppliers', id],
@@ -124,26 +121,16 @@ const AddSupply = ({id}: any) => {
       amountCharged: totalAmount,
       supplierId: supplierId,
       amountPaid: amountPaid,
+      businessId:id
     };
 
-    console.log(post);
-    addSupply(post, navigate, setIsLoading, id);
+    mutate(post)
   };
   const balance = amountPaid - amountCharged;
 
-  console.log(products);
-  console.log(supplierId);
   return (
     <FormsLayout title="Supply">
       <Card className="p-3">
-        {errors !== '' && (
-          <Alert
-            variant="filled"
-            onClose={() => setErrors('')}
-            severity="error">
-            {errors}
-          </Alert>
-        )}
         <form onSubmit={onSubmit}>
           <div className="row padding mt-3">
             <div className="col-lg-6">
@@ -330,7 +317,7 @@ const AddSupply = ({id}: any) => {
             <button
               type="submit"
               className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-              disabled={isLoading ? true : false}>
+              disabled={isLoading}>
               {' '}
               {isLoading ? 'Adding' : 'Add Supply'}{' '}
             </button>

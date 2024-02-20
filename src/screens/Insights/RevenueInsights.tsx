@@ -38,12 +38,14 @@ const RevenueInsights = () => {
   >({
     queryKey: ['totalprofits', businessId, data],
     queryFn: () => getTotalProfits(businessId, data),
+    staleTime: 5000
   });
   // eslint-disable-next-line
   const {data: totalSales, isLoading: totalSalesLoading} = useQuery<any, Error>(
     {
       queryKey: ['totalsales', businessId, data],
       queryFn: () => getTotalSales(businessId, data),
+      staleTime: 5000
     }
   );
   const {data: totalSupplies, isLoading: totalSuppliesLoading} = useQuery<
@@ -53,6 +55,7 @@ const RevenueInsights = () => {
   >({
     queryKey: ['totalsupplies', businessId],
     queryFn: () => getTotalSupplies(businessId, data),
+    staleTime: 5000
   });
 
   const revenueData = [

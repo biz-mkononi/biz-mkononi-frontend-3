@@ -47,15 +47,18 @@ const CustomersInsights = () => {
   const {data: newCustomers, isLoading: customersLoading} = useQuery({
     queryKey: ['newcustomers', data, businessId],
     queryFn: () => getNewCustomers(businessId, data),
+    staleTime: 5000
   });
   const {data: repeatPurchaseRate, isLoading: purchaseRateLoading} = useQuery({
     queryKey: ['repeatpurchaserate', data, businessId],
     queryFn: () => getRepeatCustomerRate(businessId, data),
+    staleTime: 5000
   });
   // eslint-disable-next-line
   const {data: churnRate, isLoading: churnRateLoading} = useQuery<any, Error>({
     queryKey: ['churnrate', data, businessId],
     queryFn: () => getChurnCustomerRate(businessId, data),
+    staleTime: 5000
   });
   const {data: totalCustomers, isLoading: totalCustomersLoading} = useQuery<
   // eslint-disable-next-line
@@ -64,11 +67,13 @@ const CustomersInsights = () => {
   >({
     queryKey: ['totalcustomers', businessId],
     queryFn: () => getTotalCustomers(businessId),
+    staleTime: 5000
   });
   // eslint-disable-next-line
   const {data: ageStats, isLoading: ageStatsLoading} = useQuery<any, Error>({
     queryKey: ['agestats', data, businessId],
     queryFn: () => getAgeStats(businessId, data),
+    staleTime: 5000
   });
 
   const {data: genderStats, isLoading: genderStatsLoading} = useQuery<
@@ -78,12 +83,14 @@ const CustomersInsights = () => {
   >({
     queryKey: ['genderstats', data, businessId],
     queryFn: () => getGenderStats(businessId, data),
+    staleTime: 5000
   });
   // eslint-disable-next-line
   const {data: mostActive, isLoading: mostActiveLoading} = useQuery<any, Error>(
     {
       queryKey: ['mostactive', mostActiveCustomers, businessId],
       queryFn: () => getMostActiveCustomers(businessId, mostActiveCustomers),
+      staleTime: 5000
     }
   );
   // eslint-disable-next-line

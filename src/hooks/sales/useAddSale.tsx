@@ -9,6 +9,15 @@ type SaleItems = {
   product:string;
 
 }
+type Data = {
+  message:string
+}
+type Response = {
+  data:Data;
+}
+type Error = {
+  response:Response;
+}
 
 
 interface AddSaleParams {
@@ -37,13 +46,11 @@ const queryClient = useQueryClient();
   return useMutation(createBusiness, {
     onSuccess: () => {
      queryClient
-        .invalidateQueries(['sales'])
+        .invalidateQueries(['sales','repeatpurchaserate','churnrate','mostactive','totalsales','salestrend','totalprofits','monthsalestrend','hourlysales'])
         .then(() => navigate('/sales/list'))
-        // eslint-disable-next-line
-        .catch((error: any) => {
-          // eslint-disable-next-line
-          throw new Error(error.message);
-        }); // Adjust the key as needed
+        .catch((error:Response) => {
+          throw new Error(error.data.message);
+        });
     },
   });
 };

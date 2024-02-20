@@ -58,15 +58,18 @@ const Overview = () => {
   const {data: newCustomers, isLoading: customersLoading} = useQuery({
     queryKey: ['newcustomers', data, businessId],
     queryFn: () => getNewCustomers(businessId, data),
+    staleTime: 5000
   });
   const {data: repeatPurchaseRate, isLoading: purchaseRateLoading} = useQuery({
     queryKey: ['repeatpurchaserate', data, businessId],
     queryFn: () => getRepeatCustomerRate(businessId, data),
+    staleTime: 5000
   });
   // eslint-disable-next-line
   const {data: churnRate, isLoading: churnRateLoading} = useQuery<any, Error>({
     queryKey: ['churnrate', data, businessId],
     queryFn: () => getChurnCustomerRate(businessId, data),
+    staleTime: 5000
   });
   const {data: totalCustomers, isLoading: totalCustomersLoading} = useQuery<
   // eslint-disable-next-line
@@ -75,12 +78,14 @@ const Overview = () => {
   >({
     queryKey: ['totalcustomers', businessId],
     queryFn: () => getTotalCustomers(businessId),
+    staleTime: 5000
   });
   // eslint-disable-next-line
   const {data: mostActive, isLoading: mostActiveLoading} = useQuery<any, Error>(
     {
       queryKey: ['mostactive', mostActiveCustomers, businessId],
       queryFn: () => getMostActiveCustomers(businessId, mostActiveCustomers),
+      staleTime: 5000
     }
   );
   // eslint-disable-next-line
@@ -88,6 +93,7 @@ const Overview = () => {
     {
       queryKey: ['totalsales', businessId, data],
       queryFn: () => getTotalSales(businessId, data),
+      staleTime: 5000
     }
   );
   // eslint-disable-next-line
@@ -95,6 +101,7 @@ const Overview = () => {
     {
       queryKey: ['salestrend', businessId, groupByDayData],
       queryFn: () => getSalesInLastMonthTrend(businessId, groupByDayData),
+      staleTime: 5000
     }
   );
 
@@ -105,11 +112,13 @@ const Overview = () => {
   >({
     queryKey: ['totalsupplies', businessId],
     queryFn: () => getTotalSupplies(businessId, data),
+    staleTime: 5000
   });
   // eslint-disable-next-line
   const {data: sales, isLoading: salesLoading} = useQuery<any, Error>({
     queryKey: ['sales', businessId],
     queryFn: () => getSales(businessId),
+    staleTime: 5000
   });
   const {data: totalProfits, isLoading: totalProfitsLoading} = useQuery<
   // eslint-disable-next-line
@@ -118,6 +127,7 @@ const Overview = () => {
   >({
     queryKey: ['totalprofits', businessId, data],
     queryFn: () => getTotalProfits(businessId, data),
+    staleTime: 5000
   });
 
   const churnData = [

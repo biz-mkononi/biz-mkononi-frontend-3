@@ -48,6 +48,7 @@ const SuppliesList = ({id}: any) => {
         </div>
       ) : (
         <Table
+        sale
           columns={columns}
           data={memoizedSupplies}
           onEdit={onEdit}

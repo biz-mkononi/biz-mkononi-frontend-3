@@ -34,15 +34,18 @@ const ChurnRateInsights = () => {
   const {data: newCustomers, isLoading: customersLoading} = useQuery({
     queryKey: ['newcustomers', data, businessId],
     queryFn: () => getNewCustomers(businessId, data),
+    staleTime: 5000
   });
   const {data: repeatPurchaseRate, isLoading: purchaseRateLoading} = useQuery({
     queryKey: ['repeatpurchaserate', data, businessId],
     queryFn: () => getRepeatCustomerRate(businessId, data),
+    staleTime: 5000
   });
   // eslint-disable-next-line
   const {data: churnRate, isLoading: churnRateLoading} = useQuery<any, Error>({
     queryKey: ['churnrate', data, businessId],
     queryFn: () => getChurnCustomerRate(businessId, data),
+    staleTime: 5000
   });
   const churnData = [
     {

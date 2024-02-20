@@ -17,8 +17,9 @@ interface TableProps {
   onEdit: (id: string | undefined) => void;
   data: [];
   Business?: boolean;
+  sale?:boolean;
 }
-const Table = ({columns, onEdit, onView, data, Business}: TableProps) => {
+const Table = ({columns, onEdit, onView, data, Business,sale}: TableProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
   const {setBusiness, setBusinessId} = useContext(DataContext);
@@ -90,11 +91,15 @@ const Table = ({columns, onEdit, onView, data, Business}: TableProps) => {
                       onClick={() => onView(business.id)}>
                       View
                     </button>
-                    <button
+                   {
+                    !sale && (
+                       <button
                       className="btn btn-success btn-sm "
                       onClick={() => onEdit(business.id)}>
                       Edit
                     </button>
+                    )
+                   }
                   </div>
                 </td>
               </tr>

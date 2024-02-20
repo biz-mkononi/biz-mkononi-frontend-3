@@ -62,6 +62,7 @@ const SalesInsights = () => {
     {
       queryKey: ['totalsales', businessId, data],
       queryFn: () => getTotalSales(businessId, data),
+      staleTime: 5000
     }
   );
   // eslint-disable-next-line
@@ -69,6 +70,7 @@ const SalesInsights = () => {
     {
       queryKey: ['salestrend', businessId, groupByDayData],
       queryFn: () => getSalesInLastMonthTrend(businessId, groupByDayData),
+      staleTime: 5000
     }
   );
   const {data: totalSupplies, isLoading: totalSuppliesLoading} = useQuery<
@@ -78,11 +80,13 @@ const SalesInsights = () => {
   >({
     queryKey: ['totalsupplies', businessId],
     queryFn: () => getTotalSupplies(businessId, data),
+    staleTime: 5000
   });
   // eslint-disable-next-line
   const {data: sales, isLoading: salesLoading} = useQuery<any, Error>({
     queryKey: ['sales', businessId],
     queryFn: () => getSales(businessId),
+    staleTime: 5000
   });
   const {data: totalProfits, isLoading: totalProfitsLoading} = useQuery<
   // eslint-disable-next-line
@@ -91,6 +95,7 @@ const SalesInsights = () => {
   >({
     queryKey: ['totalprofits', businessId, data],
     queryFn: () => getTotalProfits(businessId, data),
+    staleTime: 5000
   });
   const {data: monthSalesTrend, isLoading: monthSalesTrendLoading} = useQuery<
   // eslint-disable-next-line
@@ -99,6 +104,7 @@ const SalesInsights = () => {
   >({
     queryKey: ['monthsalestrend', businessId, groupByMonth],
     queryFn: () => getSalesTrendByMonth(businessId, groupByMonth),
+    staleTime: 5000
   });
   const {data: hourlySales, isLoading: hourlySalesLoading} = useQuery<
   // eslint-disable-next-line
@@ -107,6 +113,7 @@ const SalesInsights = () => {
   >({
     queryKey: ['hourlysales', businessId, partByHour],
     queryFn: () => getTotalDatePartSalesByHour(businessId, partByHour),
+    staleTime: 5000
   });
   // eslint-disable-next-line
   const createYDomain = (data: any) => {
@@ -117,6 +124,7 @@ const SalesInsights = () => {
 
     return yDomain;
   };
+  console.log(totalSales)
   return (
     <div>
       {totalSalesLoading ||
@@ -154,7 +162,7 @@ const SalesInsights = () => {
                   <div className="col-lg-4">
                     <div className="card text-center mt-3">
                       <h5 className="mb-2 top-cards">
-                        <span className="money">Ksh</span> {totalSales.total}
+                        <span className="money">Ksh</span> {totalSales}
                       </h5>
                       <h3>Total Sales</h3>
                     </div>

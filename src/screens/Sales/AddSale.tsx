@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import PersonIcon from '@mui/icons-material/Person';
 import ScaleIcon from '@mui/icons-material/Scale';
-import {Card, Alert} from '@mui/material';
+import {Card,Typography} from '@mui/material';
 import {getCustomers} from '../../Data/Customers/Data';
 import {getProducts} from '../../Data/Products/Data';
 import '../Businesses/AddBusiness.css';
@@ -52,7 +52,7 @@ const AddSale = ({id}: any) => {
     queryKey: ['products', id],
     queryFn: () => getProducts(id),
   });
-  const {mutate,isLoading,isError} = useAddSale();
+  const {mutate,isLoading,isError,error} = useAddSale();
   useEffect(() => {
     //calculate the total
     let formTotal = 0;
@@ -129,10 +129,7 @@ const AddSale = ({id}: any) => {
   };
   const balance = amountPaid - amountCharged;
 
-  if (isError) {
-    // eslint-disable-next-line
-    console.log()
-  }
+
   return (
     <FormsLayout title="Sale">
       <Card className="p-3">
@@ -319,17 +316,20 @@ const AddSale = ({id}: any) => {
               <h2 className="mb-4">Balance : Ksh: {balance}</h2>
             </div>
           </div>
+          <div className="text-center">
+   {
+              isError && (
+                <Typography variant='subtitle2' sx={{marginTop:'5px',color:'red'}} >
+
+                  {error.response.data.message}
+                </Typography>
+              )
+            }
+</div>
           <div className="text-center mt-3">
-             {isError && (
-          <Alert
-            variant="filled"
-            severity="error">
-            The current stock of the product you are trying to sell is lower, please add more stock and try again
-          </Alert>
-        )}
             <button
               type="submit"
-              className="focus:outline-none mt-4 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+              className="focus:outline-none mt-2 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
               disabled={isLoading}>
               {' '}
               {isLoading ? 'Adding' : 'Add Sale'}{' '}

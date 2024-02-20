@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Card} from '@mui/material';
 import '../Businesses/AddBusiness.css';
 import {useNavigate, useParams} from 'react-router-dom';
@@ -31,7 +31,6 @@ type Categories = {
 const UpdateProductDetails = ({id}: any) => {
   // eslint-disable-next-line
   const [data, setData] = useState<data | any>({});
-  const [isLoading, setIsloading] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
 
   const navigate = useNavigate();
@@ -41,22 +40,18 @@ const UpdateProductDetails = ({id}: any) => {
   const [category, setCategory] = useState<data | any>({});
   const [displayImage, setDisplayImage] = useState('');
  // eslint-disable-next-line
-  const {data: categories} = useQuery<Categories[] | any, Error>({
+  const {data: categories,isLoading:categoriesLoading} = useQuery<Categories[] | any, Error>({
     queryKey: ['categories', id],
     queryFn: () => getCategory(id),
   });
-  const params = useParams();
 
-  useEffect(() => {
-    getSingleProduct(
-      setData,
-      params.id,
-      setIsloading,
-      setCategory,
-      setFormData,
-      id
-    );
-  }, []);
+  const params = useParams();
+  // eslint-disable-next-line
+  const {data: products,isLoading:productsLoading} = useQuery<Categories[] | any, Error>({
+    queryKey: ['single',params.id,id],
+    queryFn: () => getSingleProduct(params.id,id),
+  });
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, [e.target.name]: e.target.value});
@@ -84,15 +79,15 @@ const UpdateProductDetails = ({id}: any) => {
     e.preventDefault();
     updateSingleProduct(formData, navigate, params.id, setIsUpdating, id);
   };
-  console.log(formData);
-
-  return (
-    <>
-      {isLoading ? (
-        <div className="text-center">
+  if (productsLoading || categoriesLoading) {
+    return  <div className="text-center">
           <CircularProgress color="success" />
         </div>
-      ) : (
+  }
+  console.log(products);
+
+  return (
+
         <FormsLayout title="Product" update>
           <Card className="p-3">
             <form onSubmit={onSubmit}>
@@ -108,7 +103,7 @@ const UpdateProductDetails = ({id}: any) => {
                     <input
                       type="text"
                       onChange={handleChange}
-                      defaultValue={data.name}
+                      defaultValue={products.name}
                       name="name"
                       className="form-control"
                       placeholder="name"
@@ -129,9 +124,11 @@ const UpdateProductDetails = ({id}: any) => {
                       className="form-select"
                       onChange={handleCategoryChange}
                       name="category"
+                      value={products.category.id}
                       aria-label="Default select example"
                       id="basic-addon1">
-                      <option selected>{category.name}</option>
+
+                      <option selected>{products.category.name}</option>
                       {
                         // eslint-disable-next-line
                       categories.map((category:any) => {
@@ -155,10 +152,11 @@ const UpdateProductDetails = ({id}: any) => {
                     <select
                       className="form-select"
                       onChange={handleTypeChange}
+                      value={products.productType}
                       name="productType"
                       aria-label="Default select example"
                       id="basic-addon1">
-                      <option selected>{data.productType}</option>
+                      <option selected>{products.productType}</option>
                       <option value="PRODUCT">Product</option>
                       <option value="SERVICE">Service</option>
                       <option value="SERVICE_PRODUCT">Service_product</option>
@@ -178,7 +176,7 @@ const UpdateProductDetails = ({id}: any) => {
                     <input
                       type="text"
                       onChange={handleChange}
-                      defaultValue={data.size}
+                      defaultValue={products.size}
                       name="size"
                       className="form-control"
                       placeholder="Size e.g 500"
@@ -198,7 +196,7 @@ const UpdateProductDetails = ({id}: any) => {
                     <input
                       type="text"
                       onChange={handleChange}
-                      defaultValue={data.unit}
+                      defaultValue={products.unit}
                       name="unit"
                       className="form-control"
                       placeholder="Unit e.g. ml for millilitres"
@@ -218,7 +216,7 @@ const UpdateProductDetails = ({id}: any) => {
                     <input
                       type="text"
                       onChange={handleChange}
-                      defaultValue={data.buyingPrice}
+                      defaultValue={products.buyingPrice}
                       name="buyingPrice"
                       className="form-control"
                       placeholder="Buying Price e.g 1000"
@@ -240,7 +238,7 @@ const UpdateProductDetails = ({id}: any) => {
                     <input
                       type="text"
                       onChange={handleChange}
-                      defaultValue={data.sellingPrice}
+                      defaultValue={products.sellingPrice}
                       name="sellingPrice"
                       className="form-control"
                       placeholder="Selling Price e.g 1000"
@@ -260,7 +258,7 @@ const UpdateProductDetails = ({id}: any) => {
                     <input
                       type="text"
                       onChange={handleChange}
-                      defaultValue={data.tags}
+                      defaultValue={products.tags}
                       name="tags"
                       className="form-control"
                       placeholder="tags"
@@ -278,7 +276,7 @@ const UpdateProductDetails = ({id}: any) => {
                   <div className="input-group mb-3">
                     <textarea
                       className="form-control"
-                      defaultValue={data.description}
+                      defaultValue={products.description}
                       onChange={handleDescriptionChange}
                       name="description"
                       aria-label="With textarea"></textarea>
@@ -290,7 +288,7 @@ const UpdateProductDetails = ({id}: any) => {
                     update
                     displayImage={displayImage}
                     label="Product"
-                    data={data}
+                    data={products}
                   />
                 </div>
               </div>
@@ -305,8 +303,6 @@ const UpdateProductDetails = ({id}: any) => {
             </form>
           </Card>
         </FormsLayout>
-      )}
-    </>
   );
 };
 
