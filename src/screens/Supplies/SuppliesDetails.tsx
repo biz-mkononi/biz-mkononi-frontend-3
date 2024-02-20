@@ -83,14 +83,7 @@ const SuppliesDetails = ({id}: any) => {
                   {' '}
                   Back
                 </button>
-                <button
-                  className="btn btn-warning btn-md"
-                  onClick={() =>
-                    navigate(`/expense/${params.id}/update-details`)
-                  }>
-                  {' '}
-                  Update
-                </button>
+
                 <button className="btn btn-danger btn-md" onClick={onDelete}>
                   {' '}
                   Delete
