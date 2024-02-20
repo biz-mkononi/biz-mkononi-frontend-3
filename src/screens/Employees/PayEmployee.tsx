@@ -21,15 +21,16 @@ type Employees = {
 // eslint-disable-next-line
 const PayEmployee = ({id}: any) => {
   const navigate = useNavigate();
+  // eslint-disable-next-line
+  const [value, setValue] = React.useState<Dayjs | any>(dayjs(Date.now()));
   const initialState = {
     employeeId: '',
     amount: '',
-    txDate: '',
+    txDate: value,
     description: '',
   };
   const [formData, setFormData] = useState(initialState);
-  // eslint-disable-next-line
-  const [value, setValue] = React.useState<Dayjs | any>(dayjs(Date.now()));
+
   const [isLoading,setIsLoading] = useState(false);
   // eslint-disable-next-line
 const {data: employees} = useQuery<Employees[] | any, Error>({

@@ -11,11 +11,12 @@ import TextArea from '../../components/FormFields/TextArea';
 // eslint-disable-next-line
 const AddExpense = ({id}: any) => {
   const navigate = useNavigate();
-  const initialState = {title: '', amount: '', txDate: '', description: ''};
+  // eslint-disable-next-line
+  const [value, setValue] = React.useState<Dayjs | any>(dayjs(Date.now()));
+  const initialState = {title: '', amount: '', txDate: value, description: ''};
   const [formData, setFormData] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
-// eslint-disable-next-line
-  const [value, setValue] = React.useState<Dayjs | any>(dayjs(Date.now()));
+
 // eslint-disable-next-line
   const handleDateChange = (newValue: Dayjs | any) => {
     setValue(newValue);
