@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
-import {Card, Typography} from '@mui/material';
+import { Card } from '@mui/material';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -9,12 +9,12 @@ import FormControl from '@mui/material/FormControl';
 import '../Businesses/AddBusiness.css';
 import PersonIcon from '@mui/icons-material/Person';
 import FormsLayout from '../../Layout/FormsLayout';
-import Image from '../../components/FormFields/Image';
 import Input from '../../components/FormFields/Input';
 import TextArea from '../../components/FormFields/TextArea';
 import useAddCustomers from '../../hooks/Customers/useCreateCustomer';
+import { toast } from 'react-toastify';
 // eslint-disable-next-line
-const AddCustomer = ({id}: any) => {
+const AddCustomer = ({ id }: any) => {
   const initialState = {
     name: '',
     gender: '',
@@ -23,31 +23,55 @@ const AddCustomer = ({id}: any) => {
     email: '',
     description: '',
     image: null,
-    businessId:id
+    businessId: id,
   };
-  const [displayImage, setDisplayImage] = useState('');
+  //TODO: const [displayImage, setDisplayImage] = useState('');
   const [formData, setFormData] = useState(initialState);
-  const {mutate,isLoading,isError} = useAddCustomers();
+  const { mutateAsync, isLoading } = useAddCustomers();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({...formData, [e.target.name]: e.target.value});
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setFormData({...formData, [e.target.name]: e.target.files[0]});
-      setDisplayImage(URL.createObjectURL(e.target.files[0]));
-    }
-  };
+  //TODO: const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files) {
+  //     setFormData({ ...formData, [e.target.name]: e.target.files[0] });
+  //     setDisplayImage(URL.createObjectURL(e.target.files[0]));
+  //   }
+  // };
 
   const handleDescriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
-    setFormData({...formData, [e.target.name]: e.target.value});
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    mutate(formData)
+    await mutateAsync(formData)
+      .then(() => {
+        toast.success('Customer was added successfully', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+      })
+      .catch(() => {
+        toast.error('Customer with this phone number is already registered', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+      });
   };
 
   return (
@@ -84,7 +108,8 @@ const AddCustomer = ({id}: any) => {
                   aria-labelledby="demo-radio-buttons-group-label"
                   defaultValue="male"
                   name="gender"
-                  onChange={handleChange}>
+                  onChange={handleChange}
+                >
                   <FormControlLabel
                     value="FEMALE"
                     control={<Radio />}
@@ -125,31 +150,22 @@ const AddCustomer = ({id}: any) => {
             <div className="col-lg-4">
               <TextArea handleDescriptionChange={handleDescriptionChange} />
             </div>
-            <div className="col-lg-4">
+            {/*TODO: <div className="col-lg-4">
               <Image
                 handleFileChange={handleFileChange}
                 displayImage={displayImage}
                 label="Customer"
               />
-            </div>
+            </div> */}
           </div>
-<div className="text-center">
-   {
-              isError && (
-                <Typography variant='subtitle2' sx={{marginTop:'5px',color:'red'}} >
-                  Customer with this phone number is already registered
-                </Typography>
-              )
-            }
-</div>
-          <div className="text-center mt-3">
 
+          <div className="text-center mt-3">
             <button
               className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               {isLoading ? 'Adding' : 'Add Customer'}
             </button>
-
           </div>
         </form>
       </Card>

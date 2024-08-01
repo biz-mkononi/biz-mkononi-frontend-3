@@ -1,14 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import BusinessIcon from '@mui/icons-material/Business';
-import {Card} from '@mui/material';
+import { Card } from '@mui/material';
 import '../Businesses/AddBusiness.css';
-import {useNavigate, useParams} from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import {
   getSingleCategory,
   updateSingleCategory,
 } from '../../Data/Categories/Data';
-import Image from '../../components/FormFields/Image';
 import FormsLayout from '../../Layout/FormsLayout';
 
 interface data {
@@ -16,12 +15,12 @@ interface data {
   description: '';
 }
 // eslint-disable-next-line
-const UpdateCategories = ({id}: any) => {
+const UpdateCategories = ({ id }: any) => {
   // eslint-disable-next-line
   const [data, setData] = useState<data | any>({});
   const [isLoading, setIsloading] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
-  const [displayImage, setDisplayImage] = useState('');
+  //TODO: const [displayImage, setDisplayImage] = useState('');
 
   const navigate = useNavigate();
 
@@ -34,20 +33,20 @@ const UpdateCategories = ({id}: any) => {
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({...formData, [e.target.name]: e.target.value});
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleDescriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
-    setFormData({...formData, [e.target.name]: e.target.value});
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setFormData({...formData, [e.target.name]: e.target.files[0]});
-      setDisplayImage(URL.createObjectURL(e.target.files[0]));
-    }
-  };
+  //TODO: const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files) {
+  //     setFormData({...formData, [e.target.name]: e.target.files[0]});
+  //     setDisplayImage(URL.createObjectURL(e.target.files[0]));
+  //   }
+  // };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -90,19 +89,21 @@ const UpdateCategories = ({id}: any) => {
                   className="form-control"
                   onChange={handleDescriptionChange}
                   name="description"
-                  aria-label="With textarea"></textarea>
+                  aria-label="With textarea"
+                ></textarea>
               </div>
-              <Image
+              {/*TODO: <Image
                 handleFileChange={handleFileChange}
                 update
                 displayImage={displayImage}
                 label="Category"
                 data={data}
-              />
+              /> */}
               <div className="text-center mt-3">
                 <button
                   className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-                  disabled={isUpdating ? true : false}>
+                  disabled={isUpdating ? true : false}
+                >
                   {isUpdating ? 'updating' : 'Update Category'}
                 </button>
               </div>

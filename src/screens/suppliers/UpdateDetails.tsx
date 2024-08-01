@@ -1,16 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import BusinessIcon from '@mui/icons-material/Business';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
-import {Card} from '@mui/material';
+import { Card } from '@mui/material';
 import '../Businesses/AddBusiness.css';
-import {useNavigate, useParams} from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   getSingleSupplier,
   updateSingleSupplier,
 } from '../../Data/Suppliers/Data';
 import CircularProgress from '@mui/material/CircularProgress';
-import Image from '../../components/FormFields/Image';
 import FormsLayout from '../../Layout/FormsLayout';
 
 interface data {
@@ -20,12 +19,12 @@ interface data {
   description: '';
 }
 // eslint-disable-next-line
-const UpdateSupplierDetails = ({id}: any) => {
+const UpdateSupplierDetails = ({ id }: any) => {
   // eslint-disable-next-line
   const [data, setData] = useState<data | any>({});
   const [isLoading, setIsloading] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
-  const [displayImage, setDisplayImage] = useState('');
+  //TODO: const [displayImage, setDisplayImage] = useState('');
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({});
@@ -37,21 +36,21 @@ const UpdateSupplierDetails = ({id}: any) => {
   }, [location]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({...formData, [e.target.name]: e.target.value});
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleDescriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
-    setFormData({...formData, [e.target.name]: e.target.value});
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setFormData({...formData, [e.target.name]: e.target.files[0]});
-      setDisplayImage(URL.createObjectURL(e.target.files[0]));
-    }
-  };
+  //TODO: const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files) {
+  //     setFormData({...formData, [e.target.name]: e.target.files[0]});
+  //     setDisplayImage(URL.createObjectURL(e.target.files[0]));
+  //   }
+  // };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -141,10 +140,11 @@ const UpdateSupplierDetails = ({id}: any) => {
                       className="form-control"
                       onChange={handleDescriptionChange}
                       name="description"
-                      aria-label="With textarea"></textarea>
+                      aria-label="With textarea"
+                    ></textarea>
                   </div>
                 </div>
-                <div className="col-lg-4">
+                {/*TODO: <div className="col-lg-4">
                   <Image
                     handleFileChange={handleFileChange}
                     update
@@ -152,12 +152,13 @@ const UpdateSupplierDetails = ({id}: any) => {
                     label="Supplier"
                     data={data}
                   />
-                </div>
+                </div> */}
               </div>
               <div className="text-center mt-3">
                 <button
                   className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-                  disabled={isUpdating ? true : false}>
+                  disabled={isUpdating ? true : false}
+                >
                   {isUpdating ? 'updating' : 'Update Supplier'}
                 </button>
               </div>
