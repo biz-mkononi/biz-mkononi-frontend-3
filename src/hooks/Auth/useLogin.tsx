@@ -1,4 +1,8 @@
-import {useMutation, UseMutationResult, useQueryClient} from '@tanstack/react-query';
+import {
+  useMutation,
+  UseMutationResult,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { reqInstance } from '../common/axiosInstance';
 import useAuthToken from '../common/useAuthToken';
 
@@ -6,17 +10,16 @@ interface LoginUserParams {
   phone: string;
   password: string;
 }
-type User ={
-  email:string;
-  phone:string;
-  freeTrialStartDate:string;
-  subscriptionType:string;
-  name:string;
-}
+type User = {
+  email: string;
+  phone: string;
+  freeTrialStartDate: string;
+  subscriptionType: string;
+  name: string;
+};
 type Data = {
   jwt: string;
-  user:User;
-
+  user: User;
 };
 type Response = {
   data: Data;
@@ -34,12 +37,12 @@ const useLoginUser = (): UseMutationResult<
   Error,
   LoginUserParams
 > => {
-  const {setAuthToken} = useAuthToken();
+  const { setAuthToken } = useAuthToken();
   const queryClient = useQueryClient();
   return useMutation(loginUser, {
     onSuccess: (response: Response) => {
       setAuthToken(response.data);
-      console.log(response.data.user.email)
+      console.log(response.data.user.email);
       queryClient
         .invalidateQueries()
         .then(() => window.location.assign('/'))

@@ -4,7 +4,7 @@ import React from 'react';
 interface SelectProps {
   handleTypeChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
-const Select: React.FC<SelectProps> = ({handleTypeChange}) => {
+const Select: React.FC<SelectProps> = ({ handleTypeChange }) => {
   return (
     <div>
       <label htmlFor="basic-url" className="form-label">
@@ -19,11 +19,12 @@ const Select: React.FC<SelectProps> = ({handleTypeChange}) => {
           onChange={handleTypeChange}
           name="productType"
           aria-label="Default select example"
-          id="basic-addon1">
+          id="basic-addon1"
+        >
           <option selected>select a product type</option>
           <option value="PRODUCT">Product</option>
           <option value="SERVICE">Service</option>
-          <option value="SERVICE_PRODUCT">Service_product</option>
+          <option value="SERVICE_PRODUCT">Service/product</option>
         </select>
       </div>
     </div>
