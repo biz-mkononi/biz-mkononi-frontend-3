@@ -3,13 +3,13 @@ import BusinessIcon from '@mui/icons-material/Business';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import { Card } from '@mui/material';
-import { addEmployee } from '../../Data/Employees/Data';
 import StarsIcon from '@mui/icons-material/Stars';
 import '../Businesses/AddBusiness.css';
-import { useNavigate } from 'react-router-dom';
 import FormsLayout from '../../Layout/FormsLayout';
 // import Image from '../../components/FormFields/Image';
 import Input from '../../components/FormFields/Input';
+import useAddEmployee from '../../hooks/Employees/useAddEmployee';
+import { toast } from 'react-toastify';
 // eslint-disable-next-line
 const NewEmployee = ({ id }: any) => {
   const initialState = {
@@ -20,10 +20,11 @@ const NewEmployee = ({ id }: any) => {
     position: '',
     image: {},
   };
-  const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
+
   const [formData, setFormData] = useState(initialState);
   //TODO: const [displayImage, setDisplayImage] = useState('');
+
+  const { mutateAsync, isLoading } = useAddEmployee();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -34,9 +35,41 @@ const NewEmployee = ({ id }: any) => {
   //   }
   // };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    addEmployee(formData, navigate, setIsLoading, id);
+    const post = {
+      name: formData.name,
+      phone: formData.phone,
+      email: formData.email,
+      idNumber: formData.idNumber,
+      position: formData.position,
+      businessId: id,
+    };
+    await mutateAsync(post)
+      .then(() => {
+        toast.success('Employee added successfully', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+      })
+      .catch(() => {
+        toast.error('There was an error when adding the employee', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+      });
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import Card from '@mui/material/Card';
 import {
   Bar,
@@ -10,7 +10,7 @@ import {
   BarChart,
   ResponsiveContainer,
 } from 'recharts';
-import {Chart as ChartJS, registerables} from 'chart.js';
+import { Chart as ChartJS, registerables } from 'chart.js';
 import './Overview.css';
 import {
   getChurnCustomerRate,
@@ -18,35 +18,40 @@ import {
   getRepeatCustomerRate,
 } from '../../Data/Analytics/CustomerAnalytics';
 import CircularProgress from '@mui/material/CircularProgress';
-import {DataContext} from '../../context/ContextProvider';
-import {useQuery} from '@tanstack/react-query';
+import { DataContext } from '../../context/ContextProvider';
+import { useQuery } from '@tanstack/react-query';
 import DateComponent from '../../components/DateComponent/DateComponent';
 
 ChartJS.register(...registerables);
 const ChurnRateInsights = () => {
-  const {businessId, startDate, endDate} = useContext(DataContext);
+  const { businessId, startDate, endDate } = useContext(DataContext);
   const from = new Date(startDate);
   const to = new Date(endDate);
   const data = {
     from: from.toISOString(),
     to: to.toISOString(),
   };
-  const {data: newCustomers, isLoading: customersLoading} = useQuery({
+  const { data: newCustomers, isLoading: customersLoading } = useQuery({
     queryKey: ['newcustomers', data, businessId],
     queryFn: () => getNewCustomers(businessId, data),
-    staleTime: 5000
+    staleTime: 5000,
   });
-  const {data: repeatPurchaseRate, isLoading: purchaseRateLoading} = useQuery({
-    queryKey: ['repeatpurchaserate', data, businessId],
-    queryFn: () => getRepeatCustomerRate(businessId, data),
-    staleTime: 5000
-  });
+  const { data: repeatPurchaseRate, isLoading: purchaseRateLoading } = useQuery(
+    {
+      queryKey: ['repeatpurchaserate', data, businessId],
+      queryFn: () => getRepeatCustomerRate(businessId, data),
+      staleTime: 5000,
+    },
+  );
   // eslint-disable-next-line
-  const {data: churnRate, isLoading: churnRateLoading} = useQuery<any, Error>({
-    queryKey: ['churnrate', data, businessId],
-    queryFn: () => getChurnCustomerRate(businessId, data),
-    staleTime: 5000
-  });
+  const { data: churnRate, isLoading: churnRateLoading } = useQuery<any, Error>(
+    {
+      queryKey: ['churnrate', data, businessId],
+      queryFn: () => getChurnCustomerRate(businessId, data),
+      staleTime: 5000,
+    },
+  );
+
   const churnData = [
     {
       name: 'new Customers',
@@ -105,7 +110,8 @@ const ChurnRateInsights = () => {
                         right: 30,
                         left: 20,
                         bottom: 5,
-                      }}>
+                      }}
+                    >
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="name" />
                       <YAxis />

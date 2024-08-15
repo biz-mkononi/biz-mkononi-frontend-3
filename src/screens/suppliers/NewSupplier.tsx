@@ -3,12 +3,12 @@ import PersonIcon from '@mui/icons-material/Person';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import { Card } from '@mui/material';
-import { addSupplier } from '../../Data/Suppliers/Data';
-import { useNavigate } from 'react-router-dom';
 import '../Businesses/AddBusiness.css';
 import FormsLayout from '../../Layout/FormsLayout';
 import Input from '../../components/FormFields/Input';
 import TextArea from '../../components/FormFields/TextArea';
+import useAddSupplier from '../../hooks/Supplier/useAddSupplier';
+import { toast } from 'react-toastify';
 // eslint-disable-next-line
 const AddSupplier = ({ id }: any) => {
   const initialState = {
@@ -18,10 +18,9 @@ const AddSupplier = ({ id }: any) => {
     description: '',
     image: {},
   };
-  const navigate = useNavigate();
   //TODO: const [displayImage, setDisplayImage] = useState('');
   const [formData, setFormData] = useState(initialState);
-  const [isLoading, setIsLoading] = useState(false);
+  const { mutateAsync, isLoading } = useAddSupplier();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -39,9 +38,41 @@ const AddSupplier = ({ id }: any) => {
   //   }
   // };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    addSupplier(formData, navigate, setIsLoading, id);
+    const post = {
+      name: formData.name,
+      phone: formData.phone,
+      email: formData.email,
+      description: formData.description,
+      // image: formData.image,
+      businessId: id,
+    };
+    await mutateAsync(post)
+      .then(() => {
+        toast.success('Supplier added successfully', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+      })
+      .catch(() => {
+        toast.error('There was an error adding the supplier', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+      });
   };
 
   return (

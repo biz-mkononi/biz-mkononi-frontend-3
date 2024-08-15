@@ -1,5 +1,5 @@
-import {reqInstance} from '../Auth/authHelper';
-import {newUrl} from '../Sales/Data';
+import { reqInstance } from '../Auth/authHelper';
+import { newUrl } from '../Sales/Data';
 // eslint-disable-next-line
 const addEmployee = (post: any, navigate: any, setIsLoading: any, id: any) => {
   setIsLoading(true);
@@ -7,6 +7,7 @@ const addEmployee = (post: any, navigate: any, setIsLoading: any, id: any) => {
     .post(`${newUrl}/${id}/employees`, post)
     .then(() => navigate('/employees/list'));
 };
+
 // eslint-disable-next-line
 const getEmployees = async (id: any) => {
   const response = await reqInstance.get(`${newUrl}/${id}/employees`);
@@ -23,7 +24,7 @@ const getSingleEmployee = (
   // eslint-disable-next-line
   setFormData: any,
   // eslint-disable-next-line
-  businessid: any
+  businessid: any,
 ) => {
   setIsLoading(true);
   reqInstance
@@ -50,7 +51,7 @@ const updateSingleEmployee = (
   // eslint-disable-next-line
   setIsLoading: any,
   // eslint-disable-next-line
-  businessid: any
+  businessid: any,
 ) => {
   setIsLoading(true);
   reqInstance
@@ -66,7 +67,7 @@ const deleteEmployee = async (
   // eslint-disable-next-line
   setIsLoading: any,
   // eslint-disable-next-line
-  businessid: any
+  businessid: any,
 ) => {
   setIsLoading(true);
   await reqInstance
