@@ -1,15 +1,16 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import PersonIcon from '@mui/icons-material/Person';
 import ScaleIcon from '@mui/icons-material/Scale';
-import {Card,Typography} from '@mui/material';
-import {getCustomers} from '../../Data/Customers/Data';
-import {getProducts} from '../../Data/Products/Data';
+import { Card } from '@mui/material';
+import { getCustomers } from '../../Data/Customers/Data';
+import { getProducts } from '../../Data/Products/Data';
 import '../Businesses/AddBusiness.css';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import PaymentIcon from '@mui/icons-material/Payment';
 import FormsLayout from '../../Layout/FormsLayout';
 import { useQuery } from '@tanstack/react-query';
 import useAddSale from '../../hooks/sales/useAddSale';
+import { toast } from 'react-toastify';
 
 interface Form {
   product: string;
@@ -34,25 +35,25 @@ type Products = {
   stock: string;
 };
 // eslint-disable-next-line
-const AddSale = ({id}: any) => {
+const AddSale = ({ id }: any) => {
   const [forms, setForms] = useState<Form[]>([
-    {product: '', salePrice: 0, quantity: 0, productId: ''},
+    { product: '', salePrice: 0, quantity: 0, productId: '' },
   ]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [amountCharged, setAmountCharged] = useState(0);
   const [amountPaid, setAmountPaid] = useState(0);
   const [customerId, setCustomer] = useState('');
   // eslint-disable-next-line
-  const {data: customers} = useQuery<Customers[] | any, Error>({
+  const { data: customers } = useQuery<Customers[] | any, Error>({
     queryKey: ['customers', id],
     queryFn: () => getCustomers(id),
   });
-   // eslint-disable-next-line
-  const {data: products} = useQuery<Products[] | any, Error>({
+  // eslint-disable-next-line
+  const { data: products } = useQuery<Products[] | any, Error>({
     queryKey: ['products', id],
     queryFn: () => getProducts(id),
   });
-  const {mutate,isLoading,isError,error} = useAddSale();
+  const { mutateAsync, isLoading } = useAddSale();
   useEffect(() => {
     //calculate the total
     let formTotal = 0;
@@ -67,7 +68,7 @@ const AddSale = ({id}: any) => {
   const handleAddForm = () => {
     setForms([
       ...forms,
-      {product: '', salePrice: 0, quantity: 0, productId: ''},
+      { product: '', salePrice: 0, quantity: 0, productId: '' },
     ]);
   };
 
@@ -78,13 +79,13 @@ const AddSale = ({id}: any) => {
   };
   const handleProductChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
-    index: number
+    index: number,
   ) => {
     const newForms = [...forms];
     newForms[index].product = e.target.value;
     const selectedProduct = products.find(
       // eslint-disable-next-line
-      (product:any) => product.name === e.target.value
+      (product: any) => product.name === e.target.value,
     );
     if (selectedProduct) {
       newForms[index].salePrice = selectedProduct.sellingPrice;
@@ -95,7 +96,7 @@ const AddSale = ({id}: any) => {
 
   const handleQuantityChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    index: number
+    index: number,
   ) => {
     const newForms = [...forms];
     newForms[index].quantity = Number(e.target.value);
@@ -106,7 +107,7 @@ const AddSale = ({id}: any) => {
     setCustomer(e.target.value);
   };
   const handleAmountChargedChange = (
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setAmountCharged(parseInt(e.target.value));
   };
@@ -114,7 +115,7 @@ const AddSale = ({id}: any) => {
     setAmountPaid(parseInt(e.target.value));
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const post = {
@@ -122,18 +123,40 @@ const AddSale = ({id}: any) => {
       amountCharged: totalAmount,
       customerId: customerId,
       amountPaid: amountPaid,
-      businessId:id
+      businessId: id,
     };
 
-    mutate(post)
+    await mutateAsync(post)
+      .then(() => {
+        toast.success('Sale added successfully', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+      })
+      .catch(() => {
+        toast.error('There was an error adding the sale', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+      });
   };
   const balance = amountPaid - amountCharged;
-
 
   return (
     <FormsLayout title="Sale">
       <Card className="p-3">
-
         <form onSubmit={onSubmit}>
           <div className="row padding mt-3">
             <div className="col-lg-6">
@@ -149,11 +172,11 @@ const AddSale = ({id}: any) => {
                   onChange={handleCustomerChange}
                   name="category"
                   aria-label="Default select example"
-                  id="basic-addon1">
+                  id="basic-addon1"
+                >
                   <option selected>Select customer</option>
-                  {
-                    // eslint-disable-next-line
-                  customers?.map((customer:any) => {
+                  {// eslint-disable-next-line
+                  customers?.map((customer: any) => {
                     return (
                       <option value={customer.id} key={customer.id}>
                         {customer.name}
@@ -173,7 +196,8 @@ const AddSale = ({id}: any) => {
                 sx={{
                   padding: '10px',
                   marginBottom: '50px',
-                }}>
+                }}
+              >
                 <div className="row padding">
                   <div className="col-lg-6">
                     <label htmlFor="basic-url" className="form-label">
@@ -189,11 +213,11 @@ const AddSale = ({id}: any) => {
                         value={form.product}
                         name="category"
                         aria-label="Default select example"
-                        id="basic-addon1">
+                        id="basic-addon1"
+                      >
                         <option selected>Select product</option>
-                        {
-                          // eslint-disable-next-line
-                        products?.map((product:any) => {
+                        {// eslint-disable-next-line
+                        products?.map((product: any) => {
                           return (
                             <option key={product.name} value={product.name}>
                               {product.name}
@@ -214,10 +238,9 @@ const AddSale = ({id}: any) => {
                       <input
                         type="text"
                         onChange={(e) => handleQuantityChange(e, index)}
-                        value={form.quantity}
                         name="location"
                         className="form-control"
-                        placeholder="quantity"
+                        placeholder="quantity of the product"
                         aria-label="Username"
                         aria-describedby="basic-addon1"
                       />
@@ -231,7 +254,7 @@ const AddSale = ({id}: any) => {
                     </label>
                     <div className="input-group mb-5">
                       <span className="input-group-text" id="basic-addon1">
-                        <AttachMoneyIcon />
+                        <PaymentIcon />
                       </span>
                       <input
                         type="text"
@@ -241,6 +264,7 @@ const AddSale = ({id}: any) => {
                         placeholder="details"
                         aria-label="Username"
                         aria-describedby="basic-addon1"
+                        disabled
                       />
                     </div>
                   </div>
@@ -256,7 +280,8 @@ const AddSale = ({id}: any) => {
                     {index !== 0 && (
                       <button
                         className="btn btn-md btn-danger"
-                        onClick={() => handleRemoveForm(index)}>
+                        onClick={() => handleRemoveForm(index)}
+                      >
                         Remove Product
                       </button>
                     )}
@@ -269,7 +294,8 @@ const AddSale = ({id}: any) => {
             <button
               className="btn btn-info btn-md"
               type="button"
-              onClick={handleAddForm}>
+              onClick={handleAddForm}
+            >
               Add Product
             </button>
           </div>
@@ -282,7 +308,7 @@ const AddSale = ({id}: any) => {
               </label>
               <div className="input-group mb-5">
                 <span className="input-group-text" id="basic-addon1">
-                  <AttachMoneyIcon />
+                  <PaymentIcon />
                 </span>
                 <input
                   type="text"
@@ -300,7 +326,7 @@ const AddSale = ({id}: any) => {
               </label>
               <div className="input-group mb-5">
                 <span className="input-group-text" id="basic-addon1">
-                  <AttachMoneyIcon />
+                  <PaymentIcon />
                 </span>
                 <input
                   type="text"
@@ -316,21 +342,13 @@ const AddSale = ({id}: any) => {
               <h2 className="mb-4">Balance : Ksh: {balance}</h2>
             </div>
           </div>
-          <div className="text-center">
-   {
-              isError && (
-                <Typography variant='subtitle2' sx={{marginTop:'5px',color:'red'}} >
 
-                  {error.response.data.message}
-                </Typography>
-              )
-            }
-</div>
           <div className="text-center mt-3">
             <button
               type="submit"
               className="focus:outline-none mt-2 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               {' '}
               {isLoading ? 'Adding' : 'Add Sale'}{' '}
             </button>

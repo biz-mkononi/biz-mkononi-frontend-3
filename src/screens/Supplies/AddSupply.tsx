@@ -1,15 +1,16 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import PersonIcon from '@mui/icons-material/Person';
 import ScaleIcon from '@mui/icons-material/Scale';
-import {Card} from '@mui/material';
-import {getProducts} from '../../Data/Products/Data';
+import { Card } from '@mui/material';
+import { getProducts } from '../../Data/Products/Data';
 import '../Businesses/AddBusiness.css';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import {getSuppliers} from '../../Data/Suppliers/Data';
+import PaymentIcon from '@mui/icons-material/Payment';
+import { getSuppliers } from '../../Data/Suppliers/Data';
 import FormsLayout from '../../Layout/FormsLayout';
 import { useQuery } from '@tanstack/react-query';
 import useAddSupply from '../../hooks/supplies/useAddSupply';
+import { toast } from 'react-toastify';
 
 interface Form {
   product: string;
@@ -32,22 +33,22 @@ type Suppliers = {
   phone: string;
 };
 // eslint-disable-next-line
-const AddSupply = ({id}: any) => {
+const AddSupply = ({ id }: any) => {
   const [forms, setForms] = useState<Form[]>([
-    {product: '', supplyPrice: 0, quantity: 0, productId: ''},
+    { product: '', supplyPrice: 0, quantity: 0, productId: '' },
   ]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [amountCharged, setAmountCharged] = useState(0);
   const [amountPaid, setAmountPaid] = useState(0);
   const [supplierId, setSupplierId] = useState('');
-  const {mutate,isLoading} = useAddSupply();
+  const { mutateAsync, isLoading } = useAddSupply();
   // eslint-disable-next-line
-  const {data: suppliers} = useQuery<Suppliers[] | any, Error>({
+  const { data: suppliers } = useQuery<Suppliers[] | any, Error>({
     queryKey: ['suppliers', id],
     queryFn: () => getSuppliers(id),
   });
   // eslint-disable-next-line
-  const {data: products} = useQuery<Products[] | any, Error>({
+  const { data: products } = useQuery<Products[] | any, Error>({
     queryKey: ['products', id],
     queryFn: () => getProducts(id),
   });
@@ -65,7 +66,7 @@ const AddSupply = ({id}: any) => {
   const handleAddForm = () => {
     setForms([
       ...forms,
-      {product: '', supplyPrice: 0, quantity: 0, productId: ''},
+      { product: '', supplyPrice: 0, quantity: 0, productId: '' },
     ]);
   };
 
@@ -76,13 +77,13 @@ const AddSupply = ({id}: any) => {
   };
   const handleProductChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
-    index: number
+    index: number,
   ) => {
     const newForms = [...forms];
     newForms[index].product = e.target.value;
     const selectedProduct = products.find(
       // eslint-disable-next-line
-      (product:any) => product.name === e.target.value
+      (product: any) => product.name === e.target.value,
     );
     if (selectedProduct) {
       newForms[index].supplyPrice = selectedProduct.buyingPrice;
@@ -93,7 +94,7 @@ const AddSupply = ({id}: any) => {
 
   const handleQuantityChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    index: number
+    index: number,
   ) => {
     const newForms = [...forms];
     newForms[index].quantity = Number(e.target.value);
@@ -102,10 +103,9 @@ const AddSupply = ({id}: any) => {
 
   const handleSupplierChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSupplierId(e.target.value);
-    console.log(e.target.value);
   };
   const handleAmountChargedChange = (
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setAmountCharged(parseInt(e.target.value));
   };
@@ -113,7 +113,7 @@ const AddSupply = ({id}: any) => {
     setAmountPaid(parseInt(e.target.value));
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const post = {
@@ -121,10 +121,34 @@ const AddSupply = ({id}: any) => {
       amountCharged: totalAmount,
       supplierId: supplierId,
       amountPaid: amountPaid,
-      businessId:id
+      businessId: id,
     };
 
-    mutate(post)
+    await mutateAsync(post)
+      .then(() => {
+        toast.success('Supply added successfully', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+      })
+      .catch(() => {
+        toast.error('There was an error adding the supply', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+      });
   };
   const balance = amountPaid - amountCharged;
 
@@ -146,11 +170,11 @@ const AddSupply = ({id}: any) => {
                   onChange={handleSupplierChange}
                   name="category"
                   aria-label="Default select example"
-                  id="basic-addon1">
+                  id="basic-addon1"
+                >
                   <option selected>Select Supplier</option>
-                  {
-                    // eslint-disable-next-line
-                  suppliers?.map((supplier:any) => {
+                  {// eslint-disable-next-line
+                  suppliers?.map((supplier: any) => {
                     return (
                       <option value={supplier.id} key={supplier.id}>
                         {supplier.name}
@@ -170,7 +194,8 @@ const AddSupply = ({id}: any) => {
                 sx={{
                   padding: '10px',
                   marginBottom: '50px',
-                }}>
+                }}
+              >
                 <div className="row padding">
                   <div className="col-lg-6">
                     <label htmlFor="basic-url" className="form-label">
@@ -186,11 +211,11 @@ const AddSupply = ({id}: any) => {
                         value={form.product}
                         name="category"
                         aria-label="Default select example"
-                        id="basic-addon1">
+                        id="basic-addon1"
+                      >
                         <option selected>Select product</option>
-                        {
-                          // eslint-disable-next-line
-                        products?.map((product:any) => {
+                        {// eslint-disable-next-line
+                        products?.map((product: any) => {
                           return (
                             <option key={product.name} value={product.name}>
                               {product.name}
@@ -211,10 +236,9 @@ const AddSupply = ({id}: any) => {
                       <input
                         type="text"
                         onChange={(e) => handleQuantityChange(e, index)}
-                        value={form.quantity}
                         name="location"
                         className="form-control"
-                        placeholder="quantity"
+                        placeholder="quantity of the product"
                         aria-label="Username"
                         aria-describedby="basic-addon1"
                       />
@@ -228,7 +252,7 @@ const AddSupply = ({id}: any) => {
                     </label>
                     <div className="input-group mb-5">
                       <span className="input-group-text" id="basic-addon1">
-                        <AttachMoneyIcon />
+                        <PaymentIcon />
                       </span>
                       <input
                         type="text"
@@ -238,6 +262,7 @@ const AddSupply = ({id}: any) => {
                         placeholder="details"
                         aria-label="Username"
                         aria-describedby="basic-addon1"
+                        disabled
                       />
                     </div>
                   </div>
@@ -253,7 +278,8 @@ const AddSupply = ({id}: any) => {
                     {index !== 0 && (
                       <button
                         className="btn btn-md btn-danger"
-                        onClick={() => handleRemoveForm(index)}>
+                        onClick={() => handleRemoveForm(index)}
+                      >
                         Remove Product
                       </button>
                     )}
@@ -266,7 +292,8 @@ const AddSupply = ({id}: any) => {
             <button
               className="btn btn-info btn-md"
               type="button"
-              onClick={handleAddForm}>
+              onClick={handleAddForm}
+            >
               Add Product
             </button>
           </div>
@@ -279,7 +306,7 @@ const AddSupply = ({id}: any) => {
               </label>
               <div className="input-group mb-5">
                 <span className="input-group-text" id="basic-addon1">
-                  <AttachMoneyIcon />
+                  <PaymentIcon />
                 </span>
                 <input
                   type="text"
@@ -297,7 +324,7 @@ const AddSupply = ({id}: any) => {
               </label>
               <div className="input-group mb-5">
                 <span className="input-group-text" id="basic-addon1">
-                  <AttachMoneyIcon />
+                  <PaymentIcon />
                 </span>
                 <input
                   type="text"
@@ -317,7 +344,8 @@ const AddSupply = ({id}: any) => {
             <button
               type="submit"
               className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-              disabled={isLoading}>
+              disabled={isLoading}
+            >
               {' '}
               {isLoading ? 'Adding' : 'Add Supply'}{' '}
             </button>

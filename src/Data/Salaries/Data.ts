@@ -1,5 +1,5 @@
-import {reqInstance} from '../Auth/authHelper';
-import {newUrl} from '../Sales/Data';
+import { reqInstance } from '../Auth/authHelper';
+import { newUrl } from '../Sales/Data';
 // eslint-disable-next-line
 const addSalary = (post: any, navigate: any, setIsLoading: any, id: any) => {
   setIsLoading(true);
@@ -25,7 +25,7 @@ const getSingleSalary = async (
   // eslint-disable-next-line
   setFormData: any,
   // eslint-disable-next-line
-  businessid: any
+  businessid: any,
 ) => {
   setIsLoading(true);
   await reqInstance
@@ -53,7 +53,7 @@ const updateSingleSalary = async (
   // eslint-disable-next-line
   setIsLoading: any,
   // eslint-disable-next-line
-  businessid: any
+  businessid: any,
 ) => {
   setIsLoading(true);
   await reqInstance
@@ -69,7 +69,7 @@ const deleteSalary = async (
   // eslint-disable-next-line
   setIsLoading: any,
   // eslint-disable-next-line
-  businessid: any
+  businessid: any,
 ) => {
   setIsLoading(true);
   await reqInstance

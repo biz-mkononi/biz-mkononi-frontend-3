@@ -4,43 +4,37 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { reqInstance2 } from '../common/axiosInstance';
-
-interface CreateCustomerParams {
+import { reqInstance3 } from '../common/axiosInstance';
+interface AddSupplierParams {
   name: string;
-  gender: string;
-  yearOfBirth: string;
   phone: string;
   email: string;
   description: string;
-  image: File | null;
   businessId: string;
 }
 
-const createCustomers = async (data: CreateCustomerParams) => {
-  const response = await reqInstance2.post(
-    `businesses/${data.businessId}/customers`,
+const createSupplier = async (data: AddSupplierParams) => {
+  const response = await reqInstance3.post(
+    `businesses/${data.businessId}/suppliers`,
     data,
   );
 
   return response;
 };
 
-const useAddCustomers = (): UseMutationResult<
+const useAddSupplier = (): UseMutationResult<
   // eslint-disable-next-line
   any,
   Error,
-  CreateCustomerParams
+  AddSupplierParams
 > => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  return useMutation(createCustomers, {
+  return useMutation(createSupplier, {
     onSuccess: () => {
       queryClient
-        .invalidateQueries([
-          'customers,newcustomers,totalcustomers,agestats,genderstats',
-        ])
-        .then(() => navigate('/customers/list'))
+        .invalidateQueries(['suppliers', 'totalsupplies', 'totalprofits'])
+        .then(() => navigate('/suppliers/list'))
         // eslint-disable-next-line
         .catch((error: any) => {
           // eslint-disable-next-line
@@ -50,4 +44,4 @@ const useAddCustomers = (): UseMutationResult<
   });
 };
 
-export default useAddCustomers;
+export default useAddSupplier;
