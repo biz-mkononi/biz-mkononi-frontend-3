@@ -2,18 +2,16 @@ import React, { useState } from 'react';
 import CategoryIcon from '@mui/icons-material/Category';
 import { Card } from '@mui/material';
 import '../Businesses/AddBusiness.css';
-import { addCategory } from '../../Data/Categories/Data';
-import { useNavigate } from 'react-router-dom';
 import FormsLayout from '../../Layout/FormsLayout';
+import useAddCategory from '../../hooks/Categories/useAddCategory';
+import { toast } from 'react-toastify';
 // eslint-disable-next-line
 const NewCategory = ({ id }: any) => {
   const initialState = { name: '', description: '', image: {} };
 
-  const navigate = useNavigate();
   const [formData, setFormData] = useState(initialState);
-  const [isLoading, setIsLoading] = useState(false);
   //TODO: const [displayImage, setDisplayImage] = useState('');
-
+  const { mutateAsync, isLoading } = useAddCategory();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -31,9 +29,39 @@ const NewCategory = ({ id }: any) => {
   //   }
   // };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    addCategory(formData, navigate, setIsLoading, id);
+    const post = {
+      name: formData.name,
+      description: formData.description,
+      businessId: id,
+      // image: formData.image,
+    };
+    await mutateAsync(post)
+      .then(() => {
+        toast.success('Category added successfully', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+      })
+      .catch(() => {
+        toast.error('There was an error adding the category', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+      });
   };
 
   return (
