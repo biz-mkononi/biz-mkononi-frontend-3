@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { Card } from '@mui/material';
-import { addProduct } from '../../Data/Products/Data';
-import { useNavigate } from 'react-router-dom';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ScaleIcon from '@mui/icons-material/Scale';
@@ -12,6 +10,8 @@ import CategoryIcon from '@mui/icons-material/Category';
 import '../Businesses/AddBusiness.css';
 import FormsLayout from '../../Layout/FormsLayout';
 import { useQuery } from '@tanstack/react-query';
+import useAddProduct from '../../hooks/Products/useAddProduct';
+import { toast } from 'react-toastify';
 type Categories = {
   name: string;
 };
@@ -29,17 +29,15 @@ const AddProduct = ({ id }: any) => {
     tags: '',
     image: {},
   };
-  const navigate = useNavigate();
 
   const [formData, setFormData] = useState(initialState);
-  const [isLoading, setIsLoading] = useState(false);
   //TODO: const [displayImage, setDisplayImage] = useState('');
   // eslint-disable-next-line
   const { data: categories } = useQuery<Categories[] | any, Error>({
     queryKey: ['categories', id],
     queryFn: () => getCategory(id),
   });
-
+  const { mutateAsync, isLoading } = useAddProduct();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -62,9 +60,46 @@ const AddProduct = ({ id }: any) => {
   //   }
   // };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    addProduct(formData, navigate, setIsLoading, id);
+    const post = {
+      name: formData.name,
+      categoryId: formData.categoryId,
+      productType: formData.productType,
+      size: formData.size,
+      unit: formData.unit,
+      buyingPrice: formData.buyingPrice,
+      sellingPrice: formData.sellingPrice,
+      description: formData.description,
+      tags: formData.tags,
+      businessId: id,
+      // image: formData.image, //TODO: add image handling
+    };
+    await mutateAsync(post)
+      .then(() => {
+        toast.success('Product added successfully', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+      })
+      .catch(() => {
+        toast.error('There was an error adding the product', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+      });
   };
 
   return (

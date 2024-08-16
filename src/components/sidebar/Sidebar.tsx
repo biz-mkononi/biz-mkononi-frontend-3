@@ -14,8 +14,6 @@ import SideBarMenuItem from './SideBarMenuItem';
 import { DataContext } from '../../context/ContextProvider';
 import Logo from '../../Assets/logo.png';
 
-
-
 const appMenuItems = [
   {
     name: 'Insights',
@@ -129,7 +127,7 @@ const otherItems = [
     Icon: ProductionQuantityLimitsIcon,
     items: [
       {
-        name: 'Product',
+        name: 'Products',
         link: '/products/list',
       },
       {
@@ -189,87 +187,102 @@ interface Props {
    * Remove this when copying and pasting into your project.
    */
   window?: () => Window;
-  mobileOpen:boolean;
+  mobileOpen: boolean;
   handleDrawerTransitionEnd: () => void;
   handleDrawerClose: () => void;
-  drawerWidth:number;
+  drawerWidth: number;
 }
 
 export default function Sidebar(props: Props) {
-  const { window,mobileOpen,handleDrawerClose,handleDrawerTransitionEnd,drawerWidth } = props;
-const {business} = React.useContext(DataContext);
+  const {
+    window,
+    mobileOpen,
+    handleDrawerClose,
+    handleDrawerTransitionEnd,
+    drawerWidth,
+  } = props;
+  const { business } = React.useContext(DataContext);
   const filteredListItems = appMenuItems.filter((item) => {
     return item.name.includes('Businesses');
   });
 
   const drawer = (
     <div>
-       <div className="flex space-x-2 ml-4 mt-6  items-center">
+      <div className="flex space-x-2 ml-4 mt-6  items-center">
         <img src={Logo} alt="logo" className="h-8 w-8" />
-        <h1 className='text-xl text-black font-semibold'>BizMkononi</h1>
+        <h1 className="text-xl text-black font-semibold">BizMkononi</h1>
       </div>
       <Toolbar />
 
       <Divider />
       {business
-          ? appMenuItems.map((item, index) => (
-              <div className="mb-2" key={index}>
-                <SideBarMenuItem {...item} key={index} />
-              </div>
-            ))
-          : filteredListItems.map((item, index) => (
-              <div className="mb-2" key={index}>
-                <SideBarMenuItem {...item} key={index} />
-              </div>
-            ))}
-        <Divider />
-        {business &&
-          otherItems.map((item, index) => (
+        ? appMenuItems.map((item, index) => (
+            <div className="mb-2" key={index}>
+              <SideBarMenuItem {...item} key={index} />
+            </div>
+          ))
+        : filteredListItems.map((item, index) => (
             <div className="mb-2" key={index}>
               <SideBarMenuItem {...item} key={index} />
             </div>
           ))}
+      <Divider />
+      {business &&
+        otherItems.map((item, index) => (
+          <div className="mb-2" key={index}>
+            <SideBarMenuItem {...item} key={index} />
+          </div>
+        ))}
     </div>
   );
 
   // Remove this const when copying and pasting into your project.
-  const container = window !== undefined ? () => window().document.body : undefined;
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
 
   return (
-      <Box
-        component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="mailbox folders"
+    <Box
+      component="nav"
+      sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+      aria-label="mailbox folders"
+    >
+      {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+      <Drawer
+        container={container}
+        variant="temporary"
+        open={mobileOpen}
+        onTransitionEnd={handleDrawerTransitionEnd}
+        onClose={handleDrawerClose}
+        ModalProps={{
+          keepMounted: true, // Better open performance on mobile.
+        }}
+        sx={{
+          display: { xs: 'block', sm: 'none' },
+          '& .MuiDrawer-paper': {
+            boxSizing: 'border-box',
+            width: drawerWidth,
+            backgroundColor: '#bbe1fa',
+            boxShadow: '2px 0px 10px rgba(0, 0, 0, 0.1)',
+          },
+        }}
       >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onTransitionEnd={handleDrawerTransitionEnd}
-          onClose={handleDrawerClose}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth,backgroundColor: '#bbe1fa',boxShadow: '2px 0px 10px rgba(0, 0, 0, 0.1)' },
-          }}
-        >
-          {drawer}
-        </Drawer>
-        <Drawer
-          variant="permanent"
-          sx={{
-            display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth,backgroundColor: '#bbe1fa',boxShadow: '2px 0px 10px rgba(0, 0, 0, 0.1)' },
-          }}
-          open
-        >
-          {drawer}
-        </Drawer>
-      </Box>
-
+        {drawer}
+      </Drawer>
+      <Drawer
+        variant="permanent"
+        sx={{
+          display: { xs: 'none', sm: 'block' },
+          '& .MuiDrawer-paper': {
+            boxSizing: 'border-box',
+            width: drawerWidth,
+            backgroundColor: '#bbe1fa',
+            boxShadow: '2px 0px 10px rgba(0, 0, 0, 0.1)',
+          },
+        }}
+        open
+      >
+        {drawer}
+      </Drawer>
+    </Box>
   );
 }
-
