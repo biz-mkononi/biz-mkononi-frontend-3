@@ -58,16 +58,44 @@ const appMenuItems = [
 ];
 const otherItems = [
   {
-    name: 'Sales',
-    Icon: BusinessIcon,
+    name: 'Product Categories',
+    Icon: ProductionQuantityLimitsIcon,
     items: [
       {
-        name: 'Sales',
-        link: '/sales/list',
+        name: 'Product Categories',
+        link: '/categories/list',
       },
       {
-        name: 'Add Sale',
-        link: '/sales/add',
+        name: 'New Category',
+        link: '/category/new',
+      },
+    ],
+  },
+  {
+    name: 'Products',
+    Icon: ProductionQuantityLimitsIcon,
+    items: [
+      {
+        name: 'Products',
+        link: '/products/list',
+      },
+      {
+        name: 'New Product',
+        link: '/product/new',
+      },
+    ],
+  },
+  {
+    name: 'Suppliers',
+    Icon: InventoryIcon,
+    items: [
+      {
+        name: 'Suppliers',
+        link: '/suppliers/list',
+      },
+      {
+        name: 'New Supplier',
+        link: '/supplier/new',
       },
     ],
   },
@@ -86,65 +114,6 @@ const otherItems = [
     ],
   },
   {
-    name: 'Finance',
-    Icon: AttachMoneyIcon,
-    items: [
-      {
-        name: 'Add Expense',
-        link: '/expense/add',
-      },
-      {
-        name: 'Expenses',
-        link: '/expense/list',
-      },
-      {
-        name: 'Other Income',
-        link: '/income/list',
-      },
-      {
-        name: 'Add Extra Income',
-        link: '/income/add',
-      },
-    ],
-  },
-
-  {
-    name: 'Suppliers',
-    Icon: InventoryIcon,
-    items: [
-      {
-        name: 'Suppliers',
-        link: '/suppliers/list',
-      },
-      {
-        name: 'New Supplier',
-        link: '/supplier/new',
-      },
-    ],
-  },
-  {
-    name: 'Products',
-    Icon: ProductionQuantityLimitsIcon,
-    items: [
-      {
-        name: 'Products',
-        link: '/products/list',
-      },
-      {
-        name: 'New Product',
-        link: '/product/new',
-      },
-      {
-        name: 'Product Categories',
-        link: '/categories/list',
-      },
-      {
-        name: 'New Category',
-        link: '/category/new',
-      },
-    ],
-  },
-  {
     name: 'Customers',
     Icon: BusinessIcon,
     items: [
@@ -155,6 +124,20 @@ const otherItems = [
       {
         name: 'New Customer',
         link: '/customers/new',
+      },
+    ],
+  },
+  {
+    name: 'Sales',
+    Icon: BusinessIcon,
+    items: [
+      {
+        name: 'Sales',
+        link: '/sales/list',
+      },
+      {
+        name: 'Add Sale',
+        link: '/sales/add',
       },
     ],
   },
@@ -177,6 +160,28 @@ const otherItems = [
       {
         name: 'Employee Salaries',
         link: '/employees/salaries',
+      },
+    ],
+  },
+  {
+    name: 'Finance',
+    Icon: AttachMoneyIcon,
+    items: [
+      {
+        name: 'Add Expense',
+        link: '/expense/add',
+      },
+      {
+        name: 'Expenses',
+        link: '/expense/list',
+      },
+      {
+        name: 'Other Income',
+        link: '/income/list',
+      },
+      {
+        name: 'Add Extra Income',
+        link: '/income/add',
       },
     ],
   },

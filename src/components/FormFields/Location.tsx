@@ -5,7 +5,7 @@ type Props = {
   // eslint-disable-next-line
   handleSelect: (place: any) => void;
 };
-const Location = ({handleSelect}: Props) => {
+const Location = ({ handleSelect }: Props) => {
   return (
     <>
       <label htmlFor="basic-url" className="form-label ">
