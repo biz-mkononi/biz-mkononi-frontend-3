@@ -7,6 +7,22 @@ export const loginValidationSchema = Yup.object().shape({
     .required('Phone number is required'),
   password: Yup.string().required('Password is required'),
 });
+export const SignupSchema = Yup.object().shape({
+  phone: Yup.string()
+    .matches(/^0\d{9}$/, 'Phone number must be 10 digits and start with 0')
+    .required('Phone number is required'),
+  name: Yup.string().required('Name is required'),
+  password: Yup.string().required('Password is required'),
+  password2: Yup.string()
+    .oneOf([Yup.ref('password')], 'Passwords must match')
+    .required('Confirm password is required'),
+  email: Yup.string()
+    .matches(
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      'Invalid email format',
+    )
+    .required('Business email is required'),
+});
 export const resendCodeSchema = Yup.object().shape({
   phone: Yup.string()
     .matches(/^0\d{9}$/, 'Phone number must be 10 digits and start with 0')
