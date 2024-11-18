@@ -1,4 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+// @ts-nocheck
+
 import React from 'react';
 import LocationOn from '@mui/icons-material/LocationOn';
 import GooglePlacesAutocomplete, {

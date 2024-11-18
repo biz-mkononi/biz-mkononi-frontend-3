@@ -1,5 +1,9 @@
-import {useMutation, UseMutationResult, useQueryClient} from '@tanstack/react-query';
-import {useNavigate} from 'react-router-dom';
+import {
+  useMutation,
+  UseMutationResult,
+  useQueryClient,
+} from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import { reqInstance2 } from '../common/axiosInstance';
 
 interface CreateBusinessParams {
@@ -7,12 +11,12 @@ interface CreateBusinessParams {
   businessEmail: string;
   productType: string;
   locationDetails: string;
-  location:string;
-  businessPhone:string;
-  description:string;
-  longitude:number;
-  latitude:number;
-  image: File | null;
+  location: string;
+  businessPhone: string;
+  description: string;
+  longitude: number;
+  latitude: number;
+  image?: File | null;
 }
 
 const createBusiness = async (data: CreateBusinessParams) => {
@@ -28,10 +32,10 @@ const useAddBusiness = (): UseMutationResult<
   CreateBusinessParams
 > => {
   const navigate = useNavigate();
-const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   return useMutation(createBusiness, {
     onSuccess: () => {
-     queryClient
+      queryClient
         .invalidateQueries(['businesses'])
         .then(() => navigate('/'))
         // eslint-disable-next-line
