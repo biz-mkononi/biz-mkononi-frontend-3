@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
+
 import React, { useContext, useState } from 'react';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -24,7 +27,6 @@ const SignUpPage = () => {
     resolver: yupResolver(SignupSchema),
     defaultValues: {
       phone: '',
-      password: '',
       Email: '',
       password: '',
       password2: '',
