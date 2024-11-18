@@ -13,7 +13,7 @@ interface CreateCustomerParams {
   phone: string;
   email: string;
   description: string;
-  image: File | null;
+  image?: File | null;
   businessId: string;
 }
 

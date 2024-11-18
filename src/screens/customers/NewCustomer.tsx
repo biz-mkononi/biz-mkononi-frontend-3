@@ -22,7 +22,7 @@ type AddCustomerFormInputs = {
   phone: string;
   description: string;
   yearOfBirth: string;
-  gender: string;
+  gender: 'MALE' | 'FEMALE';
 };
 // eslint-disable-next-line
 const AddCustomer = ({ id }: any) => {
