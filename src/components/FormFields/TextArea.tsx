@@ -3,7 +3,7 @@ import React from 'react';
 type Props = {
   handleDescriptionChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 };
-const TextArea = ({handleDescriptionChange}: Props) => {
+const TextArea = ({ handleDescriptionChange }: Props) => {
   return (
     <>
       <label htmlFor="basic-url" className="form-label ">
@@ -14,7 +14,8 @@ const TextArea = ({handleDescriptionChange}: Props) => {
           className="form-control"
           onChange={handleDescriptionChange}
           name="description"
-          aria-label="With textarea"></textarea>
+          aria-label="With textarea"
+        ></textarea>
       </div>
     </>
   );
