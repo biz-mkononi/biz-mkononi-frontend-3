@@ -13,7 +13,7 @@ import Toolbar from '@mui/material/Toolbar';
 import SideBarMenuItem from './SideBarMenuItem';
 import { DataContext } from '../../context/ContextProvider';
 import Logo from '../../Assets/logo.png';
-
+import CategoryIcon from '@mui/icons-material/Category';
 const appMenuItems = [
   {
     name: 'Insights',
@@ -59,7 +59,7 @@ const appMenuItems = [
 const otherItems = [
   {
     name: 'Product Categories',
-    Icon: ProductionQuantityLimitsIcon,
+    Icon: CategoryIcon,
     items: [
       {
         name: 'Product Categories',
