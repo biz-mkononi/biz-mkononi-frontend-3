@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// @ts-nocheck
-
 import React from 'react';
 import LocationOn from '@mui/icons-material/LocationOn';
 import GooglePlacesAutocomplete, {
@@ -14,7 +11,10 @@ type LocationProps = {
 };
 
 const Location: React.FC<LocationProps> = ({ name }) => {
-  const { control, setValue } = useFormContext();
+  const { control, setValue, getValues } = useFormContext();
+
+  // Get the initial value from react-hook-form
+  const defaultLocation = getValues(name);
 
   // Function to handle place selection and extract coordinates
   const handleSelect = async (place: any) => {
@@ -51,6 +51,9 @@ const Location: React.FC<LocationProps> = ({ name }) => {
                 ...field,
                 placeholder: 'Business location',
                 className: 'places',
+                value: defaultLocation
+                  ? { label: defaultLocation, value: defaultLocation }
+                  : null,
                 onChange: (place) => {
                   handleSelect(place);
                   field.onChange(place.label);

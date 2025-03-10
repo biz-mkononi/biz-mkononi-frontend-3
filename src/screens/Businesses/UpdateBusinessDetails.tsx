@@ -1,238 +1,183 @@
-import React, {useState, useEffect} from 'react';
+import React, { useEffect } from 'react';
 import BusinessIcon from '@mui/icons-material/Business';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
-import {Card} from '@mui/material';
+import { Card } from '@mui/material';
 import './AddBusiness.css';
-import {
-  getSingleBusiness,
-  updateSingleBusiness,
-} from '../../Data/Businesses/Data';
-import {useNavigate, useParams} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
-import Image from '../../components/FormFields/Image';
 import FormsLayout from '../../Layout/FormsLayout';
-
-interface data {
-  name: '';
-  location: '';
-  owner: {
-    name: '';
-  };
-  productType: '';
-  businessEmail: '';
-  businessPhone: '';
-  description: '';
-  locationDetails: '';
-}
+import useGetSingleBusiness from '../../hooks/Businesses/useGetSingleBusiness';
+import { FormProvider, useForm } from 'react-hook-form';
+import { AddBusinessFormInputs } from '../../utils/types/BusinessTypes';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { CreateBusinessSchema } from '../../utils/schemas/LoginValidation';
+import Input from '../../components/FormFields/FormattedInput';
+import Location from '../../components/FormFields/FormattedLocation';
+import Select from '../../components/FormFields/FormattedSelect';
+import TextArea from '../../components/FormFields/FormattedDescription';
+import useUpdateBusiness from '../../hooks/Businesses/useUpdateBusiness';
+import { toast } from 'react-toastify';
 
 const UpdateBusinessDetails = () => {
-// eslint-disable-next-line
-  const [data, setData] = useState<data | any>({});
-  const [isLoading, setIsloading] = useState(false);
-  const [isUpdating, setIsUpdating] = useState(false);
-  const [displayImage, setDisplayImage] = useState('');
-  const navigate = useNavigate();
-
-  const [formData, setFormData] = useState({});
-
   const params = useParams();
+  const { data, isLoading: businessLoading } = useGetSingleBusiness(
+    params.id || '',
+  );
+  const { mutateAsync, isLoading: updateLoading } = useUpdateBusiness();
+  const methods = useForm<AddBusinessFormInputs>({
+    resolver: yupResolver(CreateBusinessSchema),
+    defaultValues: {
+      businessPhone: '',
+      name: '',
+      businessEmail: '',
+      location: '',
+      locationDetails: '',
+      productType: '',
+      description: '',
+      longitude: 0,
+      latitude: 0,
+    },
+  });
 
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+  } = methods;
   useEffect(() => {
-    getSingleBusiness(setData, params.id, setIsloading, setFormData);
-  }, []);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({...formData, [e.target.name]: e.target.value});
-  };
-  const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFormData({...formData, [e.target.name]: e.target.value});
-  };
-  const handleDescriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setFormData({...formData, [e.target.name]: e.target.value});
-  };
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setFormData({...formData, [e.target.name]: e.target.files[0]});
-      setDisplayImage(URL.createObjectURL(e.target.files[0]));
+    if (data) {
+      reset({
+        businessPhone: data.businessPhone,
+        name: data.name,
+        businessEmail: data.businessEmail,
+        location: data.location,
+        locationDetails: data.locationDetails,
+        productType: data.productType,
+        description: data.description,
+        longitude: data.longitude,
+        latitude: data.latitude,
+      });
     }
+  }, [data, reset]);
+  const onSubmit = async (data: AddBusinessFormInputs) => {
+    const post = { ...data, id: params.id || '' };
+    await mutateAsync(post)
+      .then(() => {
+        toast.success('Business updated successfully', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+      })
+      .catch(() => {
+        toast.error('There was an error updating the business', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+      });
   };
-
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    updateSingleBusiness(formData, navigate, params.id, setIsUpdating);
-  };
-  console.log(formData);
+  if (businessLoading) {
+    return (
+      <div className="text-center">
+        <CircularProgress color="success" />
+      </div>
+    );
+  }
+  console.log(data);
   return (
-    <>
-      {isLoading ? (
-        <div className="text-center">
-          <CircularProgress color="success" />
-        </div>
-      ) : (
-        <FormsLayout title="Business" update>
-          <Card className="p-3">
-            <form onSubmit={onSubmit}>
-              <div className="row padding mt-3">
-                <div className="col-lg-4">
-                  <label htmlFor="basic-url" className="form-label ">
-                    Business Name
-                  </label>
-                  <div className="input-group mb-5">
-                    <span className="input-group-text" id="basic-addon1">
-                      <BusinessIcon />
-                    </span>
-                    <input
-                      defaultValue={data.name}
-                      type="text"
-                      onChange={handleChange}
-                      name="name"
-                      className="form-control"
-                      placeholder="name"
-                      aria-label="Username"
-                      aria-describedby="basic-addon1"
-                    />
-                  </div>
-                </div>
-                <div className="col-lg-4">
-                  <label htmlFor="basic-url" className="form-label">
-                    Business Email
-                  </label>
-                  <div className="input-group mb-5">
-                    <span className="input-group-text" id="basic-addon1">
-                      <EmailIcon />
-                    </span>
-                    <input
-                      defaultValue={data.businessEmail}
-                      type="text"
-                      onChange={handleChange}
-                      name="businessEmail"
-                      className="form-control"
-                      placeholder="email"
-                      aria-label="Username"
-                      aria-describedby="basic-addon1"
-                    />
-                  </div>
-                </div>
-                <div className="col-lg-4">
-                  <label htmlFor="basic-url" className="form-label">
-                    Business Phone
-                  </label>
-                  <div className="input-group mb-5">
-                    <span className="input-group-text" id="basic-addon1">
-                      <PhoneIcon />
-                    </span>
-                    <input
-                      defaultValue={data.businessPhone}
-                      type="text"
-                      onChange={handleChange}
-                      name="businessPhone"
-                      className="form-control"
-                      placeholder="phone"
-                      aria-label="Username"
-                      aria-describedby="basic-addon1"
-                    />
-                  </div>
-                </div>
+    <FormsLayout title="Business" update>
+      <Card className="p-3">
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="row padding mt-3">
+              <div className="col-lg-4">
+                <Input
+                  icon={<BusinessIcon />}
+                  label="Business Name"
+                  name="name"
+                  placeholder="name"
+                  type="text"
+                  register={register}
+                  error={errors.name}
+                />
               </div>
-              <div className="row padding">
-                <div className="col-lg-4">
-                  <label htmlFor="basic-url" className="form-label ">
-                    Location
-                  </label>
-                  <div className="input-group mb-5">
-                    {/* <GooglePlacesAutocomplete
-                      selectProps={{
-                        location,
-                        onChange: selectLocation,
-                        placeholder: data.location,
-                        className: 'places',
-                      }}
-                    /> */}
-                  </div>
-                </div>
-                <div className="col-lg-4">
-                  <label htmlFor="basic-url" className="form-label">
-                    Location Details
-                  </label>
-                  <div className="input-group mb-5">
-                    <span className="input-group-text" id="basic-addon1">
-                      <LocationOnIcon />
-                    </span>
-                    <input
-                      defaultValue={data.locationDetails}
-                      type="text"
-                      onChange={handleChange}
-                      name="locationDetails"
-                      className="form-control"
-                      placeholder="details"
-                      aria-label="Username"
-                      aria-describedby="basic-addon1"
-                    />
-                  </div>
-                </div>
-                <div className="col-lg-4">
-                  <label htmlFor="basic-url" className="form-label">
-                    Product Type
-                  </label>
-                  <div className="input-group mb-5">
-                    <span className="input-group-text" id="basic-addon1">
-                      <ProductionQuantityLimitsIcon />
-                    </span>
-                    <select
-                      className="form-select"
-                      value={data.productType}
-                      onChange={handleTypeChange}
-                      name="productType"
-                      aria-label="Default select example"
-                      id="basic-addon1">
-                      <option value="PRODUCT">Product</option>
-                      <option value="SERVICE">Service</option>
-                      <option value="SERVICE_PRODUCT">Service_product</option>
-                    </select>
-                  </div>
-                </div>
+              <div className="col-lg-4">
+                <Input
+                  icon={<EmailIcon />}
+                  label="Business Email"
+                  name="businessEmail"
+                  placeholder="email"
+                  type="email"
+                  register={register}
+                  error={errors.businessEmail}
+                />
               </div>
-              <div className="row padding">
-                <div className="col-lg-4">
-                  <label htmlFor="basic-url" className="form-label ">
-                    Description
-                  </label>
-                  <div className="input-group mb-3">
-                    <textarea
-                      defaultValue={data.description}
-                      className="form-control"
-                      onChange={handleDescriptionChange}
-                      name="description"
-                      aria-label="With textarea"></textarea>
-                  </div>
-                </div>
-                <div className="col-lg-4">
+              <div className="col-lg-4">
+                <Input
+                  icon={<PhoneIcon />}
+                  label="Business Phone"
+                  name="businessPhone"
+                  placeholder="phone"
+                  type="text"
+                  register={register}
+                  error={errors.businessPhone}
+                />
+              </div>
+            </div>
+            <div className="row padding">
+              <div className="col-lg-4">
+                <Location name="location" />
+              </div>
+              <div className="col-lg-4">
+                <Input
+                  icon={<LocationOnIcon />}
+                  label="Location Details"
+                  name="locationDetails"
+                  placeholder="details"
+                  type="text"
+                  register={register}
+                  error={errors.locationDetails}
+                />
+              </div>
+              <div className="col-lg-4">
+                <Select name="productType" />
+              </div>
+            </div>
+            <div className="row padding">
+              <div className="col-lg-4">
+                <TextArea name="description" />
+              </div>
+              {/* TODO: <div className="col-lg-4">
                   <Image
-                    handleFileChange={handleImageChange}
-                    update
-                    displayImage={displayImage}
+                    handleFileChange={handleFileChange}
                     label="Business"
-                    data={data}
+                    displayImage={displayImage}
                   />
-                </div>
-              </div>
-              <div className="text-center mt-3">
-                <button
-                  className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-                  disabled={isUpdating ? true : false}>
-                  {isUpdating ? 'updating' : 'Update Business'}
-                </button>
-              </div>
-            </form>
-          </Card>
-        </FormsLayout>
-      )}
-    </>
+                </div> */}
+            </div>
+            <div className="text-center mt-3">
+              <button className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                {updateLoading ? 'Updating..' : 'Update Business'}
+              </button>
+            </div>
+          </form>
+        </FormProvider>
+      </Card>
+    </FormsLayout>
   );
 };
 
