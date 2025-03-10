@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import LocationOn from '@mui/icons-material/LocationOn';
 import GooglePlacesAutocomplete, {
   geocodeByPlaceId,
@@ -11,13 +11,26 @@ type LocationProps = {
 };
 
 const Location: React.FC<LocationProps> = ({ name }) => {
-  const { control, setValue, getValues } = useFormContext();
+  const { control, setValue, watch } = useFormContext();
+  const [initialized, setInitialized] = useState(false);
 
-  // Get the initial value from react-hook-form
-  const defaultLocation = getValues(name);
+  // Get the current location value
+  const locationValue = watch(name);
+
+  // Format location for the component's select
+  const formatLocationForSelect = (location: string) => {
+    return location ? { label: location, value: location } : null;
+  };
+
+  // Initialize component once with API data
+  useEffect(() => {
+    if (!initialized && locationValue) {
+      setInitialized(true);
+    }
+  }, [locationValue, initialized]);
 
   const handleSelect = async (place: any) => {
-    if (!place?.value?.place_id) return; // Ensure place and place_id exist
+    if (!place?.value?.place_id) return;
 
     try {
       const results = await geocodeByPlaceId(place.value.place_id);
@@ -25,7 +38,7 @@ const Location: React.FC<LocationProps> = ({ name }) => {
         const { lat, lng } = results[0].geometry.location;
         setValue('latitude', lat());
         setValue('longitude', lng());
-        setValue(name, place.label); // Save the location label
+        setValue(name, place.label);
       }
     } catch (error) {
       console.error('Error fetching coordinates:', error);
@@ -48,22 +61,20 @@ const Location: React.FC<LocationProps> = ({ name }) => {
             <GooglePlacesAutocomplete
               apiKey="AIzaSyAeiInK3UvyBWonodEd0HswfhQ5WFhCvNQ"
               selectProps={{
-                ...field,
                 placeholder: 'Business location',
                 className: 'places',
-                value: defaultLocation
-                  ? { label: defaultLocation, value: defaultLocation }
-                  : null,
+                value: formatLocationForSelect(field.value),
                 onChange: (place) => {
                   if (place) {
-                    // Add this null check
                     handleSelect(place);
                     field.onChange(place.label);
                   } else {
-                    // Handle the case when place is null (e.g., when the input is cleared)
                     field.onChange('');
+                    setValue('latitude', 0);
+                    setValue('longitude', 0);
                   }
                 },
+                isClearable: true,
               }}
               aria-describedby="basic-addon1"
             />
