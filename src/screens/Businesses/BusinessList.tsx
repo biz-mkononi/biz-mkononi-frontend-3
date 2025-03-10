@@ -11,7 +11,7 @@ const BusinessList = () => {
   const navigate = useNavigate();
   const { data: businesses, isLoading } = useGetBusinesses();
   const memoizedBusinesses = useMemo(() => {
-    return businesses;
+    return businesses ?? [];
   }, [businesses]);
   const onView = (id: string | undefined) => {
     navigate(`/business/${id}/details`);
