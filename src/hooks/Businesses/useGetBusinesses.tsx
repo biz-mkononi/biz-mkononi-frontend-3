@@ -6,11 +6,11 @@ import { BusinessResponse } from '../../utils/types/BusinessTypes';
 type BusinessApiResponse = {
   rows: BusinessResponse[];
 };
-const fetchData = async (): Promise<BusinessApiResponse[]> => {
+const fetchData = async (): Promise<BusinessApiResponse> => {
   try {
-    const response: AxiosResponse<BusinessApiResponse[]> =
+    const response: AxiosResponse<BusinessApiResponse> =
       await reqInstance2.get('/businesses');
-    return response.data.rows;
+    return response.data;
   } catch (error: any) {
     throw new Error(
       error?.response?.data?.message || error?.message || 'An error occurred',
@@ -18,7 +18,7 @@ const fetchData = async (): Promise<BusinessApiResponse[]> => {
   }
 };
 
-const useGetBusinesses = (): UseQueryResult<BusinessApiResponse[], Error> => {
+const useGetBusinesses = (): UseQueryResult<BusinessApiResponse, Error> => {
   return useQuery(['businesses'], fetchData);
 };
 
