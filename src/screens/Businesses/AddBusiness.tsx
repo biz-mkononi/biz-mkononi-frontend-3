@@ -17,18 +17,8 @@ import Input from '../../components/FormFields/FormattedInput';
 import Location from '../../components/FormFields/FormattedLocation';
 import Select from '../../components/FormFields/FormattedSelect';
 import TextArea from '../../components/FormFields/FormattedDescription';
+import { AddBusinessFormInputs } from '../../utils/types/BusinessTypes';
 
-type AddBusinessFormInputs = {
-  businessPhone: string;
-  name: string;
-  businessEmail: string;
-  location: string;
-  locationDetails: string;
-  productType: string;
-  description: string;
-  longitude: number;
-  latitude: number;
-};
 const AddBusiness = () => {
   //TODO: const [displayImage, setDisplayImage] = useState('');
 

@@ -4,11 +4,12 @@ import { reqInstance2 } from '../common/axiosInstance';
 import { AxiosResponse } from 'axios';
 import { BusinessResponse } from '../../utils/types/BusinessTypes';
 
-const fetchData = async (): Promise<BusinessResponse[]> => {
+const fetchData = async (id: string): Promise<BusinessResponse> => {
   try {
-    const response: AxiosResponse<BusinessResponse[]> =
-      await reqInstance2.get('/businesses');
-    return response.data.rows;
+    const response: AxiosResponse<BusinessResponse> = await reqInstance2.get(
+      `/businesses/${id}`,
+    );
+    return response.data;
   } catch (error: any) {
     throw new Error(
       error?.response?.data?.message || error?.message || 'An error occurred',
@@ -16,8 +17,10 @@ const fetchData = async (): Promise<BusinessResponse[]> => {
   }
 };
 
-const useGetBusinesses = (): UseQueryResult<BusinessResponse[], Error> => {
-  return useQuery(['businesses'], fetchData);
+const useGetSingleBusiness = (
+  id: string,
+): UseQueryResult<BusinessResponse, Error> => {
+  return useQuery(['business', id], () => fetchData(id));
 };
 
-export default useGetBusinesses;
+export default useGetSingleBusiness;
