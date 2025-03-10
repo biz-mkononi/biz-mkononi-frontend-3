@@ -3,10 +3,12 @@ import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { reqInstance2 } from '../common/axiosInstance';
 import { AxiosResponse } from 'axios';
 import { BusinessResponse } from '../../utils/types/BusinessTypes';
-
-const fetchData = async (): Promise<BusinessResponse[]> => {
+type BusinessApiResponse = {
+  rows: BusinessResponse[];
+};
+const fetchData = async (): Promise<BusinessApiResponse[]> => {
   try {
-    const response: AxiosResponse<BusinessResponse[]> =
+    const response: AxiosResponse<BusinessApiResponse[]> =
       await reqInstance2.get('/businesses');
     return response.data.rows;
   } catch (error: any) {
@@ -16,7 +18,7 @@ const fetchData = async (): Promise<BusinessResponse[]> => {
   }
 };
 
-const useGetBusinesses = (): UseQueryResult<BusinessResponse[], Error> => {
+const useGetBusinesses = (): UseQueryResult<BusinessApiResponse[], Error> => {
   return useQuery(['businesses'], fetchData);
 };
 

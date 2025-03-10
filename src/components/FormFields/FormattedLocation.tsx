@@ -16,19 +16,19 @@ const Location: React.FC<LocationProps> = ({ name }) => {
   // Get the initial value from react-hook-form
   const defaultLocation = getValues(name);
 
-  // Function to handle place selection and extract coordinates
   const handleSelect = async (place: any) => {
-    if (place) {
-      try {
-        const results = await geocodeByPlaceId(place.value.place_id);
-        const { lat, lng } = results[0].geometry.location;
+    if (!place?.value?.place_id) return; // Ensure place and place_id exist
 
+    try {
+      const results = await geocodeByPlaceId(place.value.place_id);
+      if (results.length > 0 && results[0].geometry?.location) {
+        const { lat, lng } = results[0].geometry.location;
         setValue('latitude', lat());
         setValue('longitude', lng());
         setValue(name, place.label); // Save the location label
-      } catch (error) {
-        console.error('Error fetching coordinates:', error);
       }
+    } catch (error) {
+      console.error('Error fetching coordinates:', error);
     }
   };
 
