@@ -55,8 +55,14 @@ const Location: React.FC<LocationProps> = ({ name }) => {
                   ? { label: defaultLocation, value: defaultLocation }
                   : null,
                 onChange: (place) => {
-                  handleSelect(place);
-                  field.onChange(place.label);
+                  if (place) {
+                    // Add this null check
+                    handleSelect(place);
+                    field.onChange(place.label);
+                  } else {
+                    // Handle the case when place is null (e.g., when the input is cleared)
+                    field.onChange('');
+                  }
                 },
               }}
               aria-describedby="basic-addon1"

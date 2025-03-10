@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useMemo } from 'react';
 import './AddBusiness.css';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +12,7 @@ const BusinessList = () => {
   const navigate = useNavigate();
   const { data: businesses, isLoading } = useGetBusinesses();
   const memoizedBusinesses = useMemo(() => {
-    return businesses ?? [];
+    return businesses?.rows ?? [];
   }, [businesses]);
   const onView = (id: string | undefined) => {
     navigate(`/business/${id}/details`);
@@ -33,7 +34,7 @@ const BusinessList = () => {
       </div>
     );
   }
-  if (businesses?.length === 0) {
+  if (businesses?.rows?.length === 0) {
     return (
       <NotFound
         icon={<BusinessIcon />}
@@ -49,7 +50,7 @@ const BusinessList = () => {
       onEdit={onEdit}
       onView={onView}
       Business
-      data={memoizedBusinesses}
+      data={memoizedBusinesses as any}
     />
   );
 };
