@@ -120,7 +120,7 @@ const LoginPage = () => {
             Dont have an account yet?{' '}
             <button
               className="bg-transparent"
-              onClick={() => navigate('/payment/plans')}
+              onClick={() => navigate('/auth/sign-up')}
             >
               Sign Up
             </button>

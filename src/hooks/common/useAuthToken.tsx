@@ -2,17 +2,17 @@ import { useState } from 'react';
 
 // Replace with your preferred key
 const TOKEN_KEY = 'user';
-type User ={
-  email:string;
-  phone:string;
-  freeTrialStartDate:string;
-  subscriptionType:string;
-  name:string;
-}
+type User = {
+  email: string;
+  phone: string;
+  freeTrialStartDate: string;
+  subscriptionType: string;
+  name: string;
+  id: string;
+};
 type Data = {
   jwt: string;
-  user:User;
-
+  user: User;
 };
 
 const useAuthToken = () => {

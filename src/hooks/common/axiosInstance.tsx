@@ -8,9 +8,10 @@ const instance = () => {
   }
 };
 
-const baseURL = 'https://api-stage.mkononi.biz';
+const baseURL = 'https://api-stage.mkononi.biz/';
 const reqInstance: AxiosInstance = axios.create({
   baseURL,
+
   // No 'Authorization' header for this instance
 });
 
@@ -29,4 +30,4 @@ const reqInstance3: AxiosInstance = axios.create({
   },
 });
 
-export { reqInstance, reqInstance2,reqInstance3 };
+export { reqInstance, reqInstance2, reqInstance3 };
