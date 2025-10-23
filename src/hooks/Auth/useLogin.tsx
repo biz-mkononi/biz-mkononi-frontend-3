@@ -11,6 +11,7 @@ interface LoginUserParams {
   password: string;
 }
 type User = {
+  id: string;
   email: string;
   phone: string;
   freeTrialStartDate: string;
@@ -42,7 +43,6 @@ const useLoginUser = (): UseMutationResult<
   return useMutation(loginUser, {
     onSuccess: (response: Response) => {
       setAuthToken(response.data);
-      console.log(response.data.user.email);
       queryClient
         .invalidateQueries()
         .then(() => window.location.assign('/'))

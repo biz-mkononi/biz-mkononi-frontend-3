@@ -23,9 +23,11 @@ interface PaystackResponse {
 const initiatePayment = async (
   data: InitiatePaymentParams,
 ): Promise<PaystackResponse> => {
-  const response = await reqInstance3.post('auth/initiate', data);
-
-  return response;
+  const response = await reqInstance3.post<PaystackResponse>(
+    'auth/initiate',
+    data,
+  );
+  return response.data;
 };
 
 const useInitiatePayment = (): UseMutationResult<
@@ -37,10 +39,7 @@ const useInitiatePayment = (): UseMutationResult<
 
   return useMutation(initiatePayment, {
     onSuccess: (data) => {
-      // Redirect to Paystack payment page
       window.location.href = data.data.authorizationUrl;
-
-      // Optionally invalidate any payment-related queries
       queryClient.invalidateQueries(['payments']);
     },
     onError: (error) => {
