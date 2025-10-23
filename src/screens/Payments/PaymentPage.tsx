@@ -58,7 +58,7 @@ const PaymentPage = () => {
     const payment = {
       amount: plan.price,
       method: paymentMethod,
-      userId: id,
+      userId: id ?? '',
     };
     await mutateAsync(payment);
   };
