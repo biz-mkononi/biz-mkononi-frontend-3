@@ -139,7 +139,7 @@ const RoutesFile = () => {
   const { businessId } = useContext(DataContext);
   const { token } = useAuthToken();
   const drawerWidth = 270;
-  const isInactive = data?.status === 'free-trial';
+  const isInactive = data?.status === 'inactive';
 
   if (isLoading) {
     return (
