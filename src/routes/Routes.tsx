@@ -6,14 +6,15 @@ import { useTheme } from '@mui/material/styles';
 import { DataContext } from '../context/ContextProvider';
 import Box from '@mui/material/Box';
 import Sidebar from '../components/sidebar/Sidebar';
-import useAuthToken from '../hooks/common/useAuthToken';
 import { CircularProgress, CssBaseline, Toolbar } from '@mui/material';
 import AppMenuBar from '../components/sidebar/AppBar';
 import useSubscriptionStatus from '../hooks/common/useGetSubscriptionStatus';
 import InactiveAccountPage from '../screens/Payments/InactiveAccountPage';
 import PaymentPage from '../screens/Payments/PaymentPage';
+import useAuthToken from '../hooks/common/useAuthToken';
 
 const RoutesFile = () => {
+  const { token } = useAuthToken();
   const { data, isLoading } = useSubscriptionStatus();
 
   const ProductDetails = lazy(
@@ -137,11 +138,11 @@ const RoutesFile = () => {
   // eslint-disable-next-line
   const theme = useTheme();
   const { businessId } = useContext(DataContext);
-  const { token } = useAuthToken();
   const drawerWidth = 270;
   const isInactive = data?.status === 'inactive';
 
-  if (isLoading) {
+  // Only show loading when token exists and subscription data is loading
+  if (token !== null && isLoading) {
     return (
       <div className="text-center">
         <CircularProgress color="success" />
