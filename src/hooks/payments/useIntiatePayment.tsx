@@ -13,11 +13,9 @@ interface InitiatePaymentParams {
 
 interface PaystackResponse {
   status: boolean;
-  data: {
-    authorizationUrl: string;
-    access_code: string;
-    reference: string;
-  };
+  authorizationUrl: string;
+  access_code: string;
+  reference: string;
 }
 
 const initiatePayment = async (
