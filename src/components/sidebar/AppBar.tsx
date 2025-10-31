@@ -176,7 +176,7 @@ const AppMenuBar = ({ drawerWidth, handleDrawerToggle }: Props) => {
             </ListItemText>
           </MenuItem>
 
-          {['billing-due', 'inactive'].includes(data?.status) && (
+          {['billing-due', 'inactive'].includes(data?.status ?? '') && (
             <>
               <Divider />
               <MenuItem
