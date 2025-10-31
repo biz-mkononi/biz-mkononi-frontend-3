@@ -191,7 +191,7 @@ const AppMenuBar = ({ drawerWidth, handleDrawerToggle }: Props) => {
                 <ListItemButton>
                   <ListItemText
                     primary={
-                      data.status === 'inactive' ? 'Renew Now' : 'Fix Billing'
+                      data?.status === 'inactive' ? 'Renew Now' : 'Fix Billing'
                     }
                   />
                 </ListItemButton>
