@@ -139,7 +139,8 @@ const RoutesFile = () => {
   const theme = useTheme();
   const { businessId } = useContext(DataContext);
   const drawerWidth = 270;
-  const isInactive = data?.status === 'inactive';
+  const notEligible =
+    data?.status === 'inactive' || data?.status === 'billing-due';
 
   // Only show loading when token exists and subscription data is loading
   if (token !== null && isLoading) {
@@ -154,7 +155,7 @@ const RoutesFile = () => {
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
 
-      {token !== null && !isInactive && (
+      {token !== null && !notEligible && (
         <>
           <AppMenuBar
             handleDrawerToggle={handleDrawerToggle}
@@ -191,12 +192,12 @@ const RoutesFile = () => {
             width: { sm: `calc(100% - ${drawerWidth}px)` },
           }}
         >
-          {!isInactive && <Toolbar />}
+          {!notEligible && <Toolbar />}
           <Routes>
             <Route path="/inactive-account" element={<InactiveAccountPage />} />
             <Route path="/payments/:id" element={<PaymentPage />} />
             <Route element={<PrivateRoute />}>
-              {isInactive ? (
+              {notEligible ? (
                 <Route
                   path="*"
                   element={<Navigate to="/inactive-account" replace />}
