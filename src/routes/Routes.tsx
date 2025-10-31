@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useContext, useState, useEffect } from 'react';
+import React, { Suspense, lazy, useContext, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import PrivateRoute from './PrivateRoute';
@@ -120,17 +120,9 @@ const RoutesFile = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
-  const [lastDismissed, setLastDismissed] = useState(() => {
+  const [lastDismissed, setLastDismissed] = useState<string | null>(() => {
     return localStorage.getItem('billingWarningLastDismissed');
   });
-
-  // Reset dismissal if status changes to critical (optional)
-  useEffect(() => {
-    if (data?.status === 'billing-due') {
-      localStorage.removeItem('billingWarningDismissed');
-      setWarningDismissed(false);
-    }
-  }, [data?.status]);
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -196,8 +188,11 @@ const RoutesFile = () => {
                 color="inherit"
                 onClick={() => {
                   const now = Date.now();
-                  setLastDismissed(now);
-                  localStorage.setItem('billingWarningLastDismissed', now);
+                  setLastDismissed(now.toString());
+                  localStorage.setItem(
+                    'billingWarningLastDismissed',
+                    now.toString(),
+                  );
                 }}
               >
                 <CloseIcon fontSize="small" />
