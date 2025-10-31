@@ -176,7 +176,7 @@ const AppMenuBar = ({ drawerWidth, handleDrawerToggle }: Props) => {
             </ListItemText>
           </MenuItem>
 
-          {(data?.status === 'free-trial' || data?.status === 'inactive') && (
+          {['billing-due', 'inactive'].includes(data?.status) && (
             <>
               <Divider />
               <MenuItem
@@ -191,7 +191,7 @@ const AppMenuBar = ({ drawerWidth, handleDrawerToggle }: Props) => {
                 <ListItemButton>
                   <ListItemText
                     primary={
-                      data.status === 'inactive' ? 'Renew Now' : 'Upgrade Plan'
+                      data.status === 'inactive' ? 'Renew Now' : 'Fix Billing'
                     }
                   />
                 </ListItemButton>
