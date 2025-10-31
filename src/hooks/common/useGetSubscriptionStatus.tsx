@@ -3,7 +3,7 @@ import { reqInstance2 } from '../common/axiosInstance';
 import useAuthToken from './useAuthToken';
 
 interface TrialStatus {
-  status: 'active' | 'trial' | 'inactive' | 'billing-due';
+  status: 'active' | 'free-trial' | 'inactive' | 'billing-due';
   userId: string;
 }
 
