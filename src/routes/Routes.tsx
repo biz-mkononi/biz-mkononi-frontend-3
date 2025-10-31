@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useContext, useState } from 'react';
+import React, { Suspense, lazy, useContext, useState, useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import PrivateRoute from './PrivateRoute';
@@ -13,113 +13,124 @@ import InactiveAccountPage from '../screens/Payments/InactiveAccountPage';
 import PaymentPage from '../screens/Payments/PaymentPage';
 import useAuthToken from '../hooks/common/useAuthToken';
 
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import Button from '@mui/material/Button';
+
+// Lazy load all screens
+const ProductDetails = lazy(() => import('../screens/Products/ProductDetails'));
+const UpdateProductDetails = lazy(
+  () => import('../screens/Products/UpdateProductDetails'),
+);
+const OverviewScreen = lazy(() => import('../screens/Insights/Overview'));
+const SalesInsightsScreen = lazy(
+  () => import('../screens/Insights/SalesInsights'),
+);
+const CustomersInsightsScreen = lazy(
+  () => import('../screens/Insights/CustomersInsights'),
+);
+const ChurnRateInsightsScreen = lazy(
+  () => import('../screens/Insights/ChurnRateInsights'),
+);
+const AddBusiness = lazy(() => import('../screens/Businesses/AddBusiness'));
+const AddSale = lazy(() => import('../screens/Sales/AddSale'));
+const CustomersList = lazy(() => import('../screens/customers/CustomersList'));
+const AddCustomer = lazy(() => import('../screens/customers/NewCustomer'));
+const AddSupplier = lazy(() => import('../screens/suppliers/NewSupplier'));
+const SuppliersList = lazy(() => import('../screens/suppliers/SuppliersList'));
+const BusinessList = lazy(() => import('../screens/Businesses/BusinessList'));
+const NewCategory = lazy(() => import('../screens/Products/NewCategory'));
+const CategoriesList = lazy(() => import('../screens/Products/CategoriesList'));
+const AddProduct = lazy(() => import('../screens/Products/AddProduct'));
+const ProductsList = lazy(() => import('../screens/Products/ProductList'));
+const NewEmployee = lazy(() => import('../screens/Employees/NewEmployee'));
+const EmployeesList = lazy(() => import('../screens/Employees/EmployeesList'));
+const PayEmployee = lazy(() => import('../screens/Employees/PayEmployee'));
+const EmployeesSalaries = lazy(
+  () => import('../screens/Employees/EmployeesSalaries'),
+);
+const BusinessDetails = lazy(
+  () => import('../screens/Businesses/BusinessDetails'),
+);
+const UpdateBusinessDetails = lazy(
+  () => import('../screens/Businesses/UpdateBusinessDetails'),
+);
+const UpdateSupplierDetails = lazy(
+  () => import('../screens/suppliers/UpdateDetails'),
+);
+const SupplierDetails = lazy(
+  () => import('../screens/suppliers/SupplierDetails'),
+);
+const CategoryDetails = lazy(
+  () => import('../screens/Products/CategoryDetails'),
+);
+const UpdateCategories = lazy(
+  () => import('../screens/Products/UpdateCategories'),
+);
+const CustomerDetails = lazy(
+  () => import('../screens/customers/CustomerDetails'),
+);
+const UpdateCustomerDetails = lazy(
+  () => import('../screens/customers/UpdateCustomerDetails'),
+);
+const EmployeeDetails = lazy(
+  () => import('../screens/Employees/EmployeeDetails'),
+);
+const EmployeeUpdateDetails = lazy(
+  () => import('../screens/Employees/EmployeeUpdateDetails'),
+);
+const UpdateSalariesDetails = lazy(
+  () => import('../screens/Employees/UpdateSalariesDetails'),
+);
+const AddIncome = lazy(() => import('../screens/Finance/AddIncome'));
+const AddExpense = lazy(() => import('../screens/Finance/AddExpense'));
+const Income = lazy(() => import('../screens/Finance/Income'));
+const Expense = lazy(() => import('../screens/Finance/Expense'));
+const ExpenseDetails = lazy(() => import('../screens/Finance/ExpenseDetails'));
+const IncomeDetails = lazy(() => import('../screens/Finance/IncomeDetails'));
+const UpdateExpenseDetails = lazy(
+  () => import('../screens/Finance/UpdateExpenseDetails'),
+);
+const UpdateIncomeDetails = lazy(
+  () => import('../screens/Finance/UpdateIncomeDetails'),
+);
+const SalesList = lazy(() => import('../screens/Sales/SalesList'));
+const SalesDetails = lazy(() => import('../screens/Sales/SalesDetails'));
+const SalariesDetails = lazy(
+  () => import('../screens/Employees/SalariesDetails'),
+);
+const SuppliesList = lazy(() => import('../screens/Supplies/SuppliesList'));
+const SuppliesDetails = lazy(
+  () => import('../screens/Supplies/SuppliesDetails'),
+);
+const AddSupply = lazy(() => import('../screens/Supplies/AddSupply'));
+const RevenueInsights = lazy(
+  () => import('../screens/Insights/RevenueInsights'),
+);
+
 const RoutesFile = () => {
   const { token } = useAuthToken();
   const { data, isLoading } = useSubscriptionStatus();
+  const { businessId } = useContext(DataContext);
+  const theme = useTheme();
 
-  const ProductDetails = lazy(
-    () => import('../screens/Products/ProductDetails'),
-  );
-  const UpdateProductDetails = lazy(
-    () => import('../screens/Products/UpdateProductDetails'),
-  );
-  const OverviewScreen = lazy(() => import('../screens/Insights/Overview'));
-  const SalesInsightsScreen = lazy(
-    () => import('../screens/Insights/SalesInsights'),
-  );
-  const CustomersInsightsScreen = lazy(
-    () => import('../screens/Insights/CustomersInsights'),
-  );
-  const ChurnRateInsightsScreen = lazy(
-    () => import('../screens/Insights/ChurnRateInsights'),
-  );
-  const AddBusiness = lazy(() => import('../screens/Businesses/AddBusiness'));
-  const AddSale = lazy(() => import('../screens/Sales/AddSale'));
-  const CustomersList = lazy(
-    () => import('../screens/customers/CustomersList'),
-  );
-  const AddCustomer = lazy(() => import('../screens/customers/NewCustomer'));
-  const AddSupplier = lazy(() => import('../screens/suppliers/NewSupplier'));
-  const SuppliersList = lazy(
-    () => import('../screens/suppliers/SuppliersList'),
-  );
-  const BusinessList = lazy(() => import('../screens/Businesses/BusinessList'));
-  const NewCategory = lazy(() => import('../screens/Products/NewCategory'));
-  const CategoriesList = lazy(
-    () => import('../screens/Products/CategoriesList'),
-  );
-  const AddProduct = lazy(() => import('../screens/Products/AddProduct'));
-  const ProductsList = lazy(() => import('../screens/Products/ProductList'));
-  const NewEmployee = lazy(() => import('../screens/Employees/NewEmployee'));
-  const EmployeesList = lazy(
-    () => import('../screens/Employees/EmployeesList'),
-  );
-  const PayEmployee = lazy(() => import('../screens/Employees/PayEmployee'));
-  const EmployeesSalaries = lazy(
-    () => import('../screens/Employees/EmployeesSalaries'),
-  );
-  const BusinessDetails = lazy(
-    () => import('../screens/Businesses/BusinessDetails'),
-  );
-  const UpdateBusinessDetails = lazy(
-    () => import('../screens/Businesses/UpdateBusinessDetails'),
-  );
-  const UpdateSupplierDetails = lazy(
-    () => import('../screens/suppliers/UpdateDetails'),
-  );
-  const SupplierDetails = lazy(
-    () => import('../screens/suppliers/SupplierDetails'),
-  );
-  const CategoryDetails = lazy(
-    () => import('../screens/Products/CategoryDetails'),
-  );
-  const UpdateCategories = lazy(
-    () => import('../screens/Products/UpdateCategories'),
-  );
-  const CustomerDetails = lazy(
-    () => import('../screens/customers/CustomerDetails'),
-  );
-  const UpdateCustomerDetails = lazy(
-    () => import('../screens/customers/UpdateCustomerDetails'),
-  );
-  const EmployeeDetails = lazy(
-    () => import('../screens/Employees/EmployeeDetails'),
-  );
-  const EmployeeUpdateDetails = lazy(
-    () => import('../screens/Employees/EmployeeUpdateDetails'),
-  );
-  const UpdateSalariesDetails = lazy(
-    () => import('../screens/Employees/UpdateSalariesDetails'),
-  );
-  const AddIncome = lazy(() => import('../screens/Finance/AddIncome'));
-  const AddExpense = lazy(() => import('../screens/Finance/AddExpense'));
-  const Income = lazy(() => import('../screens/Finance/Income'));
-  const Expense = lazy(() => import('../screens/Finance/Expense'));
-  const ExpenseDetails = lazy(
-    () => import('../screens/Finance/ExpenseDetails'),
-  );
-  const IncomeDetails = lazy(() => import('../screens/Finance/IncomeDetails'));
-  const UpdateExpenseDetails = lazy(
-    () => import('../screens/Finance/UpdateExpenseDetails'),
-  );
-  const UpdateIncomeDetails = lazy(
-    () => import('../screens/Finance/UpdateIncomeDetails'),
-  );
-  const SalesList = lazy(() => import('../screens/Sales/SalesList'));
-  const SalesDetails = lazy(() => import('../screens/Sales/SalesDetails'));
-  const SalariesDetails = lazy(
-    () => import('../screens/Employees/SalariesDetails'),
-  );
-  const SuppliesList = lazy(() => import('../screens/Supplies/SuppliesList'));
-  const SuppliesDetails = lazy(
-    () => import('../screens/Supplies/SuppliesDetails'),
-  );
-  const AddSupply = lazy(() => import('../screens/Supplies/AddSupply'));
-  const RevenueInsights = lazy(
-    () => import('../screens/Insights/RevenueInsights'),
-  );
+  const drawerWidth = 270;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+
+  const [lastDismissed, setLastDismissed] = useState(() => {
+    return localStorage.getItem('billingWarningLastDismissed');
+  });
+
+  // Reset dismissal if status changes to critical (optional)
+  useEffect(() => {
+    if (data?.status === 'billing-due') {
+      localStorage.removeItem('billingWarningDismissed');
+      setWarningDismissed(false);
+    }
+  }, [data?.status]);
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -135,26 +146,86 @@ const RoutesFile = () => {
       setMobileOpen(!mobileOpen);
     }
   };
-  // eslint-disable-next-line
-  const theme = useTheme();
-  const { businessId } = useContext(DataContext);
-  const drawerWidth = 270;
-  const notEligible =
-    data?.status === 'inactive' || data?.status === 'billing-due';
 
-  // Only show loading when token exists and subscription data is loading
+  const status = data?.status || '';
+  const notEligible = status === 'inactive';
+  const showWarning = ['billing-due', 'grace', 'extension'].includes(status);
+  const HOURS_24 = 24 * 60 * 60 * 1000;
+
+  const shouldShowWarning =
+    showWarning &&
+    (!lastDismissed || Date.now() - Number(lastDismissed) > HOURS_24);
+
+  // Show loading only when authenticated and fetching subscription
   if (token !== null && isLoading) {
     return (
-      <div className="text-center">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="100vh"
+      >
         <CircularProgress color="success" />
-      </div>
+      </Box>
     );
   }
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <CssBaseline />
 
+      {/* Sticky Warning Banner */}
+      {shouldShowWarning && (
+        <Alert
+          severity="warning"
+          variant="filled"
+          action={
+            <>
+              <Button
+                component="a"
+                href={`/payments/${token?.user.id}`}
+                color="inherit"
+                size="small"
+                sx={{ fontWeight: 'bold', minWidth: 'auto', px: 2 }}
+              >
+                Pay Now
+              </Button>
+              <IconButton
+                size="small"
+                aria-label="close warning"
+                color="inherit"
+                onClick={() => {
+                  const now = Date.now();
+                  setLastDismissed(now);
+                  localStorage.setItem('billingWarningLastDismissed', now);
+                }}
+              >
+                <CloseIcon fontSize="small" />
+              </IconButton>
+            </>
+          }
+          sx={{
+            position: 'sticky',
+            top: 0,
+            zIndex: theme.zIndex.drawer + 1,
+            borderRadius: 0,
+            py: 1.5,
+            boxShadow: 2,
+            '& .MuiAlert-message': {
+              flexGrow: 1,
+              pr: 2,
+            },
+          }}
+        >
+          <AlertTitle sx={{ fontWeight: 600, marginBottom: 0.5 }}>
+            Trial Ended – Action Required
+          </AlertTitle>
+          Your trial has ended. Please complete payment to continue using all
+          features.
+        </Alert>
+      )}
+
+      {/* App Bar & Sidebar (only if eligible) */}
       {token !== null && !notEligible && (
         <>
           <AppMenuBar
@@ -170,32 +241,39 @@ const RoutesFile = () => {
         </>
       )}
 
-      <Suspense
-        fallback={
-          <div className="flex justify-center items-center mt-3">
-            <div
-              className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0 text-blue-600"
-              role="status"
-            >
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          </div>
-        }
+      {/* Main Content */}
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          p: { xs: 2, sm: 3 },
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          ml: { sm: `${drawerWidth}px` },
+          transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+          }),
+        }}
       >
-        {/* <AppBar/> */}
+        {/* Offset for AppBar */}
+        {!notEligible && <Toolbar />}
 
-        <Box
-          component="main"
-          sx={{
-            flexGrow: 1,
-            p: 3,
-            width: { sm: `calc(100% - ${drawerWidth}px)` },
-          }}
+        <Suspense
+          fallback={
+            <Box display="flex" justifyContent="center" mt={4}>
+              <div
+                className="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0 text-blue-600"
+                role="status"
+              >
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            </Box>
+          }
         >
-          {!notEligible && <Toolbar />}
           <Routes>
             <Route path="/inactive-account" element={<InactiveAccountPage />} />
             <Route path="/payments/:id" element={<PaymentPage />} />
+
             <Route element={<PrivateRoute />}>
               {notEligible ? (
                 <Route
@@ -390,8 +468,8 @@ const RoutesFile = () => {
               )}
             </Route>
           </Routes>
-        </Box>
-      </Suspense>
+        </Suspense>
+      </Box>
     </Box>
   );
 };

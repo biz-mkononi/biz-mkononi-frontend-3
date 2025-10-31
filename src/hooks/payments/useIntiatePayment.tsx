@@ -39,7 +39,7 @@ const useInitiatePayment = (): UseMutationResult<
 
   return useMutation(initiatePayment, {
     onSuccess: (data) => {
-      window.location.href = data.data.authorizationUrl;
+      window.location.href = data.authorizationUrl;
       queryClient.invalidateQueries(['payments']);
     },
     onError: (error) => {
