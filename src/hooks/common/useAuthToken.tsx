@@ -1,7 +1,10 @@
 import { useState } from 'react';
 
-// Replace with your preferred key
+// Keys for localStorage
 const TOKEN_KEY = 'user';
+const TOKEN_TIME_KEY = 'user_time';
+const EXPIRY_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
+
 type User = {
   email: string;
   phone: string;
@@ -10,29 +13,44 @@ type User = {
   name: string;
   id: string;
 };
+
 type Data = {
   jwt: string;
   user: User;
 };
 
 const useAuthToken = () => {
-  // State to store the token
   const [token, setToken] = useState<Data | null>(() => {
-    // Get the initial token value from localStorage
     const storedToken = localStorage.getItem(TOKEN_KEY);
-    return storedToken ? JSON.parse(storedToken) : null;
+    const storedTime = localStorage.getItem(TOKEN_TIME_KEY);
+
+    // Treat missing timestamp as expired
+    if (!storedToken || !storedTime) {
+      localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(TOKEN_TIME_KEY);
+      return null;
+    }
+
+    const age = Date.now() - Number(storedTime);
+    if (age > EXPIRY_MS) {
+      // Token expired → clear it
+      localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(TOKEN_TIME_KEY);
+      return null;
+    }
+
+    return JSON.parse(storedToken) as Data;
   });
 
-  // Function to set the token in state and localStorage
   const setAuthToken = (newToken: Data | null) => {
     setToken(newToken);
 
-    // Store the token in localStorage
     if (newToken) {
       localStorage.setItem(TOKEN_KEY, JSON.stringify(newToken));
+      localStorage.setItem(TOKEN_TIME_KEY, Date.now().toString());
     } else {
-      // Remove the token from localStorage if null
       localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(TOKEN_TIME_KEY);
     }
   };
 
