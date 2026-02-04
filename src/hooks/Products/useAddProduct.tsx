@@ -8,10 +8,10 @@ import { reqInstance3 } from '../common/axiosInstance';
 interface AddProductParams {
   categoryId: string;
   productType: string;
-  size: string;
+  size: number;
   unit: string;
-  buyingPrice: string;
-  sellingPrice: string;
+  buyingPrice: number;
+  sellingPrice: number;
   tags: string;
   description: string;
   businessId: string;
