@@ -12,19 +12,21 @@ import FormsLayout from '../../Layout/FormsLayout';
 import { useQuery } from '@tanstack/react-query';
 import useAddProduct from '../../hooks/Products/useAddProduct';
 import { toast } from 'react-toastify';
+
 type Categories = {
   name: string;
 };
+
 // eslint-disable-next-line
 const AddProduct = ({ id }: any) => {
   const initialState = {
     name: '',
     categoryId: '',
     productType: '',
-    size: '',
+    size: 0,
     unit: '',
-    buyingPrice: '',
-    sellingPrice: '',
+    buyingPrice: 0,
+    sellingPrice: 0,
     description: '',
     tags: '',
     image: {},
@@ -38,12 +40,15 @@ const AddProduct = ({ id }: any) => {
     queryFn: () => getCategory(id),
   });
   const { mutateAsync, isLoading } = useAddProduct();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFormData({ ...formData, ['categoryId']: e.target.value });
   };
@@ -53,6 +58,7 @@ const AddProduct = ({ id }: any) => {
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   //TODO: const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   //   if (e.target.files) {
   //     setFormData({ ...formData, [e.target.name]: e.target.files[0] });
@@ -101,11 +107,11 @@ const AddProduct = ({ id }: any) => {
         });
       });
   };
-
   return (
     <FormsLayout title="Product">
       <Card className="p-3">
         <form onSubmit={onSubmit}>
+          {/* First Row - Always 3 columns */}
           <div className="row padding mt-3">
             <div className="col-lg-4">
               <label htmlFor="basic-url" className="form-label ">
@@ -171,34 +177,42 @@ const AddProduct = ({ id }: any) => {
                   <option selected>select a product type</option>
                   <option value="PRODUCT">Product</option>
                   <option value="SERVICE">Service</option>
+                  <option value="USAGE_BASED">Usage Based</option>
                   <option value="SERVICE_PRODUCT">Service/product</option>
                 </select>
               </div>
             </div>
           </div>
+
+          {/* Second Row - Consistent 3 column layout with conditional rendering */}
           <div className="row padding">
-            <div className="col-lg-4">
-              <label htmlFor="basic-url" className="form-label ">
-                Size e.g 500
-              </label>
-              <div className="input-group mb-5">
-                <span className="input-group-text" id="basic-addon1">
-                  <ScaleIcon />
-                </span>
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  name="size"
-                  className="form-control"
-                  placeholder="Size e.g 500"
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                />
+            {formData.productType !== 'USAGE_BASED' && (
+              <div className="col-lg-4">
+                <label htmlFor="basic-url" className="form-label ">
+                  Size e.g 500
+                </label>
+                <div className="input-group mb-5">
+                  <span className="input-group-text" id="basic-addon1">
+                    <ScaleIcon />
+                  </span>
+                  <input
+                    type="text"
+                    onChange={handleChange}
+                    name="size"
+                    className="form-control"
+                    placeholder="Size e.g 500"
+                    aria-label="Username"
+                    aria-describedby="basic-addon1"
+                  />
+                </div>
               </div>
-            </div>
+            )}
+
             <div className="col-lg-4">
               <label htmlFor="basic-url" className="form-label">
-                Unit e.g. ml for millilitres
+                {formData.productType === 'USAGE_BASED'
+                  ? 'Unit e.g. hours'
+                  : 'Unit e.g. ml for millilitres'}
               </label>
               <div className="input-group mb-5">
                 <span className="input-group-text" id="basic-addon1">
@@ -209,36 +223,47 @@ const AddProduct = ({ id }: any) => {
                   onChange={handleChange}
                   name="unit"
                   className="form-control"
-                  placeholder="Unit e.g. ml for millilitres"
+                  placeholder={
+                    formData.productType === 'USAGE_BASED'
+                      ? 'Unit e.g. hours'
+                      : 'Unit e.g. ml for millilitres'
+                  }
                   aria-label="Username"
                   aria-describedby="basic-addon1"
                 />
               </div>
             </div>
-            <div className="col-lg-4">
-              <label htmlFor="basic-url" className="form-label">
-                Buying Price e.g 1000
-              </label>
-              <div className="input-group mb-5">
-                <span className="input-group-text" id="basic-addon1">
-                  <ShoppingCartIcon />
-                </span>
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  name="buyingPrice"
-                  className="form-control"
-                  placeholder="Buying Price e.g 1000"
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                />
+
+            {formData.productType !== 'USAGE_BASED' && (
+              <div className="col-lg-4">
+                <label htmlFor="basic-url" className="form-label">
+                  Buying Price e.g 1000
+                </label>
+                <div className="input-group mb-5">
+                  <span className="input-group-text" id="basic-addon1">
+                    <ShoppingCartIcon />
+                  </span>
+                  <input
+                    type="text"
+                    onChange={handleChange}
+                    name="buyingPrice"
+                    className="form-control"
+                    placeholder="Buying Price e.g 1000"
+                    aria-label="Username"
+                    aria-describedby="basic-addon1"
+                  />
+                </div>
               </div>
-            </div>
+            )}
           </div>
-          <div className=" row padding">
+
+          {/* Third Row - Always 2 columns */}
+          <div className="row padding">
             <div className="col-lg-6">
               <label htmlFor="basic-url" className="form-label">
-                Selling Price e.g 1000
+                {formData.productType === 'USAGE_BASED'
+                  ? 'Unit Price e.g 1000'
+                  : 'Selling Price e.g 1000'}
               </label>
               <div className="input-group mb-5">
                 <span className="input-group-text" id="basic-addon1">
@@ -249,7 +274,11 @@ const AddProduct = ({ id }: any) => {
                   onChange={handleChange}
                   name="sellingPrice"
                   className="form-control"
-                  placeholder="Selling Price e.g 1000"
+                  placeholder={
+                    formData.productType === 'USAGE_BASED'
+                      ? 'Unit Price e.g 1000'
+                      : 'Selling Price e.g 1000'
+                  }
                   aria-label="Username"
                   aria-describedby="basic-addon1"
                 />
@@ -275,6 +304,8 @@ const AddProduct = ({ id }: any) => {
               </div>
             </div>
           </div>
+
+          {/* Fourth Row - Description */}
           <div className="row padding">
             <div className="col-lg-4">
               <label htmlFor="basic-url" className="form-label ">
@@ -301,7 +332,7 @@ const AddProduct = ({ id }: any) => {
           <div className="text-center mt-3">
             <button
               className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-              disabled={isLoading ? true : false}
+              disabled={isLoading}
             >
               {isLoading ? 'Adding' : 'Add Product'}
             </button>
