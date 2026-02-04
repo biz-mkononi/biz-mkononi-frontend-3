@@ -1,37 +1,100 @@
-.login {
-    background-color: #BBE1FA;
-    padding: 50px;
+.banner-logo {
+  height: 50px;
+  width: 50px;
+}
+.banner-heading {
+  text-align: center !important;
 }
 .login-banner {
-    padding: 10px;
+  padding: 40px !important;
+  background-color: white !important;
+  margin: 0px !important;
+  justify-items: center;
+}
+.sign-container {
+  padding: 80px;
+}
+.login {
+  background-image: url('../../Assets/Group 2.svg');
+  background-size: 500px 300px;
+  background-repeat: no-repeat;
+  background-position: top right;
+  background-color: #f2f8ff;
+  padding: 0px !important;
+  height: 100% !important;
 }
 .login-banner p {
-    padding: 20px;
+  padding: 20px;
 }
 .login-banner h5 {
-    padding: 20px;
+  padding: 20px;
 }
-.login-img{
-    width: 300px;
 
-}
 .login-card {
-    margin-top: 5%;
-    position: relative;
-    background-color: transparent;
-    text-align: center;
-    padding: 10px;
+  position: relative;
+  border-width: 0ch !important;
+  background-color: transparent;
+  padding: 10px;
 }
-.textfield {
-    border-width: 0 0 1px 0;
-    border-radius: 0px;
-    padding: 0.75rem 0;
-    background: transparent !important;
+.field .textfield:focus {
+  border: transparent !important;
+  outline: none !important;
+}
+
+.login-card .textfield:active {
+  border-top: none !important;
+  outline: none !important;
+  border-color: red !important;
+}
+.login-card .textfield:active:focus {
+  border: transparent !important;
+  outline: none !important;
 }
 .sign-button .btn {
-    border-radius: 200px !important;
-    background-color: #1572E8;
+  border-radius: 200px !important;
+  background-color: #1572e8;
 }
 a {
-    text-decoration: none;
+  text-decoration: none;
+}
+.field {
+  margin-left: 25%;
+}
+
+@media only screen and (max-width: 1200px) {
+}
+@media only screen and (max-width: 600px) {
+  .login-banner {
+    padding: 60px;
+    background-color: #f2f8ff !important;
+    margin: 0px !important;
+  }
+  .login {
+    background-size: 50px 30px;
+  }
+  .login-banner p {
+    display: none !important;
+  }
+  .banner-logo {
+    margin-left: 100px;
+  }
+  .banner-heading {
+    text-align: center !important;
+  }
+  .login-icons {
+    display: none !important;
+  }
+  .login-card {
+    text-align: center !important;
+    margin-top: 0rem !important;
+  }
+  .field {
+    margin-left: 0% !important;
+  }
+}
+@media only screen and (max-width: 425px) {
+  /*Small smartphones [325px -> 425px]*/
+  .banner-logo {
+    margin-left: 40px;
+  }
 }
